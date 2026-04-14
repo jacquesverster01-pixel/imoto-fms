@@ -1,0 +1,85 @@
+{
+  "zones": [
+    {
+      "id": "zone-1",
+      "name": "Workshop Bay 1",
+      "x": 600,
+      "y": 186,
+      "width": 200,
+      "height": 155,
+      "colour": "#dbeafe"
+    },
+    {
+      "id": "zone-2",
+      "name": "Workshop Bay 2",
+      "x": 0,
+      "y": 37,
+      "width": 200,
+      "height": 150,
+      "colour": "#dbeafe"
+    },
+    {
+      "id": "zone-3",
+      "name": "Fabrication",
+      "x": 200,
+      "y": 37,
+      "width": 200,
+      "height": 150,
+      "colour": "#dbeafe"
+    },
+    {
+      "id": "zone-4",
+      "name": "Paint Bay",
+      "x": 202,
+      "y": 188,
+      "width": 198,
+      "height": 154,
+      "colour": "#fce7f3"
+    },
+    {
+      "id": "zone-5",
+      "name": "Assembly",
+      "x": 400,
+      "y": 38,
+      "width": 200,
+      "height": 150,
+      "colour": "#fce7f3"
+    },
+    {
+      "id": "zone-6",
+      "name": "Dispatch",
+      "x": 400,
+      "y": 187,
+      "width": 200,
+      "height": 155,
+      "colour": "#fce7f3"
+    },
+    {
+      "id": "zone-7",
+      "name": "Office",
+      "x": 0,
+      "y": 187,
+      "width": 202,
+      "height": 154,
+      "colour": "#dcfce7"
+    },
+    {
+      "id": "zone-8",
+      "name": "Compressor Room",
+      "x": 800,
+      "y": 39,
+      "width": 195,
+      "height": 149,
+      "colour": "#dcfce7"
+    },
+    {
+      "id": "zone-9",
+      "name": "Stores / Stock",
+      "x": 600,
+      "y": 36,
+      "width": 200,
+      "height": 150,
+      "colour": "#ede9fe"
+    }
+  ]
+}

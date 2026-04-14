@@ -1,0 +1,35 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -c ':*)",
+      "Bash(node server.js)",
+      "Bash(echo \"Exit: $?\")",
+      "Read(//c/Users/jacqu/AppData/Local/Temp/claude/c--Users-jacqu-Desktop-imoto-fms/7782ea8f-d9c6-44cc-b36a-d8695392b034/tasks/**)",
+      "Bash(npm install:*)",
+      "Read(//c/Users/jacqu/.claude/projects/c--Users-jacqu-Desktop-imoto-fms/memory/**)",
+      "Bash(python3 -c \"import sys,json; data=json.load\\(sys.stdin\\); print\\(f'Total entries: {len\\(data\\)}'\\); [print\\(e\\) for e in data[:5]]\")",
+      "Bash(mkdir -p \"C:/Users/jacqu/Desktop/imoto-fms/src/utils\")",
+      "Bash(mkdir -p \"C:/Users/jacqu/Desktop/imoto-fms/src/pages/hr\")",
+      "Bash(mkdir -p \"C:/Users/jacqu/Desktop/imoto-fms/src/pages/hr/disciplinary\")",
+      "Bash(xargs wc:*)",
+      "Bash(grep -n \"export default function\" c:/Users/jacqu/Desktop/imoto-fms/src/pages/hr/*.jsx c:/Users/jacqu/Desktop/imoto-fms/src/pages/hr/disciplinary/*.jsx)",
+      "Bash(wc -l c:/Users/jacqu/Desktop/imoto-fms/src/pages/hr/OHSTab.jsx c:/Users/jacqu/Desktop/imoto-fms/src/pages/hr/ohs/*.jsx)",
+      "Bash(grep -rn \"apiFetch\\\\\\(['\\\\`]/api/\" src/)",
+      "Bash(node -e 'JSON.parse\\(require\\('\\\\''fs'\\\\''\\).readFileSync\\('\\\\''__TRACKED_VAR__'\\\\'', '\\\\''utf8'\\\\''\\)\\)')",
+      "Bash(ls -la /c/Users/jacqu/Desktop/imoto-fms/data/*.json)",
+      "Read(//c/Users/jacqu/Desktop/imoto-fms/**)",
+      "Bash(node -e \"const d = require\\('./data/employees.json'\\); console.log\\(Array.isArray\\(d\\) ? 'ARRAY' : 'OBJECT', JSON.stringify\\(d\\).slice\\(0,100\\)\\)\")",
+      "Bash(node -e \"const fs=require\\('fs'\\); const d=JSON.parse\\(fs.readFileSync\\('data/employees.json'\\)\\); console.log\\(Array.isArray\\(d\\) ? 'ARRAY' : 'OBJECT', JSON.stringify\\(d\\).slice\\(0,80\\)\\)\")",
+      "Bash(curl -s http://localhost:3001/api/ohs-appointments)",
+      "Bash(curl -s http://localhost:3001/api/ohs-appointment-types)",
+      "Bash(node -e ':*)",
+      "Bash(taskkill //PID 27308 //F)",
+      "Bash(curl -s http://localhost:3001/api/dashboard)",
+      "Bash(node -e \"const chunks=[];process.stdin.on\\('data',c=>chunks.push\\(c\\)\\);process.stdin.on\\('end',\\(\\)=>{const d=JSON.parse\\(chunks.join\\(''\\)\\);console.log\\('hr:',JSON.stringify\\(d.hr\\)\\);const counts={};d.employeeStatus.forEach\\(e=>counts[e.status]=\\(counts[e.status]||0\\)+1\\);console.log\\('status distribution:',counts\\);console.log\\('total employees:',d.employeeStatus.length\\);}\\);\")",
+      "Bash(curl -s http://localhost:3001/api/ohs-zones)"
+    ],
+    "additionalDirectories": [
+      "c:\\Users\\jacqu\\.claude\\projects\\c--Users-jacqu-Desktop-imoto-fms\\memory"
+    ]
+  }
+}

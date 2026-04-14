@@ -1,0 +1,44 @@
+[
+  {
+    "id": "TPL001",
+    "name": "Weekly Workshop Walkthrough",
+    "department": "Workshop",
+    "items": [
+      { "id": "I001", "question": "Are all fire extinguishers accessible and in date?", "category": "Fire Safety" },
+      { "id": "I002", "question": "Are emergency exits clear and unobstructed?", "category": "Fire Safety" },
+      { "id": "I003", "question": "Is all PPE available and in good condition?", "category": "PPE" },
+      { "id": "I004", "question": "Are power tools inspected before use?", "category": "Equipment" },
+      { "id": "I005", "question": "Is the work area free of trip hazards?", "category": "Housekeeping" },
+      { "id": "I006", "question": "Are hazardous materials properly labelled and stored?", "category": "Chemical Safety" },
+      { "id": "I007", "question": "Is first aid kit fully stocked?", "category": "First Aid" },
+      { "id": "I008", "question": "Are all guards and safety devices in place on machinery?", "category": "Equipment" }
+    ]
+  },
+  {
+    "id": "TPL002",
+    "name": "Monthly Fabrication Shop Audit",
+    "department": "Fabrication",
+    "items": [
+      { "id": "I001", "question": "Are welding screens and curtains in place?", "category": "Welding Safety" },
+      { "id": "I002", "question": "Is ventilation adequate in welding areas?", "category": "Welding Safety" },
+      { "id": "I003", "question": "Are gas cylinders secured upright and capped when not in use?", "category": "Gas Safety" },
+      { "id": "I004", "question": "Is all electrical equipment in good condition (no frayed cables)?", "category": "Electrical" },
+      { "id": "I005", "question": "Are grinding and cutting areas free of combustibles?", "category": "Fire Safety" },
+      { "id": "I006", "question": "Is hearing protection available and being used?", "category": "PPE" },
+      { "id": "I007", "question": "Are all MSDS/SDS sheets accessible for chemicals in use?", "category": "Chemical Safety" }
+    ]
+  },
+  {
+    "id": "TPL003",
+    "name": "General Factory H&S Check",
+    "department": "All",
+    "items": [
+      { "id": "I001", "question": "Are walkways and aisles clear?", "category": "Housekeeping" },
+      { "id": "I002", "question": "Is lighting adequate throughout the facility?", "category": "Environment" },
+      { "id": "I003", "question": "Are waste disposal areas tidy and correctly labelled?", "category": "Housekeeping" },
+      { "id": "I004", "question": "Are safety notices and signage visible and legible?", "category": "Signage" },
+      { "id": "I005", "question": "Is the accident register up to date?", "category": "Records" },
+      { "id": "I006", "question": "Are all employees wearing required PPE for their area?", "category": "PPE" }
+    ]
+  }
+]

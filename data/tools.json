@@ -1,0 +1,10 @@
+[
+  { "id": "T001", "name": "Angle grinder #4", "category": "Power tools", "serial": "AG-2019-004", "dept": "Workshop", "assignedTo": "E004", "checkedOut": "2026-03-20", "due": "2026-03-23", "status": "overdue", "condition": "Needs repair" },
+  { "id": "T002", "name": "MIG welder #2", "category": "Welding", "serial": "MW-2021-002", "dept": "Welding", "assignedTo": "E002", "checkedOut": "2026-03-23", "due": "2026-03-25", "status": "out", "condition": "Good" },
+  { "id": "T003", "name": "Circular saw #1", "category": "Power tools", "serial": "CS-2020-001", "dept": "Cabinet Making", "assignedTo": "E005", "checkedOut": "2026-03-22", "due": "2026-03-24", "status": "overdue", "condition": "Good" },
+  { "id": "T004", "name": "Cordless drill #3", "category": "Power tools", "serial": "CD-2022-003", "dept": "Assembly", "assignedTo": null, "checkedOut": null, "due": null, "status": "in", "condition": "Good" },
+  { "id": "T005", "name": "Pipe bender #1", "category": "Plumbing", "serial": "PB-2018-001", "dept": "Plumbing", "assignedTo": "E006", "checkedOut": "2026-03-21", "due": "2026-03-23", "status": "overdue", "condition": "Good" },
+  { "id": "T006", "name": "Oscillating multi-tool", "category": "Power tools", "serial": "OM-2023-001", "dept": "Workshop", "assignedTo": null, "checkedOut": null, "due": null, "status": "in", "condition": "Good" },
+  { "id": "T007", "name": "TIG welder #1", "category": "Welding", "serial": "TW-2020-001", "dept": "Welding", "assignedTo": null, "checkedOut": null, "due": null, "status": "service", "condition": "Due service" },
+  { "id": "T008", "name": "Jigsaw #2", "category": "Power tools", "serial": "JS-2021-002", "dept": "Cabinet Making", "assignedTo": "E005", "checkedOut": "2026-03-23", "due": "2026-03-25", "status": "out", "condition": "Good" }
+]

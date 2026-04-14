@@ -1,0 +1,393 @@
+[
+  {
+    "status": "completed",
+    "cadence": "monthly",
+    "assigneeId": "E001",
+    "assigneeName": "Lorenzo August",
+    "dueDate": "2026-04-13",
+    "notes": "",
+    "questions": [
+      {
+        "questionId": "WQ1",
+        "text": "Fire extinguishers visible and unobstructed",
+        "requiresPhoto": false,
+        "cadence": "weekly",
+        "response": "yes",
+        "photoPath": null,
+        "note": ""
+      },
+      {
+        "questionId": "WQ2",
+        "text": "Emergency exit signs visible and unobstructed",
+        "requiresPhoto": false,
+        "cadence": "weekly",
+        "response": "yes",
+        "photoPath": null,
+        "note": ""
+      },
+      {
+        "questionId": "WQ3",
+        "text": "Fire hose gauges intact and seals visible",
+        "requiresPhoto": false,
+        "cadence": "weekly",
+        "response": "yes",
+        "photoPath": null,
+        "note": ""
+      },
+      {
+        "questionId": "WQ4",
+        "text": "First aid kit accessible and sealed",
+        "requiresPhoto": false,
+        "cadence": "weekly",
+        "response": "yes",
+        "photoPath": null,
+        "note": ""
+      },
+      {
+        "questionId": "WQ5",
+        "text": "First aid signs indicating location visible",
+        "requiresPhoto": false,
+        "cadence": "weekly",
+        "response": "yes",
+        "photoPath": null,
+        "note": ""
+      },
+      {
+        "questionId": "WQ6",
+        "text": "First aider available on shift",
+        "requiresPhoto": false,
+        "cadence": "weekly",
+        "response": "yes",
+        "photoPath": null,
+        "note": ""
+      },
+      {
+        "questionId": "WQ7",
+        "text": "Aisles and workstations clear of obstacles",
+        "requiresPhoto": false,
+        "cadence": "weekly",
+        "response": "yes",
+        "photoPath": null,
+        "note": ""
+      },
+      {
+        "questionId": "WQ8",
+        "text": "Waste areas covered and separated correctly",
+        "requiresPhoto": false,
+        "cadence": "weekly",
+        "response": "yes",
+        "photoPath": null,
+        "note": ""
+      },
+      {
+        "questionId": "WQ9",
+        "text": "Combustible waste removed from workplace",
+        "requiresPhoto": false,
+        "cadence": "weekly",
+        "response": "yes",
+        "photoPath": null,
+        "note": ""
+      },
+      {
+        "questionId": "WQ10",
+        "text": "Areas outside buildings clear of waste and combustible items",
+        "requiresPhoto": true,
+        "cadence": "weekly",
+        "response": "yes",
+        "photoPath": null,
+        "note": ""
+      },
+      {
+        "questionId": "WQ11",
+        "text": "PPE available and in good condition (gloves, masks, safety glasses, footwear)",
+        "requiresPhoto": false,
+        "cadence": "weekly",
+        "response": "yes",
+        "photoPath": null,
+        "note": ""
+      },
+      {
+        "questionId": "WQ12",
+        "text": "No exposed wiring from light or wall sockets visible",
+        "requiresPhoto": true,
+        "cadence": "weekly",
+        "response": "yes",
+        "photoPath": null,
+        "note": ""
+      },
+      {
+        "questionId": "WQ13",
+        "text": "No broken plugs or adapters visible",
+        "requiresPhoto": false,
+        "cadence": "weekly",
+        "response": "yes",
+        "photoPath": null,
+        "note": ""
+      },
+      {
+        "questionId": "WQ14",
+        "text": "No overloading of plug outlets",
+        "requiresPhoto": false,
+        "cadence": "weekly",
+        "response": "yes",
+        "photoPath": null,
+        "note": ""
+      },
+      {
+        "questionId": "WQ15",
+        "text": "Chemical containers labelled and sealed",
+        "requiresPhoto": false,
+        "cadence": "weekly",
+        "response": "yes",
+        "photoPath": null,
+        "note": ""
+      },
+      {
+        "questionId": "WQ16",
+        "text": "Spill kits in place and stocked",
+        "requiresPhoto": false,
+        "cadence": "weekly",
+        "response": "yes",
+        "photoPath": null,
+        "note": ""
+      },
+      {
+        "questionId": "WQ17",
+        "text": "MSDS accessible near chemicals",
+        "requiresPhoto": false,
+        "cadence": "weekly",
+        "response": "yes",
+        "photoPath": null,
+        "note": ""
+      },
+      {
+        "questionId": "WQ18",
+        "text": "Emergency exits clear and unobstructed",
+        "requiresPhoto": false,
+        "cadence": "weekly",
+        "response": "yes",
+        "photoPath": null,
+        "note": ""
+      },
+      {
+        "questionId": "WQ19",
+        "text": "Safety signage visible and legible",
+        "requiresPhoto": false,
+        "cadence": "weekly",
+        "response": "yes",
+        "photoPath": null,
+        "note": ""
+      },
+      {
+        "questionId": "WQ20",
+        "text": "No visible slip or trip hazards in walkways",
+        "requiresPhoto": true,
+        "cadence": "weekly",
+        "response": "yes",
+        "photoPath": null,
+        "note": ""
+      },
+      {
+        "questionId": "MQ1",
+        "text": "Fire extinguisher pressure gauges checked",
+        "requiresPhoto": true,
+        "cadence": "monthly",
+        "response": "yes",
+        "photoPath": null,
+        "note": ""
+      },
+      {
+        "questionId": "MQ2",
+        "text": "Fire extinguishers fixed at regulated height with correct signage",
+        "requiresPhoto": true,
+        "cadence": "monthly",
+        "response": "yes",
+        "photoPath": null,
+        "note": ""
+      },
+      {
+        "questionId": "MQ3",
+        "text": "Fire extinguishers numbered and number reflected on signage",
+        "requiresPhoto": false,
+        "cadence": "monthly",
+        "response": "yes",
+        "photoPath": null,
+        "note": ""
+      },
+      {
+        "questionId": "MQ4",
+        "text": "Emergency lighting tested — minimum 60 minute function confirmed",
+        "requiresPhoto": false,
+        "cadence": "monthly",
+        "response": "yes",
+        "photoPath": null,
+        "note": ""
+      },
+      {
+        "questionId": "MQ5",
+        "text": "First aid kit contents checked and restocked if needed",
+        "requiresPhoto": true,
+        "cadence": "monthly",
+        "response": "yes",
+        "photoPath": null,
+        "note": ""
+      },
+      {
+        "questionId": "MQ6",
+        "text": "First aid register up to date",
+        "requiresPhoto": false,
+        "cadence": "monthly",
+        "response": "yes",
+        "photoPath": null,
+        "note": ""
+      },
+      {
+        "questionId": "MQ7",
+        "text": "Machinery guards in place and secure",
+        "requiresPhoto": true,
+        "cadence": "monthly",
+        "response": "yes",
+        "photoPath": null,
+        "note": ""
+      },
+      {
+        "questionId": "MQ8",
+        "text": "Equipment free from visible wear and damage",
+        "requiresPhoto": false,
+        "cadence": "monthly",
+        "response": "yes",
+        "photoPath": null,
+        "note": ""
+      },
+      {
+        "questionId": "MQ9",
+        "text": "Defective tools tagged or stored in designated area",
+        "requiresPhoto": true,
+        "cadence": "monthly",
+        "response": "yes",
+        "photoPath": null,
+        "note": ""
+      },
+      {
+        "questionId": "MQ10",
+        "text": "Portable electrical equipment inspected and in good condition",
+        "requiresPhoto": false,
+        "cadence": "monthly",
+        "response": "yes",
+        "photoPath": null,
+        "note": ""
+      },
+      {
+        "questionId": "MQ11",
+        "text": "Distribution board doors and plates in place",
+        "requiresPhoto": true,
+        "cadence": "monthly",
+        "response": "yes",
+        "photoPath": null,
+        "note": ""
+      },
+      {
+        "questionId": "MQ12",
+        "text": "All switches on distribution board labelled",
+        "requiresPhoto": false,
+        "cadence": "monthly",
+        "response": "yes",
+        "photoPath": null,
+        "note": ""
+      },
+      {
+        "questionId": "MQ13",
+        "text": "No open switch gaps on distribution board",
+        "requiresPhoto": true,
+        "cadence": "monthly",
+        "response": "yes",
+        "photoPath": null,
+        "note": ""
+      },
+      {
+        "questionId": "MQ14",
+        "text": "Chemical storage full check — containers labelled, sealed, correctly stored",
+        "requiresPhoto": true,
+        "cadence": "monthly",
+        "response": "yes",
+        "photoPath": null,
+        "note": ""
+      },
+      {
+        "questionId": "MQ15",
+        "text": "Dust control measures in place and effective",
+        "requiresPhoto": false,
+        "cadence": "monthly",
+        "response": "yes",
+        "photoPath": null,
+        "note": ""
+      },
+      {
+        "questionId": "MQ16",
+        "text": "Hazardous waste stored separately and labelled",
+        "requiresPhoto": false,
+        "cadence": "monthly",
+        "response": "no",
+        "photoPath": null,
+        "note": ""
+      },
+      {
+        "questionId": "MQ17",
+        "text": "Incident register reviewed",
+        "requiresPhoto": false,
+        "cadence": "monthly",
+        "response": "no",
+        "photoPath": null,
+        "note": ""
+      },
+      {
+        "questionId": "MQ18",
+        "text": "PPE inspection completed — damaged items replaced",
+        "requiresPhoto": false,
+        "cadence": "monthly",
+        "response": "no",
+        "photoPath": null,
+        "note": ""
+      },
+      {
+        "questionId": "MQ19",
+        "text": "Employees aware of hazards and emergency procedures",
+        "requiresPhoto": false,
+        "cadence": "monthly",
+        "response": "no",
+        "photoPath": null,
+        "note": ""
+      },
+      {
+        "questionId": "MQ20",
+        "text": "Defective lights reported and replaced",
+        "requiresPhoto": false,
+        "cadence": "monthly",
+        "response": "yes",
+        "photoPath": null,
+        "note": ""
+      },
+      {
+        "questionId": "MQ21",
+        "text": "Broken or damaged building areas reported",
+        "requiresPhoto": true,
+        "cadence": "monthly",
+        "response": "yes",
+        "photoPath": null,
+        "note": ""
+      },
+      {
+        "questionId": "MQ22",
+        "text": "Washing facilities clean and functional",
+        "requiresPhoto": false,
+        "cadence": "monthly",
+        "response": "yes",
+        "photoPath": null,
+        "note": ""
+      }
+    ],
+    "id": "INS1776065772392",
+    "createdAt": "2026-04-13T07:36:12.392Z",
+    "completedAt": "2026-04-13T07:37:01.301Z"
+  }
+]

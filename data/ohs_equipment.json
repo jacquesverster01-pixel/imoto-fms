@@ -1,0 +1,42 @@
+[
+  {
+    "name": "sdfsf",
+    "category": "Power Tools",
+    "serial": "sdfsd",
+    "location": "",
+    "department": "",
+    "riskLevel": 1,
+    "status": "Active",
+    "zoneId": "zone-6",
+    "lastInspectionDate": "2026-04-01",
+    "nextInspectionDate": "2026-06-03",
+    "inspectionIntervalDays": 90,
+    "preUseCheckRequired": false,
+    "notes": "",
+    "serviceIntervalDays": null,
+    "lastServiceDate": null,
+    "nextServiceDate": null,
+    "id": "EQ1775802376444",
+    "createdAt": "2026-04-10T06:26:16.444Z"
+  },
+  {
+    "name": "Grinder",
+    "category": "Power Tools",
+    "serial": "123123",
+    "location": "",
+    "department": "Electrical",
+    "riskLevel": 2,
+    "status": "Active",
+    "zoneId": "zone-3",
+    "lastInspectionDate": "2026-04-13",
+    "nextInspectionDate": "2027-04-13",
+    "inspectionIntervalDays": 180,
+    "preUseCheckRequired": false,
+    "notes": "",
+    "serviceIntervalDays": null,
+    "lastServiceDate": null,
+    "nextServiceDate": null,
+    "id": "EQ1776065891442",
+    "createdAt": "2026-04-13T07:38:11.442Z"
+  }
+]

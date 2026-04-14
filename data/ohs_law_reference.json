@@ -1,0 +1,71 @@
+[
+  {
+    "id": "ch1",
+    "chapter": "Chapter 1",
+    "title": "Interpretation and Application",
+    "sections": [
+      { "id": "s1", "section": "Section 1", "title": "Definitions", "description": "Defines key terms used throughout the Act including 'employer', 'employee', 'workplace', 'health and safety representative', 'health and safety committee', 'machinery', 'incident', and 'hazardous work'. These definitions form the legal basis for all duties and obligations." },
+      { "id": "s2", "section": "Section 2", "title": "Application of Act", "description": "Specifies that the Act applies to all employers and employees in South Africa. Exceptions include members of the National Defence Force and National Intelligence Service. Mines and works fall under the Mines Health and Safety Act." },
+      { "id": "s3", "section": "Section 3", "title": "Act binding on State", "description": "The Act is binding on the State as an employer, ensuring that government departments comply with the same health and safety obligations as private employers." }
+    ]
+  },
+  {
+    "id": "ch2",
+    "chapter": "Chapter 2",
+    "title": "General Duties of Employers",
+    "sections": [
+      { "id": "s8", "section": "Section 8", "title": "General duties of employers to their employees", "description": "Every employer must, as far as reasonably practicable, provide and maintain a working environment that is safe and without risk to health. This includes safe plant and systems of work, safe handling and storage of articles and substances, and necessary information, instruction, training and supervision." },
+      { "id": "s9", "section": "Section 9", "title": "Duties of employers to persons other than employees", "description": "Employers must conduct their undertakings to ensure, as far as reasonably practicable, that persons other than employees — such as contractors, visitors, and members of the public — are not exposed to hazards at the workplace." },
+      { "id": "s10", "section": "Section 10", "title": "Duty to inform", "description": "Employers must inform health and safety representatives or the health and safety committee of any matter affecting the health or safety of employees, and must provide relevant information, reports, or data upon request." },
+      { "id": "s13", "section": "Section 13", "title": "First aid", "description": "Employers must provide first-aid boxes or kits at the workplace in accordance with prescribed requirements, and must ensure that a sufficient number of employees are trained in first-aid procedures." },
+      { "id": "s14", "section": "Section 14", "title": "General duties of employees", "description": "Every employee must take reasonable care of their own health and safety and that of other persons who may be affected by their acts or omissions. Employees must cooperate with the employer, report unsafe or unhealthy conditions, and must not interfere with, damage, or misuse safety equipment." },
+      { "id": "s16", "section": "Section 16", "title": "Chief executive officer duties", "description": "The chief executive officer (or equivalent) must ensure compliance with the Act at the workplace. They may delegate specific duties in writing but remain responsible for ensuring that delegated persons carry out those duties, and cannot delegate the overall duty of care." }
+    ]
+  },
+  {
+    "id": "ch3",
+    "chapter": "Chapter 3",
+    "title": "Health and Safety Representatives and Committees",
+    "sections": [
+      { "id": "s17", "section": "Section 17", "title": "Health and safety representatives", "description": "Employers with 20 or more employees must designate health and safety representatives for each workplace or section. Representatives are selected by employees or appointed by the employer after consultation with employees, and must be given reasonable time during working hours to perform their functions." },
+      { "id": "s18", "section": "Section 18", "title": "Functions of health and safety representatives", "description": "Representatives may review the effectiveness of health and safety measures, identify hazardous situations, investigate incidents and complaints, make representations to the employer, and inspect the workplace at reasonable intervals. Employers must provide reasonable assistance to enable representatives to perform their functions." },
+      { "id": "s19", "section": "Section 19", "title": "Health and safety committees", "description": "Where two or more health and safety representatives are designated for a workplace, the employer must establish a health and safety committee. Committees must meet at least every three months and may make recommendations to the employer regarding health and safety measures." },
+      { "id": "s20", "section": "Section 20", "title": "Functions of health and safety committees", "description": "Health and safety committees must discuss any matter referred to them by a representative or arising from the employer's health and safety programme. They may review the implementation of health and safety policies and make recommendations to the employer for improvement." }
+    ]
+  },
+  {
+    "id": "ch4",
+    "chapter": "Chapter 4",
+    "title": "General Administrative Provisions",
+    "sections": [
+      { "id": "s28", "section": "Section 28", "title": "Designation of inspectors", "description": "The Chief Inspector of the Department of Labour may designate officers as inspectors to administer and enforce the Act. Inspectors are issued with official identity cards and certificates of designation, which must be produced on request when entering a workplace." },
+      { "id": "s29", "section": "Section 29", "title": "Powers of inspectors", "description": "Inspectors may enter any workplace at any time to inspect, investigate, or conduct enquiries. They may question any person, take samples, require production of documents and records, and take photographs. Obstruction of an inspector is a criminal offence." },
+      { "id": "s30", "section": "Section 30", "title": "Improvement notices", "description": "Where an inspector finds a contravention of the Act or regulations, they may issue an improvement notice requiring the employer to remedy the contravention within a specified period. Failure to comply with an improvement notice is a criminal offence." },
+      { "id": "s31", "section": "Section 31", "title": "Prohibition notices", "description": "Where an inspector believes that an activity or condition at a workplace involves an imminent risk of serious injury or ill health, they may issue a prohibition notice immediately halting the activity. The activity must not resume until the notice is withdrawn." },
+      { "id": "s34", "section": "Section 34", "title": "Incident reporting", "description": "Employers must immediately report to an inspector any incident at the workplace that results in the death of an employee, or a dangerous occurrence. A written report must be submitted within seven days. The incident scene must be preserved until inspected or written permission to proceed is given." }
+    ]
+  },
+  {
+    "id": "ch5",
+    "chapter": "Chapter 5",
+    "title": "Regulations and Penalties",
+    "sections": [
+      { "id": "s35", "section": "Section 35", "title": "Power to make regulations", "description": "The Minister may make regulations prescribing requirements for specific industries, substances, processes, machinery, and activities. Regulations are published in the Government Gazette and have the force of law once in effect." },
+      { "id": "s38", "section": "Section 38", "title": "Offences and penalties", "description": "Any person who contravenes or fails to comply with the Act or regulations is guilty of an offence. Penalties include a fine not exceeding R100 000 or imprisonment not exceeding two years, or both. For a second or subsequent offence the court may impose double the maximum penalty." },
+      { "id": "s40", "section": "Section 40", "title": "Liability of employers and officers", "description": "Directors and managers may be held personally liable for offences committed by the company where the offence resulted from their failure to take reasonable steps to prevent it. An employer remains liable for acts or omissions of employees in the course of employment." }
+    ]
+  },
+  {
+    "id": "gsr",
+    "chapter": "General Safety Regulations",
+    "title": "Key GSR Provisions (GNR 1031 of 1986)",
+    "sections": [
+      { "id": "gsr3", "section": "GSR 3", "title": "Machine guarding", "description": "All dangerous moving parts of machinery must be effectively guarded to prevent contact by any person. Guards must be of sound construction and proper material, maintained in good working order, and must not be removed or made ineffective while the machinery is in operation." },
+      { "id": "gsr4", "section": "GSR 4", "title": "Housekeeping", "description": "Every workplace must be kept clean and orderly at all times. Passages, emergency exits, and access routes must be kept clear of obstructions. Waste material must not be allowed to accumulate and must be removed and disposed of regularly to prevent slipping, tripping, and fire hazards." },
+      { "id": "gsr5", "section": "GSR 5", "title": "Personal protective equipment (PPE)", "description": "Where risks cannot be adequately controlled at source, employers must provide suitable personal protective equipment at no cost to employees. PPE must be appropriate to the hazard, maintained in a clean and serviceable condition, and employees must be trained in its correct use and storage." },
+      { "id": "gsr6", "section": "GSR 6", "title": "Fire equipment", "description": "Adequate and suitable fire extinguishing equipment must be provided, maintained, and inspected at intervals not exceeding 12 months. Equipment must be accessible, clearly identified, and employees must be trained in basic fire-fighting and evacuation procedures." },
+      { "id": "gsr7", "section": "GSR 7", "title": "Stacking and storage", "description": "All articles must be stacked, stored, or placed in a stable and safe manner that does not obstruct walkways or emergency routes. Maximum mass and height limits must not be exceeded, and storage areas must be clearly demarcated and kept orderly." },
+      { "id": "gsr8", "section": "GSR 8", "title": "Working at heights", "description": "Where employees are required to work at heights where there is risk of falling, the employer must take adequate precautions including the provision of guardrails, safety nets, or fall arrest systems. Scaffolding and elevated work platforms must be inspected before use by a competent person." }
+    ]
+  }
+]

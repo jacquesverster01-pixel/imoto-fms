@@ -1,0 +1,12 @@
+[
+  { "id": "S001", "name": "Conduit 20mm", "category": "Electrical", "unit": "metres", "qty": 12, "min": 50, "onOrder": 100, "orderDate": "2026-03-24", "usedBy": ["J003"], "status": "low" },
+  { "id": "S002", "name": "Cable 2.5mm TwinEarth", "category": "Electrical", "unit": "metres", "qty": 0, "min": 100, "onOrder": 200, "orderDate": "2026-03-23", "usedBy": ["J002", "J001"], "status": "out" },
+  { "id": "S003", "name": "18mm Plywood sheets", "category": "Cabinet Making", "unit": "sheets", "qty": 8, "min": 20, "onOrder": 0, "orderDate": null, "usedBy": ["J004"], "status": "low" },
+  { "id": "S004", "name": "MIG wire 0.8mm", "category": "Welding", "unit": "rolls", "qty": 4, "min": 10, "onOrder": 10, "orderDate": "2026-03-25", "usedBy": ["J003"], "status": "low" },
+  { "id": "S005", "name": "PVC pipe 15mm", "category": "Plumbing", "unit": "metres", "qty": 45, "min": 30, "onOrder": 0, "orderDate": null, "usedBy": [], "status": "ok" },
+  { "id": "S006", "name": "Stainless steel screws M6", "category": "Fasteners", "unit": "box", "qty": 22, "min": 10, "onOrder": 0, "orderDate": null, "usedBy": [], "status": "ok" },
+  { "id": "S007", "name": "Aluminium angle 40x40", "category": "Structural", "unit": "metres", "qty": 0, "min": 20, "onOrder": 30, "orderDate": "2026-03-22", "usedBy": ["J005"], "status": "out" },
+  { "id": "S008", "name": "Silicone sealant", "category": "Consumables", "unit": "tubes", "qty": 6, "min": 15, "onOrder": 0, "orderDate": null, "usedBy": [], "status": "low" },
+  { "id": "S009", "name": "Brass fittings 15mm", "category": "Plumbing", "unit": "units", "qty": 34, "min": 20, "onOrder": 0, "orderDate": null, "usedBy": [], "status": "ok" },
+  { "id": "S010", "name": "Welding rods 3.2mm", "category": "Welding", "unit": "kg", "qty": 18, "min": 10, "onOrder": 0, "orderDate": null, "usedBy": [], "status": "ok" }
+]

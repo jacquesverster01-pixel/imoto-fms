@@ -1,0 +1,10 @@
+[
+  { "id": "AT1", "label": "SHE Representative", "legalRef": "OHS Act Section 17" },
+  { "id": "AT2", "label": "First Aider", "legalRef": "OHS Act General Safety Reg 3" },
+  { "id": "AT3", "label": "Fire Fighter", "legalRef": "OHS Act Section 26" },
+  { "id": "AT4", "label": "Safety Officer", "legalRef": "OHS Act Section 16(2)" },
+  { "id": "AT5", "label": "Incident Investigator", "legalRef": "OHS Act Section 24" },
+  { "id": "AT6", "label": "Emergency Coordinator", "legalRef": "OHS Act Section 26" },
+  { "id": "AT7", "label": "Hazardous Chemical Handler", "legalRef": "HCS Reg 4" },
+  { "id": "AT8", "label": "Stacking & Storage Supervisor", "legalRef": "OHS Act GSR 8" }
+]

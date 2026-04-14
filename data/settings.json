@@ -1,0 +1,87 @@
+{
+  "company": {
+    "name": "iMoto Manufacturing (Pty) Ltd",
+    "reg": "2015/123456/07",
+    "address": "Montague Gardens, Cape Town, 7441",
+    "phone": "+27 21 555 0100",
+    "email": "info@imoto.co.za",
+    "website": "www.imoto.co.za"
+  },
+  "departments": [
+    {
+      "name": "Assembly",
+      "color": "#f59e0b"
+    },
+    {
+      "name": "Cabinet Making",
+      "color": "#ef4444"
+    },
+    {
+      "name": "Electrical",
+      "color": "#6c63ff"
+    },
+    {
+      "name": "General",
+      "color": "#64748b"
+    },
+    {
+      "name": "Plumbing",
+      "color": "#b45309"
+    },
+    {
+      "name": "Welding",
+      "color": "#22c55e"
+    },
+    {
+      "name": "Workshop",
+      "color": "#9298c4"
+    },
+    {
+      "name": "Branding",
+      "color": "#f59e0b"
+    }
+  ],
+  "users": [
+    {
+      "name": "Jacques Du Plessis",
+      "email": "jacques@imoto.co.za",
+      "role": "Admin",
+      "color": "#6c63ff",
+      "id": "JD"
+    }
+  ],
+  "alerts": {
+    "staffConstraint": true,
+    "toolOverdue": true,
+    "stockLevel": true,
+    "certExpiry": true,
+    "absentImpact": true,
+    "dailySummary": false
+  },
+  "whatsapp": {
+    "enabled": false,
+    "twilioSid": "",
+    "twilioToken": "",
+    "number": "",
+    "checkinTime": "08:00",
+    "clockinReminders": false,
+    "leaveViaWhatsapp": false,
+    "sickNotePhoto": false,
+    "requireNoteMonFri": false,
+    "requireNoteAfter2": false
+  },
+  "shifts": [
+    {
+      "id": "SH1775636250967",
+      "name": "test",
+      "startTime": "07:00",
+      "endTime": "17:00",
+      "graceMinutes": 15
+    }
+  ],
+  "leaveLimits": {
+    "Annual": 15,
+    "Sick": 30,
+    "Family Responsibility": 3
+  }
+}

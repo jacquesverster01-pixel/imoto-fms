@@ -1,0 +1,153 @@
+[
+  {
+    "name": "Lorenzo August",
+    "dept": "Branding",
+    "color": "#6c63ff",
+    "zkUserId": "780405514",
+    "id": "E001",
+    "firstName": "Lorenzo",
+    "lastName": "August",
+    "idNumber": "",
+    "taxNumber": "",
+    "shift": "test",
+    "hourlyRate": 100,
+    "documents": {
+      "workPermit": {
+        "skipped": true
+      }
+    }
+  },
+  {
+    "name": "Ronald Edwards",
+    "dept": "Welding",
+    "color": "#c0c0c0",
+    "zkUserId": "720313504",
+    "id": "E002"
+  },
+  {
+    "name": "Ashley Lenting",
+    "dept": "Welding",
+    "color": "#f59e0b",
+    "zkUserId": "760105579",
+    "id": "E003"
+  },
+  {
+    "name": "Brazza Nyirenda",
+    "dept": "Electrical",
+    "color": "#6c63ff",
+    "zkUserId": "162055",
+    "id": "E004"
+  },
+  {
+    "name": "Alex Thobela",
+    "dept": "Welding",
+    "color": "#22c55e",
+    "zkUserId": "741126590",
+    "id": "E005"
+  },
+  {
+    "name": "Marlon Arendse",
+    "dept": "",
+    "color": "#f59e0b",
+    "zkUserId": "770911502",
+    "id": "E006"
+  },
+  {
+    "name": "Raymond Malgas",
+    "dept": "",
+    "color": "#ef4444",
+    "zkUserId": "761218510",
+    "id": "E007"
+  },
+  {
+    "name": "Samuel Mulema",
+    "dept": "",
+    "color": "#3b82f6",
+    "zkUserId": "998401",
+    "id": "E008"
+  },
+  {
+    "name": "Zamile Ncisana",
+    "dept": "",
+    "color": "#ec4899",
+    "zkUserId": "950510595",
+    "id": "E009"
+  },
+  {
+    "name": "Clint Langley",
+    "dept": "",
+    "color": "#14b8a6",
+    "zkUserId": "711230549",
+    "id": "E010"
+  },
+  {
+    "name": "Quinlen Josias",
+    "dept": "",
+    "color": "#f97316",
+    "zkUserId": "840607519",
+    "id": "E011"
+  },
+  {
+    "name": "Nelson Nhlahle",
+    "dept": "",
+    "color": "#8b5cf6",
+    "zkUserId": "109077097",
+    "id": "E012"
+  },
+  {
+    "name": "Jean Erasmus",
+    "dept": "",
+    "color": "#84cc16",
+    "zkUserId": "780629505",
+    "id": "E013"
+  },
+  {
+    "name": "Brendon Williams",
+    "dept": "",
+    "color": "#6c63ff",
+    "zkUserId": "880126517",
+    "id": "E014"
+  },
+  {
+    "name": "Keegan McKay",
+    "dept": "",
+    "color": "#f59e0b",
+    "zkUserId": "880715517",
+    "id": "E016"
+  },
+  {
+    "name": "Samson Jeremia",
+    "dept": "",
+    "color": "#ef4444",
+    "zkUserId": "381965",
+    "id": "E017"
+  },
+  {
+    "name": "Gareth Galant",
+    "dept": "",
+    "color": "#3b82f6",
+    "zkUserId": "791527",
+    "id": "E018"
+  },
+  {
+    "name": "Yaatie Weaver",
+    "dept": "",
+    "color": "#ec4899",
+    "zkUserId": "785632",
+    "id": "E019"
+  },
+  {
+    "name": "Barry Clark",
+    "dept": "",
+    "color": "#14b8a6",
+    "zkUserId": "727677",
+    "id": "E020"
+  },
+  {
+    "name": "Jacques Verster",
+    "dept": "",
+    "color": "#f97316",
+    "zkUserId": "950625503",
+    "id": "E021"
+  }
+]

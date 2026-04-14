@@ -1,0 +1,20 @@
+[
+  {
+    "typeId": "AT1",
+    "appointeeId": "E011",
+    "dateAppointed": "2026-04-01",
+    "expiryDate": null,
+    "notes": "",
+    "id": "APT1775735684394",
+    "createdAt": "2026-04-09T11:54:44.394Z"
+  },
+  {
+    "typeId": "AT2",
+    "appointeeId": "E001",
+    "dateAppointed": "2026-04-01",
+    "expiryDate": "2026-09-01",
+    "notes": "",
+    "id": "APT1775802421965",
+    "createdAt": "2026-04-10T06:27:01.965Z"
+  }
+]
