@@ -1,0 +1,48 @@
+{
+  "assets": [
+    {
+      "id": "MA1776341571027",
+      "label": "1",
+      "type": "first_aid",
+      "zoneId": null,
+      "xPct": 0.31966053748231965,
+      "yPct": 0.7823515126055935,
+      "lastServiced": null,
+      "nextService": null,
+      "stockLevel": null
+    },
+    {
+      "id": "MA1776341582566",
+      "label": "w",
+      "type": "hose_reel",
+      "zoneId": null,
+      "xPct": 0.4158415841584159,
+      "yPct": 0.8235750745527383,
+      "lastServiced": null,
+      "nextService": null,
+      "stockLevel": null
+    },
+    {
+      "id": "MA1776341595473",
+      "label": "asd",
+      "type": "emergency_exit",
+      "zoneId": null,
+      "xPct": 0.44200848656294195,
+      "yPct": 0.9615843906366575,
+      "lastServiced": null,
+      "nextService": null,
+      "stockLevel": null
+    },
+    {
+      "id": "MA1776341613305",
+      "label": "as",
+      "type": "electrical_panel",
+      "zoneId": null,
+      "xPct": 0.2397454031117398,
+      "yPct": 0.2858764404595468,
+      "lastServiced": null,
+      "nextService": null,
+      "stockLevel": null
+    }
+  ]
+}

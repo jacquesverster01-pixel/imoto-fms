@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { useGet } from '../../hooks/useApi'
-import { todayStr } from '../../utils/time'
-import { daysAgoStr } from '../../utils/ohs'
+import { todayStr, daysAgoStr } from '../../utils/time'
 import OHSNotifications from './ohs/OHSNotifications'
 import OHSDashboard from './ohs/OHSDashboard'
 import EquipmentTab from './ohs/EquipmentTab'

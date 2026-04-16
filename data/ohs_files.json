@@ -1,1 +1,134 @@
-[]
+[
+  {
+    "id": "OHF1776237875467",
+    "context": "factory-map",
+    "contextId": "floor-plan",
+    "filename": "ffc4afd4-4507-40b0-830c-2996eecd7221.pdf",
+    "originalName": "ENGIN AVE_cropped.pdf",
+    "mimeType": "application/pdf",
+    "size": 109169,
+    "uploadedAt": "2026-04-15T07:24:35.467Z",
+    "uploadedBy": "",
+    "label": ""
+  },
+  {
+    "id": "OHF1776237910031",
+    "context": "factory-map",
+    "contextId": "floor-plan",
+    "filename": "ea537cd9-0298-4091-996f-7acc645cd5ef.jpeg",
+    "originalName": "WhatsApp Image 2026-04-01 at 14.45.45.jpeg",
+    "mimeType": "image/jpeg",
+    "size": 251189,
+    "uploadedAt": "2026-04-15T07:25:10.031Z",
+    "uploadedBy": "",
+    "label": ""
+  },
+  {
+    "id": "OHF1776239703816",
+    "context": "factory-map",
+    "contextId": "floor-plan",
+    "filename": "68fce98c-b4b3-4c3e-97a0-776aee0d8faf.jpeg",
+    "originalName": "WhatsApp Image 2026-04-01 at 14.45.45.jpeg",
+    "mimeType": "image/jpeg",
+    "size": 251189,
+    "uploadedAt": "2026-04-15T07:55:03.816Z",
+    "uploadedBy": "",
+    "label": ""
+  },
+  {
+    "id": "OHF1776239712748",
+    "context": "factory-map",
+    "contextId": "floor-plan",
+    "filename": "90069008-132c-4b6e-99e1-b1ef318794fd.pdf",
+    "originalName": "ENGIN AVE_cropped.pdf",
+    "mimeType": "application/pdf",
+    "size": 109169,
+    "uploadedAt": "2026-04-15T07:55:12.748Z",
+    "uploadedBy": "",
+    "label": ""
+  },
+  {
+    "id": "OHF1776239725984",
+    "context": "factory-map",
+    "contextId": "floor-plan",
+    "filename": "dc9a47e7-9fb2-41d4-ab71-ca9db04fc70d.pdf",
+    "originalName": "ENGIN AVE_cropped.pdf",
+    "mimeType": "application/pdf",
+    "size": 109169,
+    "uploadedAt": "2026-04-15T07:55:25.984Z",
+    "uploadedBy": "",
+    "label": ""
+  },
+  {
+    "id": "OHF1776239948464",
+    "context": "factory-map",
+    "contextId": "floor-plan",
+    "filename": "5f1def7e-7e6e-47c8-bcfd-2b8ce3bbda47.png",
+    "originalName": "floorplan_overlay.png",
+    "mimeType": "image/png",
+    "size": 113880,
+    "uploadedAt": "2026-04-15T07:59:08.464Z",
+    "uploadedBy": "",
+    "label": ""
+  },
+  {
+    "id": "OHF1776239997279",
+    "context": "factory-map",
+    "contextId": "floor-plan",
+    "filename": "7f609299-ea9f-4048-af59-67539c419462.png",
+    "originalName": "floorplan_overlay(1).png",
+    "mimeType": "image/png",
+    "size": 111905,
+    "uploadedAt": "2026-04-15T07:59:57.279Z",
+    "uploadedBy": "",
+    "label": ""
+  },
+  {
+    "id": "OHF1776260332668",
+    "context": "factory-map",
+    "contextId": "floor-plan",
+    "filename": "438c4079-8c60-43f8-9591-5b6ac1b2851b.png",
+    "originalName": "floorplan_overlay(1).png",
+    "mimeType": "image/png",
+    "size": 111905,
+    "uploadedAt": "2026-04-15T13:38:52.668Z",
+    "uploadedBy": "",
+    "label": ""
+  },
+  {
+    "id": "OHF1776275070544",
+    "context": "factory-map",
+    "contextId": "floor-plan",
+    "filename": "4f5a4a1e-9ae0-4f2f-8fdb-1a4e39ad954c.png",
+    "originalName": "floorplan_overlay(1).png",
+    "mimeType": "image/png",
+    "size": 111905,
+    "uploadedAt": "2026-04-15T17:44:30.544Z",
+    "uploadedBy": "",
+    "label": ""
+  },
+  {
+    "id": "OHF1776276184941",
+    "context": "factory-map",
+    "contextId": "floor-plan",
+    "filename": "e784634c-e93e-484f-a964-0dd183f29165.png",
+    "originalName": "floorplan_overlay(1).png",
+    "mimeType": "image/png",
+    "size": 111905,
+    "uploadedAt": "2026-04-15T18:03:04.941Z",
+    "uploadedBy": "",
+    "label": ""
+  },
+  {
+    "id": "OHF1776276255697",
+    "context": "factory-map",
+    "contextId": "floor-plan",
+    "filename": "29aebfa0-3388-4dd1-a5f1-8697cd91454e.png",
+    "originalName": "floorplan_overlay(1).png",
+    "mimeType": "image/png",
+    "size": 111905,
+    "uploadedAt": "2026-04-15T18:04:15.697Z",
+    "uploadedBy": "",
+    "label": ""
+  }
+]

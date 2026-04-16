@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useGet } from '../../hooks/useApi'
+import { useGet, apiFetch } from '../../hooks/useApi'
 import { styles } from '../../utils/hrStyles'
 import EditShiftModal from './EditShiftModal'
 import ExportModal from './ExportModal'
@@ -50,21 +50,65 @@ function buildShifts(logs) {
 
   const shifts = []
   Object.values(byEmp).forEach(empLogs => {
-    const sorted = [...empLogs].sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp))
+    // Group by UTC date so bio-override filter runs per day
+    const byDate = {}
+    empLogs.forEach(e => {
+      const d = e.timestamp.slice(0, 10)
+      if (!byDate[d]) byDate[d] = []
+      byDate[d].push(e)
+    })
+
+    // Per day: suppress manual entries that biometric already covers
+    //   - manual clock-in AFTER a bio clock-in → ignored (bio is the authoritative arrival)
+    //   - manual clock-out BEFORE a bio clock-out → ignored (bio is the authoritative departure)
+    const bioFiltered = []
+    Object.values(byDate).forEach(dayLogs => {
+      const bioInTimes  = dayLogs.filter(e => e.source === 'biometric' && e.type === 'in').map(e => e.timestamp)
+      const bioOutTimes = dayLogs.filter(e => e.source === 'biometric' && e.type === 'out').map(e => e.timestamp)
+      dayLogs.forEach(e => {
+        if (e.source !== 'biometric') {
+          if (e.type === 'in'  && bioInTimes.some(t => t <= e.timestamp))  return
+          if (e.type === 'out' && bioOutTimes.some(t => t >= e.timestamp)) return
+        }
+        bioFiltered.push(e)
+      })
+    })
+
+    const sorted = [...bioFiltered].sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp))
     let pending = null
+    const empShifts = []
+
     sorted.forEach(e => {
       if (e.type === 'in') {
-        if (pending) shifts.push({ ...pending, outTimestamp: null, outId: null, outSource: null })
+        if (pending) empShifts.push({ ...pending, outTimestamp: null, outId: null, outSource: null })
         pending = { employeeId: e.employeeId, name: e.name, dept: e.dept, inTimestamp: e.timestamp, inId: e.id, inSource: e.source }
-      } else if (e.type === 'out' && pending) {
-        shifts.push({ ...pending, outTimestamp: e.timestamp, outId: e.id, outSource: e.source })
-        pending = null
+      } else if (e.type === 'out') {
+        if (pending) {
+          empShifts.push({ ...pending, outTimestamp: e.timestamp, outId: e.id, outSource: e.source })
+          pending = null
+        }
+        // orphan clock-out with no open shift — ignore
       }
     })
-    if (pending) shifts.push({ ...pending, outTimestamp: null, outId: null, outSource: null })
+    if (pending) empShifts.push({ ...pending, outTimestamp: null, outId: null, outSource: null })
+
+    // Any unclosed shift that has a later shift for this employee is a missed clock-out,
+    // not an active "on shift" — regardless of whether the later entry was manual or biometric
+    empShifts.forEach((s, idx) => {
+      if (!s.outTimestamp && idx < empShifts.length - 1) s.missedClockOut = true
+    })
+
+    shifts.push(...empShifts)
   })
 
   return shifts.sort((a, b) => new Date(b.inTimestamp) - new Date(a.inTimestamp))
+}
+
+function getOtInfo(hours, otTiers) {
+  if (!hours || Number(hours) <= 8 || !otTiers.length) return null
+  const otHours = Number(hours) - 8
+  const tier = [...otTiers].reverse().find(t => otHours > t.hoursOver)
+  return tier ? { otHours: otHours.toFixed(1), multiplier: tier.multiplier } : null
 }
 
 // EditShiftModal → ./EditShiftModal.jsx
@@ -81,15 +125,14 @@ export default function TimeLogTab({ employees }) {
   const [sourceFilter, setSourceFilter] = useState('all')
   const [editShift, setEditShift] = useState(null)
   const [showExport, setShowExport] = useState(false)
+  const [showDelete, setShowDelete] = useState(false)
+  const [delFrom, setDelFrom] = useState('')
+  const [delTo, setDelTo] = useState('')
+  const [delSource, setDelSource] = useState('all')
+  const [deleting, setDeleting] = useState(false)
+  const [delResult, setDelResult] = useState(null)
   const { data: settingsData } = useGet('/settings')
   const otTiers = (settingsData?.overtime?.tiers || []).sort((a, b) => a.hoursOver - b.hoursOver)
-
-  function getOtInfo(hours) {
-    if (!hours || Number(hours) <= 8 || !otTiers.length) return null
-    const otHours = Number(hours) - 8
-    const tier = [...otTiers].reverse().find(t => otHours > t.hoursOver)
-    return tier ? { otHours: otHours.toFixed(1), multiplier: tier.multiplier } : null
-  }
 
   const allShifts = buildShifts(timelog)
 
@@ -112,6 +155,35 @@ export default function TimeLogTab({ employees }) {
     refreshTimelog()
   }
 
+  const delPreviewCount = (() => {
+    if (!delFrom || !delTo) return 0
+    const fromTs = delFrom + 'T00:00:00.000Z'
+    const toTs   = delTo   + 'T23:59:59.999Z'
+    return timelog.filter(e => {
+      if (e.timestamp < fromTs || e.timestamp > toTs) return false
+      if (delSource === 'biometric' && e.source !== 'biometric') return false
+      if (delSource === 'manual'    && e.source === 'biometric') return false
+      return true
+    }).length
+  })()
+
+  async function handleDeleteRange() {
+    if (!delFrom || !delTo || delPreviewCount === 0) return
+    setDeleting(true)
+    setDelResult(null)
+    try {
+      const res = await apiFetch('/timelog/range', {
+        method: 'DELETE',
+        body: JSON.stringify({ from: delFrom, to: delTo, source: delSource })
+      })
+      setDelResult({ deleted: res.deleted })
+      refreshTimelog()
+    } catch {
+      setDelResult({ error: 'Delete failed.' })
+    }
+    setDeleting(false)
+  }
+
   return (
     <div>
       {editShift && (
@@ -127,6 +199,73 @@ export default function TimeLogTab({ employees }) {
           employees={employees}
           onClose={() => setShowExport(false)}
         />
+      )}
+      {showDelete && (
+        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.35)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ background: '#fff', borderRadius: 12, padding: 28, width: 420, maxWidth: '95vw', boxShadow: '0 8px 32px rgba(0,0,0,0.18)' }}>
+            <h3 style={{ margin: '0 0 18px', fontSize: 16, fontWeight: 700, color: '#1a1a2e' }}>Delete Time Log Entries</h3>
+
+            <div style={{ display: 'flex', gap: 12, marginBottom: 14 }}>
+              <div style={{ flex: 1 }}>
+                <label style={{ fontSize: 12, color: '#666', display: 'block', marginBottom: 4 }}>From date</label>
+                <input type="date" style={{ ...styles.input, marginBottom: 0, width: '100%' }}
+                  value={delFrom} onChange={e => { setDelFrom(e.target.value); setDelResult(null) }} />
+              </div>
+              <div style={{ flex: 1 }}>
+                <label style={{ fontSize: 12, color: '#666', display: 'block', marginBottom: 4 }}>To date</label>
+                <input type="date" style={{ ...styles.input, marginBottom: 0, width: '100%' }}
+                  value={delTo} onChange={e => { setDelTo(e.target.value); setDelResult(null) }} />
+              </div>
+            </div>
+
+            <div style={{ marginBottom: 18 }}>
+              <label style={{ fontSize: 12, color: '#666', display: 'block', marginBottom: 6 }}>Source</label>
+              <div style={{ display: 'flex', gap: 8 }}>
+                {['all', 'biometric', 'manual'].map(s => (
+                  <button key={s}
+                    onClick={() => { setDelSource(s); setDelResult(null) }}
+                    style={{ padding: '5px 14px', fontSize: 12, fontWeight: 500, borderRadius: 6, border: '1px solid', cursor: 'pointer',
+                      background: delSource === s ? '#ef4444' : '#fff',
+                      color:      delSource === s ? '#fff'     : '#555',
+                      borderColor: delSource === s ? '#ef4444' : '#e4e6ea' }}>
+                    {s.charAt(0).toUpperCase() + s.slice(1)}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {delFrom && delTo && (
+              <div style={{ background: delPreviewCount > 0 ? '#fff3f3' : '#f0fdf4', border: `1px solid ${delPreviewCount > 0 ? '#fca5a5' : '#86efac'}`, borderRadius: 8, padding: '10px 14px', marginBottom: 18, fontSize: 13 }}>
+                {delPreviewCount > 0
+                  ? <span style={{ color: '#dc2626', fontWeight: 600 }}>{delPreviewCount} entries will be permanently deleted.</span>
+                  : <span style={{ color: '#16a34a' }}>No entries found for this selection.</span>
+                }
+              </div>
+            )}
+
+            {delResult && (
+              <div style={{ background: delResult.error ? '#fff3f3' : '#f0fdf4', border: `1px solid ${delResult.error ? '#fca5a5' : '#86efac'}`, borderRadius: 8, padding: '10px 14px', marginBottom: 14, fontSize: 13 }}>
+                {delResult.error
+                  ? <span style={{ color: '#ef4444' }}>{delResult.error}</span>
+                  : <span style={{ color: '#16a34a' }}>{delResult.deleted} entries deleted.</span>
+                }
+              </div>
+            )}
+
+            <div style={{ display: 'flex', gap: 10, justifyContent: 'flex-end' }}>
+              <button style={styles.btnSecondary} onClick={() => { setShowDelete(false); setDelResult(null); setDelFrom(''); setDelTo(''); setDelSource('all') }}>
+                Close
+              </button>
+              <button
+                style={{ ...styles.btnPrimary, background: '#ef4444', opacity: (!delFrom || !delTo || delPreviewCount === 0 || deleting) ? 0.5 : 1 }}
+                onClick={handleDeleteRange}
+                disabled={!delFrom || !delTo || delPreviewCount === 0 || deleting}
+              >
+                {deleting ? 'Deleting…' : `Delete ${delPreviewCount > 0 ? delPreviewCount : ''} Entries`}
+              </button>
+            </div>
+          </div>
+        </div>
       )}
 
       <div style={{ display: 'flex', gap: 10, marginBottom: 16, flexWrap: 'wrap', alignItems: 'center' }}>
@@ -181,7 +320,10 @@ export default function TimeLogTab({ employees }) {
           ))}
         </div>
 
-        <button style={{ ...styles.btnSecondary, marginLeft: 'auto' }} onClick={() => setShowExport(true)}>Export CSV</button>
+        <div style={{ display: 'flex', gap: 8, marginLeft: 'auto' }}>
+          <button style={styles.btnSecondary} onClick={() => setShowExport(true)}>Export CSV</button>
+          <button style={{ ...styles.btnSecondary, color: '#ef4444', borderColor: '#fca5a5' }} onClick={() => { setShowDelete(true); setDelResult(null) }}>Delete Range</button>
+        </div>
       </div>
 
       <div style={{ display: 'flex', gap: 20, marginBottom: 16 }}>
@@ -204,8 +346,9 @@ export default function TimeLogTab({ employees }) {
           <tbody>
             {filtered.map((s, i) => {
               const hours = calcHours(s.inTimestamp, s.outTimestamp)
-              const onShift = !s.outTimestamp
-              const ot = hours ? getOtInfo(hours) : null
+              const today = new Date().toISOString().slice(0, 10)
+              const onShift = !s.outTimestamp && !s.missedClockOut && dateLabel(s.inTimestamp) === today
+              const ot = hours ? getOtInfo(hours, otTiers) : null
               return (
                 <tr
                   key={s.inId || i}
@@ -224,10 +367,12 @@ export default function TimeLogTab({ employees }) {
                   <td style={styles.td}>
                     {onShift
                       ? <span style={{ ...styles.pill, background: '#dcfce7', color: '#16a34a' }}>On shift</span>
-                      : <>
-                          {isoToHHMM(s.outTimestamp)}
-                          {s.outSource === 'biometric' && <FingerprintIcon title="Biometric clock-out" />}
-                        </>
+                      : s.outTimestamp
+                        ? <>
+                            {isoToHHMM(s.outTimestamp)}
+                            {s.outSource === 'biometric' && <FingerprintIcon title="Biometric clock-out" />}
+                          </>
+                        : <span style={{ ...styles.pill, background: '#fef9ec', color: '#d97706' }}>No clock-out</span>
                     }
                   </td>
                   <td style={styles.td}>

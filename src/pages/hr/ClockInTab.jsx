@@ -93,7 +93,10 @@ export default function ClockInTab({ employees, settingsData }) {
   const [selectedEmp, setSelectedEmp] = useState(null)
 
   useEffect(() => {
-    const id = setInterval(() => setTick(t => t + 1), 60000)
+    const id = setInterval(() => {
+      setTick(t => t + 1)
+      refreshTimelog()
+    }, 30000)
     return () => clearInterval(id)
   }, [])
 

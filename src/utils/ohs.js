@@ -69,11 +69,6 @@ export function ohsAlertSeverityStyle(severity) {
   return { border: '#f97316', bg: '#fff7ed', text: '#9a3412' }
 }
 
-export function daysAgoStr(daysBack) {
-  const d = new Date(Date.now() + 2 * 60 * 60 * 1000 - daysBack * 86400000)
-  return d.toISOString().slice(0, 10)
-}
-
 export function riskRatingFromScore(score) {
   if (score >= 13) return 'Critical'
   if (score >= 7)  return 'High'
@@ -215,8 +210,7 @@ export function calcNextReviewDate(lastDate, intervalDays) {
 
 export function isReviewOverdue(nextReviewDate) {
   if (!nextReviewDate) return false
-  const today = new Date().toISOString().slice(0, 10)
-  return nextReviewDate < today
+  return nextReviewDate < todayStr()
 }
 
 // ─── Zone helpers ─────────────────────────────────────────

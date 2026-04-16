@@ -83,5 +83,7 @@
     "Annual": 15,
     "Sick": 30,
     "Family Responsibility": 3
-  }
+  },
+  "factoryMapBg": "29aebfa0-3388-4dd1-a5f1-8697cd91454e.png",
+  "biometricImportFrom": "2026-01-01"
 }

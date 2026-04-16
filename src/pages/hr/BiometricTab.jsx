@@ -219,3 +219,4 @@ export default function BiometricTab({ employees, refetchEmployees }) {
     </div>
   )
 }
+

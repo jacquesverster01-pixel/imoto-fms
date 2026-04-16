@@ -3,83 +3,184 @@
     {
       "id": "zone-1",
       "name": "Workshop Bay 1",
-      "x": 600,
-      "y": 186,
-      "width": 200,
-      "height": 155,
-      "colour": "#dbeafe"
-    },
-    {
-      "id": "zone-2",
-      "name": "Workshop Bay 2",
-      "x": 0,
-      "y": 37,
-      "width": 200,
-      "height": 150,
-      "colour": "#dbeafe"
+      "colour": "#dbeafe",
+      "rects": [
+        {
+          "id": "zone-1-r0",
+          "xPct": 0.7943524829600779,
+          "yPct": 0.18026779532298118,
+          "widthPct": 0.08648101265822783,
+          "heightPct": 0.08973406559217485
+        }
+      ]
     },
     {
       "id": "zone-3",
       "name": "Fabrication",
-      "x": 200,
-      "y": 37,
-      "width": 200,
-      "height": 150,
-      "colour": "#dbeafe"
+      "colour": "#dbeafe",
+      "rects": [
+        {
+          "id": "zone-3-r0",
+          "xPct": 0.45775657254138263,
+          "yPct": 0.28247181216160616,
+          "widthPct": 0.05353359298928923,
+          "heightPct": 0.10257881721256899
+        }
+      ]
     },
     {
       "id": "zone-4",
       "name": "Paint Bay",
-      "x": 202,
-      "y": 188,
-      "width": 198,
-      "height": 154,
-      "colour": "#fce7f3"
+      "colour": "#fce7f3",
+      "rects": [
+        {
+          "id": "zone-4-r0",
+          "xPct": 0.8808334956183056,
+          "yPct": 0.1822296324116443,
+          "widthPct": 0.039391796322489396,
+          "heightPct": 0.08239524216257979
+        }
+      ]
     },
     {
       "id": "zone-5",
       "name": "Assembly",
-      "x": 400,
-      "y": 38,
-      "width": 200,
-      "height": 150,
-      "colour": "#fce7f3"
+      "colour": "#fce7f3",
+      "rects": [
+        {
+          "id": "zone-5-r0",
+          "xPct": 0.2663300876338851,
+          "yPct": 0.28247181216160616,
+          "widthPct": 0.15025900681596882,
+          "heightPct": 0.12355481788373354
+        }
+      ]
     },
     {
       "id": "zone-6",
       "name": "Dispatch",
-      "x": 400,
-      "y": 187,
-      "width": 200,
-      "height": 155,
-      "colour": "#fce7f3"
+      "colour": "#fce7f3",
+      "rects": [
+        {
+          "id": "zone-6-r0",
+          "xPct": 0.8545433300876338,
+          "yPct": 0.5992818810500923,
+          "widthPct": 0.1285092502434275,
+          "heightPct": 0.32344376545600745
+        }
+      ]
     },
     {
       "id": "zone-7",
       "name": "Office",
-      "x": 0,
-      "y": 187,
-      "width": 202,
-      "height": 154,
-      "colour": "#dcfce7"
+      "colour": "#dcfce7",
+      "rects": [
+        {
+          "id": "zone-7-r0",
+          "xPct": 0.4165890944498539,
+          "yPct": 0.03961503833327065,
+          "widthPct": 0.18963261115372912,
+          "heightPct": 0.23038682258188534
+        }
+      ]
     },
     {
       "id": "zone-8",
       "name": "Compressor Room",
-      "x": 800,
-      "y": 39,
-      "width": 195,
-      "height": 149,
-      "colour": "#dcfce7"
+      "colour": "#dcfce7",
+      "rects": [
+        {
+          "id": "zone-8-r0",
+          "xPct": 0.5112901655306719,
+          "yPct": 0.28247181216160616,
+          "widthPct": 0.05012560856864658,
+          "heightPct": 0.10329693616247664
+        }
+      ]
     },
     {
       "id": "zone-9",
       "name": "Stores / Stock",
-      "x": 600,
-      "y": 36,
-      "width": 200,
-      "height": 150,
-      "colour": "#ede9fe"
+      "colour": "#ede9fe",
+      "rects": [
+        {
+          "id": "zone-9-r0",
+          "xPct": 0.7344488802336904,
+          "yPct": 0.659742118278743,
+          "widthPct": 0.10254722492697174,
+          "heightPct": 0.2629835282273567
+        }
+      ]
+    },
+    {
+      "id": "Z1776276474072",
+      "name": "Bay 1",
+      "colour": "#fce7f3",
+      "rects": [
+        {
+          "id": "Z1776276474072-r0",
+          "xPct": 0.25884810126582275,
+          "yPct": 0.4376432876428831,
+          "widthPct": 0.15774099318403115,
+          "heightPct": 0.13942871034362314
+        }
+      ]
+    },
+    {
+      "id": "Z1776276490618",
+      "name": "Bay 2",
+      "colour": "#dcfce7",
+      "rects": [
+        {
+          "id": "Z1776276490618-r0",
+          "xPct": 0.25884810126582275,
+          "yPct": 0.5992818810500923,
+          "widthPct": 0.1587147030185005,
+          "heightPct": 0.13942871034362314
+        }
+      ]
+    },
+    {
+      "id": "Z1776276505980",
+      "name": "Bay 3",
+      "colour": "#dbeafe",
+      "rects": [
+        {
+          "id": "Z1776276505980-r0",
+          "xPct": 0.45775657254138263,
+          "yPct": 0.509375045044916,
+          "widthPct": 0.05744888023369036,
+          "heightPct": 0.37139860011885456
+        }
+      ]
+    },
+    {
+      "id": "Z1776276522746",
+      "name": "Bay 4",
+      "colour": "#dcfce7",
+      "rects": [
+        {
+          "id": "Z1776276522746-r0",
+          "xPct": 0.549966893865628,
+          "yPct": 0.509375045044916,
+          "widthPct": 0.056962025316455694,
+          "heightPct": 0.36893083533401166
+        }
+      ]
+    },
+    {
+      "id": "Z1776276539420",
+      "name": "Bay 5",
+      "colour": "#fef3c7",
+      "rects": [
+        {
+          "id": "Z1776276539420-r0",
+          "xPct": 0.642161635832522,
+          "yPct": 0.5118428098297589,
+          "widthPct": 0.054527750730282376,
+          "heightPct": 0.36893083533401166
+        }
+      ]
     }
   ]
 }

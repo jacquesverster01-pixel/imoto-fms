@@ -26,10 +26,17 @@
       "Bash(taskkill //PID 27308 //F)",
       "Bash(curl -s http://localhost:3001/api/dashboard)",
       "Bash(node -e \"const chunks=[];process.stdin.on\\('data',c=>chunks.push\\(c\\)\\);process.stdin.on\\('end',\\(\\)=>{const d=JSON.parse\\(chunks.join\\(''\\)\\);console.log\\('hr:',JSON.stringify\\(d.hr\\)\\);const counts={};d.employeeStatus.forEach\\(e=>counts[e.status]=\\(counts[e.status]||0\\)+1\\);console.log\\('status distribution:',counts\\);console.log\\('total employees:',d.employeeStatus.length\\);}\\);\")",
-      "Bash(curl -s http://localhost:3001/api/ohs-zones)"
+      "Bash(curl -s http://localhost:3001/api/ohs-zones)",
+      "Bash(node --check server.js)",
+      "Read(//c/Users/jacqu/Desktop/**)",
+      "Bash(Get-Content \"c:\\\\Users\\\\jacqu\\\\Desktop\\\\imoto-fms\\\\src\\\\pages\\\\hr\\\\ohs\\\\FactoryMapTab.jsx\")",
+      "Bash(Measure-Object -Line)",
+      "Bash(Select-Object -ExpandProperty Lines)",
+      "Bash(Get-Content \"c:\\\\Users\\\\jacqu\\\\Desktop\\\\imoto-fms\\\\src\\\\pages\\\\hr\\\\ohs\\\\factoryMapUtils.js\")"
     ],
     "additionalDirectories": [
-      "c:\\Users\\jacqu\\.claude\\projects\\c--Users-jacqu-Desktop-imoto-fms\\memory"
+      "c:\\Users\\jacqu\\.claude\\projects\\c--Users-jacqu-Desktop-imoto-fms\\memory",
+      "c:\\Users\\jacqu\\Desktop"
     ]
   }
 }

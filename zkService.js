@@ -1,16 +1,15 @@
 // ─── ZKTeco F22/ID Integration Service ───────────────────────────────────────
 // Device: ZKTeco F22/ID at 10.16.15.141:4370
-// Handles: real-time punch events, historical log pull, user sync
+// Handles: 30s attendance poll, historical log pull, user sync
 //
 // This file is imported by server.js and runs as a background service.
 // It writes directly to timelog.json using the same read/write helpers.
 //
 // KEY DESIGN NOTE:
 // The ZKTeco F22/ID only allows ONE TCP connection at a time.
-// The live listener holds that connection permanently.
-// All other functions (getUsers, pullLogs, getStatus) REUSE the live
-// listener's open socket rather than opening a second connection.
-// If the live listener is not running, they open a temporary connection.
+// The poll loop opens a connection, pulls logs, then disconnects.
+// All other functions (getUsers, getStatus) open their own temporary connections.
+// The _connecting semaphore prevents concurrent connect() races.
 
 import ZKLib from 'node-zklib'
 
@@ -51,10 +50,7 @@ function writePunch({ employeeId, name, dept, type, timestamp, zkUserId }) {
     e.timestamp  === timestamp  &&
     e.type       === type
   )
-  if (alreadyExists) {
-    log(`Skipping duplicate punch for ${name} at ${timestamp}`)
-    return null
-  }
+  if (alreadyExists) return null
 
   const entry = {
     id:        `TL${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
@@ -74,20 +70,34 @@ function writePunch({ employeeId, name, dept, type, timestamp, zkUserId }) {
 
 // ─── Connection management ────────────────────────────────────────────────────
 
+let _connecting = false   // prevents concurrent connect() races
+
 async function connect() {
   if (_connected) return true
+  if (_connecting) {
+    // Another call is mid-connect — wait up to 5s for it to finish
+    const start = Date.now()
+    await new Promise(resolve => {
+      const poll = setInterval(() => {
+        if (_connected || !_connecting || Date.now() - start > 5000) {
+          clearInterval(poll)
+          resolve()
+        }
+      }, 100)
+    })
+    return _connected
+  }
+  _connecting = true
   try {
     _zk = new ZKLib(DEVICE_IP, DEVICE_PORT, TIMEOUT, 4000)
     await _zk.createSocket(
       (err) => {
         log(`Socket error: ${err.message}`)
         _connected = false
-        if (_liveActive) _reconnectTimer = setTimeout(_connectLive, 10000)
       },
       () => {
         log('Device disconnected')
         _connected = false
-        if (_liveActive) _reconnectTimer = setTimeout(_connectLive, 10000)
       }
     )
     _connected = true
@@ -97,6 +107,8 @@ async function connect() {
     _connected = false
     log(`Connection failed: ${err.message}`)
     return false
+  } finally {
+    _connecting = false
   }
 }
 
@@ -115,10 +127,8 @@ async function disconnect() {
 export async function getDeviceStatus() {
   try {
     if (_connected && _zk) {
-      // Live listener is holding the connection — just report online
       return { online: true, ip: DEVICE_IP, port: DEVICE_PORT, info: { ip: DEVICE_IP } }
     }
-    // Live listener not running — try a fresh temporary connection
     const ok = await connect()
     if (!ok) return { online: false, ip: DEVICE_IP }
     const info = await _zk.getInfo()
@@ -162,7 +172,7 @@ export async function getDeviceUsers() {
 // Returns { imported, skipped, unmatched }
 // Reuses live listener socket if available.
 
-export async function pullHistoricalLogs() {
+export async function pullHistoricalLogs({ since = null } = {}) {
   const usingLive = _connected && _zk
   let tempConnected = false
 
@@ -177,8 +187,6 @@ export async function pullHistoricalLogs() {
       tempConnected = true
     }
 
-    // Only disable/enable device if we have our own connection
-    // (disabling while live listener is active would kill it)
     if (tempConnected) await _zk.disableDevice()
 
     const { data: attendances } = await _zk.getAttendances()
@@ -187,26 +195,94 @@ export async function pullHistoricalLogs() {
 
     log(`Device returned ${attendances.length} attendance records`)
 
-    // Log the first 5 records so we can verify raw attState values
-    attendances.slice(0, 5).forEach(r => log(`RAW attState=${r.attState} inOutMode=${r.inOutMode} type=${r.type} deviceUserId=${r.deviceUserId}`))
+    // Load once — avoids per-record file I/O
+    const employees = _readData('employees.json')
+    const timelog   = _readData('timelog.json')
+
+    // O(1) dedup lookup keyed by employeeId|timestamp (type is computed, not a device field)
+    const existing = new Set(
+      timelog
+        .filter(e => e.source === 'biometric')
+        .map(e => `${e.employeeId}|${e.timestamp}`)
+    )
+
+    // Permanently blocked keys (same format: employeeId|timestamp)
+    try {
+      const blockedKeys = _readData('timelog_blocked.json')
+      if (Array.isArray(blockedKeys)) blockedKeys.forEach(k => existing.add(k))
+    } catch { /* file missing on first run */ }
+
+    // Read configurable minimum import date from settings (biometricImportFrom: 'YYYY-MM-DD')
+    let importFromTs = null
+    try {
+      const settings = _readData('settings.json')
+      if (settings?.biometricImportFrom) {
+        importFromTs = settings.biometricImportFrom + 'T00:00:00.000Z'
+      }
+    } catch { /* ignore */ }
+
+    // Count existing biometric entries per employee+UTC-date — used for alternating offset
+    const existsByEmpDate = {}
+    for (const e of timelog) {
+      if (e.source !== 'biometric') continue
+      const k = `${e.employeeId}|${e.timestamp.slice(0, 10)}`
+      existsByEmpDate[k] = (existsByEmpDate[k] || 0) + 1
+    }
+
+    const nowIso = new Date().toISOString()
+
+    // ── Pass 1: collect new candidates grouped by employee+date ──────────────
+    const candidatesByEmpDate = {}
 
     for (const record of attendances) {
-      const emp = resolveEmployee(record.deviceUserId)
-      if (!emp) {
-        unmatched++
-        continue
-      }
-      const type      = zkTypeToFMS(record.attState)
       const timestamp = new Date(record.recordTime).toISOString()
-      const result    = writePunch({
-        employeeId: emp.id,
-        name:       emp.name,
-        dept:       emp.dept,
-        type,
-        timestamp,
-        zkUserId:   record.deviceUserId
+      if (timestamp > nowIso)       { skipped++; continue }   // future date — bad RTC
+      if (importFromTs && timestamp < importFromTs) { skipped++; continue }
+
+      const emp = employees.find(e => String(e.zkUserId) === String(record.deviceUserId))
+      if (!emp) { unmatched++; continue }
+
+      const key = `${emp.id}|${timestamp}`
+      if (existing.has(key)) { skipped++; continue }
+
+      const dateKey  = timestamp.slice(0, 10)
+      const groupKey = `${emp.id}|${dateKey}`
+      if (!candidatesByEmpDate[groupKey]) {
+        candidatesByEmpDate[groupKey] = { emp, dateKey, items: [] }
+      }
+      candidatesByEmpDate[groupKey].items.push({ timestamp, key, zkUserId: record.deviceUserId })
+    }
+
+    // ── Pass 2: assign alternating in/out by sequence position ────────────────
+    const newEntries = []
+
+    for (const { emp, dateKey, items } of Object.values(candidatesByEmpDate)) {
+      items.sort((a, b) => a.timestamp.localeCompare(b.timestamp))
+
+      const groupKey = `${emp.id}|${dateKey}`
+      const startIdx = existsByEmpDate[groupKey] || 0
+
+      items.forEach(({ timestamp, key, zkUserId }, i) => {
+        const type = (startIdx + i) % 2 === 0 ? 'in' : 'out'
+        newEntries.push({
+          id:         `TL${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
+          employeeId: emp.id,
+          name:       emp.name,
+          dept:       emp.dept,
+          type,
+          timestamp,
+          source:     'biometric',
+          zkUserId:   String(zkUserId)
+        })
+        existing.add(key)    // prevent within-batch dupes
+        // update count so subsequent groups on the same day get the right offset
+        existsByEmpDate[groupKey] = (existsByEmpDate[groupKey] || 0) + 1
+        imported++
       })
-      result ? imported++ : skipped++
+    }
+
+    if (newEntries.length > 0) {
+      _writeData('timelog.json', [...timelog, ...newEntries])
     }
 
   } finally {
@@ -217,79 +293,104 @@ export async function pullHistoricalLogs() {
   return { imported, skipped, unmatched }
 }
 
-// ─── Real-time live punch listener ───────────────────────────────────────────
-// Stays connected and fires on every fingerprint scan.
-// Auto-reconnects every 30s if device drops.
+// ─── 30s Attendance Poll Loop ─────────────────────────────────────────────────
+// F22/ID firmware does not push real-time events.
+// Poll every 30s instead. writePunch() deduplication prevents double entries.
 
-let _liveActive     = false
-let _reconnectTimer = null
+let _pollTimer  = null
+let _pollActive = false
+let _polling    = false   // prevents overlapping poll cycles
+let _timeSynced = false   // sync device clock once on first poll
 
-export async function startLiveListener() {
-  if (_liveActive) return
-  _liveActive = true
-  log('Starting live punch listener...')
-  await _connectLive()
+export function startPollLoop() {
+  if (_pollActive) return
+  _pollActive = true
+  log('Attendance poll loop started (30s interval)')
+  _schedulePoll()
 }
 
-async function _connectLive() {
-  if (!_liveActive) return
+function _schedulePoll() {
+  if (!_pollActive) return
+  _pollTimer = setTimeout(_runPoll, 30000)
+}
 
-  const ok = await connect()
-  if (!ok) {
-    log('Live listener: device unreachable, retrying in 30s...')
-   _reconnectTimer = setTimeout(_connectLive, 30000)
+function _latestBiometricTimestamp() {
+  try {
+    const timelog = _readData('timelog.json')
+    const now = new Date().toISOString()
+    let max = ''
+    for (const e of timelog) {
+      // Ignore future-dated entries — device RTC was wrong during earlier imports
+      if (e.source === 'biometric' && e.timestamp > max && e.timestamp <= now) {
+        max = e.timestamp
+      }
+    }
+    return max || null
+  } catch { return null }
+}
+
+async function _runPoll() {
+  if (!_pollActive) return
+  if (_polling) {
+    log('Poll skipped — previous cycle still running')
+    _schedulePoll()
     return
   }
-
+  _polling = true
   try {
-    await _zk.getRealTimeLogs((data) => {
-      log(`Raw punch event: ${JSON.stringify(data)}`)
-
-      const rawId = data?.userId ?? data?.deviceUserId ?? data?.uid
-      if (!rawId && rawId !== 0) {
-        log(`Punch event missing userId — full data: ${JSON.stringify(data)}`)
-        return
-      }
-
-      const emp = resolveEmployee(rawId)
-      if (!emp) {
-        log(`Unmatched ZK userId: ${rawId} — enroll this employee first`)
-        return
-      }
-
-      const type      = zkTypeToFMS(data.attState ?? 0)
-      const timestamp = new Date().toISOString()
-      writePunch({
-        employeeId: emp.id,
-        name:       emp.name,
-        dept:       emp.dept,
-        type,
-        timestamp,
-        zkUserId:   String(rawId)
-      })
-    })
-
-    // Diagnostic: log every raw TCP packet so we can see if the device is
-    // sending anything at all, even if checkNotEventTCP filters it out.
-    if (_zk.socket) {
-      _zk.socket.on('data', (raw) => {
-        log(`RAW TCP (${raw.length}b): ${raw.toString('hex').slice(0, 80)}`)
-      })
+    if (!_timeSynced) {
+      await syncDeviceTime()
+      _timeSynced = true
     }
-
-    log('Live listener active — waiting for punches...')
+    const result = await pullHistoricalLogs()
+    if (result.imported > 0) {
+      log(`Poll: imported ${result.imported} new punch(es)`)
+    }
   } catch (err) {
-    log(`Live listener error: ${err.message}, reconnecting in 30s...`)
-    _connected = false
-    _reconnectTimer = setTimeout(_connectLive, 30000)
+    log(`Poll error: ${err.message}`)
+  } finally {
+    _polling = false
+    _schedulePoll()
   }
 }
 
-export function stopLiveListener() {
-  _liveActive = false
-  if (_reconnectTimer) clearTimeout(_reconnectTimer)
-  disconnect()
-  log('Live listener stopped')
+export function stopPollLoop() {
+  _pollActive = false
+  if (_pollTimer) { clearTimeout(_pollTimer); _pollTimer = null }
+  log('Attendance poll loop stopped')
+}
+
+// ─── Sync device RTC to server clock ─────────────────────────────────────────
+// CMD_SET_TIME (202) encodes local time as a packed uint32 using ZKTeco's formula.
+// Called once automatically on the first poll cycle.
+
+export async function syncDeviceTime() {
+  let tempConnected = false
+  try {
+    if (!_connected) {
+      const ok = await connect()
+      if (!ok) { log('syncDeviceTime: device unreachable'); return }
+      tempConnected = true
+    }
+    const now    = new Date()
+    const year   = now.getFullYear() - 2000
+    const month  = now.getMonth()        // 0-indexed
+    const day    = now.getDate() - 1     // 0-indexed
+    const hour   = now.getHours()
+    const minute = now.getMinutes()
+    const second = now.getSeconds()
+    // Inverse of parseTimeToDate in node-zklib/utils.js
+    const packed = ((year * 12 + month) * 31 + day) * 86400
+                 + hour * 3600 + minute * 60 + second
+    const buf = Buffer.alloc(4)
+    buf.writeUInt32LE(packed, 0)
+    await _zk.executeCmd(202, buf)   // 202 = CMD_SET_TIME
+    log(`Device clock synced → ${now.toLocaleString()}`)
+  } catch (err) {
+    log(`syncDeviceTime error: ${err.message}`)
+  } finally {
+    if (tempConnected) await disconnect()
+  }
 }
 
 // ─── Init — call this from server.js ─────────────────────────────────────────
@@ -304,12 +405,48 @@ export function getZkInstance() {
   return { zk: _zk, connected: _connected }
 }
 
+// ─── Safe setUser — preserves fingerprint templates ──────────────────────────
+// node-zklib setUser overwrites the device user record and does NOT restore
+// fingerprint templates. Always use this wrapper instead of calling zk.setUser directly.
+
+export async function safeSetUser(uid, userId, name, password, role, cardNo) {
+  if (!_connected || !_zk) throw new Error('ZK not connected')
+
+  // 1. Snapshot all templates, filter to this uid
+  let userTemplates = []
+  try {
+    const { data: allTemplates } = await _zk.getTemplates()
+    userTemplates = (allTemplates || []).filter(t => Number(t.uid) === Number(uid))
+    if (userTemplates.length > 0) {
+      log(`safeSetUser uid=${uid}: snapshotted ${userTemplates.length} template(s)`)
+    }
+  } catch (err) {
+    log(`safeSetUser uid=${uid}: could not snapshot templates — ${err.message}`)
+  }
+
+  // 2. Write the user record
+  await _zk.setUser(uid, userId, name, password, role, cardNo)
+  log(`safeSetUser uid=${uid}: setUser complete`)
+
+  // 3. Restore templates
+  if (userTemplates.length > 0) {
+    for (const tpl of userTemplates) {
+      try {
+        await _zk.setFingerprintTemplate(tpl)
+      } catch (err) {
+        log(`safeSetUser uid=${uid}: failed to restore template finger=${tpl.finger} — ${err.message}`)
+      }
+    }
+    log(`safeSetUser uid=${uid}: restored ${userTemplates.length} template(s)`)
+  }
+}
+
 // ─── Force-reset connection ───────────────────────────────────────────────────
 // Clears any stuck socket state so the next API call opens a fresh connection.
 
 export async function resetConnection() {
-  _liveActive = false
-  if (_reconnectTimer) { clearTimeout(_reconnectTimer); _reconnectTimer = null }
+  _pollActive = false
+  if (_pollTimer) { clearTimeout(_pollTimer); _pollTimer = null }
   if (_zk) {
     try { await _zk.disconnect() } catch { /* ignore errors on bad socket */ }
   }
