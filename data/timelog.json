@@ -18197,5 +18197,165 @@
     "timestamp": "2026-04-16T17:57:01.000Z",
     "source": "biometric",
     "zkUserId": "950625503"
+  },
+  {
+    "id": "TL1776409554551_odc4",
+    "employeeId": "E021",
+    "name": "Jacques Verster",
+    "dept": "",
+    "type": "in",
+    "timestamp": "2026-04-16T18:08:35.000Z",
+    "source": "biometric",
+    "zkUserId": "950625503"
+  },
+  {
+    "id": "TL1776409554551_r5bk",
+    "employeeId": "E018",
+    "name": "Gareth Galant",
+    "dept": "",
+    "type": "in",
+    "timestamp": "2026-04-17T04:27:01.000Z",
+    "source": "biometric",
+    "zkUserId": "791527"
+  },
+  {
+    "id": "TL1776409554551_pcwb",
+    "employeeId": "E007",
+    "name": "Raymond Malgas",
+    "dept": "",
+    "type": "in",
+    "timestamp": "2026-04-17T04:45:49.000Z",
+    "source": "biometric",
+    "zkUserId": "761218510"
+  },
+  {
+    "id": "TL1776409554551_wqov",
+    "employeeId": "E001",
+    "name": "Lorenzo August",
+    "dept": "Branding",
+    "type": "in",
+    "timestamp": "2026-04-17T04:46:09.000Z",
+    "source": "biometric",
+    "zkUserId": "780405514"
+  },
+  {
+    "id": "TL1776409554551_3yxn",
+    "employeeId": "E009",
+    "name": "Zamile Ncisana",
+    "dept": "",
+    "type": "in",
+    "timestamp": "2026-04-17T05:05:45.000Z",
+    "source": "biometric",
+    "zkUserId": "950510595"
+  },
+  {
+    "id": "TL1776409554551_j6d5",
+    "employeeId": "E005",
+    "name": "Alex Thobela",
+    "dept": "Welding",
+    "type": "in",
+    "timestamp": "2026-04-17T05:05:54.000Z",
+    "source": "biometric",
+    "zkUserId": "741126590"
+  },
+  {
+    "id": "TL1776409554551_7034",
+    "employeeId": "E004",
+    "name": "Brazza Nyirenda",
+    "dept": "Electrical",
+    "type": "in",
+    "timestamp": "2026-04-17T05:11:14.000Z",
+    "source": "biometric",
+    "zkUserId": "162055"
+  },
+  {
+    "id": "TL1776409554551_4qnd",
+    "employeeId": "E008",
+    "name": "Samuel Mulema",
+    "dept": "",
+    "type": "in",
+    "timestamp": "2026-04-17T05:19:54.000Z",
+    "source": "biometric",
+    "zkUserId": "998401"
+  },
+  {
+    "id": "TL1776409554551_clul",
+    "employeeId": "E020",
+    "name": "Barry Clark",
+    "dept": "",
+    "type": "in",
+    "timestamp": "2026-04-17T05:34:04.000Z",
+    "source": "biometric",
+    "zkUserId": "727677"
+  },
+  {
+    "id": "TL1776409554551_nlvj",
+    "employeeId": "E006",
+    "name": "Marlon Arendse",
+    "dept": "",
+    "type": "in",
+    "timestamp": "2026-04-17T05:34:10.000Z",
+    "source": "biometric",
+    "zkUserId": "770911502"
+  },
+  {
+    "id": "TL1776409554551_6j27",
+    "employeeId": "E003",
+    "name": "Ashley Lenting",
+    "dept": "Welding",
+    "type": "in",
+    "timestamp": "2026-04-17T05:34:18.000Z",
+    "source": "biometric",
+    "zkUserId": "760105579"
+  },
+  {
+    "id": "TL1776409554551_yoz0",
+    "employeeId": "E021",
+    "name": "Jacques Verster",
+    "dept": "",
+    "type": "in",
+    "timestamp": "2026-04-17T06:46:08.000Z",
+    "source": "biometric",
+    "zkUserId": "950625503"
+  },
+  {
+    "id": "TL1776409872642_9u20",
+    "employeeId": "E021",
+    "name": "Jacques Verster",
+    "dept": "",
+    "type": "out",
+    "timestamp": "2026-04-17T07:09:48.000Z",
+    "source": "biometric",
+    "zkUserId": "950625503"
+  },
+  {
+    "id": "TL1776409872642_cwfc",
+    "employeeId": "E021",
+    "name": "Jacques Verster",
+    "dept": "",
+    "type": "in",
+    "timestamp": "2026-04-17T07:10:58.000Z",
+    "source": "biometric",
+    "zkUserId": "950625503"
+  },
+  {
+    "id": "TL1776409903679_ids0",
+    "employeeId": "E021",
+    "name": "Jacques Verster",
+    "dept": "",
+    "type": "out",
+    "timestamp": "2026-04-17T07:11:19.000Z",
+    "source": "biometric",
+    "zkUserId": "950625503"
+  },
+  {
+    "id": "TL1776410113052_nirv",
+    "employeeId": "E021",
+    "name": "Jacques Verster",
+    "dept": "",
+    "type": "in",
+    "timestamp": "2026-04-17T07:14:25.000Z",
+    "source": "biometric",
+    "zkUserId": "950625503"
   }
 ]
