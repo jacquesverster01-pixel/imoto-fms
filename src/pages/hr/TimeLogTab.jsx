@@ -1,28 +1,11 @@
-import { useState } from 'react'
-import { useGet, apiFetch } from '../../hooks/useApi'
+import { useState, useMemo } from 'react'
+import { useGet } from '../../hooks/useApi'
+import { daysAgoStr, isoToHHMM, dateLabel, calcHours } from '../../utils/time'
 import { styles } from '../../utils/hrStyles'
 import EditShiftModal from './EditShiftModal'
 import ExportModal from './ExportModal'
+import DeleteRangeModal from './DeleteRangeModal'
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
-
-function isoToHHMM(iso) {
-  if (!iso) return '--:--'
-  const d = new Date(iso)
-  const h = String((d.getUTCHours() + 2) % 24).padStart(2, '0')
-  const m = String(d.getUTCMinutes()).padStart(2, '0')
-  return `${h}:${m}`
-}
-
-function calcHours(inIso, outIso) {
-  if (!inIso || !outIso) return null
-  const diff = (new Date(outIso) - new Date(inIso)) / 3600000
-  return diff > 0 ? diff.toFixed(1) : null
-}
-
-function dateLabel(isoStr) {
-  return new Date(isoStr).toISOString().slice(0, 10)
-}
 
 function FingerprintIcon({ title = 'Biometric scan' }) {
   return (
@@ -116,8 +99,18 @@ function getOtInfo(hours, otTiers) {
 
 // ─── TimeLogTab ───────────────────────────────────────────────────────────────
 
+const WINDOW_OPTIONS = [
+  { label: '7d',  days: 7   },
+  { label: '30d', days: 30  },
+  { label: '90d', days: 90  },
+  { label: 'All', days: null },
+]
+
 export default function TimeLogTab({ employees }) {
-  const { data: tlData, refetch: refreshTimelog } = useGet('/timelog')
+  const [fetchDays, setFetchDays] = useState(30)
+
+  const tlPath = fetchDays ? `/timelog?from=${daysAgoStr(fetchDays)}` : '/timelog'
+  const { data: tlData, refetch: refreshTimelog } = useGet(tlPath)
   const timelog = Array.isArray(tlData) ? tlData : []
 
   const [search, setSearch] = useState('')
@@ -126,62 +119,28 @@ export default function TimeLogTab({ employees }) {
   const [editShift, setEditShift] = useState(null)
   const [showExport, setShowExport] = useState(false)
   const [showDelete, setShowDelete] = useState(false)
-  const [delFrom, setDelFrom] = useState('')
-  const [delTo, setDelTo] = useState('')
-  const [delSource, setDelSource] = useState('all')
-  const [deleting, setDeleting] = useState(false)
-  const [delResult, setDelResult] = useState(null)
   const { data: settingsData } = useGet('/settings')
   const otTiers = (settingsData?.overtime?.tiers || []).sort((a, b) => a.hoursOver - b.hoursOver)
 
-  const allShifts = buildShifts(timelog)
+  const allShifts = useMemo(() => buildShifts(timelog), [timelog])
 
-  const filtered = allShifts.filter(s => {
+  const filtered = useMemo(() => allShifts.filter(s => {
     const nameMatch = s.name.toLowerCase().includes(search.toLowerCase())
     const dateMatch = !dateFilter || dateLabel(s.inTimestamp) === dateFilter
     let sourceMatch = true
     if (sourceFilter === 'manual') sourceMatch = !s.inSource && !s.outSource
     if (sourceFilter === 'biometric') sourceMatch = s.inSource === 'biometric' || s.outSource === 'biometric'
     return nameMatch && dateMatch && sourceMatch
-  })
+  }), [allShifts, search, dateFilter, sourceFilter])
 
   const totalHours = filtered.reduce((sum, s) => {
     const h = calcHours(s.inTimestamp, s.outTimestamp)
-    return h ? sum + parseFloat(h) : sum
+    return h ? sum + h : sum
   }, 0)
 
   function handleShiftSaved() {
     setEditShift(null)
     refreshTimelog()
-  }
-
-  const delPreviewCount = (() => {
-    if (!delFrom || !delTo) return 0
-    const fromTs = delFrom + 'T00:00:00.000Z'
-    const toTs   = delTo   + 'T23:59:59.999Z'
-    return timelog.filter(e => {
-      if (e.timestamp < fromTs || e.timestamp > toTs) return false
-      if (delSource === 'biometric' && e.source !== 'biometric') return false
-      if (delSource === 'manual'    && e.source === 'biometric') return false
-      return true
-    }).length
-  })()
-
-  async function handleDeleteRange() {
-    if (!delFrom || !delTo || delPreviewCount === 0) return
-    setDeleting(true)
-    setDelResult(null)
-    try {
-      const res = await apiFetch('/timelog/range', {
-        method: 'DELETE',
-        body: JSON.stringify({ from: delFrom, to: delTo, source: delSource })
-      })
-      setDelResult({ deleted: res.deleted })
-      refreshTimelog()
-    } catch {
-      setDelResult({ error: 'Delete failed.' })
-    }
-    setDeleting(false)
   }
 
   return (
@@ -201,71 +160,12 @@ export default function TimeLogTab({ employees }) {
         />
       )}
       {showDelete && (
-        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.35)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <div style={{ background: '#fff', borderRadius: 12, padding: 28, width: 420, maxWidth: '95vw', boxShadow: '0 8px 32px rgba(0,0,0,0.18)' }}>
-            <h3 style={{ margin: '0 0 18px', fontSize: 16, fontWeight: 700, color: '#1a1a2e' }}>Delete Time Log Entries</h3>
-
-            <div style={{ display: 'flex', gap: 12, marginBottom: 14 }}>
-              <div style={{ flex: 1 }}>
-                <label style={{ fontSize: 12, color: '#666', display: 'block', marginBottom: 4 }}>From date</label>
-                <input type="date" style={{ ...styles.input, marginBottom: 0, width: '100%' }}
-                  value={delFrom} onChange={e => { setDelFrom(e.target.value); setDelResult(null) }} />
-              </div>
-              <div style={{ flex: 1 }}>
-                <label style={{ fontSize: 12, color: '#666', display: 'block', marginBottom: 4 }}>To date</label>
-                <input type="date" style={{ ...styles.input, marginBottom: 0, width: '100%' }}
-                  value={delTo} onChange={e => { setDelTo(e.target.value); setDelResult(null) }} />
-              </div>
-            </div>
-
-            <div style={{ marginBottom: 18 }}>
-              <label style={{ fontSize: 12, color: '#666', display: 'block', marginBottom: 6 }}>Source</label>
-              <div style={{ display: 'flex', gap: 8 }}>
-                {['all', 'biometric', 'manual'].map(s => (
-                  <button key={s}
-                    onClick={() => { setDelSource(s); setDelResult(null) }}
-                    style={{ padding: '5px 14px', fontSize: 12, fontWeight: 500, borderRadius: 6, border: '1px solid', cursor: 'pointer',
-                      background: delSource === s ? '#ef4444' : '#fff',
-                      color:      delSource === s ? '#fff'     : '#555',
-                      borderColor: delSource === s ? '#ef4444' : '#e4e6ea' }}>
-                    {s.charAt(0).toUpperCase() + s.slice(1)}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {delFrom && delTo && (
-              <div style={{ background: delPreviewCount > 0 ? '#fff3f3' : '#f0fdf4', border: `1px solid ${delPreviewCount > 0 ? '#fca5a5' : '#86efac'}`, borderRadius: 8, padding: '10px 14px', marginBottom: 18, fontSize: 13 }}>
-                {delPreviewCount > 0
-                  ? <span style={{ color: '#dc2626', fontWeight: 600 }}>{delPreviewCount} entries will be permanently deleted.</span>
-                  : <span style={{ color: '#16a34a' }}>No entries found for this selection.</span>
-                }
-              </div>
-            )}
-
-            {delResult && (
-              <div style={{ background: delResult.error ? '#fff3f3' : '#f0fdf4', border: `1px solid ${delResult.error ? '#fca5a5' : '#86efac'}`, borderRadius: 8, padding: '10px 14px', marginBottom: 14, fontSize: 13 }}>
-                {delResult.error
-                  ? <span style={{ color: '#ef4444' }}>{delResult.error}</span>
-                  : <span style={{ color: '#16a34a' }}>{delResult.deleted} entries deleted.</span>
-                }
-              </div>
-            )}
-
-            <div style={{ display: 'flex', gap: 10, justifyContent: 'flex-end' }}>
-              <button style={styles.btnSecondary} onClick={() => { setShowDelete(false); setDelResult(null); setDelFrom(''); setDelTo(''); setDelSource('all') }}>
-                Close
-              </button>
-              <button
-                style={{ ...styles.btnPrimary, background: '#ef4444', opacity: (!delFrom || !delTo || delPreviewCount === 0 || deleting) ? 0.5 : 1 }}
-                onClick={handleDeleteRange}
-                disabled={!delFrom || !delTo || delPreviewCount === 0 || deleting}
-              >
-                {deleting ? 'Deleting…' : `Delete ${delPreviewCount > 0 ? delPreviewCount : ''} Entries`}
-              </button>
-            </div>
-          </div>
-        </div>
+        <DeleteRangeModal
+          timelog={timelog}
+          employees={employees}
+          onClose={() => setShowDelete(false)}
+          onDeleted={refreshTimelog}
+        />
       )}
 
       <div style={{ display: 'flex', gap: 10, marginBottom: 16, flexWrap: 'wrap', alignItems: 'center' }}>
@@ -320,9 +220,23 @@ export default function TimeLogTab({ employees }) {
           ))}
         </div>
 
+        <div style={{ display: 'flex', gap: 0, border: '1px solid #e4e6ea', borderRadius: 8, overflow: 'hidden' }}>
+          {WINDOW_OPTIONS.map(opt => (
+            <button
+              key={opt.label}
+              onClick={() => setFetchDays(opt.days)}
+              style={{ padding: '6px 11px', fontSize: 12, fontWeight: 500, border: 'none', cursor: 'pointer',
+                background: fetchDays === opt.days ? '#6c63ff' : '#fff',
+                color: fetchDays === opt.days ? '#fff' : '#555' }}
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
+
         <div style={{ display: 'flex', gap: 8, marginLeft: 'auto' }}>
           <button style={styles.btnSecondary} onClick={() => setShowExport(true)}>Export CSV</button>
-          <button style={{ ...styles.btnSecondary, color: '#ef4444', borderColor: '#fca5a5' }} onClick={() => { setShowDelete(true); setDelResult(null) }}>Delete Range</button>
+          <button style={{ ...styles.btnSecondary, color: '#ef4444', borderColor: '#fca5a5' }} onClick={() => setShowDelete(true)}>Delete Range</button>
         </div>
       </div>
 
@@ -378,8 +292,8 @@ export default function TimeLogTab({ employees }) {
                   <td style={styles.td}>
                     {hours
                       ? ot
-                        ? <span>{hours}h <span style={{ fontSize: 10, color: '#6c63ff', fontWeight: 600 }}>({ot.otHours}h OT ×{ot.multiplier})</span></span>
-                        : `${hours}h`
+                        ? <span>{hours.toFixed(1)}h <span style={{ fontSize: 10, color: '#6c63ff', fontWeight: 600 }}>({ot.otHours}h OT ×{ot.multiplier})</span></span>
+                        : `${hours.toFixed(1)}h`
                       : '—'}
                   </td>
                 </tr>

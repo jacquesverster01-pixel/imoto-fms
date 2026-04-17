@@ -1,14 +1,7 @@
 import { useState, useEffect } from 'react'
 import { apiFetch } from '../../hooks/useApi'
 import { styles } from '../../utils/hrStyles'
-
-function isoToHHMM(iso) {
-  if (!iso) return '--:--'
-  const d = new Date(iso)
-  const h = String((d.getUTCHours() + 2) % 24).padStart(2, '0')
-  const m = String(d.getUTCMinutes()).padStart(2, '0')
-  return `${h}:${m}`
-}
+import { isoToHHMM, dateLabel } from '../../utils/time'
 
 function normaliseTime(timeStr, refIso) {
   if (!timeStr || !refIso) return refIso
@@ -17,10 +10,6 @@ function normaliseTime(timeStr, refIso) {
   const utcH = hh - 2
   base.setUTCHours(utcH, mm, 0, 0)
   return base.toISOString()
-}
-
-function dateLabel(isoStr) {
-  return new Date(isoStr).toISOString().slice(0, 10)
 }
 
 export default function EditShiftModal({ shift, onClose, onSaved }) {

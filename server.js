@@ -6,6 +6,7 @@ import { fileURLToPath } from 'url'
 import multer from 'multer'
 import { initZKService, startPollLoop, pullHistoricalLogs, getDeviceUsers, getDeviceStatus, getZkInstance, resetConnection } from './zkService.js'
 
+import unleashedRouter   from './routes/unleashed.js'
 import employeesRouter   from './routes/employees.js'
 import timelogRouter     from './routes/timelog.js'
 import leaveRouter       from './routes/leave.js'
@@ -192,6 +193,7 @@ app.use('/api', zkRouter(readData, writeData, { getDeviceStatus, pullHistoricalL
 app.use('/api', settingsRouter(readData, writeData))
 app.use('/api', ohsRouter(readData, writeData, upload, uploadsDir))
 app.use('/api', dashboardRouter(readData))
+app.use('/api/unleashed', unleashedRouter)
 
 
 // React app catch-all for /inspection/:id (production)

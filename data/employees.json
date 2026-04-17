@@ -149,5 +149,26 @@
     "color": "#f97316",
     "zkUserId": "950625503",
     "id": "E021"
+  },
+  {
+    "name": "Badrodien Playton",
+    "dept": "",
+    "color": "#6c63ff",
+    "zkUserId": "750915529",
+    "id": "E022"
+  },
+  {
+    "name": "Keegan McKay",
+    "dept": "",
+    "color": "#22c55e",
+    "zkUserId": "412370",
+    "id": "E023"
+  },
+  {
+    "name": "Quinlen Josias",
+    "dept": "",
+    "color": "#f59e0b",
+    "zkUserId": "630357",
+    "id": "E024"
   }
 ]

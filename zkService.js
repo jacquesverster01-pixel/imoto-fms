@@ -385,7 +385,7 @@ export async function syncDeviceTime() {
     const buf = Buffer.alloc(4)
     buf.writeUInt32LE(packed, 0)
     await _zk.executeCmd(202, buf)   // 202 = CMD_SET_TIME
-    log(`Device clock synced → ${now.toLocaleString()}`)
+    log(`Device clock synced → ${now.toISOString()}`)
   } catch (err) {
     log(`syncDeviceTime error: ${err.message}`)
   } finally {

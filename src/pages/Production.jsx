@@ -1,6 +1,7 @@
 import { useGet } from '../hooks/useApi'
 import ProductionGantt from './production/ProductionGantt'
 import ProductionSidebar from './production/ProductionSidebar'
+import ProductionJobCards from './production/ProductionJobCards'
 
 const alerts = [
   { type: 'red',   text: '2 electricians absent — electrical jobs at risk' },
@@ -16,14 +17,20 @@ const chipColors = {
 }
 
 export default function Production() {
-  const { data: jobs, loading, error } = useGet('/jobs')
+  const { data: jobs, loading, error, refetch } = useGet('/jobs')
+  const { data: assembliesData } = useGet('/unleashed/assemblies')
 
   if (loading) return <div className="p-6 text-sm" style={{ color: '#9298c4' }}>Loading production data…</div>
   if (error)   return <div className="p-6 text-sm" style={{ color: '#ef4444' }}>Failed to load jobs: {error}</div>
 
-  const activeJobs = jobs.filter(j => j.status !== 'planned').length
-  const onTrack    = jobs.filter(j => j.status === 'on-track').length
-  const atRisk     = jobs.filter(j => j.status === 'at-risk' || j.status === 'blocked').length
+  const allJobs    = Array.isArray(jobs) ? jobs : []
+  const legacyJobs = allJobs.filter(j => !String(j.id).startsWith('JOB-'))
+  const newJobs    = allJobs.filter(j => String(j.id).startsWith('JOB-'))
+  const assemblies = assembliesData?.ok ? assembliesData.items : []
+
+  const activeJobs = allJobs.filter(j => j.status !== 'planned').length
+  const onTrack    = allJobs.filter(j => j.status === 'on-track').length
+  const atRisk     = allJobs.filter(j => j.status === 'at-risk' || j.status === 'blocked').length
 
   const metrics = [
     { label: 'Active jobs',   value: String(activeJobs), sub: `${onTrack} on track · ${atRisk} at risk`, color: null },
@@ -58,10 +65,17 @@ export default function Production() {
           )
         })}
       </div>
-      <div className="grid gap-3" style={{ gridTemplateColumns: '1fr 272px' }}>
-        <ProductionGantt jobs={jobs} />
+      <div className="grid gap-3 mb-6" style={{ gridTemplateColumns: '1fr 272px' }}>
+        <ProductionGantt jobs={legacyJobs} />
         <ProductionSidebar />
       </div>
+      {newJobs.length > 0 && (
+        <ProductionJobCards
+          jobs={newJobs}
+          assemblies={assemblies}
+          onJobsChanged={refetch}
+        />
+      )}
     </div>
   )
 }

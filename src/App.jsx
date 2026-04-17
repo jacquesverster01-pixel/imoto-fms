@@ -5,7 +5,7 @@ import Dashboard from './pages/Dashboard'
 import Production from './pages/Production'
 import HR from './pages/HR'
 import Tools from './pages/Tools'
-import Stock from './pages/Stock'
+import Inventory from './pages/Inventory'
 import Jobs from './pages/Jobs'
 import Settings from './pages/Settings'
 import InspectionPage from './pages/InspectionPage'
@@ -17,7 +17,7 @@ const pageTitles = {
   production: 'Production overview',
   jobs: 'Jobs & scheduling',
   tools: 'Tool tracker',
-  stock: 'Stock control',
+  inventory: 'Inventory',
   vehicles: 'Vehicle design',
   'time-attendance': 'Time & Attendance',
   employees: 'Employees',
@@ -37,7 +37,7 @@ function PageContent({ page, onNavigate }) {
     case 'disciplinary': return <HR section="disciplinary" />
     case 'health-safety': return <HR section="health-safety" />
     case 'tools': return <Tools />
-    case 'stock': return <Stock />
+    case 'inventory': return <Inventory />
     case 'jobs': return <Jobs />
     case 'settings': return <Settings />
     default: return (

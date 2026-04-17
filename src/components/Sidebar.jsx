@@ -16,7 +16,7 @@ const navItems = [
     section: 'Operations',
     items: [
       { id: 'tools', label: 'Tool tracker', icon: 'tool', badge: 4, badgeColor: 'red' },
-      { id: 'stock', label: 'Stock control', icon: 'box', badge: 2, badgeColor: 'amber' },
+      { id: 'inventory', label: 'Inventory', icon: 'box' },
       { id: 'vehicles', label: 'Vehicle design', icon: 'truck' },
     ]
   },

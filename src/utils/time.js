@@ -1,5 +1,26 @@
 // SAST time helpers — UTC+2, no DST, hardcoded offset
 
+// Format ISO timestamp as HH:MM in SAST
+export function isoToHHMM(iso) {
+  if (!iso) return '--:--'
+  const d = new Date(iso)
+  const h = String((d.getUTCHours() + 2) % 24).padStart(2, '0')
+  const m = String(d.getUTCMinutes()).padStart(2, '0')
+  return `${h}:${m}`
+}
+
+// Extract YYYY-MM-DD date portion from an ISO string (UTC)
+export function dateLabel(isoStr) {
+  return new Date(isoStr).toISOString().slice(0, 10)
+}
+
+// Hours between two ISO timestamps — returns raw number or null
+export function calcHours(inIso, outIso) {
+  if (!inIso || !outIso) return null
+  const diff = (new Date(outIso) - new Date(inIso)) / 3600000
+  return diff > 0 ? diff : null
+}
+
 export function nowSAST() {
   return new Date(Date.now() + 2 * 60 * 60 * 1000)
 }

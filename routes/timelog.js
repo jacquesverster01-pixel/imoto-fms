@@ -4,8 +4,17 @@ export default function timelogRouter(readData, writeData) {
   const router = Router()
 
   router.get('/timelog', (req, res) => {
-    try { res.json(readData('timelog.json')) }
-    catch (err) { res.status(500).json({ error: err.message }) }
+    try {
+      const timelog = readData('timelog.json')
+      const { from, to } = req.query
+      if (!from && !to) return res.json(timelog)
+      const fromTs = from ? from + 'T00:00:00.000Z' : null
+      const toTs   = to   ? to   + 'T23:59:59.999Z' : null
+      res.json(timelog.filter(e =>
+        (!fromTs || e.timestamp >= fromTs) &&
+        (!toTs   || e.timestamp <= toTs)
+      ))
+    } catch (err) { res.status(500).json({ error: err.message }) }
   })
 
   router.post('/timelog', (req, res) => {
@@ -48,7 +57,7 @@ export default function timelogRouter(readData, writeData) {
   // Body: { from: 'YYYY-MM-DD', to: 'YYYY-MM-DD', source?: 'all'|'biometric'|'manual' }
   router.delete('/timelog/range', (req, res) => {
     try {
-      const { from, to, source = 'all' } = req.body
+      const { from, to, source = 'all', employeeId } = req.body
       if (!from || !to) return res.status(400).json({ error: 'from and to are required' })
       const fromTs = from + 'T00:00:00.000Z'
       const toTs   = to   + 'T23:59:59.999Z'
@@ -59,6 +68,7 @@ export default function timelogRouter(readData, writeData) {
         if (!inRange) return false
         if (source === 'biometric' && e.source !== 'biometric') return false
         if (source === 'manual'    && e.source === 'biometric') return false
+        if (employeeId && e.employeeId !== employeeId) return false
         return true
       })
 
