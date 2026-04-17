@@ -305,13 +305,13 @@ let _timeSynced = false   // sync device clock once on first poll
 export function startPollLoop() {
   if (_pollActive) return
   _pollActive = true
-  log('Attendance poll loop started (5min interval)')
+  log('Attendance poll loop started (30s interval)')
   _schedulePoll()
 }
 
 function _schedulePoll() {
   if (!_pollActive) return
-  _pollTimer = setTimeout(_runPoll, 300000)
+  _pollTimer = setTimeout(_runPoll, 30000)
 }
 
 function _latestBiometricTimestamp() {
