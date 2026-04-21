@@ -7,7 +7,7 @@ import {
 // All drag state and handlers for GanttModal.
 // setTasks — the React state setter from GanttModal; functional updates keep it stable.
 // Returns refs and handlers that GanttModal wires to child components.
-export function useGanttDrag(setTasks) {
+export function useGanttDrag(setTasks, scrollRef) {
   const dragRef     = useRef(null)
   const reorderRef  = useRef(null)
   const taskRowsRef = useRef({})
@@ -34,6 +34,12 @@ export function useGanttDrag(setTasks) {
       } else {
         const ne = addDays(parseDate(drag.origEndDate), dd), ts = parseDate(drag.taskStartDate)
         el.style.width = taskBarPosition({ startDate: drag.taskStartDate, endDate: toDateStr(ne < ts ? ts : ne) }, cols).width + 'px'
+      }
+      if (scrollRef?.current) {
+        const rect = scrollRef.current.getBoundingClientRect()
+        const ZONE = 60, SPEED = 12
+        if (e.clientX < rect.left + ZONE) scrollRef.current.scrollLeft -= SPEED
+        else if (e.clientX > rect.right - ZONE) scrollRef.current.scrollLeft += SPEED
       }
     }
     function onMouseUp(e) {

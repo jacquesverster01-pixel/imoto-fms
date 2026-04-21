@@ -56,6 +56,26 @@ export function computeCosts(items) {
   return { total, byDept }
 }
 
+export function buildTasksFromBom(bomItems) {
+  const assemblies = bomItems.filter(item => item.itemType === 'Assembly')
+
+  return assemblies.map((asm, i) => {
+    const parts = bomItems.filter(
+      item => item.itemType === 'Part' && item.parentCode === asm.itemCode
+    )
+    const notes = parts.length > 0
+      ? parts.map(p => `${p.itemCode} — ${p.itemDescription} | Qty: ${p.quantity} ${p.unit}`).join('\n')
+      : ''
+    return {
+      id: `t-bom-${i}`,
+      name: `${asm.itemCode} — ${asm.itemDescription}`,
+      department: asm.department,
+      startDate: null, endDate: null, done: false, pct: 0,
+      assignedTo: null, dependsOn: [], notes, subTasks: []
+    }
+  })
+}
+
 export function exportToCsv(items, productCode) {
   const headers = [
     'BOM_Reference', 'Product_Code', 'Product_Description', 'Level',

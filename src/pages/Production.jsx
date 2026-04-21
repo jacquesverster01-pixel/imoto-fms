@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useGet } from '../hooks/useApi'
+import { useGet, apiFetch } from '../hooks/useApi'
 import { fmtDDMMM } from '../utils/time'
 import NewJobModal from './production/NewJobModal' // TODO: Phase C
 import GanttModal  from './production/GanttModal'  // TODO: Phase D
@@ -33,16 +33,22 @@ const TABS = [
   { key: 'done', label: 'Done' },
 ]
 
-function JobCard({ job, assemblies, onClick }) {
+function JobCard({ job, assemblies, onClick, onDelete }) {
   const { total, done, pct } = jobProgress(job)
   const sc = STATUS_COLOURS[job.status] || STATUS_COLOURS.quote
   const dateRange = [fmtDDMMM(job.startDate), fmtDDMMM(job.dueDate)].filter(Boolean).join(' → ')
   return (
     <div onClick={() => onClick(job)}
-      style={{ border: '1px solid #e4e6ea', borderLeft: `4px solid ${job.colour || '#dbeafe'}`,
+      style={{ position: 'relative', border: '1px solid #e4e6ea', borderLeft: `4px solid ${job.colour || '#dbeafe'}`,
         background: '#fff', borderRadius: 10, padding: '14px 16px', cursor: 'pointer' }}>
+      <button
+        onClick={e => { e.stopPropagation(); onDelete(job.id) }}
+        style={{ position: 'absolute', top: 8, right: 8, background: 'none', border: 'none', cursor: 'pointer',
+          color: '#9ca3af', padding: '2px 4px', borderRadius: 4, lineHeight: 1 }}
+        title="Delete job"
+      >🗑</button>
       <div style={{ fontWeight: 700, fontSize: 14, color: '#1a1d3b', marginBottom: 6,
-        whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{job.title}</div>
+        whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', paddingRight: 20 }}>{job.title}</div>
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
         <span style={{ fontSize: 11, fontWeight: 600, padding: '2px 8px', borderRadius: 20,
           background: sc.bg, color: sc.text }}>{STATUS_LABELS[job.status] || job.status}</span>
@@ -57,10 +63,38 @@ function JobCard({ job, assemblies, onClick }) {
   )
 }
 
+function DeleteConfirmOverlay({ jobId, jobs, onCancel, onConfirm }) {
+  const job = jobs.find(j => j.id === jobId)
+  return (
+    <div style={{ position: 'fixed', inset: 0, zIndex: 200, background: 'rgba(0,0,0,0.35)',
+      display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ background: '#fff', borderRadius: 10, padding: '24px 28px',
+        boxShadow: '0 8px 32px rgba(0,0,0,0.18)', maxWidth: 360, width: '90%', textAlign: 'center' }}>
+        <div style={{ fontSize: 32, marginBottom: 12 }}>🗑</div>
+        <div style={{ fontWeight: 600, fontSize: 16, marginBottom: 8 }}>Delete "{job?.title}"?</div>
+        <div style={{ color: '#6b7280', fontSize: 14, marginBottom: 20 }}>
+          This will permanently remove the job and all its tasks. This cannot be undone.
+        </div>
+        <div style={{ display: 'flex', gap: 10, justifyContent: 'center' }}>
+          <button onClick={onCancel}
+            style={{ padding: '8px 20px', borderRadius: 6, border: '1px solid #d1d5db', background: '#fff', cursor: 'pointer', fontSize: 14 }}>
+            Cancel
+          </button>
+          <button onClick={() => onConfirm(jobId)}
+            style={{ padding: '8px 20px', borderRadius: 6, border: 'none', background: '#ef4444', color: '#fff', cursor: 'pointer', fontSize: 14, fontWeight: 600 }}>
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export default function Production({ onNavigate }) {
-  const [activeTab,   setActiveTab]   = useState('all')
-  const [selectedJob, setSelectedJob] = useState(null)
-  const [showNewJob,  setShowNewJob]  = useState(false)
+  const [activeTab,     setActiveTab]     = useState('all')
+  const [selectedJob,   setSelectedJob]   = useState(null)
+  const [showNewJob,    setShowNewJob]    = useState(false)
+  const [confirmDelete, setConfirmDelete] = useState(null)
 
   const { data: jobsData,      refetch: refetchJobs } = useGet('/jobs')
   const { data: assembliesData }                       = useGet('/jobs/assemblies')
@@ -69,6 +103,17 @@ export default function Production({ onNavigate }) {
   const assemblies = Array.isArray(assembliesData?.assemblies) ? assembliesData.assemblies : []
 
   const filtered = activeTab === 'all' ? jobs : jobs.filter(j => j.status === activeTab)
+
+  async function handleDeleteJob(jobId) {
+    try {
+      await apiFetch('/jobs/' + jobId, { method: 'DELETE' })
+      setConfirmDelete(null)
+      refetchJobs()
+    } catch (e) {
+      console.error('Delete failed', e)
+      setConfirmDelete(null)
+    }
+  }
 
   const btnStyle = { background: '#4f67e4', color: '#fff', border: 'none',
     borderRadius: 8, padding: '8px 16px', fontSize: 13, fontWeight: 600, cursor: 'pointer' }
@@ -104,7 +149,7 @@ export default function Production({ onNavigate }) {
       ) : (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 16 }}>
           {filtered.map(job => (
-            <JobCard key={job.id} job={job} assemblies={assemblies} onClick={setSelectedJob} />
+            <JobCard key={job.id} job={job} assemblies={assemblies} onClick={setSelectedJob} onDelete={id => setConfirmDelete(id)} />
           ))}
         </div>
       )}
@@ -114,6 +159,14 @@ export default function Production({ onNavigate }) {
           assemblies={assemblies}
           onClose={() => setShowNewJob(false)}
           onSaved={() => { setShowNewJob(false); refetchJobs() }}
+        />
+      )}
+      {confirmDelete && (
+        <DeleteConfirmOverlay
+          jobId={confirmDelete}
+          jobs={jobs}
+          onCancel={() => setConfirmDelete(null)}
+          onConfirm={handleDeleteJob}
         />
       )}
     </div>

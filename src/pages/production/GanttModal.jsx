@@ -12,6 +12,19 @@ import { groupCols, ppd } from '../../utils/ganttLogic'
 import { injectGanttPrintStyle } from '../../utils/ganttExport'
 
 const ROW_H = 32, HDR_H = 48
+
+function computeDateRange(tasks, padDays = 7) {
+  const dates = tasks.flatMap(t => [t.startDate, t.endDate]).filter(Boolean)
+  if (!dates.length) {
+    const today = new Date()
+    return { minDate: today, maxDate: addDays(today, 30) }
+  }
+  const min = new Date(Math.min(...dates.map(d => new Date(d))))
+  const max = new Date(Math.max(...dates.map(d => new Date(d))))
+  min.setDate(min.getDate() - padDays)
+  max.setDate(max.getDate() + padDays)
+  return { minDate: min, maxDate: max }
+}
 const STATUS_OPTIONS = [
   { value: 'quote', label: 'Quote' }, { value: 'in_progress', label: 'In progress' },
   { value: 'qc', label: 'QC' }, { value: 'dispatch', label: 'Dispatch' }, { value: 'done', label: 'Done' },
@@ -239,14 +252,16 @@ export default function GanttModal({ job, onClose, onSaved, inline }) {
   const [showCriticalPath, setShowCriticalPath] = useState(false)
   const [showBaseline,     setShowBaseline]     = useState(false)
   const [baseline,         setBaseline]         = useState(job.baseline || [])
+  const [dateRange,        setDateRange]        = useState(() => computeDateRange((job.tasks || []).map(t => ({ pct: 0, dependsOn: [], subTasks: [], ...t }))))
 
-  const { dragRef, reorderRef, taskRowsRef, linkDragRef, zoomColsRef, linkLine, setLinkLine, startLinkDrag, handleDragHandleDown, handleRowOver } = useGanttDrag(setTasks)
-  const leftPanelRef = useRef(null), rightPanelRef = useRef(null), panelRef = useRef(null)
+  const rightPanelRef = useRef(null)
+  const { dragRef, reorderRef, taskRowsRef, linkDragRef, zoomColsRef, linkLine, setLinkLine, startLinkDrag, handleDragHandleDown, handleRowOver } = useGanttDrag(setTasks, rightPanelRef)
+  const leftPanelRef = useRef(null), panelRef = useRef(null)
   useClickOutside(panelRef, inline ? onClose : () => {})
 
   const flatRows    = flattenTasksForDisplay(tasks)
   const visibleRows = flatRows.filter(r => !r.isSubTask || !collapsed[r.parentId])
-  const { minDate, maxDate } = getChartBounds(tasks)
+  const { minDate, maxDate } = dateRange
   const zoomCols = buildZoomColumns(minDate, maxDate, zoom)
   zoomColsRef.current = zoomCols
   const chartWidth = zoomCols.reduce((s, c) => s + c.widthPx, 0)
@@ -264,6 +279,13 @@ export default function GanttModal({ job, onClose, onSaved, inline }) {
   }, [])
   useEffect(() => { if (rightPanelRef.current) rightPanelRef.current.scrollLeft = getTodayScrollX(zoomColsRef.current) }, [zoom])
   useEffect(() => injectGanttPrintStyle(), [])
+  useEffect(() => {
+    const { minDate: newMin, maxDate: newMax } = computeDateRange(tasks)
+    setDateRange(prev => {
+      if (newMin < prev.minDate || newMax > prev.maxDate) return { minDate: newMin, maxDate: newMax }
+      return prev
+    })
+  }, [tasks])
 
   async function handleSave() {
     setSaving(true)
