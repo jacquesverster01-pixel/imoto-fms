@@ -31,8 +31,10 @@ function LeftPanelRow({ row, collapsed, onToggle, onChangeName, onCheck, isFocus
         : <input type="checkbox" checked={!!task.done} onChange={() => onCheck(task.id, row.parentId)} style={{ flexShrink: 0, cursor: 'pointer' }} />}
       <input ref={inputRef} value={task.name} onChange={e => onChangeName(task.id, row.parentId, e.target.value)}
         style={{ flex: 1, border: 'none', outline: 'none', fontSize: 12, background: 'transparent', color: task.done ? '#b0b5cc' : '#1a1d3b', textDecoration: task.done ? 'line-through' : 'none', fontWeight: isParent ? 600 : 400, minWidth: 0 }} />
-      <button onClick={e => { e.stopPropagation(); onOpenMenu(task.id, row.parentId, isParent, isMile, e) }}
-        style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#9298c4', fontSize: 16, padding: '0 3px', flexShrink: 0, lineHeight: 1, borderRadius: 4 }}>⋮</button>
+      {!isSubTask && (
+        <button onClick={e => { e.stopPropagation(); onOpenMenu(task.id, row.parentId, isParent, isMile, e) }}
+          style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#9298c4', fontSize: 16, padding: '0 3px', flexShrink: 0, lineHeight: 1, borderRadius: 4 }}>⋮</button>
+      )}
     </div>
   )
 }
@@ -224,7 +226,7 @@ function CtxMenu({ ctxMenu, onClose, onRemoveDep, flatRows }) {
   )
 }
 
-export default function GanttModal({ job, onClose, onSaved }) {
+export default function GanttModal({ job, onClose, onSaved, inline }) {
   const [tasks,            setTasks]            = useState(() => (job.tasks || []).map(t => ({ pct: 0, dependsOn: [], subTasks: [], ...t })))
   const [title,            setTitle]            = useState(job.title || '')
   const [status,           setStatus]           = useState(job.status || 'quote')
@@ -239,7 +241,8 @@ export default function GanttModal({ job, onClose, onSaved }) {
   const [baseline,         setBaseline]         = useState(job.baseline || [])
 
   const { dragRef, reorderRef, taskRowsRef, linkDragRef, zoomColsRef, linkLine, setLinkLine, startLinkDrag, handleDragHandleDown, handleRowOver } = useGanttDrag(setTasks)
-  const leftPanelRef = useRef(null), rightPanelRef = useRef(null)
+  const leftPanelRef = useRef(null), rightPanelRef = useRef(null), panelRef = useRef(null)
+  useClickOutside(panelRef, inline ? onClose : () => {})
 
   const flatRows    = flattenTasksForDisplay(tasks)
   const visibleRows = flatRows.filter(r => !r.isSubTask || !collapsed[r.parentId])
@@ -281,8 +284,11 @@ export default function GanttModal({ job, onClose, onSaved }) {
   }
   function addSubTask(taskId, parentId) {
     const targetId = parentId || taskId
-    setTasks(prev => prev.map(t => { if (t.id !== targetId) return t; const d0 = t.endDate ? parseDate(t.endDate) : new Date()
-      return { ...t, subTasks: [...(t.subTasks||[]), { id: `st-${Date.now()}`, name: 'New sub-task', startDate: toDateStr(d0), endDate: toDateStr(addDays(d0,1)), done: false, pct: 0, dependsOn: [], assignedTo: null }] } }))
+    setTasks(prev => {
+      if (!prev.some(t => t.id === targetId)) return prev
+      return prev.map(t => { if (t.id !== targetId) return t; const d0 = t.endDate ? parseDate(t.endDate) : new Date()
+        return { ...t, subTasks: [...(t.subTasks||[]), { id: `st-${Date.now()}`, name: 'New sub-task', startDate: toDateStr(d0), endDate: toDateStr(addDays(d0,1)), done: false, pct: 0, dependsOn: [], assignedTo: null }] } })
+    })
   }
   function onChangeName(id, parentId, val) {
     setTasks(p => !parentId ? p.map(t => t.id===id ? {...t,name:val} : t) : p.map(t => t.id!==parentId ? t : {...t, subTasks: t.subTasks.map(s => s.id===id ? {...s,name:val} : s)}))
@@ -333,52 +339,59 @@ export default function GanttModal({ job, onClose, onSaved }) {
   function onLeftScroll(e)  { if (rightPanelRef.current) rightPanelRef.current.scrollTop = e.target.scrollTop }
   function onRightScroll(e) { if (leftPanelRef.current)  leftPanelRef.current.scrollTop  = e.target.scrollTop }
 
-  return (
-    <div className="gantt-print-root" style={{ position:'fixed', inset:0, zIndex:50, background:'rgba(0,0,0,0.45)' }} onClick={() => { setCtxMenu(null); setTaskWindow(null) }}>
-      <div style={{ width:'100%', height:'100vh', display:'flex', flexDirection:'column', background:'#fff', overflow:'hidden' }} onClick={e => e.stopPropagation()}>
-        <GanttHeader title={title} setTitle={setTitle} status={status} setStatus={setStatus}
-          zoom={zoom} setZoom={setZoom} showCriticalPath={showCriticalPath} setShowCriticalPath={setShowCriticalPath}
-          showBaseline={showBaseline} setShowBaseline={setShowBaseline}
-          progress={`${doneTasks}/${totalLeaf} tasks complete`} saving={saving}
-          onSave={handleSave} onClose={onClose} onExport={() => window.print()} onSetBaseline={handleSetBaseline} />
-        <div style={{ flex:1, display:'flex', overflow:'hidden' }}>
-          <div ref={leftPanelRef} onScroll={onLeftScroll} style={{ width:220, flexShrink:0, overflowY:'auto', overflowX:'hidden', borderRight:'1px solid #e4e6ea' }}>
-            <div style={{ height:HDR_H, background:'#f8f9fb', borderBottom:'1px solid #e4e6ea' }} />
-            {visibleRows.map(row => {
-              const taskIdx = row.isSubTask ? -1 : tasks.findIndex(t => t.id===row.task.id)
-              return <LeftPanelRow key={`${row.parentId||''}-${row.task.id}`} row={row} collapsed={collapsed}
-                onToggle={id => setCollapsed(c => ({...c,[id]:!c[id]}))} onChangeName={onChangeName}
-                onCheck={onCheckTask} isFocused={row.task.id===focusId}
-                rowIdx={taskIdx} onDragHandleDown={handleDragHandleDown} onRowOver={handleRowOver}
-                onToggleMilestone={onToggleMilestone} onOpenMenu={openTaskMenu} />
-            })}
-            <div style={{ display:'flex', borderTop:'1px solid #f0f1f5' }}>
-              <button onClick={addTask} style={{ flex:1, padding:'8px 12px', fontSize:12, color:'#4f67e4', background:'none', border:'none', textAlign:'left', cursor:'pointer' }}>+ Add task</button>
-              <button onClick={addMilestone} style={{ padding:'8px 10px', fontSize:12, color:'#9298c4', background:'none', border:'none', cursor:'pointer' }}>◆ Milestone</button>
-            </div>
+  const panelStyle = inline
+    ? { width: '100%', height: 'calc(100vh - 130px)', display: 'flex', flexDirection: 'column', background: '#fff', overflow: 'hidden', borderRadius: 10, border: '1px solid #e4e6ea' }
+    : { width: '100%', height: '100vh', display: 'flex', flexDirection: 'column', background: '#fff', overflow: 'hidden' }
+
+  const ganttPanel = (
+    <div ref={panelRef} className="gantt-print-root" style={panelStyle} onClick={e => e.stopPropagation()}>
+      <GanttHeader title={title} setTitle={setTitle} status={status} setStatus={setStatus}
+        zoom={zoom} setZoom={setZoom} showCriticalPath={showCriticalPath} setShowCriticalPath={setShowCriticalPath}
+        showBaseline={showBaseline} setShowBaseline={setShowBaseline}
+        progress={`${doneTasks}/${totalLeaf} tasks complete`} saving={saving}
+        onSave={handleSave} onClose={onClose} onExport={() => window.print()} onSetBaseline={handleSetBaseline} />
+      <div style={{ flex:1, display:'flex', overflow:'hidden' }}>
+        <div ref={leftPanelRef} onScroll={onLeftScroll} style={{ width:220, flexShrink:0, overflowY:'auto', overflowX:'hidden', borderRight:'1px solid #e4e6ea' }}>
+          <div style={{ height:HDR_H, background:'#f8f9fb', borderBottom:'1px solid #e4e6ea' }} />
+          {visibleRows.map(row => {
+            const taskIdx = row.isSubTask ? -1 : tasks.findIndex(t => t.id===row.task.id)
+            return <LeftPanelRow key={`${row.parentId||''}-${row.task.id}`} row={row} collapsed={collapsed}
+              onToggle={id => setCollapsed(c => ({...c,[id]:!c[id]}))} onChangeName={onChangeName}
+              onCheck={onCheckTask} isFocused={row.task.id===focusId}
+              rowIdx={taskIdx} onDragHandleDown={handleDragHandleDown} onRowOver={handleRowOver}
+              onToggleMilestone={onToggleMilestone} onOpenMenu={openTaskMenu} />
+          })}
+          <div style={{ display:'flex', borderTop:'1px solid #f0f1f5' }}>
+            <button onClick={addTask} style={{ flex:1, padding:'8px 12px', fontSize:12, color:'#4f67e4', background:'none', border:'none', textAlign:'left', cursor:'pointer' }}>+ Add task</button>
+            <button onClick={addMilestone} style={{ padding:'8px 10px', fontSize:12, color:'#9298c4', background:'none', border:'none', cursor:'pointer' }}>◆ Milestone</button>
           </div>
-          <div ref={rightPanelRef} onScroll={onRightScroll} className="gantt-right-panel" style={{ flex:1, overflowX:'auto', overflowY:'auto', position:'relative' }}>
-            <div style={{ width:chartWidth, minWidth:'100%', position:'relative' }}>
-              <div style={{ height:24, display:'flex', position:'sticky', top:0, zIndex:2, background:'#f8f9fb', borderBottom:'1px solid #e4e6ea' }}>
-                {colGroups.map((g,i) => <div key={i} style={{ width:g.w, flexShrink:0, fontSize:11, fontWeight:600, color:'#5f5e5a', padding:'0 6px', display:'flex', alignItems:'center', borderRight:'1px solid #e4e6ea' }}>{g.label}</div>)}
-              </div>
-              <div style={{ height:24, display:'flex', position:'sticky', top:24, zIndex:2, background:'#f8f9fb', borderBottom:'1px solid #e4e6ea' }}>
-                {zoomCols.map(c => <div key={c.key} style={{ width:c.widthPx, flexShrink:0, fontSize:10, color:'#9298c4', display:'flex', alignItems:'center', justifyContent:'center', background:c.isWeekend?'rgba(0,0,0,0.05)':(c.isToday?'rgba(79,103,228,0.08)':undefined), borderLeft:c.isToday?'2px solid #185fa5':undefined }}>{c.subLabel}</div>)}
-              </div>
-              {visibleRows.map((row,ri) => (
-                <div key={`${row.parentId||''}-${row.task.id}`} style={{ height:ROW_H, position:'relative', background:ri%2===0?'#fff':'#fafafa' }}>
-                  {zoom==='day' && colsWithLeft.filter(c=>c.isWeekend).map(c => <div key={c.key} style={{ position:'absolute', left:c.left, top:0, width:c.widthPx, height:'100%', background:'rgba(0,0,0,0.03)', pointerEvents:'none' }} />)}
-                  {isMilestone(row.task)
-                    ? <MilestoneRow task={row.task} zoomCols={zoomCols} job={job} onToggleDone={onToggleMilestone} dragRef={dragRef} taskRowsRef={taskRowsRef} />
-                    : row.task.startDate && row.task.endDate && <GanttBar row={row} job={job} zoomCols={zoomCols} criticalIds={criticalIds} showBaseline={showBaseline} baseline={baseline} dragRef={dragRef} taskRowsRef={taskRowsRef} onBarRightClick={onBarRightClick} barColor={getTaskBarColor(row.task, tasks, allSubTasks)} onLinkStart={startLinkDrag} />
-                  }
-                </div>
-              ))}
-              <DependencyOverlay rows={visibleRows} zoomCols={zoomCols} chartWidth={chartWidth} />
+        </div>
+        <div ref={rightPanelRef} onScroll={onRightScroll} className="gantt-right-panel" style={{ flex:1, overflowX:'auto', overflowY:'auto', position:'relative' }}>
+          <div style={{ width:chartWidth, minWidth:'100%', position:'relative' }}>
+            <div style={{ height:24, display:'flex', position:'sticky', top:0, zIndex:2, background:'#f8f9fb', borderBottom:'1px solid #e4e6ea' }}>
+              {colGroups.map((g,i) => <div key={i} style={{ width:g.w, flexShrink:0, fontSize:11, fontWeight:600, color:'#5f5e5a', padding:'0 6px', display:'flex', alignItems:'center', borderRight:'1px solid #e4e6ea' }}>{g.label}</div>)}
             </div>
+            <div style={{ height:24, display:'flex', position:'sticky', top:24, zIndex:2, background:'#f8f9fb', borderBottom:'1px solid #e4e6ea' }}>
+              {zoomCols.map(c => <div key={c.key} style={{ width:c.widthPx, flexShrink:0, fontSize:10, color:'#9298c4', display:'flex', alignItems:'center', justifyContent:'center', background:c.isWeekend?'rgba(0,0,0,0.05)':(c.isToday?'rgba(79,103,228,0.08)':undefined), borderLeft:c.isToday?'2px solid #185fa5':undefined }}>{c.subLabel}</div>)}
+            </div>
+            {visibleRows.map((row,ri) => (
+              <div key={`${row.parentId||''}-${row.task.id}`} style={{ height:ROW_H, position:'relative', background:ri%2===0?'#fff':'#fafafa' }}>
+                {zoom==='day' && colsWithLeft.filter(c=>c.isWeekend).map(c => <div key={c.key} style={{ position:'absolute', left:c.left, top:0, width:c.widthPx, height:'100%', background:'rgba(0,0,0,0.03)', pointerEvents:'none' }} />)}
+                {isMilestone(row.task)
+                  ? <MilestoneRow task={row.task} zoomCols={zoomCols} job={job} onToggleDone={onToggleMilestone} dragRef={dragRef} taskRowsRef={taskRowsRef} />
+                  : row.task.startDate && row.task.endDate && <GanttBar row={row} job={job} zoomCols={zoomCols} criticalIds={criticalIds} showBaseline={showBaseline} baseline={baseline} dragRef={dragRef} taskRowsRef={taskRowsRef} onBarRightClick={onBarRightClick} barColor={getTaskBarColor(row.task, tasks, allSubTasks)} onLinkStart={startLinkDrag} />
+                }
+              </div>
+            ))}
+            <DependencyOverlay rows={visibleRows} zoomCols={zoomCols} chartWidth={chartWidth} />
           </div>
         </div>
       </div>
+    </div>
+  )
+
+  const floatingOverlays = (
+    <>
       {ctxMenu && ctxMenu.depIds?.length > 0 && (
         <CtxMenu ctxMenu={ctxMenu} onClose={() => setCtxMenu(null)} onRemoveDep={removeDep} flatRows={flatRows} />
       )}
@@ -411,6 +424,22 @@ export default function GanttModal({ job, onClose, onSaved }) {
           </svg>
         </>
       )}
+    </>
+  )
+
+  if (inline) {
+    return (
+      <>
+        {ganttPanel}
+        {floatingOverlays}
+      </>
+    )
+  }
+
+  return (
+    <div className="gantt-print-root" style={{ position:'fixed', inset:0, zIndex:50, background:'rgba(0,0,0,0.45)' }} onClick={() => { setCtxMenu(null); setTaskWindow(null) }}>
+      {ganttPanel}
+      {floatingOverlays}
     </div>
   )
 }

@@ -3,12 +3,14 @@ import InventoryStockOnHand from '../components/inventory/InventoryStockOnHand'
 import InventoryProducts from '../components/inventory/InventoryProducts'
 import InventoryBOM from '../components/inventory/InventoryBOM'
 import InventoryAssemblies from '../components/inventory/InventoryAssemblies'
+import InventoryImportedBOMs from '../components/inventory/InventoryImportedBOMs'
 
 const TABS = [
-  { id: 'stock',      label: 'Stock On Hand' },
-  { id: 'products',   label: 'Products' },
-  { id: 'bom',        label: 'Bill of Materials' },
-  { id: 'assemblies', label: 'Assemblies' },
+  { id: 'stock',        label: 'Stock On Hand' },
+  { id: 'products',     label: 'Products' },
+  { id: 'bom',          label: 'Bill of Materials' },
+  { id: 'assemblies',   label: 'Assemblies' },
+  { id: 'importedboms', label: 'Imported BOMs' },
 ]
 
 export default function Inventory() {
@@ -48,7 +50,8 @@ export default function Inventory() {
       {activeTab === 'stock'      && <InventoryStockOnHand />}
       {activeTab === 'products'   && <InventoryProducts />}
       {activeTab === 'bom'        && <InventoryBOM />}
-      {activeTab === 'assemblies' && <InventoryAssemblies />}
+      {activeTab === 'assemblies'   && <InventoryAssemblies />}
+      {activeTab === 'importedboms' && <InventoryImportedBOMs />}
     </div>
   )
 }

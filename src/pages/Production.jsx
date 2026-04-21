@@ -30,8 +30,6 @@ const TABS = [
   { key: 'all', label: 'All' },
   { key: 'quote', label: 'Quote' },
   { key: 'in_progress', label: 'In progress' },
-  { key: 'qc', label: 'QC' },
-  { key: 'dispatch', label: 'Dispatch' },
   { key: 'done', label: 'Done' },
 ]
 
@@ -88,10 +86,17 @@ export default function Production({ onNavigate }) {
             }}>{t.label}</button>
           ))}
         </div>
-        <button onClick={() => setShowNewJob(true)} style={btnStyle}>+ New job</button>
+        {!selectedJob && <button onClick={() => setShowNewJob(true)} style={btnStyle}>+ New job</button>}
       </div>
 
-      {filtered.length === 0 ? (
+      {selectedJob ? (
+        <GanttModal
+          inline
+          job={selectedJob}
+          onClose={() => setSelectedJob(null)}
+          onSaved={() => refetchJobs()}
+        />
+      ) : filtered.length === 0 ? (
         <div style={{ textAlign: 'center', padding: '60px 0', color: '#9298c4' }}>
           <div style={{ fontSize: 15, marginBottom: 12 }}>No jobs yet</div>
           <button onClick={() => setShowNewJob(true)} style={btnStyle}>Create your first job</button>
@@ -109,13 +114,6 @@ export default function Production({ onNavigate }) {
           assemblies={assemblies}
           onClose={() => setShowNewJob(false)}
           onSaved={() => { setShowNewJob(false); refetchJobs() }}
-        />
-      )}
-      {selectedJob && (
-        <GanttModal
-          job={selectedJob}
-          onClose={() => setSelectedJob(null)}
-          onSaved={() => refetchJobs()}
         />
       )}
     </div>

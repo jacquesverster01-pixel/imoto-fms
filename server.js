@@ -19,6 +19,7 @@ import zkRouter          from './routes/zk.js'
 import settingsRouter    from './routes/settings.js'
 import ohsRouter         from './routes/ohs.js'
 import dashboardRouter   from './routes/dashboard.js'
+import bomsRouter        from './routes/boms.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const app = express()
@@ -66,6 +67,7 @@ const DATA_INITS = {
   'timelog_blocked.json':        [],
   'zk_unmatched.json':           [],
   'settings.json':               {},
+  'boms.json':                   { boms: [] },
 }
 for (const [file, empty] of Object.entries(DATA_INITS)) {
   const fp = path.join(__dirname, 'data', file)
@@ -172,6 +174,7 @@ app.use('/api', zkRouter(readData, writeData, { getDeviceStatus, pullHistoricalL
 app.use('/api', settingsRouter(readData, writeData))
 app.use('/api', ohsRouter(readData, writeData, upload, uploadsDir))
 app.use('/api', dashboardRouter(readData))
+app.use('/api', bomsRouter(readData, writeData))
 app.use('/api/unleashed', unleashedRouter)
 
 
