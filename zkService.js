@@ -29,6 +29,20 @@ function log(msg) {
   console.log(`[ZK] ${new Date().toISOString().slice(11, 19)} ${msg}`)
 }
 
+// Persist an unmatched-ID event so the dashboard can surface it.
+// Never throws — missing file is treated as an empty log.
+function _logUnmatched(zkId, timestamp) {
+  try {
+    let existing = []
+    try { existing = _readData('zk_unmatched.json') } catch { /* file not yet created */ }
+    if (!Array.isArray(existing)) existing = []
+    existing.push({ zkId, timestamp, detectedAt: new Date().toISOString(), deviceSerial: DEVICE_IP })
+    _writeData('zk_unmatched.json', existing)
+  } catch (err) {
+    log(`_logUnmatched write error: ${err.message}`)
+  }
+}
+
 // Match a ZK userId to an FMS employee via zkUserId field
 function resolveEmployee(zkUserId) {
   const employees = _readData('employees.json')
@@ -240,7 +254,13 @@ export async function pullHistoricalLogs({ since = null } = {}) {
       if (importFromTs && timestamp < importFromTs) { skipped++; continue }
 
       const emp = employees.find(e => String(e.zkUserId) === String(record.deviceUserId))
-      if (!emp) { unmatched++; continue }
+      if (!emp) {
+        unmatched++
+        const unmatchedTs = new Date(record.recordTime).toISOString()
+        console.warn('[ZK] Unmatched employee ID', { zkId: String(record.deviceUserId), timestamp: unmatchedTs, deviceSerial: DEVICE_IP })
+        _logUnmatched(String(record.deviceUserId), unmatchedTs)
+        continue
+      }
 
       const key = `${emp.id}|${timestamp}`
       if (existing.has(key)) { skipped++; continue }
@@ -358,6 +378,25 @@ export function stopPollLoop() {
   _pollActive = false
   if (_pollTimer) { clearTimeout(_pollTimer); _pollTimer = null }
   log('Attendance poll loop stopped')
+}
+
+// Single poll cycle without scheduling — used by integration tests.
+export async function runOnePollCycle() {
+  if (_polling) return
+  _polling = true
+  try {
+    if (!_timeSynced) {
+      await syncDeviceTime()
+      _timeSynced = true
+    }
+    const result = await pullHistoricalLogs()
+    if (result.imported > 0) log(`Poll: imported ${result.imported} new punch(es)`)
+    return result
+  } catch (err) {
+    log(`Poll error: ${err.message}`)
+  } finally {
+    _polling = false
+  }
 }
 
 // ─── Sync device RTC to server clock ─────────────────────────────────────────

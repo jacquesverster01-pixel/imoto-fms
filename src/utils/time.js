@@ -9,9 +9,10 @@ export function isoToHHMM(iso) {
   return `${h}:${m}`
 }
 
-// Extract YYYY-MM-DD date portion from an ISO string (UTC)
+// Extract YYYY-MM-DD date portion from an ISO timestamp, expressed in SAST (UTC+2)
 export function dateLabel(isoStr) {
-  return new Date(isoStr).toISOString().slice(0, 10)
+  if (!isoStr) return ''
+  return new Date(new Date(isoStr).getTime() + 2 * 60 * 60 * 1000).toISOString().slice(0, 10)
 }
 
 // Hours between two ISO timestamps — returns raw number or null
@@ -56,8 +57,11 @@ export function daysAgoStr(n) {
   return new Date(nowSAST().getTime() - n * 24 * 60 * 60 * 1000).toISOString().slice(0, 10)
 }
 
-export function todaySAST() {
-  return todayStr()
+const MONTHS_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+export function fmtDDMMM(dateStr) {
+  if (!dateStr) return ''
+  const d = new Date(dateStr)
+  return `${d.getUTCDate()} ${MONTHS_SHORT[d.getUTCMonth()]}`
 }
 
 export function relativeTime(isoStr) {

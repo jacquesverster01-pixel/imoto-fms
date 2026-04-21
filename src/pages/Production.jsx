@@ -1,79 +1,121 @@
+import { useState } from 'react'
 import { useGet } from '../hooks/useApi'
-import ProductionGantt from './production/ProductionGantt'
-import ProductionSidebar from './production/ProductionSidebar'
-import ProductionJobCards from './production/ProductionJobCards'
+import { fmtDDMMM } from '../utils/time'
+import NewJobModal from './production/NewJobModal' // TODO: Phase C
+import GanttModal  from './production/GanttModal'  // TODO: Phase D
 
-const alerts = [
-  { type: 'red',   text: '2 electricians absent — electrical jobs at risk' },
-  { type: 'red',   text: 'Angle grinder #4 needs repair — in use on Job 003' },
-  { type: 'amber', text: 'Conduit stock low — SANDF Comms may be delayed' },
-  { type: 'amber', text: 'Peter van Wyk leave approved — w/c 30 Mar' },
-  { type: 'blue',  text: 'Thabo Nkosi First Aid cert expires in 12 days' },
-]
-const chipColors = {
-  red:   { bg: '#fef2f2', text: '#dc2626', border: '#fecaca', dot: '#ef4444' },
-  amber: { bg: '#fffbeb', text: '#b45309', border: '#fde68a', dot: '#f59e0b' },
-  blue:  { bg: '#eff6ff', text: '#1d4ed8', border: '#bfdbfe', dot: '#3b82f6' },
+function getAssemblyName(assemblyId, assemblies) {
+  if (!assemblyId) return 'Custom job'
+  const asm = assemblies.find(a => a.id === assemblyId)
+  return asm ? asm.name : 'Custom job'
 }
 
-export default function Production() {
-  const { data: jobs, loading, error, refetch } = useGet('/jobs')
-  const { data: assembliesData } = useGet('/unleashed/assemblies')
+function jobProgress(job) {
+  const total = job.tasks?.length || 0
+  const done  = job.tasks?.filter(t => t.done).length || 0
+  return { total, done, pct: total ? Math.round((done / total) * 100) : 0 }
+}
 
-  if (loading) return <div className="p-6 text-sm" style={{ color: '#9298c4' }}>Loading production data…</div>
-  if (error)   return <div className="p-6 text-sm" style={{ color: '#ef4444' }}>Failed to load jobs: {error}</div>
+const STATUS_LABELS = {
+  quote: 'Quote', in_progress: 'In progress', qc: 'QC', dispatch: 'Dispatch', done: 'Done'
+}
+const STATUS_COLOURS = {
+  quote:       { bg: '#f1f0ea', text: '#5f5e5a' },
+  in_progress: { bg: '#e6f1fb', text: '#185fa5' },
+  qc:          { bg: '#faeeda', text: '#854f0b' },
+  dispatch:    { bg: '#eeedfe', text: '#534ab7' },
+  done:        { bg: '#eaf3de', text: '#3b6d11' },
+}
+const TABS = [
+  { key: 'all', label: 'All' },
+  { key: 'quote', label: 'Quote' },
+  { key: 'in_progress', label: 'In progress' },
+  { key: 'qc', label: 'QC' },
+  { key: 'dispatch', label: 'Dispatch' },
+  { key: 'done', label: 'Done' },
+]
 
-  const allJobs    = Array.isArray(jobs) ? jobs : []
-  const legacyJobs = allJobs.filter(j => !String(j.id).startsWith('JOB-'))
-  const newJobs    = allJobs.filter(j => String(j.id).startsWith('JOB-'))
-  const assemblies = assembliesData?.ok ? assembliesData.items : []
+function JobCard({ job, assemblies, onClick }) {
+  const { total, done, pct } = jobProgress(job)
+  const sc = STATUS_COLOURS[job.status] || STATUS_COLOURS.quote
+  const dateRange = [fmtDDMMM(job.startDate), fmtDDMMM(job.dueDate)].filter(Boolean).join(' → ')
+  return (
+    <div onClick={() => onClick(job)}
+      style={{ border: '1px solid #e4e6ea', borderLeft: `4px solid ${job.colour || '#dbeafe'}`,
+        background: '#fff', borderRadius: 10, padding: '14px 16px', cursor: 'pointer' }}>
+      <div style={{ fontWeight: 700, fontSize: 14, color: '#1a1d3b', marginBottom: 6,
+        whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{job.title}</div>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+        <span style={{ fontSize: 11, fontWeight: 600, padding: '2px 8px', borderRadius: 20,
+          background: sc.bg, color: sc.text }}>{STATUS_LABELS[job.status] || job.status}</span>
+        <span style={{ fontSize: 12, color: '#9298c4' }}>{getAssemblyName(job.assemblyId, assemblies)}</span>
+      </div>
+      {dateRange && <div style={{ fontSize: 12, color: '#b0b5cc', marginBottom: 8 }}>{dateRange}</div>}
+      <div style={{ fontSize: 11, color: '#9298c4', marginBottom: 4 }}>{done}/{total} tasks</div>
+      <div style={{ background: '#f0f1f5', borderRadius: 4, height: 4 }}>
+        <div style={{ width: `${pct}%`, background: '#4f67e4', borderRadius: 4, height: 4 }} />
+      </div>
+    </div>
+  )
+}
 
-  const activeJobs = allJobs.filter(j => j.status !== 'planned').length
-  const onTrack    = allJobs.filter(j => j.status === 'on-track').length
-  const atRisk     = allJobs.filter(j => j.status === 'at-risk' || j.status === 'blocked').length
+export default function Production({ onNavigate }) {
+  const [activeTab,   setActiveTab]   = useState('all')
+  const [selectedJob, setSelectedJob] = useState(null)
+  const [showNewJob,  setShowNewJob]  = useState(false)
 
-  const metrics = [
-    { label: 'Active jobs',   value: String(activeJobs), sub: `${onTrack} on track · ${atRisk} at risk`, color: null },
-    { label: 'Staff on site', value: '11',               sub: '3 absent · 4 on leave', extra: '/18',     color: null },
-    { label: 'Tools overdue', value: '4',                sub: '1 needs repair',                           color: '#ef4444' },
-    { label: 'Stock alerts',  value: '2',                sub: 'Blocking 1 job',                           color: '#f59e0b' },
-  ]
+  const { data: jobsData,      refetch: refetchJobs } = useGet('/jobs')
+  const { data: assembliesData }                       = useGet('/jobs/assemblies')
+
+  const jobs       = Array.isArray(jobsData?.jobs)            ? jobsData.jobs            : []
+  const assemblies = Array.isArray(assembliesData?.assemblies) ? assembliesData.assemblies : []
+
+  const filtered = activeTab === 'all' ? jobs : jobs.filter(j => j.status === activeTab)
+
+  const btnStyle = { background: '#4f67e4', color: '#fff', border: 'none',
+    borderRadius: 8, padding: '8px 16px', fontSize: 13, fontWeight: 600, cursor: 'pointer' }
 
   return (
     <div>
-      <div className="grid grid-cols-4 gap-3 mb-4">
-        {metrics.map(m => (
-          <div key={m.label} className="bg-white rounded-xl p-3 border" style={{ borderColor: '#e4e6ea' }}>
-            <div className="text-xs uppercase tracking-widest mb-1" style={{ color: '#9298c4' }}>{m.label}</div>
-            <div className="text-2xl font-bold" style={{ color: m.color || '#1a1d3b', lineHeight: 1 }}>
-              {m.value}
-              {m.extra && <span className="text-sm font-normal" style={{ color: '#b0b5cc' }}>{m.extra}</span>}
-            </div>
-            <div className="text-xs mt-1" style={{ color: '#b0b5cc' }}>{m.sub}</div>
-          </div>
-        ))}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
+        <div style={{ display: 'flex', gap: 2 }}>
+          {TABS.map(t => (
+            <button key={t.key} onClick={() => setActiveTab(t.key)} style={{
+              padding: '6px 14px', background: 'none', border: 'none', cursor: 'pointer',
+              fontSize: 13, color: activeTab === t.key ? '#1a1d3b' : '#9298c4',
+              fontWeight: activeTab === t.key ? 700 : 400,
+              borderBottom: activeTab === t.key ? '2px solid #4f67e4' : '2px solid transparent',
+            }}>{t.label}</button>
+          ))}
+        </div>
+        <button onClick={() => setShowNewJob(true)} style={btnStyle}>+ New job</button>
       </div>
-      <div className="flex flex-wrap gap-2 mb-4">
-        {alerts.map((a, i) => {
-          const c = chipColors[a.type]
-          return (
-            <div key={i} className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium border"
-              style={{ background: c.bg, color: c.text, borderColor: c.border }}>
-              <div className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: c.dot }} />
-              {a.text}
-            </div>
-          )
-        })}
-      </div>
-      <div className="grid gap-3 mb-6" style={{ gridTemplateColumns: '1fr 272px' }}>
-        <ProductionGantt jobs={legacyJobs} />
-        <ProductionSidebar />
-      </div>
-      {newJobs.length > 0 && (
-        <ProductionJobCards
-          jobs={newJobs}
+
+      {filtered.length === 0 ? (
+        <div style={{ textAlign: 'center', padding: '60px 0', color: '#9298c4' }}>
+          <div style={{ fontSize: 15, marginBottom: 12 }}>No jobs yet</div>
+          <button onClick={() => setShowNewJob(true)} style={btnStyle}>Create your first job</button>
+        </div>
+      ) : (
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 16 }}>
+          {filtered.map(job => (
+            <JobCard key={job.id} job={job} assemblies={assemblies} onClick={setSelectedJob} />
+          ))}
+        </div>
+      )}
+
+      {showNewJob && (
+        <NewJobModal
           assemblies={assemblies}
-          onJobsChanged={refetch}
+          onClose={() => setShowNewJob(false)}
+          onSaved={() => { setShowNewJob(false); refetchJobs() }}
+        />
+      )}
+      {selectedJob && (
+        <GanttModal
+          job={selectedJob}
+          onClose={() => setSelectedJob(null)}
+          onSaved={() => refetchJobs()}
         />
       )}
     </div>

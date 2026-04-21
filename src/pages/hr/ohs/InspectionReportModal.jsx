@@ -1,7 +1,7 @@
 import { useGet } from '../../../hooks/useApi'
 import { styles } from '../../../utils/hrStyles'
 
-const UPLOADS_URL = 'http://localhost:3001/uploads'
+import { UPLOADS_BASE as UPLOADS_URL } from '../../../hooks/useApi'
 
 function ResponseBadge({ response }) {
   if (!response) return <span style={{ fontSize: 11, color: '#aaa' }}>—</span>

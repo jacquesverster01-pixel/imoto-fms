@@ -5,6 +5,7 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 import multer from 'multer'
 import { initZKService, startPollLoop, pullHistoricalLogs, getDeviceUsers, getDeviceStatus, getZkInstance, resetConnection } from './zkService.js'
+import { runAutoClockOut } from './lib/autoClockOut.js'
 
 import unleashedRouter   from './routes/unleashed.js'
 import employeesRouter   from './routes/employees.js'
@@ -27,7 +28,19 @@ const PORT = 3001
 
 const uploadsDir = path.join(__dirname, 'data', 'uploads')
 if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true })
-const upload = multer({ dest: uploadsDir })
+const ALLOWED_MIME_TYPES = new Set([
+  'image/jpeg', 'image/png', 'image/gif', 'image/webp',
+  'application/pdf',
+  'application/msword',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  'application/vnd.ms-excel',
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+])
+const upload = multer({
+  dest: uploadsDir,
+  limits: { fileSize: 10 * 1024 * 1024 },
+  fileFilter: (_req, file, cb) => cb(null, ALLOWED_MIME_TYPES.has(file.mimetype)),
+})
 
 // ─── DATA FILE INITIALISATION ─────────────────────────────────────────────────
 
@@ -37,7 +50,8 @@ const DATA_INITS = {
   'leave.json':                  [],
   'excused.json':                [],
   'disciplinary.json':           [],
-  'jobs.json':                   [],
+  'jobs.json':                   { jobs: [] },
+  'assemblies.json':             { assemblies: [] },
   'tools.json':                  [],
   'stock.json':                  [],
   'ohs.json':                    [],
@@ -50,6 +64,8 @@ const DATA_INITS = {
   'ohs_map_assets.json':         { assets: [] },
   'ohs_zones.json':              { canvasWidth: 900, canvasHeight: 600, zones: [] },
   'timelog_blocked.json':        [],
+  'zk_unmatched.json':           [],
+  'settings.json':               {},
 }
 for (const [file, empty] of Object.entries(DATA_INITS)) {
   const fp = path.join(__dirname, 'data', file)
@@ -138,44 +154,7 @@ startPollLoop()
 
 // ─── AUTO CLOCK-OUT ───────────────────────────────────────────────────────────
 
-setInterval(() => {
-  try {
-    const settings = readData('settings.json')
-    const aco = settings?.autoClockOut
-    if (!aco?.enabled || !aco.time) return
-    const now = new Date(Date.now() + 2 * 3600 * 1000) // SAST = UTC+2
-    const hh = String(now.getUTCHours()).padStart(2, '0')
-    const mm = String(now.getUTCMinutes()).padStart(2, '0')
-    if (`${hh}:${mm}` !== aco.time) return
-    const timelog  = readData('timelog.json')
-    const employees = readData('employees.json')?.employees || []
-    const lastByEmp = {}
-    for (const e of timelog) {
-      if (!lastByEmp[e.employeeId] || new Date(e.timestamp) > new Date(lastByEmp[e.employeeId].timestamp)) {
-        lastByEmp[e.employeeId] = e
-      }
-    }
-    const toClockOut = Object.values(lastByEmp).filter(e => e.type === 'in')
-    if (!toClockOut.length) return
-    const nowIso = new Date().toISOString()
-    for (const entry of toClockOut) {
-      const emp = employees.find(e => e.id === entry.employeeId)
-      timelog.push({
-        id: `TL${Date.now()}_${entry.employeeId}`,
-        employeeId: entry.employeeId,
-        name: entry.name || emp?.name || entry.employeeId,
-        dept: entry.dept || emp?.dept || '',
-        type: 'out',
-        source: 'auto',
-        timestamp: nowIso,
-      })
-    }
-    writeData('timelog.json', timelog)
-    console.log(`[Auto clock-out] Clocked out ${toClockOut.length} employee(s) at ${aco.time}`)
-  } catch (err) {
-    console.error('[Auto clock-out] Error:', err.message)
-  }
-}, 60000)
+setInterval(() => runAutoClockOut(readData, writeData), 60000)
 
 // ─── ROUTES ───────────────────────────────────────────────────────────────────
 
@@ -186,7 +165,7 @@ app.use('/api', employeesRouter(readData, writeData, upload))
 app.use('/api', timelogRouter(readData, writeData))
 app.use('/api', leaveRouter(readData, writeData, upload))
 app.use('/api', disciplinaryRouter(readData, writeData, upload))
-app.use('/api', jobsRouter(readData, writeData))
+app.use('/api', jobsRouter(readData, writeData, upload, uploadsDir))
 app.use('/api', toolsRouter(readData, writeData))
 app.use('/api', stockRouter(readData, writeData))
 app.use('/api', zkRouter(readData, writeData, { getDeviceStatus, pullHistoricalLogs, getDeviceUsers, getZkInstance, resetConnection }))
@@ -215,8 +194,8 @@ app.get('/api/health', (req, res) => {
 // ─── GLOBAL ERROR HANDLER ─────────────────────────────────────────────────────
 
 app.use((err, req, res, _next) => {
-  console.error(`[API error] ${req.method} ${req.path}:`, err.message)
-  res.status(500).json({ error: err.message })
+  console.error(`[API error] ${req.method} ${req.path}:`, err)
+  res.status(500).json({ error: 'Internal server error' })
 })
 
 app.listen(PORT, () => {

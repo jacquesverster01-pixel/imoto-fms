@@ -7,7 +7,7 @@ import AddEquipmentModal from './AddEquipmentModal'
 import LogServiceModal from './LogServiceModal'
 import OHSFilePanel from './OHSFilePanel'
 
-const UPLOADS_URL = 'http://localhost:3001/uploads'
+import { UPLOADS_BASE as UPLOADS_URL } from '../../../hooks/useApi'
 
 const CATEGORIES = ['All','Power Tools','Hand Tools','Lifting Equipment','Pressure Vessels','Electrical Equipment','Welding Equipment','Material Handling','Safety Equipment','Other']
 const STATUSES   = ['All','Active','Under Inspection','Out of Service','Decommissioned']

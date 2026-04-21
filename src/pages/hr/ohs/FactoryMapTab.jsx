@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { useGet, apiFetch } from '../../../hooks/useApi'
+import { useClickOutside } from '../../../hooks/useClickOutside'
 import { serviceStatusColour, equipRiskColour, equipRiskLabel } from '../../../utils/ohs'
 import { saveZones, zoneBBox, migrateZonesToPct, migrateZonesToRects, uploadFloorPlan } from './factoryMapUtils'
 import { useMapDrag } from './useMapDrag'
@@ -53,6 +54,8 @@ export default function FactoryMapTab() {
   const refetchRef      = useRef(refetchZones)
   const editModeRef     = useRef(false)
   const showToastRef    = useRef(null)
+  const incPopRef       = useRef(null)
+  useClickOutside(incPopRef, () => setIncPop(null))
   showToastRef.current  = showToast
 
   useEffect(() => { zonesRef.current    = zones        }, [zones])
@@ -314,7 +317,7 @@ export default function FactoryMapTab() {
           {selectedAsset && !editMode && <AssetPinPopup asset={selectedAsset} zones={zones} onClose={() => setSelectedAsset(null)} />}
 
           {incPop && incPopZone && (
-            <div onMouseDown={e => e.stopPropagation()} onClick={e => e.stopPropagation()}
+            <div ref={incPopRef} onMouseDown={e => e.stopPropagation()} onClick={e => e.stopPropagation()}
               style={{ position: 'absolute', left: incPopPx, top: incPopPy, background: '#fff', border: '1px solid #e4e6ea', borderRadius: 8, padding: '10px 12px', zIndex: 10, minWidth: 200, maxWidth: 250, boxShadow: '0 4px 16px rgba(0,0,0,0.14)' }}>
               <div style={{ fontWeight: 700, fontSize: 12, marginBottom: 6, color: '#991b1b' }}>Incidents — {incPopZone.name}</div>
               {incPopIncs.map(inc => (

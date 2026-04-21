@@ -1,0 +1,80 @@
+{
+  "assemblies": [
+    {
+      "id": "asm-1",
+      "name": "Full engine rebuild",
+      "tasks": [
+        { "name": "Engine removal", "defaultDays": 1 },
+        { "name": "Strip & inspect", "defaultDays": 2 },
+        { "name": "Parts order & wait", "defaultDays": 3 },
+        { "name": "Rebuild & assemble", "defaultDays": 3 },
+        { "name": "Refit to frame", "defaultDays": 1 },
+        { "name": "Test & tune", "defaultDays": 1 }
+      ]
+    },
+    {
+      "id": "asm-2",
+      "name": "Fork service",
+      "tasks": [
+        { "name": "Remove forks", "defaultDays": 1 },
+        { "name": "Disassemble & inspect", "defaultDays": 1 },
+        { "name": "Replace seals & oil", "defaultDays": 1 },
+        { "name": "Reassemble & refit", "defaultDays": 1 },
+        { "name": "Alignment check", "defaultDays": 1 }
+      ]
+    },
+    {
+      "id": "asm-3",
+      "name": "Wheel build",
+      "tasks": [
+        { "name": "Lace spokes", "defaultDays": 1 },
+        { "name": "True & tension", "defaultDays": 1 },
+        { "name": "Tyre fit", "defaultDays": 1 }
+      ]
+    },
+    {
+      "id": "asm-4",
+      "name": "Frame repair & paint",
+      "tasks": [
+        { "name": "Strip components", "defaultDays": 1 },
+        { "name": "Weld & repair", "defaultDays": 2 },
+        { "name": "Bead blast", "defaultDays": 1 },
+        { "name": "Primer coat", "defaultDays": 1 },
+        { "name": "Top coat", "defaultDays": 1 },
+        { "name": "Cure & clear", "defaultDays": 1 },
+        { "name": "Rebuild & refit", "defaultDays": 2 }
+      ]
+    },
+    {
+      "id": "asm-5",
+      "name": "Suspension setup",
+      "tasks": [
+        { "name": "Measure & assess", "defaultDays": 1 },
+        { "name": "Spring rate swap", "defaultDays": 1 },
+        { "name": "Damping adjustment", "defaultDays": 1 },
+        { "name": "Test ride & fine-tune", "defaultDays": 1 }
+      ]
+    },
+    {
+      "id": "asm-6",
+      "name": "Electrical overhaul",
+      "tasks": [
+        { "name": "Full diagnostic", "defaultDays": 1 },
+        { "name": "Harness strip", "defaultDays": 1 },
+        { "name": "Rewire & connectors", "defaultDays": 2 },
+        { "name": "ECU mapping", "defaultDays": 1 },
+        { "name": "Final test", "defaultDays": 1 }
+      ]
+    },
+    {
+      "id": "asm-7",
+      "name": "General service",
+      "tasks": [
+        { "name": "Oil & filter change", "defaultDays": 1 },
+        { "name": "Chain & sprockets", "defaultDays": 1 },
+        { "name": "Brake check & bleed", "defaultDays": 1 },
+        { "name": "Safety inspection", "defaultDays": 1 }
+      ]
+    }
+  ]
+}

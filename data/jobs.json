@@ -1,7 +1,87 @@
-[
-  { "id": "J001", "name": "SAPS Mobile Clinic #14", "client": "SAPS", "trades": ["Electrical", "Assembly"], "start": "2026-03-10", "due": "2026-03-28", "pct": 72, "status": "on-track", "priority": "High", "assignedTo": ["E001", "E003"], "description": "Mobile health clinic conversion on Ford Transit chassis.", "flags": [] },
-  { "id": "J002", "name": "City of CT Canteen Unit", "client": "City of Cape Town", "trades": ["Electrical"], "start": "2026-03-17", "due": "2026-04-04", "pct": 38, "status": "at-risk", "priority": "High", "assignedTo": ["E001"], "description": "Mobile canteen unit for municipal parks department.", "flags": ["2 electricians absent — progress delayed"] },
-  { "id": "J003", "name": "SANDF Comms Vehicle", "client": "SANDF", "trades": ["Welding", "Electrical"], "start": "2026-03-28", "due": "2026-04-18", "pct": 0, "status": "blocked", "priority": "High", "assignedTo": ["E002"], "description": "Communications vehicle conversion for SANDF field operations.", "flags": ["Conduit stock out of stock", "Angle grinder #4 needs repair"] },
-  { "id": "J004", "name": "Glencore Mobile Lab", "client": "Glencore", "trades": ["Cabinet Making", "Electrical"], "start": "2026-03-03", "due": "2026-03-25", "pct": 91, "status": "on-track", "priority": "Medium", "assignedTo": ["E005", "E001"], "description": "Mobile computer lab for mine site use.", "flags": [] },
-  { "id": "J005", "name": "SAPS Vehicle #15", "client": "SAPS", "trades": ["Electrical", "Welding", "Assembly", "Plumbing"], "start": "2026-03-30", "due": "2026-04-30", "pct": 0, "status": "planned", "priority": "Medium", "assignedTo": [], "description": "Standard SAPS mobile unit — spec TBC.", "flags": [] }
-]
+{
+  "jobs": [
+    {
+      "id": "job-1776669992977-thozw",
+      "title": "sioc 1",
+      "status": "in_progress",
+      "assemblyId": null,
+      "colour": "#dbeafe",
+      "startDate": "2026-04-01",
+      "dueDate": "2026-05-03",
+      "tasks": [
+        {
+          "pct": 45,
+          "dependsOn": [],
+          "subTasks": [],
+          "id": "t-1776669995174",
+          "name": "floors",
+          "startDate": "2026-04-22",
+          "endDate": "2026-04-28",
+          "done": false,
+          "assignedTo": null
+        },
+        {
+          "pct": 0,
+          "dependsOn": [],
+          "subTasks": [
+            {
+              "id": "st-1776675713835",
+              "name": "New sub-task",
+              "startDate": "2026-05-05",
+              "endDate": "2026-05-11",
+              "done": false,
+              "pct": 0,
+              "dependsOn": [],
+              "assignedTo": null
+            },
+            {
+              "id": "st-1776675725420",
+              "name": "New sub-task",
+              "startDate": "2026-04-26",
+              "endDate": "2026-05-04",
+              "done": false,
+              "pct": 0,
+              "dependsOn": [],
+              "assignedTo": null
+            }
+          ],
+          "id": "t-1776670003581",
+          "name": "test",
+          "startDate": "2026-04-29",
+          "endDate": "2026-04-29",
+          "done": false,
+          "assignedTo": null
+        },
+        {
+          "pct": 0,
+          "dependsOn": [],
+          "subTasks": [],
+          "id": "t-1776675739782",
+          "name": "New task",
+          "startDate": "2026-04-30",
+          "endDate": "2026-05-03",
+          "done": false,
+          "assignedTo": null
+        }
+      ],
+      "createdAt": "2026-04-20T07:26:32.977Z",
+      "baseline": [
+        {
+          "taskId": "t-1776669995174",
+          "startDate": "2026-04-22",
+          "endDate": "2026-04-28"
+        },
+        {
+          "taskId": "t-1776670003581",
+          "startDate": "2026-04-29",
+          "endDate": "2026-04-29"
+        },
+        {
+          "taskId": "t-1776675739782",
+          "startDate": "2026-04-30",
+          "endDate": "2026-05-03"
+        }
+      ]
+    }
+  ]
+}

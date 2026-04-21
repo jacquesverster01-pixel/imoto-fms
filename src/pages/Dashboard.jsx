@@ -1,5 +1,7 @@
+import { useState } from 'react'
 import { useGet } from '../hooks/useApi'
 import FactoryFloorList from './dashboard/FactoryFloorList'
+import ZkUnmatchedBanner from '../components/ZkUnmatchedBanner'
 
 const CARD = { background: '#fff', border: '1px solid #e4e6ea', borderRadius: 14, padding: '24px 28px' }
 
@@ -7,7 +9,7 @@ function jobStatusStyle(status) {
   if (status === 'on-track') return { bg: '#e8f8f0', text: '#16a34a' }
   if (status === 'at-risk')  return { bg: '#fffbeb', text: '#b45309' }
   if (status === 'blocked')  return { bg: '#fee2e2', text: '#dc2626' }
-  if (status === 'complete') return { bg: '#ede9fe', text: '#6c63ff' }
+  if (status === 'done') return { bg: '#ede9fe', text: '#6c63ff' }
   return { bg: '#f3f4f6', text: '#6b7280' }
 }
 
@@ -20,6 +22,7 @@ function sortKey(e) {
 }
 
 export default function Dashboard({ onNavigate }) {
+  const [zkBannerDismissed, setZkBannerDismissed] = useState(false)
   const { data: raw, refetch } = useGet('/dashboard')
   const d    = raw || {}
   const hr   = d.hr         || {}
@@ -29,7 +32,7 @@ export default function Dashboard({ onNavigate }) {
   const tls  = d.tools      || {}
   const empStatus = Array.isArray(d.employeeStatus) ? d.employeeStatus : []
   const ganttJobs = (Array.isArray(prod.jobs) ? prod.jobs : [])
-    .filter(j => j.status !== 'complete' && j.status !== 'cancelled')
+    .filter(j => j.status !== 'done' && j.status !== 'cancelled')
     .sort((a, b) => (a.due || '').localeCompare(b.due || ''))
     .slice(0, 8)
   const sorted     = [...empStatus].sort((a, b) => sortKey(a) - sortKey(b))
@@ -37,6 +40,8 @@ export default function Dashboard({ onNavigate }) {
   const lateCount  = empStatus.filter(e => e.status === 'late').length
   const leaveCount = empStatus.filter(e => e.status === 'leave').length
   const notInCount = empStatus.filter(e => e.status === 'out' && !e.clockInTime).length
+  const unmatchedZkPunches = Array.isArray(d.unmatchedZkPunches) ? d.unmatchedZkPunches : []
+
   const kpiGroups = [
     { title: 'HR', nav: 'employees', stats: [
         { label: 'Clocked in',  value: hr.clockedInCount   ?? 0, problem: false },
@@ -63,6 +68,7 @@ export default function Dashboard({ onNavigate }) {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+      {!zkBannerDismissed && <ZkUnmatchedBanner punches={unmatchedZkPunches} onDismiss={() => setZkBannerDismissed(true)} />}
       <div style={{ maxWidth: 1100, margin: '0 auto', width: '100%' }}>
         <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', justifyContent: 'center' }}>
           {kpiGroups.map(grp => (

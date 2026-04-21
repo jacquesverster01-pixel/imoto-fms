@@ -18882,5 +18882,505 @@
     "dept": "",
     "type": "out",
     "id": "TL1776424625564"
+  },
+  {
+    "id": "TL1776666008394_afi2",
+    "employeeId": "E007",
+    "name": "Raymond Malgas",
+    "dept": "",
+    "type": "out",
+    "timestamp": "2026-04-17T13:34:19.000Z",
+    "source": "biometric",
+    "zkUserId": "761218510"
+  },
+  {
+    "id": "TL1776666008394_balp",
+    "employeeId": "E008",
+    "name": "Samuel Mulema",
+    "dept": "",
+    "type": "out",
+    "timestamp": "2026-04-17T13:34:28.000Z",
+    "source": "biometric",
+    "zkUserId": "998401"
+  },
+  {
+    "id": "TL1776666008394_hk56",
+    "employeeId": "E004",
+    "name": "Brazza Nyirenda",
+    "dept": "Electrical",
+    "type": "out",
+    "timestamp": "2026-04-17T13:35:28.000Z",
+    "source": "biometric",
+    "zkUserId": "162055"
+  },
+  {
+    "id": "TL1776666008394_mhhk",
+    "employeeId": "E001",
+    "name": "Lorenzo August",
+    "dept": "Branding",
+    "type": "out",
+    "timestamp": "2026-04-17T13:35:32.000Z",
+    "source": "biometric",
+    "zkUserId": "780405514"
+  },
+  {
+    "id": "TL1776666008394_slvf",
+    "employeeId": "E022",
+    "name": "Badrodien Playton",
+    "dept": "",
+    "type": "out",
+    "timestamp": "2026-04-17T13:36:04.000Z",
+    "source": "biometric",
+    "zkUserId": "750915529"
+  },
+  {
+    "id": "TL1776666008394_li30",
+    "employeeId": "E005",
+    "name": "Alex Thobela",
+    "dept": "Welding",
+    "type": "out",
+    "timestamp": "2026-04-17T13:37:32.000Z",
+    "source": "biometric",
+    "zkUserId": "741126590"
+  },
+  {
+    "id": "TL1776666008394_67l2",
+    "employeeId": "E013",
+    "name": "Jean Erasmus",
+    "dept": "",
+    "type": "in",
+    "timestamp": "2026-04-20T04:24:45.000Z",
+    "source": "biometric",
+    "zkUserId": "780629505"
+  },
+  {
+    "id": "TL1776666008394_xvcm",
+    "employeeId": "E023",
+    "name": "Keegan McKay",
+    "dept": "",
+    "type": "in",
+    "timestamp": "2026-04-20T04:28:26.000Z",
+    "source": "biometric",
+    "zkUserId": "412370"
+  },
+  {
+    "id": "TL1776666008394_5qu6",
+    "employeeId": "E018",
+    "name": "Gareth Galant",
+    "dept": "",
+    "type": "in",
+    "timestamp": "2026-04-20T04:31:20.000Z",
+    "source": "biometric",
+    "zkUserId": "791527"
+  },
+  {
+    "id": "TL1776666008394_edb9",
+    "employeeId": "E022",
+    "name": "Badrodien Playton",
+    "dept": "",
+    "type": "in",
+    "timestamp": "2026-04-20T04:33:15.000Z",
+    "source": "biometric",
+    "zkUserId": "750915529"
+  },
+  {
+    "id": "TL1776666008394_gp09",
+    "employeeId": "E001",
+    "name": "Lorenzo August",
+    "dept": "Branding",
+    "type": "in",
+    "timestamp": "2026-04-20T04:43:10.000Z",
+    "source": "biometric",
+    "zkUserId": "780405514"
+  },
+  {
+    "id": "TL1776666008394_2qy3",
+    "employeeId": "E008",
+    "name": "Samuel Mulema",
+    "dept": "",
+    "type": "in",
+    "timestamp": "2026-04-20T04:55:14.000Z",
+    "source": "biometric",
+    "zkUserId": "998401"
+  },
+  {
+    "id": "TL1776666008394_gdeb",
+    "employeeId": "E012",
+    "name": "Nelson Nhlahle",
+    "dept": "",
+    "type": "in",
+    "timestamp": "2026-04-20T05:03:52.000Z",
+    "source": "biometric",
+    "zkUserId": "109077097"
+  },
+  {
+    "id": "TL1776666008394_o50q",
+    "employeeId": "E005",
+    "name": "Alex Thobela",
+    "dept": "Welding",
+    "type": "in",
+    "timestamp": "2026-04-20T05:04:54.000Z",
+    "source": "biometric",
+    "zkUserId": "741126590"
+  },
+  {
+    "id": "TL1776666008394_6729",
+    "employeeId": "E002",
+    "name": "Ronald Edwards",
+    "dept": "Welding",
+    "type": "in",
+    "timestamp": "2026-04-20T05:05:01.000Z",
+    "source": "biometric",
+    "zkUserId": "720313504"
+  },
+  {
+    "id": "TL1776666008394_3ji9",
+    "employeeId": "E024",
+    "name": "Quinlen Josias",
+    "dept": "",
+    "type": "in",
+    "timestamp": "2026-04-20T05:18:00.000Z",
+    "source": "biometric",
+    "zkUserId": "630357"
+  },
+  {
+    "id": "TL1776666008394_mb6f",
+    "employeeId": "E004",
+    "name": "Brazza Nyirenda",
+    "dept": "Electrical",
+    "type": "in",
+    "timestamp": "2026-04-20T05:48:37.000Z",
+    "source": "biometric",
+    "zkUserId": "162055"
+  },
+  {
+    "id": "TL1776666008394_jelv",
+    "employeeId": "E006",
+    "name": "Marlon Arendse",
+    "dept": "",
+    "type": "in",
+    "timestamp": "2026-04-20T06:08:09.000Z",
+    "source": "biometric",
+    "zkUserId": "770911502"
+  },
+  {
+    "id": "TL1776666008394_dkl3",
+    "employeeId": "E003",
+    "name": "Ashley Lenting",
+    "dept": "Welding",
+    "type": "in",
+    "timestamp": "2026-04-20T06:08:19.000Z",
+    "source": "biometric",
+    "zkUserId": "760105579"
+  },
+  {
+    "id": "TL1776666008394_s0yb",
+    "employeeId": "E020",
+    "name": "Barry Clark",
+    "dept": "",
+    "type": "in",
+    "timestamp": "2026-04-20T06:08:32.000Z",
+    "source": "biometric",
+    "zkUserId": "727677"
+  },
+  {
+    "id": "TL1776670820297_yf8e",
+    "employeeId": "E009",
+    "name": "Zamile Ncisana",
+    "dept": "",
+    "type": "in",
+    "timestamp": "2026-04-20T07:38:08.000Z",
+    "source": "biometric",
+    "zkUserId": "950510595"
+  },
+  {
+    "id": "TL1776752004909_mucn",
+    "employeeId": "E008",
+    "name": "Samuel Mulema",
+    "dept": "",
+    "type": "out",
+    "timestamp": "2026-04-20T13:55:16.000Z",
+    "source": "biometric",
+    "zkUserId": "998401"
+  },
+  {
+    "id": "TL1776752004909_vg8r",
+    "employeeId": "E004",
+    "name": "Brazza Nyirenda",
+    "dept": "Electrical",
+    "type": "out",
+    "timestamp": "2026-04-20T13:55:27.000Z",
+    "source": "biometric",
+    "zkUserId": "162055"
+  },
+  {
+    "id": "TL1776752004909_zfch",
+    "employeeId": "E023",
+    "name": "Keegan McKay",
+    "dept": "",
+    "type": "out",
+    "timestamp": "2026-04-20T13:55:35.000Z",
+    "source": "biometric",
+    "zkUserId": "412370"
+  },
+  {
+    "id": "TL1776752004909_3w2c",
+    "employeeId": "E001",
+    "name": "Lorenzo August",
+    "dept": "Branding",
+    "type": "out",
+    "timestamp": "2026-04-20T13:55:44.000Z",
+    "source": "biometric",
+    "zkUserId": "780405514"
+  },
+  {
+    "id": "TL1776752004909_k94c",
+    "employeeId": "E005",
+    "name": "Alex Thobela",
+    "dept": "Welding",
+    "type": "out",
+    "timestamp": "2026-04-20T13:55:49.000Z",
+    "source": "biometric",
+    "zkUserId": "741126590"
+  },
+  {
+    "id": "TL1776752004909_jd1f",
+    "employeeId": "E009",
+    "name": "Zamile Ncisana",
+    "dept": "",
+    "type": "out",
+    "timestamp": "2026-04-20T13:56:05.000Z",
+    "source": "biometric",
+    "zkUserId": "950510595"
+  },
+  {
+    "id": "TL1776752004909_qq5h",
+    "employeeId": "E022",
+    "name": "Badrodien Playton",
+    "dept": "",
+    "type": "out",
+    "timestamp": "2026-04-20T13:56:15.000Z",
+    "source": "biometric",
+    "zkUserId": "750915529"
+  },
+  {
+    "id": "TL1776752004909_iwrx",
+    "employeeId": "E012",
+    "name": "Nelson Nhlahle",
+    "dept": "",
+    "type": "out",
+    "timestamp": "2026-04-20T13:56:21.000Z",
+    "source": "biometric",
+    "zkUserId": "109077097"
+  },
+  {
+    "id": "TL1776752004909_642o",
+    "employeeId": "E006",
+    "name": "Marlon Arendse",
+    "dept": "",
+    "type": "out",
+    "timestamp": "2026-04-20T13:56:25.000Z",
+    "source": "biometric",
+    "zkUserId": "770911502"
+  },
+  {
+    "id": "TL1776752004909_hp1y",
+    "employeeId": "E024",
+    "name": "Quinlen Josias",
+    "dept": "",
+    "type": "out",
+    "timestamp": "2026-04-20T13:56:35.000Z",
+    "source": "biometric",
+    "zkUserId": "630357"
+  },
+  {
+    "id": "TL1776752004909_oe3z",
+    "employeeId": "E013",
+    "name": "Jean Erasmus",
+    "dept": "",
+    "type": "out",
+    "timestamp": "2026-04-20T13:56:43.000Z",
+    "source": "biometric",
+    "zkUserId": "780629505"
+  },
+  {
+    "id": "TL1776752004909_lc01",
+    "employeeId": "E020",
+    "name": "Barry Clark",
+    "dept": "",
+    "type": "out",
+    "timestamp": "2026-04-20T13:56:59.000Z",
+    "source": "biometric",
+    "zkUserId": "727677"
+  },
+  {
+    "id": "TL1776752004909_6ih1",
+    "employeeId": "E002",
+    "name": "Ronald Edwards",
+    "dept": "Welding",
+    "type": "out",
+    "timestamp": "2026-04-20T13:59:24.000Z",
+    "source": "biometric",
+    "zkUserId": "720313504"
+  },
+  {
+    "id": "TL1776752004909_7qrw",
+    "employeeId": "E009",
+    "name": "Zamile Ncisana",
+    "dept": "",
+    "type": "in",
+    "timestamp": "2026-04-21T04:43:37.000Z",
+    "source": "biometric",
+    "zkUserId": "950510595"
+  },
+  {
+    "id": "TL1776752004909_2k97",
+    "employeeId": "E001",
+    "name": "Lorenzo August",
+    "dept": "Branding",
+    "type": "in",
+    "timestamp": "2026-04-21T04:43:41.000Z",
+    "source": "biometric",
+    "zkUserId": "780405514"
+  },
+  {
+    "id": "TL1776752004909_8ypt",
+    "employeeId": "E019",
+    "name": "Yaatie Weaver",
+    "dept": "",
+    "type": "in",
+    "timestamp": "2026-04-21T04:43:44.000Z",
+    "source": "biometric",
+    "zkUserId": "785632"
+  },
+  {
+    "id": "TL1776752004909_oi2i",
+    "employeeId": "E023",
+    "name": "Keegan McKay",
+    "dept": "",
+    "type": "in",
+    "timestamp": "2026-04-21T04:43:51.000Z",
+    "source": "biometric",
+    "zkUserId": "412370"
+  },
+  {
+    "id": "TL1776752004909_rkif",
+    "employeeId": "E018",
+    "name": "Gareth Galant",
+    "dept": "",
+    "type": "in",
+    "timestamp": "2026-04-21T04:44:04.000Z",
+    "source": "biometric",
+    "zkUserId": "791527"
+  },
+  {
+    "id": "TL1776752004909_y8nh",
+    "employeeId": "E022",
+    "name": "Badrodien Playton",
+    "dept": "",
+    "type": "in",
+    "timestamp": "2026-04-21T04:44:38.000Z",
+    "source": "biometric",
+    "zkUserId": "750915529"
+  },
+  {
+    "id": "TL1776752004909_lzuv",
+    "employeeId": "E007",
+    "name": "Raymond Malgas",
+    "dept": "",
+    "type": "in",
+    "timestamp": "2026-04-21T04:52:39.000Z",
+    "source": "biometric",
+    "zkUserId": "761218510"
+  },
+  {
+    "id": "TL1776752004909_l796",
+    "employeeId": "E005",
+    "name": "Alex Thobela",
+    "dept": "Welding",
+    "type": "in",
+    "timestamp": "2026-04-21T04:55:53.000Z",
+    "source": "biometric",
+    "zkUserId": "741126590"
+  },
+  {
+    "id": "TL1776752004909_s5vv",
+    "employeeId": "E012",
+    "name": "Nelson Nhlahle",
+    "dept": "",
+    "type": "in",
+    "timestamp": "2026-04-21T04:56:02.000Z",
+    "source": "biometric",
+    "zkUserId": "109077097"
+  },
+  {
+    "id": "TL1776752004909_qmio",
+    "employeeId": "E008",
+    "name": "Samuel Mulema",
+    "dept": "",
+    "type": "in",
+    "timestamp": "2026-04-21T04:57:20.000Z",
+    "source": "biometric",
+    "zkUserId": "998401"
+  },
+  {
+    "id": "TL1776752004909_7077",
+    "employeeId": "E024",
+    "name": "Quinlen Josias",
+    "dept": "",
+    "type": "in",
+    "timestamp": "2026-04-21T05:05:40.000Z",
+    "source": "biometric",
+    "zkUserId": "630357"
+  },
+  {
+    "id": "TL1776752004909_x2hz",
+    "employeeId": "E002",
+    "name": "Ronald Edwards",
+    "dept": "Welding",
+    "type": "in",
+    "timestamp": "2026-04-21T05:16:28.000Z",
+    "source": "biometric",
+    "zkUserId": "720313504"
+  },
+  {
+    "id": "TL1776752004909_dizz",
+    "employeeId": "E004",
+    "name": "Brazza Nyirenda",
+    "dept": "Electrical",
+    "type": "in",
+    "timestamp": "2026-04-21T05:41:42.000Z",
+    "source": "biometric",
+    "zkUserId": "162055"
+  },
+  {
+    "id": "TL1776752004909_tjvp",
+    "employeeId": "E006",
+    "name": "Marlon Arendse",
+    "dept": "",
+    "type": "in",
+    "timestamp": "2026-04-21T06:01:43.000Z",
+    "source": "biometric",
+    "zkUserId": "770911502"
+  },
+  {
+    "id": "TL1776752004909_y9t6",
+    "employeeId": "E003",
+    "name": "Ashley Lenting",
+    "dept": "Welding",
+    "type": "in",
+    "timestamp": "2026-04-21T06:02:12.000Z",
+    "source": "biometric",
+    "zkUserId": "760105579"
+  },
+  {
+    "id": "TL1776752004909_y9qa",
+    "employeeId": "E020",
+    "name": "Barry Clark",
+    "dept": "",
+    "type": "in",
+    "timestamp": "2026-04-21T06:02:20.000Z",
+    "source": "biometric",
+    "zkUserId": "727677"
   }
 ]

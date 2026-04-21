@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 
 export const BASE = 'http://localhost:3001/api'
+export const UPLOADS_BASE = 'http://localhost:3001/uploads'
 
 export async function apiFetch(path, options = {}) {
   const res = await fetch(`${BASE}${path}`, {

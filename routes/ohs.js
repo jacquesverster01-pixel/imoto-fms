@@ -724,7 +724,7 @@ export default function ohsRouter(readData, writeData, upload, uploadsDir) {
       const all = readData('ohs_inspections_active.json')
       const ins = all.find(r => r.id === req.params.id)
       if (!ins) return res.status(404).json({ error: 'Inspection not found' })
-      const employees = readData('employees.json')?.employees || []
+      const employees = readData('employees.json') || []
       const emp = employees.find(e => e.id === ins.assigneeId)
       if (!emp?.phone) return res.json({ url: null, reason: 'no phone' })
       const ip  = getLocalIp()

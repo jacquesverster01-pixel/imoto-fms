@@ -1,74 +1,148 @@
 import { Router } from 'express'
+import { randomUUID } from 'crypto'
+import nodePath from 'path'
+import fs from 'fs'
 
-function nextJobId(jobs) {
-  const nums = jobs
-    .map(j => parseInt((j.id || '').replace('JOB-', ''), 10))
-    .filter(n => !isNaN(n) && n > 0)
-  return 'JOB-' + String(nums.length ? Math.max(...nums) + 1 : 1).padStart(4, '0')
+function newId(prefix) {
+  return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`
 }
 
-function nowTs() {
-  return new Date(Date.now() + 2 * 3600000).toISOString().replace('Z', '+02:00')
-}
-
-export default function jobsRouter(readData, writeData) {
+export default function jobsRouter(readData, writeData, upload, uploadsDir) {
   const router = Router()
 
+  // GET /api/jobs/assemblies — must be before /:id to avoid param capture
+  router.get('/jobs/assemblies', (req, res) => {
+    try { res.json(readData('assemblies.json')) }
+    catch (err) { res.status(500).json({ error: err.message }) }
+  })
+
+  // POST /api/jobs/assemblies
+  router.post('/jobs/assemblies', (req, res) => {
+    try {
+      const data = readData('assemblies.json')
+      const { name, tasks } = req.body
+      const asm = {
+        id: newId('asm'),
+        name: name || 'Untitled assembly',
+        tasks: Array.isArray(tasks) ? tasks : []
+      }
+      data.assemblies.push(asm)
+      writeData('assemblies.json', data)
+      res.json(asm)
+    } catch (err) { res.status(500).json({ error: err.message }) }
+  })
+
+  // GET /api/jobs
   router.get('/jobs', (req, res) => {
     try { res.json(readData('jobs.json')) }
     catch (err) { res.status(500).json({ error: err.message }) }
   })
 
-  router.get('/jobs/:id', (req, res) => {
+  // POST /api/jobs
+  router.post('/jobs', (req, res) => {
     try {
-      const job = readData('jobs.json').find(j => j.id === req.params.id)
-      if (!job) return res.status(404).json({ error: 'Job not found' })
+      const data = readData('jobs.json')
+      const { title, status, assemblyId, colour, startDate, dueDate, tasks } = req.body
+      const job = {
+        id: newId('job'),
+        title: title || 'Untitled job',
+        status: status || 'quote',
+        assemblyId: assemblyId || null,
+        colour: colour || '#dbeafe',
+        startDate: startDate || null,
+        dueDate: dueDate || null,
+        tasks: Array.isArray(tasks) ? tasks : [],
+        createdAt: new Date().toISOString()
+      }
+      data.jobs.push(job)
+      writeData('jobs.json', data)
       res.json(job)
     } catch (err) { res.status(500).json({ error: err.message }) }
   })
 
-  router.post('/jobs', (req, res) => {
+  // PUT /api/jobs/:id/baseline — snapshot task dates as baseline
+  router.put('/jobs/:id/baseline', (req, res) => {
     try {
-      const jobs = readData('jobs.json')
-      const ts   = nowTs()
-      const newJob = { id: nextJobId(jobs), createdAt: ts, updatedAt: ts, ...req.body }
-      jobs.push(newJob)
-      writeData('jobs.json', jobs)
-      res.json(newJob)
+      const data = readData('jobs.json')
+      const idx = data.jobs.findIndex(j => j.id === req.params.id)
+      if (idx === -1) return res.status(404).json({ error: 'Job not found' })
+      data.jobs[idx].baseline = Array.isArray(req.body.baseline) ? req.body.baseline : []
+      writeData('jobs.json', data)
+      res.json(data.jobs[idx])
     } catch (err) { res.status(500).json({ error: err.message }) }
   })
 
+  // PUT /api/jobs/:id — update job header fields
   router.put('/jobs/:id', (req, res) => {
     try {
-      const jobs = readData('jobs.json')
-      const idx  = jobs.findIndex(j => j.id === req.params.id)
+      const data = readData('jobs.json')
+      const idx = data.jobs.findIndex(j => j.id === req.params.id)
       if (idx === -1) return res.status(404).json({ error: 'Job not found' })
-      jobs[idx] = { ...jobs[idx], ...req.body, id: jobs[idx].id, updatedAt: nowTs() }
-      writeData('jobs.json', jobs)
-      res.json(jobs[idx])
+      const allowed = ['title', 'status', 'colour', 'startDate', 'dueDate', 'assemblyId']
+      allowed.forEach(k => {
+        if (req.body[k] !== undefined) data.jobs[idx][k] = req.body[k]
+      })
+      writeData('jobs.json', data)
+      res.json(data.jobs[idx])
     } catch (err) { res.status(500).json({ error: err.message }) }
   })
 
-  router.patch('/jobs/:id/task/:taskId', (req, res) => {
+  // PUT /api/jobs/:id/tasks — replace full task array (Gantt saves)
+  router.put('/jobs/:id/tasks', (req, res) => {
     try {
-      const jobs = readData('jobs.json')
-      const idx  = jobs.findIndex(j => j.id === req.params.id)
+      const data = readData('jobs.json')
+      const idx = data.jobs.findIndex(j => j.id === req.params.id)
       if (idx === -1) return res.status(404).json({ error: 'Job not found' })
-      const tIdx = (jobs[idx].tasks || []).findIndex(t => t.id === req.params.taskId)
-      if (tIdx === -1) return res.status(404).json({ error: 'Task not found' })
-      jobs[idx].tasks[tIdx] = { ...jobs[idx].tasks[tIdx], ...req.body }
-      jobs[idx].updatedAt   = nowTs()
-      writeData('jobs.json', jobs)
-      res.json(jobs[idx].tasks[tIdx])
+      const tasks = Array.isArray(req.body.tasks) ? req.body.tasks : []
+      data.jobs[idx].tasks = tasks
+      const ends = tasks.map(t => t.endDate).filter(Boolean).sort()
+      if (ends.length) data.jobs[idx].dueDate = ends[ends.length - 1]
+      writeData('jobs.json', data)
+      res.json(data.jobs[idx])
     } catch (err) { res.status(500).json({ error: err.message }) }
   })
 
-  router.delete('/jobs/:id', (req, res) => {
+  // POST /api/jobs/:jobId/tasks/:taskId/files — upload a file attachment
+  router.post('/jobs/:jobId/tasks/:taskId/files', upload.single('file'), (req, res) => {
     try {
-      let jobs = readData('jobs.json')
-      if (!jobs.find(j => j.id === req.params.id)) return res.status(404).json({ error: 'Job not found' })
-      writeData('jobs.json', jobs.filter(j => j.id !== req.params.id))
-      res.json({ success: true })
+      if (!req.file) return res.status(400).json({ error: 'No file received' })
+      const ext = nodePath.extname(req.file.originalname)
+      const storedName = `task-${randomUUID()}${ext}`
+      fs.renameSync(req.file.path, nodePath.join(uploadsDir, storedName))
+      res.json({
+        id: `tf-${Date.now()}`,
+        name: req.file.originalname,
+        filename: storedName,
+        url: `/uploads/${storedName}`,
+        size: req.file.size,
+        uploadedAt: new Date().toISOString()
+      })
+    } catch (err) { res.status(500).json({ error: err.message }) }
+  })
+
+  // DELETE /api/jobs/:id
+  router.delete('/jobs/:id', async (req, res) => {
+    try {
+      const data = readData('jobs.json')
+      const job = data.jobs.find(j => j.id === req.params.id)
+      if (!job) return res.status(404).json({ error: 'Job not found' })
+
+      // Clean up uploaded task files from disk before removing the record.
+      // A missing file must not block the delete, so each unlink is wrapped individually.
+      const allTasks = [
+        ...(job.tasks || []),
+        ...(job.tasks || []).flatMap(t => t.subTasks || []),
+      ]
+      for (const task of allTasks) {
+        for (const f of (task.files || [])) {
+          const filePath = nodePath.join(uploadsDir, nodePath.basename(f.url || ''))
+          try { await fs.promises.unlink(filePath) } catch { /* already gone */ }
+        }
+      }
+
+      data.jobs = data.jobs.filter(j => j.id !== req.params.id)
+      writeData('jobs.json', data)
+      res.json({ ok: true })
     } catch (err) { res.status(500).json({ error: err.message }) }
   })
 

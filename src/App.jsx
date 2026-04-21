@@ -6,7 +6,6 @@ import Production from './pages/Production'
 import HR from './pages/HR'
 import Tools from './pages/Tools'
 import Inventory from './pages/Inventory'
-import Jobs from './pages/Jobs'
 import Settings from './pages/Settings'
 import InspectionPage from './pages/InspectionPage'
 
@@ -15,10 +14,8 @@ const inspectionMatch = window.location.pathname.match(/^\/inspection\/(.+)$/)
 const pageTitles = {
   dashboard: 'Dashboard',
   production: 'Production overview',
-  jobs: 'Jobs & scheduling',
   tools: 'Tool tracker',
   inventory: 'Inventory',
-  vehicles: 'Vehicle design',
   'time-attendance': 'Time & Attendance',
   employees: 'Employees',
   'leave-management': 'Leave management',
@@ -38,7 +35,6 @@ function PageContent({ page, onNavigate }) {
     case 'health-safety': return <HR section="health-safety" />
     case 'tools': return <Tools />
     case 'inventory': return <Inventory />
-    case 'jobs': return <Jobs />
     case 'settings': return <Settings />
     default: return (
       <div className="flex items-center justify-center h-40">

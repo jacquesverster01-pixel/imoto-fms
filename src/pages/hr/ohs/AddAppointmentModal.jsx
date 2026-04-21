@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useGet, apiFetch } from '../../../hooks/useApi'
 import { styles } from '../../../utils/hrStyles'
 
-const UPLOADS_URL = 'http://localhost:3001/uploads'
+import { UPLOADS_BASE as UPLOADS_URL } from '../../../hooks/useApi'
 
 export default function AddAppointmentModal({ isOpen, onClose, onSaved, editAppointment }) {
   const { data: typesRaw } = useGet('/ohs-appointment-types')

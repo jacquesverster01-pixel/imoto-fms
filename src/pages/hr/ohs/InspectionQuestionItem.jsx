@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { apiFetch } from '../../../hooks/useApi'
 
-const UPLOADS_URL = 'http://localhost:3001/uploads'
+import { UPLOADS_BASE as UPLOADS_URL } from '../../../hooks/useApi'
 
 const RESPONSE_BTNS = [
   { value: 'yes', label: 'Yes', bg: '#dcfce7', active: '#22c55e', text: '#166534' },

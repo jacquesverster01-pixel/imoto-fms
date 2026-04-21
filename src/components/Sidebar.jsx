@@ -9,15 +9,13 @@ const navItems = [
     section: 'Production',
     items: [
       { id: 'production', label: 'Production overview', icon: 'grid' },
-      { id: 'jobs', label: 'Jobs & scheduling', icon: 'list' },
     ]
   },
   {
     section: 'Operations',
     items: [
-      { id: 'tools', label: 'Tool tracker', icon: 'tool', badge: 4, badgeColor: 'red' },
+      { id: 'tools', label: 'Tool tracker', icon: 'tool' }, // TODO: wire badge to dashboard API tools.overdueCount
       { id: 'inventory', label: 'Inventory', icon: 'box' },
-      { id: 'vehicles', label: 'Vehicle design', icon: 'truck' },
     ]
   },
   {

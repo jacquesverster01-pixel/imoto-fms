@@ -1,5 +1,7 @@
 // factoryMapPins.jsx — AssetPin + popup
+import { useRef } from 'react'
 import { todayStr } from '../../../utils/time'
+import { useClickOutside } from '../../../hooks/useClickOutside'
 
 export const TYPE_COLOURS = {
   fire_extinguisher: '#ef4444',
@@ -151,13 +153,15 @@ export function AssetPin({ asset, editMode, containerRef, onDragStart, onSelect,
 }
 
 export function AssetPinPopup({ asset, zones, onClose }) {
+  const popupRef = useRef(null)
+  useClickOutside(popupRef, onClose)
   if (!asset) return null
   const zoneName = zones?.find(z => z.id === asset.zoneId)?.name || 'Unassigned'
   const leftStyle = asset.xPct > 0.75
     ? `calc(${asset.xPct * 100}% - 224px)`
     : `calc(${asset.xPct * 100}% + 18px)`
   return (
-    <div onMouseDown={e => e.stopPropagation()} onClick={e => e.stopPropagation()}
+    <div ref={popupRef} onMouseDown={e => e.stopPropagation()} onClick={e => e.stopPropagation()}
       style={{ position: 'absolute', left: leftStyle, top: `calc(${asset.yPct * 100}% - 20px)`, background: '#fff', border: '1px solid #e4e6ea', borderRadius: 8, padding: '10px 12px', zIndex: 10, minWidth: 180, maxWidth: 230, boxShadow: '0 4px 16px rgba(0,0,0,0.14)' }}>
       <div style={{ fontWeight: 700, fontSize: 13, marginBottom: 6 }}>{asset.label}</div>
       <div style={{ fontSize: 12, color: '#555', marginBottom: 2 }}>Type: {TYPE_LABELS[asset.type] || asset.type}</div>

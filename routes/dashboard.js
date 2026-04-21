@@ -1,4 +1,14 @@
 import { Router } from 'express'
+import { calcProductionStats } from '../lib/dashboardStats.js'
+
+function toHHMM(isoStr) {
+  const sast = new Date(new Date(isoStr).getTime() + 2 * 60 * 60 * 1000)
+  return `${String(sast.getUTCHours()).padStart(2, '0')}:${String(sast.getUTCMinutes()).padStart(2, '0')}`
+}
+
+function toSASTDate(isoStr) {
+  return new Date(new Date(isoStr).getTime() + 2 * 60 * 60 * 1000).toISOString().slice(0, 10)
+}
 
 export default function dashboardRouter(readData) {
   const router = Router()
@@ -13,21 +23,14 @@ export default function dashboardRouter(readData) {
       const employees      = readData('employees.json')
       const timelog        = readData('timelog.json')
       const leave          = readData('leave.json')
-      const jobs           = readData('jobs.json')
+      const _jobsRaw       = readData('jobs.json')
+      const jobs           = Array.isArray(_jobsRaw) ? _jobsRaw : (_jobsRaw.jobs || [])
       const tools          = readData('tools.json')
       const stock          = readData('stock.json')
       const ohs            = readData('ohs.json')
       const ohsRisks       = readData('ohs_risks.json')
       const ohsEquipment   = readData('ohs_equipment.json')
       const ohsInspections = readData('ohs_inspections_active.json')
-
-      function toHHMM(isoStr) {
-        const sast = new Date(new Date(isoStr).getTime() + 2 * 60 * 60 * 1000)
-        return `${String(sast.getUTCHours()).padStart(2, '0')}:${String(sast.getUTCMinutes()).padStart(2, '0')}`
-      }
-      function toSASTDate(isoStr) {
-        return new Date(new Date(isoStr).getTime() + 2 * 60 * 60 * 1000).toISOString().slice(0, 10)
-      }
 
       // ── HR KPIs ──────────────────────────────────────────────
       const todayLog = timelog.filter(e => e.timestamp && toSASTDate(e.timestamp) === todayStr)
@@ -51,11 +54,7 @@ export default function dashboardRouter(readData) {
       ).length
 
       // ── PRODUCTION ──────────────────────────────────────────
-      const activeJobs         = jobs.filter(j => j.status !== 'complete' && j.status !== 'cancelled')
-      const overdueJobs        = activeJobs.filter(j => j.due && j.due < todayStr).length
-      const completedThisMonth = jobs.filter(j =>
-        j.status === 'complete' && j.completedDate && j.completedDate.startsWith(monthStr)
-      ).length
+      const { activeJobs, overdueJobs, completedThisMonth } = calcProductionStats(jobs, todayStr, monthStr)
 
       // ── OHS ─────────────────────────────────────────────────
       const openIncidents      = ohs.filter(i => (i.status || '').toLowerCase() !== 'closed').length
@@ -108,13 +107,32 @@ export default function dashboardRouter(readData) {
         }
       })
 
+      // ── ZK unmatched IDs (last 7 days) ──────────────────────
+      let unmatchedZkPunches = []
+      try {
+        const cutoff = new Date(Date.now() - 7 * 24 * 3600 * 1000).toISOString()
+        unmatchedZkPunches = readData('zk_unmatched.json')
+          .filter(e => e.detectedAt >= cutoff)
+          .map(({ zkId, timestamp, detectedAt }) => ({ zkId, timestamp, detectedAt }))
+      } catch { /* file missing on fresh install — return empty array */ }
+
+      // ── JOBS summary (only what the dashboard card needs) ───
+      // name/due align with the field names Dashboard.jsx reads.
+      const jobSummaries = activeJobs.map(j => ({
+        id:     j.id,
+        name:   j.title,
+        status: j.status,
+        due:    j.dueDate || j.due || null,
+      }))
+
       res.json({
-        hr:             { clockedInCount, lateArrivalCount, onLeaveToday, totalEmployees: employees.length },
-        production:     { activeJobs: activeJobs.length, overdueJobs, completedThisMonth, jobs },
-        ohs:            { openIncidents, overdueInspections, overdueReviews, equipmentServiceDue },
-        stock:          { lowStockCount: lowStockItems.length, lowStockItems: lowStockItems.map(s => ({ id: s.id, name: s.name, quantity: s.quantity ?? s.qty ?? 0, reorderLevel: s.reorderLevel ?? s.min ?? 5 })) },
-        tools:          { overdueCount, missingCount },
+        hr:                  { clockedInCount, lateArrivalCount, onLeaveToday, totalEmployees: employees.length },
+        production:          { activeJobs: activeJobs.length, overdueJobs, completedThisMonth, jobs: jobSummaries },
+        ohs:                 { openIncidents, overdueInspections, overdueReviews, equipmentServiceDue },
+        stock:               { lowStockCount: lowStockItems.length, lowStockItems: lowStockItems.map(s => ({ id: s.id, name: s.name, quantity: s.quantity ?? s.qty ?? 0, reorderLevel: s.reorderLevel ?? s.min ?? 5 })) },
+        tools:               { overdueCount, missingCount },
         employeeStatus,
+        unmatchedZkPunches,
       })
     } catch (err) { res.status(500).json({ error: err.message }) }
   })

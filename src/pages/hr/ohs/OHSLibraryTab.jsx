@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react'
 import { useGet, apiFetch } from '../../../hooks/useApi'
 
-const UPLOADS_URL = 'http://localhost:3001/uploads'
+import { UPLOADS_BASE as UPLOADS_URL } from '../../../hooks/useApi'
 const ACCEPT = '.pdf,.jpg,.jpeg,.png,.doc,.docx'
 
 function fmtSize(bytes) {
