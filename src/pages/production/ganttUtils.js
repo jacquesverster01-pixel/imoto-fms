@@ -135,47 +135,54 @@ export function buildMonthGroups(dayColumns) {
 }
 
 export function deriveParentBounds(task) {
-  if (!task.subTasks || task.subTasks.length === 0) return task
-  const starts = task.subTasks.map(s => parseDate(s.startDate)).filter(Boolean)
-  const ends   = task.subTasks.map(s => parseDate(s.endDate)).filter(Boolean)
-  const pctAvg = task.subTasks.length
-    ? Math.round(task.subTasks.reduce((a, s) => a + (s.pct || 0), 0) / task.subTasks.length)
-    : 0
+  if (!task.children || task.children.length === 0) return task
+  const resolvedChildren = task.children.map(c => deriveParentBounds(c))
+  const starts = resolvedChildren.map(c => parseDate(c.startDate)).filter(Boolean)
+  const ends   = resolvedChildren.map(c => parseDate(c.endDate)).filter(Boolean)
+  const pctAvg = Math.round(resolvedChildren.reduce((a, c) => a + (c.pct || 0), 0) / resolvedChildren.length)
   return {
     ...task,
     startDate: starts.length ? toDateStr(new Date(Math.min(...starts))) : task.startDate,
     endDate:   ends.length   ? toDateStr(new Date(Math.max(...ends)))   : task.endDate,
-    pct: pctAvg, done: pctAvg === 100
+    pct: pctAvg,
+    done: pctAvg === 100,
+    children: resolvedChildren
   }
 }
 
 export function flattenTasksForDisplay(tasks) {
   const rows = []
-  tasks.forEach(task => {
-    const hasChildren = task.subTasks && task.subTasks.length > 0
-    const derived = hasChildren ? deriveParentBounds(task) : task
-    rows.push({ task: derived, isParent: hasChildren, isSubTask: false, parentId: null, depth: 0 })
+  function walk(node, depth, parentId) {
+    const hasChildren = node.children && node.children.length > 0
+    const derived = hasChildren ? deriveParentBounds(node) : node
+    rows.push({ task: derived, isParent: hasChildren, isSubTask: depth > 0, parentId, depth })
     if (hasChildren) {
-      task.subTasks.forEach(st => {
-        rows.push({ task: st, isParent: false, isSubTask: true, parentId: task.id, depth: 1 })
-      })
+      derived.children.forEach(child => walk(child, depth + 1, node.id))
     }
-  })
+  }
+  tasks.forEach(task => walk(task, 0, null))
   return rows
 }
 
-export function collectAllSubTasks(tasks) {
-  return tasks.flatMap(t => t.subTasks || [])
+export function collectAllDescendants(tasks) {
+  const result = []
+  function walk(node) {
+    ;(node.children || []).forEach(c => { result.push(c); walk(c) })
+  }
+  tasks.forEach(walk)
+  return result
 }
 
-export function getEarliestAllowedStart(taskId, dependsOn, allTasks, allSubTasks) {
+export function collectAllSubTasks(tasks) { return collectAllDescendants(tasks) }
+
+export function getEarliestAllowedStart(taskId, dependsOn, allTasks, allDescendants) {
   if (!dependsOn || dependsOn.length === 0) return null
+  const union = [...allTasks, ...(allDescendants || [])]
   let latest = null
   dependsOn.forEach(depId => {
-    let dep = allTasks.find(t => t.id === depId)
-    if (!dep) dep = allSubTasks.find(s => s.id === depId)
+    const dep = union.find(t => t.id === depId)
     if (!dep) return
-    const depEnd = dep.subTasks && dep.subTasks.length
+    const depEnd = dep.children && dep.children.length > 0
       ? parseDate(deriveParentBounds(dep).endDate)
       : parseDate(dep.endDate)
     if (!depEnd) return
@@ -186,20 +193,25 @@ export function getEarliestAllowedStart(taskId, dependsOn, allTasks, allSubTasks
 }
 
 export function enforceDependencies(tasks) {
-  const allSubTasks = collectAllSubTasks(tasks)
-  const updated = tasks.map(t => ({ ...t, subTasks: t.subTasks ? [...t.subTasks] : [] }))
-  updated.forEach((task, i) => {
-    const earliest = getEarliestAllowedStart(task.id, task.dependsOn, updated, allSubTasks)
-    if (!earliest) return
-    const taskStart = parseDate(task.startDate)
-    if (taskStart && taskStart < earliest) {
-      const duration = task.startDate && task.endDate
-        ? Math.round((parseDate(task.endDate) - parseDate(task.startDate)) / 86400000) : 0
-      updated[i].startDate = toDateStr(earliest)
-      updated[i].endDate   = toDateStr(addDays(earliest, duration))
+  const allDescendants = collectAllDescendants(tasks)
+  function adjustNode(node) {
+    const earliest = getEarliestAllowedStart(node.id, node.dependsOn, tasks, allDescendants)
+    let adjusted = { ...node }
+    if (earliest) {
+      const nodeStart = parseDate(node.startDate)
+      if (nodeStart && nodeStart < earliest) {
+        const duration = node.startDate && node.endDate
+          ? Math.round((parseDate(node.endDate) - parseDate(node.startDate)) / 86400000) : 0
+        adjusted.startDate = toDateStr(earliest)
+        adjusted.endDate   = toDateStr(addDays(earliest, duration))
+      }
     }
-  })
-  return updated
+    if (node.children && node.children.length > 0) {
+      adjusted.children = node.children.map(c => adjustNode(c))
+    }
+    return adjusted
+  }
+  return tasks.map(t => adjustNode(t))
 }
 
 export function dependencyArrowPath(predLeft, predWidth, succLeft, predRowY, succRowY, colWidth) {
