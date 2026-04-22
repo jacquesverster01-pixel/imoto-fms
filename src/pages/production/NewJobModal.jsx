@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { apiFetch } from '../../hooks/useApi'
 import { skipWeekend, addWorkingDays, toDateStr } from './ganttUtils'
 import { buildTasksFromBom } from '../../components/inventory/bom/bomUtils'
+import { flattenTree } from './taskTreeOps'
 
 const COLOUR_SWATCHES = ['#dbeafe','#fce7f3','#dcfce7','#ede9fe','#fef9c3','#ffedd5','#f1f5f9','#fee2e2']
 
@@ -10,7 +11,7 @@ function buildTasksFromAssembly(assembly, startDate) {
   return assembly.tasks.map((t, i) => {
     const s = skipWeekend(new Date(cur)), e = addWorkingDays(new Date(s), t.defaultDays - 1)
     cur = addWorkingDays(new Date(e), 1)
-    return { id: `t-${Date.now()}-${i}`, name: t.name, defaultDays: t.defaultDays, startDate: toDateStr(s), endDate: toDateStr(e), done: false, assignedTo: null }
+    return { id: `t-${Date.now()}-${i}`, name: t.name, defaultDays: t.defaultDays, startDate: toDateStr(s), endDate: toDateStr(e), done: false, pct: 0, dependsOn: [], notes: '', children: [], components: [], itemCode: null, department: null, assignedTo: null }
   })
 }
 
@@ -49,7 +50,7 @@ function AssemblyModeFields({ assemblies, assemblyId, setAssemblyId, tasks }) {
 }
 
 function BomModeFields({ boms, bomsLoaded, bomId, setBomId, tasks }) {
-  const subCount = tasks.reduce((n, t) => n + (t.children?.length || 0), 0)
+  const totalDescendants = flattenTree(tasks).length - tasks.length
   return (
     <div>
       <label style={{ display: 'block', marginBottom: 4, fontWeight: 500, fontSize: 13 }}>Select BOM</label>
@@ -63,7 +64,7 @@ function BomModeFields({ boms, bomsLoaded, bomId, setBomId, tasks }) {
             </select>}
       {tasks.length > 0 && (
         <div style={{ marginTop: 12 }}>
-          <div style={{ fontSize: 12, color: '#6b7280', marginBottom: 6 }}>{tasks.length} dept task{tasks.length !== 1 ? 's' : ''} generated · {subCount} sub-tasks</div>
+          <div style={{ fontSize: 12, color: '#6b7280', marginBottom: 6 }}>{tasks.length} root task{tasks.length !== 1 ? 's' : ''} · {totalDescendants} descendant{totalDescendants !== 1 ? 's' : ''}</div>
           <div style={{ maxHeight: 160, overflowY: 'auto', border: '1px solid #e5e7eb', borderRadius: 6, padding: '6px 0' }}>
             {tasks.map(t => (
               <div key={t.id} style={{ padding: '4px 10px', fontSize: 13 }}>
@@ -72,7 +73,7 @@ function BomModeFields({ boms, bomsLoaded, bomId, setBomId, tasks }) {
               </div>
             ))}
           </div>
-          <div style={{ fontSize: 11, color: '#9ca3af', marginTop: 6 }}>Labour rows (TEAM-*) excluded. Edit tasks and sub-tasks in the Gantt after saving.</div>
+          <div style={{ fontSize: 11, color: '#9ca3af', marginTop: 6 }}>Labour rows (TEAM-*) excluded. Edit tasks and nested tasks in the Gantt after saving.</div>
         </div>
       )}
     </div>
@@ -143,7 +144,7 @@ export default function NewJobModal({ assemblies, onClose, onSaved }) {
   }
 
   function addScratchTask() {
-    setTasks(p => [...p, { id: `t-${Date.now()}`, name: '', defaultDays: 1, startDate: null, endDate: null, done: false, assignedTo: null }])
+    setTasks(p => [...p, { id: `t-${Date.now()}`, name: '', defaultDays: 1, startDate: null, endDate: null, done: false, pct: 0, dependsOn: [], notes: '', children: [], components: [], itemCode: null, department: null, assignedTo: null }])
   }
   function updateTask(id, key, val) { setTasks(p => p.map(t => t.id === id ? { ...t, [key]: val } : t)) }
   function removeTask(id)           { setTasks(p => p.filter(t => t.id !== id)) }

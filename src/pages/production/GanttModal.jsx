@@ -336,11 +336,11 @@ export default function GanttModal({ job, onClose, onSaved, inline }) {
   function addTask() {
     const id = `t-${Date.now()}`
     setTasks(prev => { const last = prev[prev.length-1]; const d = toDateStr(addDays(last?.endDate ? parseDate(last.endDate) : new Date(), 1))
-      return [...prev, { id, name: 'New task', startDate: d, endDate: d, done: false, pct: 0, dependsOn: [], subTasks: [], assignedTo: null }] })
+      return [...prev, { id, name: 'New task', startDate: d, endDate: d, done: false, pct: 0, dependsOn: [], children: [], components: [], itemCode: null, department: null, assignedTo: null }] })
   }
   function addMilestone() {
     const id = `t-${Date.now()}`; const d = toDateStr(addDays(new Date(), 1))
-    setTasks(prev => [...prev, { id, name: 'Milestone', startDate: d, endDate: d, milestone: true, done: false, pct: 0, dependsOn: [], subTasks: [] }])
+    setTasks(prev => [...prev, { id, name: 'Milestone', startDate: d, endDate: d, milestone: true, done: false, pct: 0, dependsOn: [], children: [], components: [], itemCode: null, department: null }])
   }
   function addSubTask(taskId, parentId) {
     const parent = findNodeById(tasks, taskId)
