@@ -5,6 +5,64 @@ import { UPLOADS_BASE } from '../../hooks/useApi'
 const sectionStyle = { padding: '16px', borderBottom: '1px solid #f0f1f5' }
 const labelStyle   = { fontSize: 11, fontWeight: 700, color: '#9298c4', textTransform: 'uppercase', letterSpacing: '0.07em', marginBottom: 8, display: 'block' }
 
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]))
+}
+
+function printComponentsList(task) {
+  const rows = (task.components || []).map(c => `
+    <tr>
+      <td style="font-family: monospace; padding: 6px 10px; border-bottom: 1px solid #ddd;">${escapeHtml(c.itemCode || '')}</td>
+      <td style="padding: 6px 10px; border-bottom: 1px solid #ddd;">${escapeHtml(c.itemDescription || '')}</td>
+      <td style="padding: 6px 10px; border-bottom: 1px solid #ddd; text-align: right;">${c.quantity != null ? c.quantity : ''}</td>
+      <td style="padding: 6px 10px; border-bottom: 1px solid #ddd;">${escapeHtml(c.unit || '')}</td>
+    </tr>
+  `).join('')
+
+  const html = `
+    <!doctype html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <title>Components — ${escapeHtml(task.name || '')}</title>
+      <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #1a1d3b; margin: 24px; }
+        h1 { font-size: 16px; margin: 0 0 4px; }
+        .meta { font-size: 12px; color: #666; margin-bottom: 18px; }
+        table { width: 100%; border-collapse: collapse; font-size: 12px; }
+        th { text-align: left; padding: 6px 10px; border-bottom: 2px solid #333; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; }
+        th.num { text-align: right; }
+        @media print { body { margin: 12mm; } button { display: none; } }
+      </style>
+    </head>
+    <body>
+      <h1>${escapeHtml(task.name || 'Components')}</h1>
+      <div class="meta">
+        ${task.itemCode ? escapeHtml(task.itemCode) + ' · ' : ''}${task.components.length} component${task.components.length !== 1 ? 's' : ''} · Printed ${new Date().toLocaleString()}
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Code</th>
+            <th>Description</th>
+            <th class="num">Qty</th>
+            <th>Unit</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </body>
+    </html>
+  `
+
+  const win = window.open('', '_blank', 'width=800,height=900')
+  if (!win) { alert('Pop-up blocked. Please allow pop-ups to print the components list.'); return }
+  win.document.write(html)
+  win.document.close()
+  win.focus()
+  setTimeout(() => { win.print() }, 200)
+}
+
 export default function TaskWindow({ task, parentId, pos, onClose, onChangeName, onCheckTask, onAddSubTask, onUpdateNotes, onUpdatePct, onUploadFile, onDeleteFile, onDelete }) {
   const windowRef    = useRef(null)
   const fileInputRef = useRef(null)
@@ -79,13 +137,13 @@ export default function TaskWindow({ task, parentId, pos, onClose, onChangeName,
                   </thead>
                   <tbody>
                     {task.components.map((c, i) => {
-                      const qty = c.qty ?? null
+                      const qty = c.quantity ?? null
                       const unitCost = c.unitCost ?? null
                       const total = c.totalCost ?? (qty != null && unitCost != null ? qty * unitCost : null)
                       return (
                         <tr key={i} style={{ borderTop: '1px solid #f0f1f5', height: 28 }}>
-                          <td style={{ padding: '4px 4px 4px 0', fontFamily: 'monospace', color: '#1a1d3b', fontSize: 11, whiteSpace: 'nowrap' }}>{c.code || '—'}</td>
-                          <td style={{ padding: '4px 6px', color: '#3a3e5c', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 80 }}>{c.description || c.name || '—'}</td>
+                          <td style={{ padding: '4px 4px 4px 0', fontFamily: 'monospace', color: '#1a1d3b', fontSize: 11, whiteSpace: 'nowrap' }}>{c.itemCode || '—'}</td>
+                          <td style={{ padding: '4px 6px', color: '#3a3e5c', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 160 }}>{c.itemDescription || '—'}</td>
                           <td style={{ padding: '4px 0', textAlign: 'right', color: '#1a1d3b', whiteSpace: 'nowrap' }}>{qty != null ? `${qty}${c.unit ? ' ' + c.unit : ''}` : '—'}</td>
                           <td style={{ padding: '4px 0 4px 6px', textAlign: 'right', color: '#1a1d3b', whiteSpace: 'nowrap' }}>{unitCost != null ? `R${Number(unitCost).toFixed(2)}` : '—'}</td>
                           <td style={{ padding: '4px 0 4px 6px', textAlign: 'right', color: '#1a1d3b', whiteSpace: 'nowrap' }}>{total != null ? `R${Number(total).toFixed(2)}` : '—'}</td>
@@ -119,7 +177,23 @@ export default function TaskWindow({ task, parentId, pos, onClose, onChangeName,
         )}
 
         {activeTab === 'files' && (
-          <div style={{ padding: '16px' }}>
+          <div>
+            {task.components?.length > 0 && (
+              <div style={{ padding: '16px', borderBottom: '1px solid #f0f1f5' }}>
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: 8 }}>
+                  <span style={labelStyle}>Components list</span>
+                  <span style={{ marginLeft: 'auto', fontSize: 12, color: '#9298c4' }}>
+                    {task.components.length} item{task.components.length !== 1 ? 's' : ''}
+                  </span>
+                </div>
+                <button
+                  onClick={() => printComponentsList(task)}
+                  style={{ padding: '10px 0', background: '#f0f4ff', color: '#4f67e4', border: '1px solid #c7d0f8', borderRadius: 6, cursor: 'pointer', fontSize: 13, fontWeight: 600, width: '100%' }}>
+                  🖨 Print components list
+                </button>
+              </div>
+            )}
+            <div style={{ padding: '16px' }}>
             {(task.files || []).length === 0 && (
               <div style={{ fontSize: 13, color: '#c0c5d8', marginBottom: 12 }}>No files attached</div>
             )}
@@ -143,6 +217,7 @@ export default function TaskWindow({ task, parentId, pos, onClose, onChangeName,
               style={{ marginTop: 12, padding: '10px 0', background: '#f0f4ff', color: '#4f67e4', border: '1px solid #c7d0f8', borderRadius: 6, cursor: uploading ? 'not-allowed' : 'pointer', fontSize: 13, fontWeight: 600, width: '100%', opacity: uploading ? 0.7 : 1 }}>
               {uploading ? 'Uploading…' : '+ Upload file'}
             </button>
+            </div>
           </div>
         )}
       </div>
