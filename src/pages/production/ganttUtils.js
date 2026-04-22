@@ -1,3 +1,10 @@
+function flattenAll(tasks) {
+  const out = []
+  const walk = n => { out.push(n); (n.children || []).forEach(walk) }
+  tasks.forEach(walk)
+  return out
+}
+
 export function parseDate(str) {
   if (!str) return null
   const [y, m, d] = str.split('-').map(Number)
@@ -296,10 +303,10 @@ export function getTodayScrollX(zoomCols) {
   return 0
 }
 
-export function wouldCreateCycle(tasks, allSubTasks, predecessorId, dependentId) {
+export function wouldCreateCycle(tasks, allDescendants, predecessorId, dependentId) {
   // Returns true if adding predecessorId → dependentId would create a cycle.
   // Checks whether predecessorId already (transitively) depends on dependentId.
-  const allItems = [...tasks, ...allSubTasks]
+  const allItems = [...tasks, ...allDescendants]
   const visited = new Set()
   function canReach(currentId) {
     if (currentId === dependentId) return true
@@ -311,11 +318,11 @@ export function wouldCreateCycle(tasks, allSubTasks, predecessorId, dependentId)
   return canReach(predecessorId)
 }
 
-export function getTaskBarColor(task, allTasks, allSubTasks) {
+export function getTaskBarColor(task, allTasks, allDescendants) {
   const today = new Date(); today.setHours(0, 0, 0, 0)
   if (task.done || task.pct === 100) return '#16a34a'
   if (task.dependsOn?.length) {
-    const allItems = [...allTasks, ...allSubTasks]
+    const allItems = [...allTasks, ...allDescendants]
     const isBlocked = task.dependsOn.some(depId => {
       const dep = allItems.find(t => t.id === depId)
       return dep && !dep.done && (dep.pct || 0) < 100
@@ -328,12 +335,6 @@ export function getTaskBarColor(task, allTasks, allSubTasks) {
 }
 
 export function computeCriticalPath(tasks) {
-  function flattenAll(nodes) {
-    const out = []
-    const walk = n => { out.push(n); (n.children || []).forEach(walk) }
-    nodes.forEach(walk)
-    return out
-  }
   const all = flattenAll(tasks)
   const ef = {}
   all.forEach(t => { const e = parseDate(t.endDate); ef[t.id] = e ? e.getTime() : 0 })
