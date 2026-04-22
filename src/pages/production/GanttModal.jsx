@@ -6,8 +6,9 @@ import {
   parseDate, toDateStr, addDays, getChartBounds, cascadeTasksForward,
   flattenTasksForDisplay, enforceDependencies, dependencyArrowPath,
   isMilestone, taskBarPosition, buildZoomColumns, getTodayScrollX, computeCriticalPath,
-  getTaskBarColor, collectAllSubTasks, wouldCreateCycle, pixelXToDate
+  getTaskBarColor, collectAllSubTasks, pixelXToDate
 } from './ganttUtils'
+import { updateNodeById, removeNodeById, appendChildTo, moveNodeTo, findNodeById, filterVisibleRows } from './taskTreeOps'
 import { groupCols, ppd } from '../../utils/ganttLogic'
 import { injectGanttPrintStyle } from '../../utils/ganttExport'
 import TaskWindow from './TaskWindow'
@@ -51,10 +52,10 @@ function LeftPanelRow({ row, collapsed, onToggle, onCheck, rowIdx, onDragHandleD
     <div
       data-left-row-task-id={task.id}
       data-left-row-parent-id={row.parentId || ''}
-      style={{ height: ROW_H, display: 'flex', alignItems: 'center', gap: 4, paddingLeft: isSubTask ? 24 : 4, paddingRight: 4, borderBottom: '1px solid #ecedf4', cursor: 'pointer', userSelect: 'none', background: rowBg, boxShadow: rowShadow, transition: 'background 0.12s' }}
+      style={{ height: ROW_H, display: 'flex', alignItems: 'center', gap: 4, paddingLeft: 4 + (row.depth * 20), paddingRight: 4, borderBottom: '1px solid #ecedf4', cursor: 'pointer', userSelect: 'none', background: rowBg, boxShadow: rowShadow, transition: 'background 0.12s' }}
       onMouseOver={() => onRowOver(rowIdx)}
       onClick={e => onOpenMenu(task.id, row.parentId, isParent, isMile, e)}>
-      {!isSubTask && (
+      {row.depth === 0 && (
         <span
           onMouseDown={e => { e.stopPropagation(); e.preventDefault(); onDragHandleDown(rowIdx) }}
           onClick={e => e.stopPropagation()}
@@ -73,7 +74,7 @@ function LeftPanelRow({ row, collapsed, onToggle, onCheck, rowIdx, onDragHandleD
         style={{ flex: 1, fontSize: 12, color: task.done ? '#b0b5cc' : isParent ? '#1a1d3b' : isSubTask ? '#3a3e5c' : '#1a1d3b', textDecoration: task.done ? 'line-through' : 'none', fontWeight: isParent ? 600 : 400, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', minWidth: 0 }}>
         {task.name}
       </span>
-      {!isSubTask && (
+      {row.depth === 0 && (
         <button onClick={e => { e.stopPropagation(); onOpenMenu(task.id, row.parentId, isParent, isMile, e) }}
           style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#9298c4', fontSize: 16, padding: '0 3px', flexShrink: 0, lineHeight: 1, borderRadius: 4 }}>⋮</button>
       )}
@@ -220,7 +221,7 @@ export default function GanttModal({ job, onClose, onSaved, inline }) {
   const lastSubtaskDragEndRef = useRef(0)
 
   const flatRows    = flattenTasksForDisplay(tasks)
-  const visibleRows = flatRows.filter(r => !r.isSubTask || !collapsed[r.parentId])
+  const visibleRows = filterVisibleRows(flatRows, collapsed)
   const { minDate, maxDate } = dateRange
   const zoomCols = buildZoomColumns(minDate, maxDate, zoom, zoomScale)
   zoomColsRef.current = zoomCols
@@ -232,10 +233,10 @@ export default function GanttModal({ job, onClose, onSaved, inline }) {
   const doneTasks   = flatRows.filter(r => !r.isParent && r.task.done).length
   const totalLeaf   = flatRows.filter(r => !r.isParent).length
   const criticalIds = showCriticalPath ? computeCriticalPath(tasks) : []
-  const allSubTasks = collectAllSubTasks(tasks)
+  const allDescendants = collectAllSubTasks(tasks)
 
   // No IIFE: compute task for TaskWindow before JSX
-  const taskWindowTask = taskWindow ? getTask(taskWindow.taskId, taskWindow.parentId) : null
+  const taskWindowTask = taskWindow ? findNodeById(tasks, taskWindow.taskId) : null
 
   useEffect(() => {
     const fn = e => { if (e.key === 'Escape') { setCtxMenu(null); setTaskWindow(null); linkDragRef.current = null; setLinkLine(null); dateDrawRef.current = null; setGhostBar(null) } }
@@ -282,11 +283,8 @@ export default function GanttModal({ job, onClose, onSaved, inline }) {
       const px1 = Math.min(startPx, x), px2 = Math.max(startPx, x)
       const d1 = pixelXToDate(px1, colsWithLeftRef.current)
       const d2 = pixelXToDate(px2, colsWithLeftRef.current)
-      const { taskId, parentId } = dateDrawRef.current
-      setTasks(p => !parentId
-        ? p.map(t => t.id === taskId ? { ...t, startDate: d1, endDate: d2 } : t)
-        : p.map(t => t.id !== parentId ? t : { ...t, subTasks: t.subTasks.map(s => s.id === taskId ? { ...s, startDate: d1, endDate: d2 } : s) })
-      )
+      const { taskId } = dateDrawRef.current
+      setTasks(p => updateNodeById(p, taskId, n => ({ ...n, startDate: d1, endDate: d2 })))
       dateDrawRef.current = null
       setGhostBar(null)
     }
@@ -305,9 +303,7 @@ export default function GanttModal({ job, onClose, onSaved, inline }) {
       const rowEl = el?.closest('[data-left-row-task-id]')
       if (!rowEl) { subtaskDropRef.current = null; setSubtaskDropHighlight(null); return }
       const hoveredId = rowEl.dataset.leftRowTaskId
-      const hoveredParent = rowEl.dataset.leftRowParentId || null
-      const targetId = hoveredParent || hoveredId
-      const resolved = targetId === subtaskDragRef.current.taskId ? null : targetId
+      const resolved = hoveredId === subtaskDragRef.current.taskId ? null : hoveredId
       subtaskDropRef.current = resolved
       setSubtaskDropHighlight(resolved)
     }
@@ -347,35 +343,29 @@ export default function GanttModal({ job, onClose, onSaved, inline }) {
     setTasks(prev => [...prev, { id, name: 'Milestone', startDate: d, endDate: d, milestone: true, done: false, pct: 0, dependsOn: [], subTasks: [] }])
   }
   function addSubTask(taskId, parentId) {
-    const targetId = parentId || taskId
-    setTasks(prev => {
-      if (!prev.some(t => t.id === targetId)) return prev
-      return prev.map(t => { if (t.id !== targetId) return t; const d0 = t.endDate ? parseDate(t.endDate) : new Date()
-        return { ...t, subTasks: [...(t.subTasks||[]), { id: `st-${Date.now()}`, name: 'New sub-task', startDate: toDateStr(d0), endDate: toDateStr(addDays(d0,1)), done: false, pct: 0, dependsOn: [], assignedTo: null }] } })
-    })
+    const parent = findNodeById(tasks, taskId)
+    const d0 = parent?.endDate ? parseDate(parent.endDate) : new Date()
+    const newChild = { id: `st-${Date.now()}`, name: 'New sub-task', startDate: toDateStr(d0), endDate: toDateStr(addDays(d0, 1)), done: false, pct: 0, dependsOn: [], children: [], assignedTo: null }
+    setTasks(p => appendChildTo(p, taskId, newChild))
   }
   function onChangeName(id, parentId, val) {
-    setTasks(p => !parentId ? p.map(t => t.id===id ? {...t,name:val} : t) : p.map(t => t.id!==parentId ? t : {...t, subTasks: t.subTasks.map(s => s.id===id ? {...s,name:val} : s)}))
+    setTasks(p => updateNodeById(p, id, n => ({ ...n, name: val })))
   }
   function onCheckTask(id, parentId) {
-    setTasks(p => !parentId ? p.map(t => t.id===id ? {...t,done:!t.done,pct:!t.done?100:0} : t) : p.map(t => t.id!==parentId ? t : {...t, subTasks: t.subTasks.map(s => s.id===id ? {...s,done:!s.done,pct:!s.done?100:0} : s)}))
+    setTasks(p => updateNodeById(p, id, n => ({ ...n, done: !n.done, pct: !n.done ? 100 : 0 })))
   }
   function onToggleMilestone(id) { setTasks(p => p.map(t => t.id===id ? {...t,done:!t.done,pct:!t.done?100:0} : t)) }
-  function removeDep(taskId, depId) { setTasks(p => p.map(t => t.id===taskId ? {...t, dependsOn:(t.dependsOn||[]).filter(d=>d!==depId)} : t)) }
+  function removeDep(taskId, depId) { setTasks(p => updateNodeById(p, taskId, n => ({ ...n, dependsOn: (n.dependsOn || []).filter(d => d !== depId) }))) }
   function onBarRightClick(e, taskId, parentId, depIds) { setCtxMenu({ x: Math.min(e.clientX, window.innerWidth-200), y: e.clientY, taskId, parentId, depIds }) }
-  function getTask(taskId, parentId) {
-    if (!parentId) return tasks.find(t => t.id === taskId) || null
-    return tasks.find(t => t.id === parentId)?.subTasks?.find(s => s.id === taskId) || null
-  }
   function deleteTask(taskId, parentId) {
-    setTasks(p => !parentId ? p.filter(t => t.id !== taskId) : p.map(t => t.id !== parentId ? t : { ...t, subTasks: t.subTasks.filter(s => s.id !== taskId) }))
+    setTasks(p => removeNodeById(p, taskId))
     setTaskWindow(null)
   }
   function updateNotes(taskId, parentId, notes) {
-    setTasks(p => !parentId ? p.map(t => t.id===taskId ? {...t, notes} : t) : p.map(t => t.id!==parentId ? t : {...t, subTasks: t.subTasks.map(s => s.id===taskId ? {...s, notes} : s)}))
+    setTasks(p => updateNodeById(p, taskId, n => ({ ...n, notes })))
   }
   function updatePct(taskId, parentId, v) {
-    setTasks(p => !parentId ? p.map(t => t.id===taskId ? {...t, pct:v, done:v===100} : t) : p.map(t => t.id!==parentId ? t : {...t, subTasks: t.subTasks.map(s => s.id===taskId ? {...s, pct:v, done:v===100} : s)}))
+    setTasks(p => updateNodeById(p, taskId, n => ({ ...n, pct: v, done: v === 100 })))
   }
   async function uploadTaskFile(taskId, parentId, file) {
     const fd = new FormData(); fd.append('file', file)
@@ -384,30 +374,14 @@ export default function GanttModal({ job, onClose, onSaved, inline }) {
       if (!res.ok) throw new Error(`Upload failed: ${res.status}`)
       const rec = await res.json()
       if (!rec.id) return
-      setTasks(p => !parentId ? p.map(t => t.id===taskId ? {...t, files:[...(t.files||[]), rec]} : t) : p.map(t => t.id!==parentId ? t : {...t, subTasks: t.subTasks.map(s => s.id===taskId ? {...s, files:[...(s.files||[]), rec]} : s)}))
+      setTasks(p => updateNodeById(p, taskId, n => ({ ...n, files: [...(n.files || []), rec] })))
     } catch (e) { console.error('[uploadTaskFile]', e) }
   }
   function deleteTaskFile(taskId, parentId, fileId) {
-    setTasks(p => !parentId ? p.map(t => t.id===taskId ? {...t, files:(t.files||[]).filter(f=>f.id!==fileId)} : t) : p.map(t => t.id!==parentId ? t : {...t, subTasks: t.subTasks.map(s => s.id===taskId ? {...s, files:(s.files||[]).filter(f=>f.id!==fileId)} : s)}))
+    setTasks(p => updateNodeById(p, taskId, n => ({ ...n, files: (n.files || []).filter(f => f.id !== fileId) })))
   }
   function makeSubTask(taskId, fromParentId, newParentId) {
-    setTasks(prev => {
-      const src = fromParentId ? prev.find(t => t.id === fromParentId)?.subTasks?.find(s => s.id === taskId) : prev.find(t => t.id === taskId)
-      if (!src) return prev
-      if (!fromParentId && (src.subTasks?.length > 0)) return prev
-      if (newParentId === fromParentId) return prev
-      let extracted = null
-      const u = prev.map(t => {
-        if (!fromParentId && t.id === taskId) { extracted = { ...t, subTasks: undefined }; return null }
-        if (fromParentId && t.id === fromParentId) {
-          const sub = t.subTasks?.find(s => s.id === taskId)
-          if (sub) { extracted = { ...sub }; return { ...t, subTasks: t.subTasks.filter(s => s.id !== taskId) } }
-        }
-        return t
-      }).filter(Boolean)
-      if (!extracted) return prev
-      return u.map(t => t.id !== newParentId ? t : { ...t, subTasks: [...(t.subTasks || []), extracted] })
-    })
+    setTasks(prev => moveNodeTo(prev, taskId, newParentId))
   }
   function startSubtaskDrag(taskId, parentId, e, taskName) {
     subtaskDragRef.current = { taskId, parentId, taskName, startX: e.clientX, startY: e.clientY, dragging: false }
@@ -447,7 +421,7 @@ export default function GanttModal({ job, onClose, onSaved, inline }) {
         <div ref={leftPanelRef} onScroll={onLeftScroll} style={{ width:220, flexShrink:0, overflowY:'auto', overflowX:'hidden', borderRight:'1px solid #e4e6ea' }}>
           <div style={{ height:HDR_H, background:'#f8f9fb', borderBottom:'1px solid #e4e6ea' }} />
           {visibleRows.map(row => {
-            const taskIdx = row.isSubTask ? -1 : tasks.findIndex(t => t.id===row.task.id)
+            const taskIdx = row.depth > 0 ? -1 : tasks.findIndex(t => t.id === row.task.id)
             return <LeftPanelRow key={`${row.parentId||''}-${row.task.id}`} row={row} collapsed={collapsed}
               onToggle={id => setCollapsed(c => ({...c,[id]:!c[id]}))}
               onCheck={onCheckTask} rowIdx={taskIdx}
@@ -493,7 +467,7 @@ export default function GanttModal({ job, onClose, onSaved, inline }) {
                   {isMilestone(rt)
                     ? <MilestoneRow task={rt} zoomCols={zoomCols} job={job} onToggleDone={onToggleMilestone} dragRef={dragRef} taskRowsRef={taskRowsRef} />
                     : rt.startDate && rt.endDate
-                      ? <GanttBar row={row} job={job} zoomCols={zoomCols} criticalIds={criticalIds} showBaseline={showBaseline} baseline={baseline} dragRef={dragRef} taskRowsRef={taskRowsRef} onBarRightClick={onBarRightClick} barColor={getTaskBarColor(rt, tasks, allSubTasks)} onLinkStart={startLinkDrag} />
+                      ? <GanttBar row={row} job={job} zoomCols={zoomCols} criticalIds={criticalIds} showBaseline={showBaseline} baseline={baseline} dragRef={dragRef} taskRowsRef={taskRowsRef} onBarRightClick={onBarRightClick} barColor={getTaskBarColor(rt, tasks, allDescendants)} onLinkStart={startLinkDrag} />
                       : noDate && !ghostBar && <div style={{ position:'absolute', inset:0, display:'flex', alignItems:'center', paddingLeft:8, pointerEvents:'none' }}><span style={{ fontSize:11, color:'#c0c5d8' }}>Click & drag to set dates</span></div>
                   }
                   {ghostBar && ghostBar.rowIndex === ri && ghostBar.width > 2 && (

@@ -328,8 +328,13 @@ export function getTaskBarColor(task, allTasks, allSubTasks) {
 }
 
 export function computeCriticalPath(tasks) {
-  const all = []
-  tasks.forEach(t => { all.push(t); if (t.subTasks) t.subTasks.forEach(s => all.push(s)) })
+  function flattenAll(nodes) {
+    const out = []
+    const walk = n => { out.push(n); (n.children || []).forEach(walk) }
+    nodes.forEach(walk)
+    return out
+  }
+  const all = flattenAll(tasks)
   const ef = {}
   all.forEach(t => { const e = parseDate(t.endDate); ef[t.id] = e ? e.getTime() : 0 })
   const projectEnd = Math.max(...Object.values(ef))

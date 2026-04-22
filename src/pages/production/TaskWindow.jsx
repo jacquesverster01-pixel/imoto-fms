@@ -64,26 +64,57 @@ export default function TaskWindow({ task, parentId, pos, onClose, onChangeName,
                 placeholder="Add notes…" />
             </div>
 
-            {!isSubTask && (
-              <div style={{ padding: '16px' }}>
-                <span style={labelStyle}>Sub-tasks</span>
-                {(task.subTasks || []).length === 0 && (
-                  <div style={{ fontSize: 13, color: '#c0c5d8', marginBottom: 8 }}>No sub-tasks yet</div>
-                )}
-                {(task.subTasks || []).map(st => (
-                  <div key={st.id} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '5px 0' }}>
-                    <input type="checkbox" checked={!!st.done} onChange={() => onCheckTask(st.id, task.id)}
-                      style={{ flexShrink: 0, cursor: 'pointer' }} />
-                    <input value={st.name} onChange={e => onChangeName(st.id, task.id, e.target.value)}
-                      style={{ flex: 1, border: 'none', outline: 'none', fontSize: 13, background: 'transparent', color: st.done ? '#b0b5cc' : '#1a1d3b', textDecoration: st.done ? 'line-through' : 'none', minWidth: 0, lineHeight: 1.5 }} />
-                  </div>
-                ))}
-                <button onClick={() => onAddSubTask(task.id, null)}
-                  style={{ marginTop: 8, background: 'none', border: 'none', cursor: 'pointer', color: '#4f67e4', fontSize: 13, padding: 0, fontWeight: 600 }}>
-                  + Add sub-task
-                </button>
+            {task.components?.length > 0 && (
+              <div style={sectionStyle}>
+                <span style={labelStyle}>Components</span>
+                <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
+                  <thead>
+                    <tr>
+                      <th style={{ textAlign: 'left', color: '#9298c4', fontWeight: 600, paddingBottom: 6, fontSize: 11 }}>Code</th>
+                      <th style={{ textAlign: 'left', color: '#9298c4', fontWeight: 600, paddingBottom: 6, fontSize: 11, paddingLeft: 6 }}>Description</th>
+                      <th style={{ textAlign: 'right', color: '#9298c4', fontWeight: 600, paddingBottom: 6, fontSize: 11 }}>Qty</th>
+                      <th style={{ textAlign: 'right', color: '#9298c4', fontWeight: 600, paddingBottom: 6, fontSize: 11, paddingLeft: 6 }}>Unit cost</th>
+                      <th style={{ textAlign: 'right', color: '#9298c4', fontWeight: 600, paddingBottom: 6, fontSize: 11, paddingLeft: 6 }}>Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {task.components.map((c, i) => {
+                      const qty = c.qty ?? null
+                      const unitCost = c.unitCost ?? null
+                      const total = c.totalCost ?? (qty != null && unitCost != null ? qty * unitCost : null)
+                      return (
+                        <tr key={i} style={{ borderTop: '1px solid #f0f1f5', height: 28 }}>
+                          <td style={{ padding: '4px 4px 4px 0', fontFamily: 'monospace', color: '#1a1d3b', fontSize: 11, whiteSpace: 'nowrap' }}>{c.code || '—'}</td>
+                          <td style={{ padding: '4px 6px', color: '#3a3e5c', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 80 }}>{c.description || c.name || '—'}</td>
+                          <td style={{ padding: '4px 0', textAlign: 'right', color: '#1a1d3b', whiteSpace: 'nowrap' }}>{qty != null ? `${qty}${c.unit ? ' ' + c.unit : ''}` : '—'}</td>
+                          <td style={{ padding: '4px 0 4px 6px', textAlign: 'right', color: '#1a1d3b', whiteSpace: 'nowrap' }}>{unitCost != null ? `R${Number(unitCost).toFixed(2)}` : '—'}</td>
+                          <td style={{ padding: '4px 0 4px 6px', textAlign: 'right', color: '#1a1d3b', whiteSpace: 'nowrap' }}>{total != null ? `R${Number(total).toFixed(2)}` : '—'}</td>
+                        </tr>
+                      )
+                    })}
+                  </tbody>
+                </table>
               </div>
             )}
+
+            <div style={{ padding: '16px' }}>
+              <span style={labelStyle}>Children</span>
+              {(task.children || []).length === 0 && (
+                <div style={{ fontSize: 13, color: '#c0c5d8', marginBottom: 8 }}>No children yet</div>
+              )}
+              {(task.children || []).map(st => (
+                <div key={st.id} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '5px 0' }}>
+                  <input type="checkbox" checked={!!st.done} onChange={() => onCheckTask(st.id, task.id)}
+                    style={{ flexShrink: 0, cursor: 'pointer' }} />
+                  <input value={st.name} onChange={e => onChangeName(st.id, task.id, e.target.value)}
+                    style={{ flex: 1, border: 'none', outline: 'none', fontSize: 13, background: 'transparent', color: st.done ? '#b0b5cc' : '#1a1d3b', textDecoration: st.done ? 'line-through' : 'none', minWidth: 0, lineHeight: 1.5 }} />
+                </div>
+              ))}
+              <button onClick={() => onAddSubTask(task.id, null)}
+                style={{ marginTop: 8, background: 'none', border: 'none', cursor: 'pointer', color: '#4f67e4', fontSize: 13, padding: 0, fontWeight: 600 }}>
+                + Add child
+              </button>
+            </div>
           </>
         )}
 

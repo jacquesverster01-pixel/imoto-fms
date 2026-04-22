@@ -3,6 +3,7 @@ import {
   parseDate, toDateStr, addDays,
   taskBarPosition, cascadeTasksForward, enforceDependencies, wouldCreateCycle
 } from '../pages/production/ganttUtils'
+import { flattenTree, updateNodeById } from '../pages/production/taskTreeOps'
 
 // All drag state and handlers for GanttModal.
 // setTasks — the React state setter from GanttModal; functional updates keep it stable.
@@ -57,14 +58,12 @@ export function useGanttDrag(setTasks, scrollRef) {
           if (toTaskId && toTaskId !== ld.fromTaskId) {
             // right-drag: source is predecessor, target is dependent
             // left-drag:  source is dependent, target is predecessor
-            const predecessorId   = ld.side === 'right' ? ld.fromTaskId : toTaskId
-            const dependentId     = ld.side === 'right' ? toTaskId      : ld.fromTaskId
-            const dependentParent = ld.side === 'right' ? (toParentId || null) : (ld.fromParentId || null)
+            const predecessorId = ld.side === 'right' ? ld.fromTaskId : toTaskId
+            const dependentId   = ld.side === 'right' ? toTaskId      : ld.fromTaskId
             setTasks(prev => {
-              const allSubs = prev.flatMap(t => t.subTasks || [])
-              if (wouldCreateCycle(prev, allSubs, predecessorId, dependentId)) return prev
-              if (!dependentParent) return prev.map(t => t.id !== dependentId ? t : { ...t, dependsOn: [...new Set([...(t.dependsOn||[]), predecessorId])] })
-              return prev.map(t => t.id !== dependentParent ? t : { ...t, subTasks: t.subTasks.map(s => s.id !== dependentId ? s : { ...s, dependsOn: [...new Set([...(s.dependsOn||[]), predecessorId])] }) })
+              const all = flattenTree(prev)
+              if (wouldCreateCycle(prev, all, predecessorId, dependentId)) return prev
+              return updateNodeById(prev, dependentId, n => ({ ...n, dependsOn: [...new Set([...(n.dependsOn || []), predecessorId])] }))
             })
           }
         }
@@ -73,23 +72,17 @@ export function useGanttDrag(setTasks, scrollRef) {
       const drag = dragRef.current; if (!drag) return; dragRef.current = null
       const dd = Math.round((e.clientX - drag.startMouseX) / drag.pixPerDay)
       setTasks(prev => {
-        let u = prev.map(t => ({ ...t, subTasks: t.subTasks ? [...t.subTasks] : [] }))
-        if (drag.parentId) {
-          u = u.map(t => t.id !== drag.parentId ? t : { ...t, subTasks: t.subTasks.map(st => {
-            if (st.id !== drag.taskId) return st
-            if (drag.type === 'move') return { ...st, startDate: toDateStr(addDays(parseDate(drag.origStartDate), dd)), endDate: toDateStr(addDays(parseDate(drag.origEndDate), dd)) }
-            const ne = addDays(parseDate(drag.origEndDate), dd), s = parseDate(st.startDate)
-            return { ...st, endDate: toDateStr(ne < s ? s : ne) }
-          }) })
-        } else {
-          const idx = u.findIndex(t => t.id === drag.taskId)
-          if (idx !== -1) {
-            if (drag.type === 'move') {
-              if (drag.isMilestone) { const nd = toDateStr(addDays(parseDate(drag.origStartDate), dd)); u[idx].startDate = nd; u[idx].endDate = nd }
-              else { u[idx].startDate = toDateStr(addDays(parseDate(drag.origStartDate), dd)); u[idx].endDate = toDateStr(addDays(parseDate(drag.origEndDate), dd)) }
-            } else { const ne = addDays(parseDate(drag.origEndDate), dd), s = parseDate(u[idx].startDate); u[idx].endDate = toDateStr(ne < s ? s : ne) }
-            if (!drag.isMilestone) u = cascadeTasksForward(u, idx)
+        let u = updateNodeById(prev, drag.taskId, node => {
+          if (drag.type === 'move') {
+            if (drag.isMilestone) { const nd = toDateStr(addDays(parseDate(drag.origStartDate), dd)); return { ...node, startDate: nd, endDate: nd } }
+            return { ...node, startDate: toDateStr(addDays(parseDate(drag.origStartDate), dd)), endDate: toDateStr(addDays(parseDate(drag.origEndDate), dd)) }
           }
+          const ne = addDays(parseDate(drag.origEndDate), dd), s = parseDate(node.startDate)
+          return { ...node, endDate: toDateStr(ne < s ? s : ne) }
+        })
+        if (!drag.parentId && !drag.isMilestone) {
+          const idx = u.findIndex(t => t.id === drag.taskId)
+          if (idx !== -1) u = cascadeTasksForward(u, idx)
         }
         return enforceDependencies(u)
       })
