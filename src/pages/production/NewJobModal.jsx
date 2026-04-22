@@ -49,7 +49,7 @@ function AssemblyModeFields({ assemblies, assemblyId, setAssemblyId, tasks }) {
 }
 
 function BomModeFields({ boms, bomsLoaded, bomId, setBomId, tasks }) {
-  const subCount = tasks.reduce((n, t) => n + (t.subTasks?.length || 0), 0)
+  const subCount = tasks.reduce((n, t) => n + (t.children?.length || 0), 0)
   return (
     <div>
       <label style={{ display: 'block', marginBottom: 4, fontWeight: 500, fontSize: 13 }}>Select BOM</label>
@@ -68,7 +68,7 @@ function BomModeFields({ boms, bomsLoaded, bomId, setBomId, tasks }) {
             {tasks.map(t => (
               <div key={t.id} style={{ padding: '4px 10px', fontSize: 13 }}>
                 <span style={{ fontWeight: 600 }}>{t.name}</span>
-                <span style={{ color: '#9ca3af', marginLeft: 6 }}>{t.subTasks?.length || 0} items</span>
+                <span style={{ color: '#9ca3af', marginLeft: 6 }}>{t.children?.length || 0} items</span>
               </div>
             ))}
           </div>

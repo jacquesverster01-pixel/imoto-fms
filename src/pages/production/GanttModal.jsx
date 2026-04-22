@@ -11,6 +11,7 @@ import {
 import { groupCols, ppd } from '../../utils/ganttLogic'
 import { injectGanttPrintStyle } from '../../utils/ganttExport'
 import TaskWindow from './TaskWindow'
+import { migrateTasksSchema } from './taskMigration'
 
 const ROW_H = 32, HDR_H = 48
 
@@ -192,7 +193,7 @@ function CtxMenu({ ctxMenu, onClose, onRemoveDep, flatRows }) {
 }
 
 export default function GanttModal({ job, onClose, onSaved, inline }) {
-  const [tasks,            setTasks]            = useState(() => (job.tasks || []).map(t => ({ pct: 0, dependsOn: [], subTasks: [], ...t })))
+  const [tasks,            setTasks]            = useState(() => migrateTasksSchema((job.tasks || []).map(t => ({ pct: 0, dependsOn: [], children: [], components: [], itemCode: null, department: null, ...t }))))
   const [title,            setTitle]            = useState(job.title || '')
   const [status,           setStatus]           = useState(job.status || 'quote')
   const [collapsed,        setCollapsed]        = useState({})
@@ -203,7 +204,7 @@ export default function GanttModal({ job, onClose, onSaved, inline }) {
   const [showCriticalPath, setShowCriticalPath] = useState(false)
   const [showBaseline,     setShowBaseline]     = useState(false)
   const [baseline,         setBaseline]         = useState(job.baseline || [])
-  const [dateRange,        setDateRange]        = useState(() => computeDateRange((job.tasks || []).map(t => ({ pct: 0, dependsOn: [], subTasks: [], ...t }))))
+  const [dateRange,        setDateRange]        = useState(() => computeDateRange(migrateTasksSchema((job.tasks || []).map(t => ({ pct: 0, dependsOn: [], children: [], components: [], itemCode: null, department: null, ...t })))))
   const [bomItems,         setBomItems]         = useState([])
   const [ghostBar,         setGhostBar]         = useState(null)
   const [subtaskDropHighlight, setSubtaskDropHighlight] = useState(null)

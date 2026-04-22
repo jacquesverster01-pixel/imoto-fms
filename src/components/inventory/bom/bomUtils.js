@@ -57,15 +57,41 @@ export function computeCosts(items) {
 }
 
 export function buildTasksFromBom(bomItems) {
-  const assemblies = bomItems.filter(item => item.itemType === 'Assembly')
-  return assemblies.map((asm, i) => ({
-    id: `t-bom-${i}`,
+  const childrenMap = buildChildrenMap(bomItems)
+  const counter = { n: 0 }
+  const roots = (childrenMap.get('__root__') || []).filter(i => i.itemType === 'Assembly')
+  return roots.map(asm => buildAsmTask(asm, childrenMap, counter))
+}
+
+function buildAsmTask(asm, childrenMap, counter) {
+  const id = `t-bom-${counter.n++}`
+  const direct = childrenMap.get(asm.itemCode) || []
+  const parts = direct.filter(i => i.itemType === 'Part')
+  const subAsms = direct.filter(i => i.itemType === 'Assembly')
+  return {
+    id,
     name: `${asm.itemCode} — ${asm.itemDescription}`,
     itemCode: asm.itemCode,
     department: asm.department,
-    startDate: null, endDate: null, done: false, pct: 0,
-    assignedTo: null, dependsOn: [], notes: '', subTasks: []
-  }))
+    startDate: null,
+    endDate: null,
+    done: false,
+    pct: 0,
+    assignedTo: null,
+    dependsOn: [],
+    notes: '',
+    components: parts.map(p => ({
+      itemCode: p.itemCode,
+      itemDescription: p.itemDescription,
+      department: p.department,
+      unit: p.unit,
+      quantity: p.quantity,
+      wastageQty: p.wastageQty,
+      unitCost: p.unitCost,
+      totalCost: p.totalCost,
+    })),
+    children: subAsms.map(child => buildAsmTask(child, childrenMap, counter)),
+  }
 }
 
 export function exportToCsv(items, productCode) {
