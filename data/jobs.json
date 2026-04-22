@@ -8,7 +8,7 @@
       "bomId": "23bce556-b89a-45b4-9a98-5b36911d0af0",
       "colour": "#dbeafe",
       "startDate": null,
-      "dueDate": "2026-05-25",
+      "dueDate": "2026-05-26",
       "tasks": [
         {
           "pct": 0,
@@ -88,8 +88,8 @@
           "name": "SUBA00033 — JK6 (10m) LHS Skirt Main Assembly",
           "itemCode": "SUBA00033",
           "department": "Assembly",
-          "startDate": "2026-05-16",
-          "endDate": "2026-05-23",
+          "startDate": "2026-05-19",
+          "endDate": "2026-05-26",
           "done": false,
           "assignedTo": null,
           "notes": ""
@@ -144,8 +144,8 @@
           "name": "RAWA00006 — CLADDING - Interior Walls - Toilet Cubical (Agains Pocket Wall)",
           "itemCode": "RAWA00006",
           "department": "Raw Materials",
-          "startDate": "2026-04-20",
-          "endDate": "2026-04-25",
+          "startDate": "2026-04-23",
+          "endDate": "2026-04-28",
           "done": false,
           "assignedTo": null,
           "notes": ""
@@ -160,8 +160,8 @@
           "name": "RAWA00016 — CLADDING - Interior Wall - Entrance Pocket Door Assembly",
           "itemCode": "RAWA00016",
           "department": "Raw Materials",
-          "startDate": "2026-04-26",
-          "endDate": "2026-05-01",
+          "startDate": "2026-04-30",
+          "endDate": "2026-05-05",
           "done": false,
           "assignedTo": null,
           "notes": ""
@@ -188,8 +188,8 @@
           "name": "CLWA00003 — Cabinetry Cutting List for FINA00032",
           "itemCode": "CLWA00003",
           "department": "Cutting List / Fabrication",
-          "startDate": "2026-05-07",
-          "endDate": "2026-05-08",
+          "startDate": "2026-05-08",
+          "endDate": "2026-05-09",
           "done": false,
           "assignedTo": null,
           "notes": ""
@@ -384,8 +384,8 @@
           "name": "ELEA00017 — POWER SYSTEM - Solar Battery Assembly - 4 Rack Mount Battery System",
           "itemCode": "ELEA00017",
           "department": "Electrical",
-          "startDate": "2026-05-07",
-          "endDate": "2026-05-07",
+          "startDate": "2026-05-02",
+          "endDate": "2026-05-06",
           "done": false,
           "assignedTo": null,
           "notes": ""
@@ -412,8 +412,8 @@
           "name": "CLMA00007 — CUTTING LIST, METAL - Aircon Bracket Truck, Four, Assembled",
           "itemCode": "CLMA00007",
           "department": "Cutting List / Fabrication",
-          "startDate": "2026-05-15",
-          "endDate": "2026-05-17",
+          "startDate": "2026-05-04",
+          "endDate": "2026-05-10",
           "done": false,
           "assignedTo": null,
           "notes": ""
