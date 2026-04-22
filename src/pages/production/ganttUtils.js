@@ -83,21 +83,29 @@ export function dateToWidth(startDate, endDate, totalDays) {
 
 export function cascadeTasksForward(tasks, changedIdx) {
   const updated = tasks.map(t => ({ ...t }))
+  const shiftedIds = new Set([updated[changedIdx].id])
   for (let i = changedIdx + 1; i < updated.length; i++) {
-    const prev      = updated[i - 1]
-    const curr      = updated[i]
-    const prevEnd   = parseDate(prev.endDate)
-    const currStart = parseDate(curr.startDate)
-    if (!prevEnd || !currStart) continue
-    if (currStart <= prevEnd) {
-      const newStart = addDays(prevEnd, 1)
-      const duration = curr.endDate && curr.startDate
-        ? Math.round((parseDate(curr.endDate) - parseDate(curr.startDate)) / 86400000)
-        : 0
-      const newEnd = addDays(newStart, duration)
-      updated[i].startDate = toDateStr(newStart)
-      updated[i].endDate   = toDateStr(newEnd)
+    const curr   = updated[i]
+    const linked = (curr.dependsOn || []).filter(d => shiftedIds.has(d))
+    if (linked.length === 0) continue
+    let latestEnd = null
+    linked.forEach(d => {
+      const dep = updated.find(t => t.id === d)
+      if (!dep) return
+      const e = parseDate(dep.endDate)
+      if (e && (!latestEnd || e > latestEnd)) latestEnd = e
+    })
+    if (latestEnd) {
+      const currStart = parseDate(curr.startDate)
+      if (currStart && currStart <= latestEnd) {
+        const duration = curr.endDate && curr.startDate
+          ? Math.round((parseDate(curr.endDate) - parseDate(curr.startDate)) / 86400000) : 0
+        const newStart = addDays(latestEnd, 1)
+        updated[i].startDate = toDateStr(newStart)
+        updated[i].endDate   = toDateStr(addDays(newStart, duration))
+      }
     }
+    shiftedIds.add(curr.id)
   }
   return updated
 }
@@ -215,14 +223,14 @@ export function getISOWeek(date) {
   return Math.ceil((((d - yearStart) / 86400000) + 1) / 7)
 }
 
-export function buildZoomColumns(minDate, maxDate, zoom) {
+export function buildZoomColumns(minDate, maxDate, zoom, zoomScale = 1) {
   const cols = []
   let cursor = new Date(minDate)
   cursor.setHours(0, 0, 0, 0)
   if (zoom === 'day') {
     while (cursor <= maxDate) {
       cols.push({ key: toDateStr(cursor), label: formatMonthLabel(cursor), subLabel: String(cursor.getDate()),
-        startDate: new Date(cursor), endDate: new Date(cursor), widthPx: 28,
+        startDate: new Date(cursor), endDate: new Date(cursor), widthPx: 28 * zoomScale,
         isWeekend: isWeekend(cursor), isToday: isToday(cursor) })
       cursor.setDate(cursor.getDate() + 1)
     }
@@ -234,7 +242,7 @@ export function buildZoomColumns(minDate, maxDate, zoom) {
       const wn = getISOWeek(cursor)
       const now = new Date()
       cols.push({ key: 'w' + wn + '-' + cursor.getFullYear(), label: formatMonthLabel(cursor),
-        subLabel: 'W' + wn, startDate: new Date(cursor), endDate: new Date(weekEnd), widthPx: 120,
+        subLabel: 'W' + wn, startDate: new Date(cursor), endDate: new Date(weekEnd), widthPx: 120 * zoomScale,
         isWeekend: false, isToday: now >= cursor && now <= weekEnd })
       cursor = addDays(cursor, 7)
     }
@@ -245,7 +253,7 @@ export function buildZoomColumns(minDate, maxDate, zoom) {
       const monthEnd = new Date(cursor.getFullYear(), cursor.getMonth() + 1, 0)
       cols.push({ key: cursor.getFullYear() + '-' + cursor.getMonth(), label: String(cursor.getFullYear()),
         subLabel: MONTHS[cursor.getMonth()], startDate: new Date(cursor), endDate: new Date(monthEnd),
-        widthPx: 48 * Math.ceil(monthEnd.getDate() / 7) })
+        widthPx: 48 * Math.ceil(monthEnd.getDate() / 7) * zoomScale })
       cursor = new Date(cursor.getFullYear(), cursor.getMonth() + 1, 1)
     }
   }
@@ -321,4 +329,17 @@ export function computeCriticalPath(tasks) {
     all.forEach(t => { if (critical.has(t.id) && t.dependsOn) t.dependsOn.forEach(d => { if (!critical.has(d)) { critical.add(d); changed = true } }) })
   }
   return Array.from(critical)
+}
+
+export function pixelXToDate(px, colsWithLeft) {
+  for (const col of colsWithLeft) {
+    if (px >= col.left && px < col.left + col.widthPx) {
+      const frac = (px - col.left) / col.widthPx
+      const colMs = col.endDate - col.startDate
+      return toDateStr(new Date(col.startDate.getTime() + frac * colMs))
+    }
+  }
+  const last = colsWithLeft[colsWithLeft.length - 1]
+  if (last) return toDateStr(new Date(last.endDate))
+  return toDateStr(new Date())
 }

@@ -42,12 +42,13 @@ export default function jobsRouter(readData, writeData, upload, uploadsDir) {
   router.post('/jobs', (req, res) => {
     try {
       const data = readData('jobs.json')
-      const { title, status, assemblyId, colour, startDate, dueDate, tasks } = req.body
+      const { title, status, assemblyId, bomId, colour, startDate, dueDate, tasks } = req.body
       const job = {
         id: newId('job'),
         title: title || 'Untitled job',
         status: status || 'quote',
         assemblyId: assemblyId || null,
+        bomId: bomId || null,
         colour: colour || '#dbeafe',
         startDate: startDate || null,
         dueDate: dueDate || null,
@@ -78,7 +79,7 @@ export default function jobsRouter(readData, writeData, upload, uploadsDir) {
       const data = readData('jobs.json')
       const idx = data.jobs.findIndex(j => j.id === req.params.id)
       if (idx === -1) return res.status(404).json({ error: 'Job not found' })
-      const allowed = ['title', 'status', 'colour', 'startDate', 'dueDate', 'assemblyId']
+      const allowed = ['title', 'status', 'colour', 'startDate', 'dueDate', 'assemblyId', 'bomId']
       allowed.forEach(k => {
         if (req.body[k] !== undefined) data.jobs[idx][k] = req.body[k]
       })

@@ -6,10 +6,11 @@ import {
   parseDate, toDateStr, addDays, getChartBounds, cascadeTasksForward,
   flattenTasksForDisplay, enforceDependencies, dependencyArrowPath,
   isMilestone, taskBarPosition, buildZoomColumns, getTodayScrollX, computeCriticalPath,
-  getTaskBarColor, collectAllSubTasks, wouldCreateCycle
+  getTaskBarColor, collectAllSubTasks, wouldCreateCycle, pixelXToDate
 } from './ganttUtils'
 import { groupCols, ppd } from '../../utils/ganttLogic'
 import { injectGanttPrintStyle } from '../../utils/ganttExport'
+import TaskWindow from './TaskWindow'
 
 const ROW_H = 32, HDR_H = 48
 
@@ -30,20 +31,25 @@ const STATUS_OPTIONS = [
   { value: 'qc', label: 'QC' }, { value: 'dispatch', label: 'Dispatch' }, { value: 'done', label: 'Done' },
 ]
 
-function LeftPanelRow({ row, collapsed, onToggle, onChangeName, onCheck, isFocused, rowIdx, onDragHandleDown, onRowOver, onToggleMilestone, onOpenMenu }) {
-  const inputRef = useRef(null)
-  useEffect(() => { if (isFocused && inputRef.current) { inputRef.current.focus(); inputRef.current.select() } }, [isFocused])
+// Bug 1 fix: name is a read-only span; clicking anywhere on the row opens TaskWindow.
+// Buttons/checkbox stop propagation so they don't accidentally open the window.
+// Milestone diamond gets stopPropagation so clicking it only toggles done.
+function LeftPanelRow({ row, collapsed, onToggle, onCheck, rowIdx, onDragHandleDown, onRowOver, onToggleMilestone, onOpenMenu }) {
   const { task, isParent, isSubTask } = row
   const isMile = isMilestone(task)
   return (
-    <div style={{ height: ROW_H, display: 'flex', alignItems: 'center', gap: 4, paddingLeft: isSubTask ? 24 : 4, paddingRight: 4, borderBottom: '1px solid #f0f1f5' }}
-      onMouseOver={() => onRowOver(rowIdx)}>
-      {!isSubTask && <span onMouseDown={e => { e.preventDefault(); onDragHandleDown(rowIdx) }} style={{ fontSize: 9, color: '#ccc', cursor: 'grab', flexShrink: 0, letterSpacing: 1, userSelect: 'none' }}>⋮⋮</span>}
-      {isMile ? <span onClick={() => onToggleMilestone(task.id)} style={{ cursor: 'pointer', color: task.done ? '#1a1d3b' : '#9298c4', fontSize: 12, flexShrink: 0 }}>◆</span>
-        : isParent ? <button onClick={() => onToggle(task.id)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#9298c4', fontSize: 11, padding: 0, width: 14, flexShrink: 0 }}>{collapsed[task.id] ? '▸' : '▾'}</button>
-        : <input type="checkbox" checked={!!task.done} onChange={() => onCheck(task.id, row.parentId)} style={{ flexShrink: 0, cursor: 'pointer' }} />}
-      <input ref={inputRef} value={task.name} onChange={e => onChangeName(task.id, row.parentId, e.target.value)}
-        style={{ flex: 1, border: 'none', outline: 'none', fontSize: 12, background: 'transparent', color: task.done ? '#b0b5cc' : '#1a1d3b', textDecoration: task.done ? 'line-through' : 'none', fontWeight: isParent ? 600 : 400, minWidth: 0 }} />
+    <div style={{ height: ROW_H, display: 'flex', alignItems: 'center', gap: 4, paddingLeft: isSubTask ? 24 : 4, paddingRight: 4, borderBottom: '1px solid #f0f1f5', cursor: 'pointer', userSelect: 'none' }}
+      onMouseOver={() => onRowOver(rowIdx)}
+      onClick={e => onOpenMenu(task.id, row.parentId, isParent, isMile, e)}>
+      {!isSubTask && <span onMouseDown={e => { e.stopPropagation(); e.preventDefault(); onDragHandleDown(rowIdx) }} style={{ fontSize: 9, color: '#ccc', cursor: 'grab', flexShrink: 0, letterSpacing: 1, userSelect: 'none' }}>⋮⋮</span>}
+      {isMile
+        ? <span onClick={e => { e.stopPropagation(); onToggleMilestone(task.id) }} style={{ cursor: 'pointer', color: task.done ? '#1a1d3b' : '#9298c4', fontSize: 12, flexShrink: 0 }}>◆</span>
+        : isParent
+          ? <button onClick={e => { e.stopPropagation(); onToggle(task.id) }} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#9298c4', fontSize: 11, padding: 0, width: 14, flexShrink: 0 }}>{collapsed[task.id] ? '▸' : '▾'}</button>
+          : <input type="checkbox" checked={!!task.done} onChange={e => { e.stopPropagation(); onCheck(task.id, row.parentId) }} onClick={e => e.stopPropagation()} style={{ flexShrink: 0, cursor: 'pointer' }} />}
+      <span style={{ flex: 1, fontSize: 12, color: task.done ? '#b0b5cc' : '#1a1d3b', textDecoration: task.done ? 'line-through' : 'none', fontWeight: isParent ? 600 : 400, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', minWidth: 0 }}>
+        {task.name}
+      </span>
       {!isSubTask && (
         <button onClick={e => { e.stopPropagation(); onOpenMenu(task.id, row.parentId, isParent, isMile, e) }}
           style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#9298c4', fontSize: 16, padding: '0 3px', flexShrink: 0, lineHeight: 1, borderRadius: 4 }}>⋮</button>
@@ -51,8 +57,9 @@ function LeftPanelRow({ row, collapsed, onToggle, onChangeName, onCheck, isFocus
     </div>
   )
 }
-function GanttHeader({ title, setTitle, status, setStatus, zoom, setZoom, showCriticalPath, setShowCriticalPath, showBaseline, setShowBaseline, progress, saving, onSave, onClose, onExport, onSetBaseline }) {
+function GanttHeader({ title, setTitle, status, setStatus, zoom, setZoom, zoomScale, setZoomScale, showCriticalPath, setShowCriticalPath, showBaseline, setShowBaseline, progress, onClose, onExport, onSetBaseline }) {
   const tog = on => ({ padding: '4px 10px', borderRadius: 6, border: '1px solid #dde0ea', fontSize: 12, cursor: 'pointer', background: on ? '#4f67e4' : '#fff', color: on ? '#fff' : '#1a1d3b' })
+  const zBtn = { padding: '4px 8px', border: 'none', fontSize: 13, cursor: 'pointer', background: '#fff', color: '#1a1d3b', lineHeight: 1 }
   return (
     <div style={{ minHeight: 56, display: 'flex', alignItems: 'center', gap: 6, padding: '0 14px', borderBottom: '1px solid #e4e6ea', flexShrink: 0, flexWrap: 'wrap' }}>
       <input value={title} onChange={e => setTitle(e.target.value)} style={{ flex: 1, fontWeight: 700, fontSize: 16, border: 'none', outline: 'none', color: '#1a1d3b', background: 'transparent', minWidth: 100 }} />
@@ -63,11 +70,15 @@ function GanttHeader({ title, setTitle, status, setStatus, zoom, setZoom, showCr
       <div style={{ display: 'flex', border: '1px solid #dde0ea', borderRadius: 6, overflow: 'hidden' }}>
         {['day','week','month'].map(z => <button key={z} onClick={() => setZoom(z)} style={{ padding: '4px 9px', border: 'none', borderRight: z !== 'month' ? '1px solid #dde0ea' : 'none', fontSize: 12, cursor: 'pointer', background: zoom === z ? '#4f67e4' : '#fff', color: zoom === z ? '#fff' : '#1a1d3b' }}>{z[0].toUpperCase()+z.slice(1)}</button>)}
       </div>
+      <div style={{ display: 'flex', alignItems: 'center', border: '1px solid #dde0ea', borderRadius: 6, overflow: 'hidden' }}>
+        <button onClick={() => setZoomScale(s => Math.max(0.4, Math.round((s - 0.1) * 10) / 10))} style={{ ...zBtn, borderRight: '1px solid #dde0ea' }}>−</button>
+        <button onClick={() => setZoomScale(1.0)} style={{ ...zBtn, borderRight: '1px solid #dde0ea', fontSize: 11, minWidth: 44, textAlign: 'center' }}>{Math.round(zoomScale * 100)}%</button>
+        <button onClick={() => setZoomScale(s => Math.min(3.0, Math.round((s + 0.1) * 10) / 10))} style={zBtn}>+</button>
+      </div>
       <button onClick={() => setShowCriticalPath(v => !v)} style={tog(showCriticalPath)}>Critical path</button>
       <button onClick={onSetBaseline} style={tog(false)}>Set baseline</button>
       <button onClick={() => setShowBaseline(v => !v)} style={tog(showBaseline)}>Show baseline</button>
       <button onClick={onExport} style={tog(false)}>Export PDF</button>
-      <button onClick={onSave} disabled={saving} style={{ padding: '7px 18px', borderRadius: 8, border: 'none', background: '#4f67e4', color: '#fff', fontSize: 13, fontWeight: 600, cursor: saving ? 'not-allowed' : 'pointer', opacity: saving ? 0.7 : 1 }}>{saving ? 'Saving…' : 'Save'}</button>
       <button onClick={onClose} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 24, color: '#9298c4', lineHeight: 1, padding: 0 }}>×</button>
     </div>
   )
@@ -84,6 +95,7 @@ function MilestoneRow({ task, zoomCols, job, onToggleDone, dragRef, taskRowsRef 
 }
 function GanttBar({ row, job, zoomCols, criticalIds, showBaseline, baseline, dragRef, taskRowsRef, onBarRightClick, barColor, onLinkStart }) {
   const { task, isParent, parentId } = row
+  const [hovered, setHovered] = useState(false)
   if (isMilestone(task)) return null
   const pos = taskBarPosition(task, zoomCols), p = ppd(zoomCols)
   const hasCp = criticalIds.length > 0, isCrit = criticalIds.includes(task.id), isLocked = !!(task.dependsOn?.length)
@@ -97,6 +109,8 @@ function GanttBar({ row, job, zoomCols, criticalIds, showBaseline, baseline, dra
         data-parent-id={parentId || ''}
         onMouseDown={e => { if (isParent) return; e.stopPropagation(); dragRef.current = { type: 'move', taskId: task.id, parentId: parentId || null, isMilestone: false, startMouseX: e.clientX, origStartDate: task.startDate, origEndDate: task.endDate, pixPerDay: p } }}
         onContextMenu={e => { e.preventDefault(); if (task.dependsOn?.length) onBarRightClick(e, task.id, parentId, task.dependsOn) }}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
         style={{ position: 'absolute', top: isParent ? 4 : 6, left: pos.left, width: pos.width, height: isParent ? 24 : 20, borderRadius: 4,
           background: isParent ? barColor + 'bb' : barColor, cursor: isParent ? 'default' : 'grab',
           userSelect: 'none', display: 'flex', alignItems: 'center', overflow: 'visible',
@@ -110,11 +124,11 @@ function GanttBar({ row, job, zoomCols, criticalIds, showBaseline, baseline, dra
         {!isParent && <div onMouseDown={e => { e.stopPropagation(); dragRef.current = { type: 'resize', taskId: task.id, parentId: parentId||null, startMouseX: e.clientX, origEndDate: task.endDate, taskStartDate: task.startDate, pixPerDay: p } }} style={{ width: 8, height: '100%', cursor: 'ew-resize', flexShrink: 0, position: 'relative', zIndex: 1 }} />}
         {!isParent && (
           <div onMouseDown={e => { e.stopPropagation(); onLinkStart(e, task.id, parentId || null, 'left') }}
-            style={{ position: 'absolute', left: -7, top: '50%', transform: 'translateY(-50%)', width: 12, height: 12, borderRadius: '50%', background: '#fff', border: `2px solid ${barColor}`, cursor: 'crosshair', zIndex: 3, boxShadow: '0 1px 4px rgba(0,0,0,0.35)', pointerEvents: 'all' }} />
+            style={{ position: 'absolute', left: -7, top: '50%', transform: 'translateY(-50%)', width: 12, height: 12, borderRadius: '50%', background: '#fff', border: `2px solid ${barColor}`, cursor: 'crosshair', zIndex: 3, boxShadow: '0 1px 4px rgba(0,0,0,0.35)', opacity: hovered ? 1 : 0, pointerEvents: hovered ? 'all' : 'none', transition: 'opacity 0.15s' }} />
         )}
         {!isParent && (
           <div onMouseDown={e => { e.stopPropagation(); onLinkStart(e, task.id, parentId || null, 'right') }}
-            style={{ position: 'absolute', right: -7, top: '50%', transform: 'translateY(-50%)', width: 12, height: 12, borderRadius: '50%', background: '#fff', border: `2px solid ${barColor}`, cursor: 'crosshair', zIndex: 3, boxShadow: '0 1px 4px rgba(0,0,0,0.35)', pointerEvents: 'all' }} />
+            style={{ position: 'absolute', right: -7, top: '50%', transform: 'translateY(-50%)', width: 12, height: 12, borderRadius: '50%', background: '#fff', border: `2px solid ${barColor}`, cursor: 'crosshair', zIndex: 3, boxShadow: '0 1px 4px rgba(0,0,0,0.35)', opacity: hovered ? 1 : 0, pointerEvents: hovered ? 'all' : 'none', transition: 'opacity 0.15s' }} />
         )}
       </div>
     </>
@@ -139,90 +153,6 @@ function DependencyOverlay({ rows, zoomCols, chartWidth }) {
   )
 }
 
-function TaskWindow({ task, parentId, pos, onClose, onChangeName, onCheckTask, onAddSubTask, onUpdateNotes, onUpdatePct, onUploadFile, onDeleteFile, onDelete }) {
-  const windowRef = useRef(null)
-  const fileInputRef = useRef(null)
-  const [uploading, setUploading] = useState(false)
-  useClickOutside(windowRef, onClose)
-  const isSubTask = !!parentId
-  const top  = Math.min(pos.y, window.innerHeight - 520)
-  const left = Math.min(pos.x, window.innerWidth - 308)
-  const section = { padding: '11px 14px', borderBottom: '1px solid #f0f1f5' }
-  const label   = { fontSize: 10, fontWeight: 700, color: '#9298c4', textTransform: 'uppercase', letterSpacing: '0.07em', marginBottom: 8 }
-  return (
-    <div ref={windowRef} style={{ position:'fixed', left, top, zIndex:300, width:300, background:'#fff', borderRadius:10, boxShadow:'0 10px 36px rgba(0,0,0,0.22)', border:'1px solid #e0e3ef', display:'flex', flexDirection:'column', maxHeight:'min(78vh, 560px)' }}
-      onClick={e => e.stopPropagation()}>
-      {/* ── header: bin | name | × ── */}
-      <div style={{ display:'flex', alignItems:'center', gap:6, padding:'9px 10px', background:'#f8f9fb', borderBottom:'1px solid #eef0f6', flexShrink:0 }}>
-        <button onClick={onDelete} title="Delete task"
-          style={{ border:'none', background:'none', cursor:'pointer', color:'#9298c4', padding:'3px 4px', borderRadius:4, flexShrink:0, display:'flex', alignItems:'center' }}>
-          <svg width="13" height="14" viewBox="0 0 13 14" fill="none">
-            <path d="M1 3.5h11M4.5 3.5V2h4v1.5M3 3.5l.6 8.5h5.8L10 3.5M5 6v4.5M8 6v4.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </button>
-        <input value={task.name} onChange={e => onChangeName(task.id, parentId, e.target.value)}
-          style={{ flex:1, border:'none', outline:'none', fontSize:13, fontWeight:700, color:'#1a1d3b', background:'transparent', minWidth:0 }} />
-        <button onClick={onClose} style={{ border:'none', background:'none', cursor:'pointer', color:'#9298c4', fontSize:20, lineHeight:1, padding:0, flexShrink:0 }}>×</button>
-      </div>
-      <div style={{ overflowY:'auto', flex:1 }}>
-        {/* ── sub-tasks (root tasks only) ── */}
-        {!isSubTask && (
-          <div style={section}>
-            <div style={label}>Sub-tasks</div>
-            {(task.subTasks || []).length === 0 && <div style={{ fontSize:12, color:'#c0c5d8', marginBottom:4 }}>No sub-tasks yet</div>}
-            {(task.subTasks || []).map(st => (
-              <div key={st.id} style={{ display:'flex', alignItems:'center', gap:7, padding:'3px 0' }}>
-                <input type="checkbox" checked={!!st.done} onChange={() => onCheckTask(st.id, task.id)} style={{ flexShrink:0, cursor:'pointer' }} />
-                <input value={st.name} onChange={e => onChangeName(st.id, task.id, e.target.value)}
-                  style={{ flex:1, border:'none', outline:'none', fontSize:12, background:'transparent', color:st.done?'#b0b5cc':'#1a1d3b', textDecoration:st.done?'line-through':'none', minWidth:0 }} />
-              </div>
-            ))}
-            <button onClick={() => onAddSubTask(task.id, null)}
-              style={{ marginTop:6, background:'none', border:'none', cursor:'pointer', color:'#4f67e4', fontSize:12, padding:0, fontWeight:600 }}>
-              + Add sub-task
-            </button>
-          </div>
-        )}
-        {/* ── notes ── */}
-        <div style={section}>
-          <div style={label}>Notes</div>
-          <textarea value={task.notes || ''} onChange={e => onUpdateNotes(e.target.value)}
-            style={{ width:'100%', height:76, resize:'vertical', border:'1px solid #dde0ea', borderRadius:6, padding:'7px 9px', fontSize:12, outline:'none', boxSizing:'border-box', fontFamily:'inherit', color:'#1a1d3b', lineHeight:1.5 }}
-            placeholder="Add notes..." />
-        </div>
-        {/* ── progress ── */}
-        <div style={section}>
-          <div style={{ display:'flex', alignItems:'center', marginBottom:6 }}>
-            <span style={label}>Progress</span>
-            <span style={{ marginLeft:'auto', fontSize:13, fontWeight:700, color:'#4f67e4' }}>{task.pct||0}%</span>
-          </div>
-          <input type="range" min="0" max="100" step="5" value={task.pct||0} onChange={e => onUpdatePct(Number(e.target.value))} style={{ width:'100%', accentColor:'#4f67e4' }} />
-        </div>
-        {/* ── files ── */}
-        <div style={{ padding:'11px 14px' }}>
-          <div style={label}>Files</div>
-          {(task.files||[]).length === 0 && <div style={{ fontSize:12, color:'#c0c5d8', marginBottom:8 }}>No files attached</div>}
-          {(task.files||[]).map(f => (
-            <div key={f.id} style={{ display:'flex', alignItems:'center', gap:6, padding:'4px 0', borderBottom:'1px solid #f5f6fa' }}>
-              <span style={{ fontSize:12, flex:1, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap', color:'#1a1d3b' }}>{f.name}</span>
-              <a href={`${UPLOADS_BASE}/${f.url?.replace(/^\/uploads\//, '')}`} target="_blank" rel="noreferrer" style={{ fontSize:11, color:'#4f67e4', textDecoration:'none', flexShrink:0 }}>Open</a>
-              <button onClick={() => onDeleteFile(f.id)} style={{ border:'none', background:'none', cursor:'pointer', color:'#dc2626', fontSize:15, padding:0, lineHeight:1, flexShrink:0 }}>×</button>
-            </div>
-          ))}
-          <input ref={fileInputRef} type="file" style={{ display:'none' }} onChange={async e => {
-            if (!e.target.files[0]) return
-            setUploading(true); await onUploadFile(e.target.files[0]); setUploading(false); e.target.value = ''
-          }} />
-          <button onClick={() => fileInputRef.current?.click()} disabled={uploading}
-            style={{ marginTop:10, padding:'8px 0', background:'#f0f4ff', color:'#4f67e4', border:'1px solid #c7d0f8', borderRadius:6, cursor:uploading?'not-allowed':'pointer', fontSize:12, fontWeight:600, width:'100%', opacity:uploading?0.7:1 }}>
-            {uploading ? 'Uploading…' : '+ Upload file'}
-          </button>
-        </div>
-      </div>
-    </div>
-  )
-}
-
 function CtxMenu({ ctxMenu, onClose, onRemoveDep, flatRows }) {
   const ref = useRef(null)
   useClickOutside(ref, onClose)
@@ -243,42 +173,59 @@ export default function GanttModal({ job, onClose, onSaved, inline }) {
   const [tasks,            setTasks]            = useState(() => (job.tasks || []).map(t => ({ pct: 0, dependsOn: [], subTasks: [], ...t })))
   const [title,            setTitle]            = useState(job.title || '')
   const [status,           setStatus]           = useState(job.status || 'quote')
-  const [saving,           setSaving]           = useState(false)
-  const [focusId,          setFocusId]          = useState(null)
   const [collapsed,        setCollapsed]        = useState({})
   const [ctxMenu,          setCtxMenu]          = useState(null)
   const [taskWindow,       setTaskWindow]       = useState(null)
   const [zoom,             setZoom]             = useState('day')
+  const [zoomScale,        setZoomScale]        = useState(1.0)
   const [showCriticalPath, setShowCriticalPath] = useState(false)
   const [showBaseline,     setShowBaseline]     = useState(false)
   const [baseline,         setBaseline]         = useState(job.baseline || [])
   const [dateRange,        setDateRange]        = useState(() => computeDateRange((job.tasks || []).map(t => ({ pct: 0, dependsOn: [], subTasks: [], ...t }))))
+  const [bomItems,         setBomItems]         = useState([])
+  const [ghostBar,         setGhostBar]         = useState(null)
 
   const rightPanelRef = useRef(null)
-  const { dragRef, reorderRef, taskRowsRef, linkDragRef, zoomColsRef, linkLine, setLinkLine, startLinkDrag, handleDragHandleDown, handleRowOver } = useGanttDrag(setTasks, rightPanelRef)
-  const leftPanelRef = useRef(null), panelRef = useRef(null)
-  useClickOutside(panelRef, inline ? onClose : () => {})
+  const { dragRef, reorderRef, taskRowsRef, linkDragRef, zoomColsRef, linkLine, setLinkLine, startLinkDrag, handleDragHandleDown, handleRowOver, panRef, handlePanStart } = useGanttDrag(setTasks, rightPanelRef)
+  const leftPanelRef  = useRef(null)
+  const dateDrawRef   = useRef(null)
+  const colsWithLeftRef = useRef([])
 
   const flatRows    = flattenTasksForDisplay(tasks)
   const visibleRows = flatRows.filter(r => !r.isSubTask || !collapsed[r.parentId])
   const { minDate, maxDate } = dateRange
-  const zoomCols = buildZoomColumns(minDate, maxDate, zoom)
+  const zoomCols = buildZoomColumns(minDate, maxDate, zoom, zoomScale)
   zoomColsRef.current = zoomCols
   const chartWidth = zoomCols.reduce((s, c) => s + c.widthPx, 0)
   const colGroups  = groupCols(zoomCols)
   let acc = 0
   const colsWithLeft = zoomCols.map(c => { const l = acc; acc += c.widthPx; return { ...c, left: l } })
+  colsWithLeftRef.current = colsWithLeft
   const doneTasks   = flatRows.filter(r => !r.isParent && r.task.done).length
   const totalLeaf   = flatRows.filter(r => !r.isParent).length
   const criticalIds = showCriticalPath ? computeCriticalPath(tasks) : []
   const allSubTasks = collectAllSubTasks(tasks)
 
+  // No IIFE: compute task for TaskWindow before JSX
+  const taskWindowTask = taskWindow ? getTask(taskWindow.taskId, taskWindow.parentId) : null
+
   useEffect(() => {
-    const fn = e => { if (e.key === 'Escape') { setCtxMenu(null); setTaskWindow(null); linkDragRef.current = null; setLinkLine(null) } }
+    const fn = e => { if (e.key === 'Escape') { setCtxMenu(null); setTaskWindow(null); linkDragRef.current = null; setLinkLine(null); dateDrawRef.current = null; setGhostBar(null) } }
     window.addEventListener('keydown', fn); return () => window.removeEventListener('keydown', fn)
   }, [])
-  useEffect(() => { if (rightPanelRef.current) rightPanelRef.current.scrollLeft = getTodayScrollX(zoomColsRef.current) }, [zoom])
+  useEffect(() => { if (rightPanelRef.current) rightPanelRef.current.scrollLeft = getTodayScrollX(zoomColsRef.current) }, [zoom, zoomScale])
   useEffect(() => injectGanttPrintStyle(), [])
+  useEffect(() => {
+    const el = rightPanelRef.current
+    if (!el) return
+    function onWheel(e) {
+      if (!e.ctrlKey) return
+      e.preventDefault()
+      setZoomScale(s => { const next = Math.round((s + (e.deltaY < 0 ? 0.1 : -0.1)) * 10) / 10; return Math.min(3.0, Math.max(0.4, next)) })
+    }
+    el.addEventListener('wheel', onWheel, { passive: false })
+    return () => el.removeEventListener('wheel', onWheel)
+  }, [])
   useEffect(() => {
     const { minDate: newMin, maxDate: newMax } = computeDateRange(tasks)
     setDateRange(prev => {
@@ -286,17 +233,50 @@ export default function GanttModal({ job, onClose, onSaved, inline }) {
       return prev
     })
   }, [tasks])
+  useEffect(() => {
+    if (job.bomId) apiFetch(`/boms/${job.bomId}`).then(bom => { if (Array.isArray(bom?.items)) setBomItems(bom.items) }).catch(() => {})
+  }, [])
+  useEffect(() => {
+    function handleMouseMove(e) {
+      if (!dateDrawRef.current) return
+      const rect = rightPanelRef.current?.getBoundingClientRect()
+      if (!rect) return
+      const x = e.clientX - rect.left + (rightPanelRef.current?.scrollLeft || 0)
+      const startPx = dateDrawRef.current.startPx
+      setGhostBar({ left: Math.min(startPx, x), width: Math.abs(x - startPx), rowIndex: dateDrawRef.current.rowIndex })
+    }
+    function handleMouseUp(e) {
+      if (!dateDrawRef.current) return
+      const rect = rightPanelRef.current?.getBoundingClientRect()
+      if (!rect) return
+      const x = e.clientX - rect.left + (rightPanelRef.current?.scrollLeft || 0)
+      const startPx = dateDrawRef.current.startPx
+      const px1 = Math.min(startPx, x), px2 = Math.max(startPx, x)
+      const d1 = pixelXToDate(px1, colsWithLeftRef.current)
+      const d2 = pixelXToDate(px2, colsWithLeftRef.current)
+      const { taskId, parentId } = dateDrawRef.current
+      setTasks(p => !parentId
+        ? p.map(t => t.id === taskId ? { ...t, startDate: d1, endDate: d2 } : t)
+        : p.map(t => t.id !== parentId ? t : { ...t, subTasks: t.subTasks.map(s => s.id === taskId ? { ...s, startDate: d1, endDate: d2 } : s) })
+      )
+      dateDrawRef.current = null
+      setGhostBar(null)
+    }
+    window.addEventListener('mousemove', handleMouseMove)
+    window.addEventListener('mouseup', handleMouseUp)
+    return () => { window.removeEventListener('mousemove', handleMouseMove); window.removeEventListener('mouseup', handleMouseUp) }
+  }, [])
 
-  async function handleSave() {
-    setSaving(true)
+  async function handleClose() {
     try {
       await apiFetch(`/jobs/${job.id}/tasks`, { method: 'PUT', body: JSON.stringify({ tasks }) })
       await apiFetch(`/jobs/${job.id}`, { method: 'PUT', body: JSON.stringify({ title, status }) })
       onSaved()
-    } catch { } finally { setSaving(false) }
+    } catch (e) { console.error('[GanttModal save on close]', e) }
+    onClose()
   }
   function addTask() {
-    const id = `t-${Date.now()}`; setFocusId(id)
+    const id = `t-${Date.now()}`
     setTasks(prev => { const last = prev[prev.length-1]; const d = toDateStr(addDays(last?.endDate ? parseDate(last.endDate) : new Date(), 1))
       return [...prev, { id, name: 'New task', startDate: d, endDate: d, done: false, pct: 0, dependsOn: [], subTasks: [], assignedTo: null }] })
   }
@@ -343,16 +323,15 @@ export default function GanttModal({ job, onClose, onSaved, inline }) {
       const rec = await res.json()
       if (!rec.id) return
       setTasks(p => !parentId ? p.map(t => t.id===taskId ? {...t, files:[...(t.files||[]), rec]} : t) : p.map(t => t.id!==parentId ? t : {...t, subTasks: t.subTasks.map(s => s.id===taskId ? {...s, files:[...(s.files||[]), rec]} : s)}))
-    } catch (e) { console.error('[uploadTaskFile]', e); setTaskFileError(taskId, 'Upload failed') }
+    } catch (e) { console.error('[uploadTaskFile]', e) }
   }
   function deleteTaskFile(taskId, parentId, fileId) {
     setTasks(p => !parentId ? p.map(t => t.id===taskId ? {...t, files:(t.files||[]).filter(f=>f.id!==fileId)} : t) : p.map(t => t.id!==parentId ? t : {...t, subTasks: t.subTasks.map(s => s.id===taskId ? {...s, files:(s.files||[]).filter(f=>f.id!==fileId)} : s)}))
   }
+  // Bug 1 fix: position is based on the clicked element (row or ⋮ button); clamping is inside TaskWindow
   function openTaskMenu(taskId, parentId, isParent, isMile, e) {
     const rect = e.currentTarget.getBoundingClientRect()
-    const x = Math.min(rect.right + 8, window.innerWidth - 312)
-    const y = Math.min(rect.top - 4, window.innerHeight - 530)
-    setTaskWindow({ taskId, parentId, isParent, isMile, x, y })
+    setTaskWindow({ taskId, parentId, isParent, isMile, x: rect.right + 8, y: rect.top })
   }
   async function handleSetBaseline() {
     const snap = tasks.map(t => ({ taskId:t.id, startDate:t.startDate, endDate:t.endDate }))
@@ -366,21 +345,22 @@ export default function GanttModal({ job, onClose, onSaved, inline }) {
     : { width: '100%', height: '100vh', display: 'flex', flexDirection: 'column', background: '#fff', overflow: 'hidden' }
 
   const ganttPanel = (
-    <div ref={panelRef} className="gantt-print-root" style={panelStyle} onClick={e => e.stopPropagation()}>
+    <div className="gantt-print-root" style={panelStyle} onClick={e => e.stopPropagation()}>
       <GanttHeader title={title} setTitle={setTitle} status={status} setStatus={setStatus}
-        zoom={zoom} setZoom={setZoom} showCriticalPath={showCriticalPath} setShowCriticalPath={setShowCriticalPath}
+        zoom={zoom} setZoom={setZoom} zoomScale={zoomScale} setZoomScale={setZoomScale}
+        showCriticalPath={showCriticalPath} setShowCriticalPath={setShowCriticalPath}
         showBaseline={showBaseline} setShowBaseline={setShowBaseline}
-        progress={`${doneTasks}/${totalLeaf} tasks complete`} saving={saving}
-        onSave={handleSave} onClose={onClose} onExport={() => window.print()} onSetBaseline={handleSetBaseline} />
+        progress={`${doneTasks}/${totalLeaf} tasks complete`}
+        onClose={handleClose} onExport={() => window.print()} onSetBaseline={handleSetBaseline} />
       <div style={{ flex:1, display:'flex', overflow:'hidden' }}>
         <div ref={leftPanelRef} onScroll={onLeftScroll} style={{ width:220, flexShrink:0, overflowY:'auto', overflowX:'hidden', borderRight:'1px solid #e4e6ea' }}>
           <div style={{ height:HDR_H, background:'#f8f9fb', borderBottom:'1px solid #e4e6ea' }} />
           {visibleRows.map(row => {
             const taskIdx = row.isSubTask ? -1 : tasks.findIndex(t => t.id===row.task.id)
             return <LeftPanelRow key={`${row.parentId||''}-${row.task.id}`} row={row} collapsed={collapsed}
-              onToggle={id => setCollapsed(c => ({...c,[id]:!c[id]}))} onChangeName={onChangeName}
-              onCheck={onCheckTask} isFocused={row.task.id===focusId}
-              rowIdx={taskIdx} onDragHandleDown={handleDragHandleDown} onRowOver={handleRowOver}
+              onToggle={id => setCollapsed(c => ({...c,[id]:!c[id]}))}
+              onCheck={onCheckTask} rowIdx={taskIdx}
+              onDragHandleDown={handleDragHandleDown} onRowOver={handleRowOver}
               onToggleMilestone={onToggleMilestone} onOpenMenu={openTaskMenu} />
           })}
           <div style={{ display:'flex', borderTop:'1px solid #f0f1f5' }}>
@@ -388,7 +368,14 @@ export default function GanttModal({ job, onClose, onSaved, inline }) {
             <button onClick={addMilestone} style={{ padding:'8px 10px', fontSize:12, color:'#9298c4', background:'none', border:'none', cursor:'pointer' }}>◆ Milestone</button>
           </div>
         </div>
-        <div ref={rightPanelRef} onScroll={onRightScroll} className="gantt-right-panel" style={{ flex:1, overflowX:'auto', overflowY:'auto', position:'relative' }}>
+        <div ref={rightPanelRef} onScroll={onRightScroll} className="gantt-right-panel"
+          style={{ flex:1, overflowX:'auto', overflowY:'auto', position:'relative', cursor:'grab' }}
+          onMouseDown={e => {
+            if (e.button !== 0) return
+            if (e.target.closest('[data-task-id]')) return
+            if (dateDrawRef.current) return
+            handlePanStart(e)
+          }}>
           <div style={{ width:chartWidth, minWidth:'100%', position:'relative' }}>
             <div style={{ height:24, display:'flex', position:'sticky', top:0, zIndex:2, background:'#f8f9fb', borderBottom:'1px solid #e4e6ea' }}>
               {colGroups.map((g,i) => <div key={i} style={{ width:g.w, flexShrink:0, fontSize:11, fontWeight:600, color:'#5f5e5a', padding:'0 6px', display:'flex', alignItems:'center', borderRight:'1px solid #e4e6ea' }}>{g.label}</div>)}
@@ -396,15 +383,32 @@ export default function GanttModal({ job, onClose, onSaved, inline }) {
             <div style={{ height:24, display:'flex', position:'sticky', top:24, zIndex:2, background:'#f8f9fb', borderBottom:'1px solid #e4e6ea' }}>
               {zoomCols.map(c => <div key={c.key} style={{ width:c.widthPx, flexShrink:0, fontSize:10, color:'#9298c4', display:'flex', alignItems:'center', justifyContent:'center', background:c.isWeekend?'rgba(0,0,0,0.05)':(c.isToday?'rgba(79,103,228,0.08)':undefined), borderLeft:c.isToday?'2px solid #185fa5':undefined }}>{c.subLabel}</div>)}
             </div>
-            {visibleRows.map((row,ri) => (
-              <div key={`${row.parentId||''}-${row.task.id}`} style={{ height:ROW_H, position:'relative', background:ri%2===0?'#fff':'#fafafa' }}>
-                {zoom==='day' && colsWithLeft.filter(c=>c.isWeekend).map(c => <div key={c.key} style={{ position:'absolute', left:c.left, top:0, width:c.widthPx, height:'100%', background:'rgba(0,0,0,0.03)', pointerEvents:'none' }} />)}
-                {isMilestone(row.task)
-                  ? <MilestoneRow task={row.task} zoomCols={zoomCols} job={job} onToggleDone={onToggleMilestone} dragRef={dragRef} taskRowsRef={taskRowsRef} />
-                  : row.task.startDate && row.task.endDate && <GanttBar row={row} job={job} zoomCols={zoomCols} criticalIds={criticalIds} showBaseline={showBaseline} baseline={baseline} dragRef={dragRef} taskRowsRef={taskRowsRef} onBarRightClick={onBarRightClick} barColor={getTaskBarColor(row.task, tasks, allSubTasks)} onLinkStart={startLinkDrag} />
-                }
-              </div>
-            ))}
+            {visibleRows.map((row,ri) => {
+              const { task: rt, isParent: rip } = row
+              const noDate = !rt.startDate && !isMilestone(rt) && !rip
+              return (
+                <div key={`${row.parentId||''}-${rt.id}`}
+                  style={{ height:ROW_H, position:'relative', background:ri%2===0?'#fff':'#fafafa', cursor:noDate?'crosshair':undefined }}
+                  onMouseDown={noDate ? e => {
+                    if (e.button !== 0) return
+                    const rect = rightPanelRef.current?.getBoundingClientRect()
+                    if (!rect) return
+                    const x = e.clientX - rect.left + (rightPanelRef.current?.scrollLeft || 0)
+                    dateDrawRef.current = { taskId: rt.id, parentId: row.parentId, rowIndex: ri, startPx: x }
+                  } : undefined}>
+                  {zoom==='day' && colsWithLeft.filter(c=>c.isWeekend).map(c => <div key={c.key} style={{ position:'absolute', left:c.left, top:0, width:c.widthPx, height:'100%', background:'rgba(0,0,0,0.03)', pointerEvents:'none' }} />)}
+                  {isMilestone(rt)
+                    ? <MilestoneRow task={rt} zoomCols={zoomCols} job={job} onToggleDone={onToggleMilestone} dragRef={dragRef} taskRowsRef={taskRowsRef} />
+                    : rt.startDate && rt.endDate
+                      ? <GanttBar row={row} job={job} zoomCols={zoomCols} criticalIds={criticalIds} showBaseline={showBaseline} baseline={baseline} dragRef={dragRef} taskRowsRef={taskRowsRef} onBarRightClick={onBarRightClick} barColor={getTaskBarColor(rt, tasks, allSubTasks)} onLinkStart={startLinkDrag} />
+                      : noDate && !ghostBar && <div style={{ position:'absolute', inset:0, display:'flex', alignItems:'center', paddingLeft:8, pointerEvents:'none' }}><span style={{ fontSize:11, color:'#c0c5d8' }}>Click & drag to set dates</span></div>
+                  }
+                  {ghostBar && ghostBar.rowIndex === ri && ghostBar.width > 2 && (
+                    <div style={{ position:'absolute', left:ghostBar.left, top:6, width:ghostBar.width, height:20, border:'2px dashed #2563eb', background:'rgba(37,99,235,0.08)', borderRadius:4, pointerEvents:'none' }} />
+                  )}
+                </div>
+              )
+            })}
             <DependencyOverlay rows={visibleRows} zoomCols={zoomCols} chartWidth={chartWidth} />
           </div>
         </div>
@@ -417,22 +421,18 @@ export default function GanttModal({ job, onClose, onSaved, inline }) {
       {ctxMenu && ctxMenu.depIds?.length > 0 && (
         <CtxMenu ctxMenu={ctxMenu} onClose={() => setCtxMenu(null)} onRemoveDep={removeDep} flatRows={flatRows} />
       )}
-      {taskWindow && (() => {
-        const t = getTask(taskWindow.taskId, taskWindow.parentId)
-        if (!t) return null
-        return (
-          <TaskWindow task={t} parentId={taskWindow.parentId} pos={{ x: taskWindow.x, y: taskWindow.y }}
-            onClose={() => setTaskWindow(null)}
-            onChangeName={onChangeName}
-            onCheckTask={onCheckTask}
-            onAddSubTask={addSubTask}
-            onUpdateNotes={notes => updateNotes(taskWindow.taskId, taskWindow.parentId, notes)}
-            onUpdatePct={v => updatePct(taskWindow.taskId, taskWindow.parentId, v)}
-            onUploadFile={file => uploadTaskFile(taskWindow.taskId, taskWindow.parentId, file)}
-            onDeleteFile={fileId => deleteTaskFile(taskWindow.taskId, taskWindow.parentId, fileId)}
-            onDelete={() => deleteTask(taskWindow.taskId, taskWindow.parentId)} />
-        )
-      })()}
+      {taskWindow && taskWindowTask && (
+        <TaskWindow task={taskWindowTask} parentId={taskWindow.parentId} pos={{ x: taskWindow.x, y: taskWindow.y }}
+          onClose={() => setTaskWindow(null)}
+          onChangeName={onChangeName}
+          onCheckTask={onCheckTask}
+          onAddSubTask={addSubTask}
+          onUpdateNotes={notes => updateNotes(taskWindow.taskId, taskWindow.parentId, notes)}
+          onUpdatePct={v => updatePct(taskWindow.taskId, taskWindow.parentId, v)}
+          onUploadFile={file => uploadTaskFile(taskWindow.taskId, taskWindow.parentId, file)}
+          onDeleteFile={fileId => deleteTaskFile(taskWindow.taskId, taskWindow.parentId, fileId)}
+          onDelete={() => deleteTask(taskWindow.taskId, taskWindow.parentId)} />
+      )}
       {linkLine && (
         <>
           <style>{`* { cursor: crosshair !important; }`}</style>
@@ -458,8 +458,11 @@ export default function GanttModal({ job, onClose, onSaved, inline }) {
     )
   }
 
+  // Bug 2 fix: only close ctxMenu/taskWindow when clicking the dark overlay itself,
+  // not when clicks bubble up from child elements (ganttPanel or TaskWindow).
   return (
-    <div className="gantt-print-root" style={{ position:'fixed', inset:0, zIndex:50, background:'rgba(0,0,0,0.45)' }} onClick={() => { setCtxMenu(null); setTaskWindow(null) }}>
+    <div className="gantt-print-root" style={{ position:'fixed', inset:0, zIndex:50, background:'rgba(0,0,0,0.45)' }}
+      onClick={e => { if (e.target === e.currentTarget) { setCtxMenu(null); setTaskWindow(null) } }}>
       {ganttPanel}
       {floatingOverlays}
     </div>

@@ -134,6 +134,7 @@ export default function NewJobModal({ assemblies, onClose, onSaved }) {
       await apiFetch('/jobs', { method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title: title.trim(), status: 'quote',
           assemblyId: mode === 'assembly' ? assemblyId || null : null,
+          bomId: mode === 'bom' ? bomId || null : null,
           colour, startDate: startDate || null,
           dueDate: tasks.length ? tasks[tasks.length - 1].endDate || null : null, tasks }) })
       onSaved()

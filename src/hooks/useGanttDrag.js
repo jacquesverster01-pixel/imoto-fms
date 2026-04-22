@@ -13,6 +13,7 @@ export function useGanttDrag(setTasks, scrollRef) {
   const taskRowsRef = useRef({})
   const linkDragRef = useRef(null)
   const zoomColsRef = useRef([])
+  const panRef      = useRef(null)
   const [linkLine, setLinkLine] = useState(null)
 
   useEffect(() => {
@@ -109,6 +110,28 @@ export function useGanttDrag(setTasks, scrollRef) {
     const from = reorderRef.current.fromIdx; reorderRef.current.fromIdx = rowIdx
     setTasks(prev => { const u=[...prev]; const [m]=u.splice(from,1); u.splice(rowIdx,0,m); return u })
   }
+  function handlePanStart(e) {
+    if (!scrollRef?.current) return
+    const el = scrollRef.current
+    const startX = e.clientX, startY = e.clientY
+    const startLeft = el.scrollLeft, startTop = el.scrollTop
+    panRef.current = true
+    el.style.cursor = 'grabbing'
+    function onMove(ev) {
+      if (!(ev.buttons & 1)) { end(); return }
+      el.scrollLeft = Math.max(0, startLeft - (ev.clientX - startX))
+      el.scrollTop  = Math.max(0, startTop  - (ev.clientY - startY))
+    }
+    function end() {
+      if (!panRef.current) return
+      panRef.current = null
+      el.style.cursor = 'grab'
+      window.removeEventListener('mousemove', onMove)
+      window.removeEventListener('mouseup', end)
+    }
+    window.addEventListener('mousemove', onMove)
+    window.addEventListener('mouseup', end)
+  }
 
-  return { dragRef, reorderRef, taskRowsRef, linkDragRef, zoomColsRef, linkLine, setLinkLine, startLinkDrag, handleDragHandleDown, handleRowOver }
+  return { dragRef, reorderRef, taskRowsRef, linkDragRef, zoomColsRef, linkLine, setLinkLine, startLinkDrag, handleDragHandleDown, handleRowOver, panRef, handlePanStart }
 }

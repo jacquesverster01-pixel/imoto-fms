@@ -1,736 +1,952 @@
 {
   "jobs": [
     {
-      "id": "job-1776669992977-thozw",
-      "title": "sioc 1",
-      "status": "in_progress",
-      "assemblyId": null,
-      "colour": "#dbeafe",
-      "startDate": "2026-04-01",
-      "dueDate": "2026-05-03",
-      "tasks": [
-        {
-          "pct": 45,
-          "dependsOn": [],
-          "subTasks": [],
-          "id": "t-1776669995174",
-          "name": "floors",
-          "startDate": "2026-04-22",
-          "endDate": "2026-04-28",
-          "done": false,
-          "assignedTo": null
-        },
-        {
-          "pct": 0,
-          "dependsOn": [],
-          "subTasks": [
-            {
-              "id": "st-1776675713835",
-              "name": "New sub-task",
-              "startDate": "2026-05-05",
-              "endDate": "2026-05-11",
-              "done": false,
-              "pct": 0,
-              "dependsOn": [],
-              "assignedTo": null
-            },
-            {
-              "id": "st-1776675725420",
-              "name": "New sub-task",
-              "startDate": "2026-04-26",
-              "endDate": "2026-05-04",
-              "done": false,
-              "pct": 0,
-              "dependsOn": [],
-              "assignedTo": null
-            }
-          ],
-          "id": "t-1776670003581",
-          "name": "test",
-          "startDate": "2026-04-29",
-          "endDate": "2026-04-29",
-          "done": false,
-          "assignedTo": null
-        },
-        {
-          "pct": 0,
-          "dependsOn": [],
-          "subTasks": [],
-          "id": "t-1776675739782",
-          "name": "New task",
-          "startDate": "2026-04-30",
-          "endDate": "2026-05-03",
-          "done": false,
-          "assignedTo": null
-        }
-      ],
-      "createdAt": "2026-04-20T07:26:32.977Z",
-      "baseline": [
-        {
-          "taskId": "t-1776669995174",
-          "startDate": "2026-04-22",
-          "endDate": "2026-04-28"
-        },
-        {
-          "taskId": "t-1776670003581",
-          "startDate": "2026-04-29",
-          "endDate": "2026-04-29"
-        },
-        {
-          "taskId": "t-1776675739782",
-          "startDate": "2026-04-30",
-          "endDate": "2026-05-03"
-        }
-      ]
-    },
-    {
-      "id": "job-1776789868557-vc7ad",
+      "id": "job-1776839560685-rrkc6",
       "title": "FINA00031 — FINA00031 - SIOC - FAW JK6 (10m) Dental Unit",
       "status": "quote",
       "assemblyId": null,
+      "bomId": "23bce556-b89a-45b4-9a98-5b36911d0af0",
       "colour": "#dbeafe",
       "startDate": null,
-      "dueDate": null,
+      "dueDate": "2026-05-25",
       "tasks": [
         {
+          "pct": 0,
+          "dependsOn": [],
+          "subTasks": [],
           "id": "t-bom-0",
           "name": "SUBA00003-3 — Vehicle, Chassis and Body Additions - 10m Truck (3 Rooms)",
+          "itemCode": "SUBA00003-3",
           "department": "Assembly",
-          "startDate": null,
-          "endDate": null,
+          "startDate": "2026-05-03",
+          "endDate": "2026-05-08",
           "done": false,
-          "pct": 0,
           "assignedTo": null,
-          "dependsOn": [],
-          "notes": "BODP00015 — TRUCK BODY - Box, Ice Cold, 10m | Qty: 1 EA\nBODP00018 — AEROKIT - FAW JK6 Aero Kit, N/Frame | Qty: 1 EA\nCLMP00151 — Asset Tag - Laser Cut Asset Tag | Qty: 1 EA\nFIXP00190 — WINDOW - WINDOW 1/2, REAR-SLIDING, 900 X 500 PLANT ON, TINTED, WHITE FINISH | Qty: 3 EA\nITEP00060 — Reverse Camera | Qty: 1 EA\nMECP00051 — DOOR RETAINER - RUBBER, COMPLETE | Qty: 2 EA\nMECP00088 — WINDOW - Sliding 600 | Qty: 2 EA\nMECP00289 — JACK - Parking Jack, extendable, side handle | Qty: 4 EA\nMECP00451 — DOOR RETAINER - T-Clip, Galvanised, 188mm (Long) | Qty: 2 EA\nRAWP00088 — CHANNEL IRON - STEEL, 100 X 50MM | Qty: 6 M\nRAWP00427 — STEEL - Pipe, Round 50mm, 4.5mm thick | Qty: 1 M\nRAWP00440 — Aluminum J Gutter (5m) - Issue per meter | Qty: 1 EA",
-          "subTasks": []
+          "notes": ""
         },
         {
+          "pct": 0,
+          "dependsOn": [],
+          "subTasks": [],
           "id": "t-bom-1",
           "name": "RAWA00010 — JK6 Box - Exterior Door Frame Assembly",
+          "itemCode": "RAWA00010",
           "department": "Raw Materials",
-          "startDate": null,
-          "endDate": null,
+          "startDate": "2026-05-03",
+          "endDate": "2026-05-06",
           "done": false,
-          "pct": 0,
           "assignedTo": null,
-          "dependsOn": [],
-          "notes": "CONP01027 — FOAM - Styrofoam, Soundproof 2500x1200x38mm | Qty: 1 M2\nMECP00444 — Lock - Half Euro 45mm | Qty: 1 EA\nMECP00445 — Door Lever - Arogan on Round Rose | Qty: 1 Set\nMECP00446 — Door Lever - Flush Ring 70x70 | Qty: 1 EA\nMECP00447 — Escution - Euro Lock 2mm Brushed SS | Qty: 1 EA\nMECP00448 — Door Lock - Stainless 61mm | Qty: 1 EA\nMECP00449 — Hinge - Sinkless - 100x76x2mm BSS | Qty: 4 Set\nRAWP00060 — STEEL - Square Tube - 38 X 38 X 1.5mm | Qty: 12 M\nRAWP00154 — ALUMINIUM - U Channel, 44 X 28 X 1.78MM | Qty: 12 M",
-          "subTasks": []
+          "notes": ""
         },
         {
+          "pct": 0,
+          "dependsOn": [],
+          "subTasks": [],
           "id": "t-bom-2",
           "name": "CLMA00008-1 — Door Assembly - 2035x900mm - Without Tabs - Split",
+          "itemCode": "CLMA00008-1",
           "department": "Cutting List / Fabrication",
-          "startDate": null,
-          "endDate": null,
+          "startDate": "2026-05-03",
+          "endDate": "2026-05-07",
           "done": false,
-          "pct": 0,
           "assignedTo": null,
-          "dependsOn": [],
-          "notes": "CLMP00052-1 — Door Frame Flange (2035 x 900) 3mm MS - Left | Qty: 1 EA\nCLMP00052-2 — Door Frame Flange (2035 x 900) 3mm MS - Right | Qty: 1 EA\nCLMP00063 — FAW Side Door - Bottom Profile 1 | Qty: 1 EA\nCLMP00064 — FAW Side Door - Bottom Profile 2 | Qty: 1 EA\nCLMP00071 — FAW Door - Bottom Profile End Cap | Qty: 2 EA\nCLMP00072-1 — FAW Door - Door Skin 1 - Without Tabs | Qty: 1 EA\nCLMP00077-1 — FAW Door - Door Skin 2 - Without Tabs | Qty: 1 EA",
-          "subTasks": []
+          "notes": ""
         },
         {
+          "pct": 0,
+          "dependsOn": [],
+          "subTasks": [],
           "id": "t-bom-3",
           "name": "RAWA00003 — STEEL - Door Frame 2060 x 900",
+          "itemCode": "RAWA00003",
           "department": "Raw Materials",
-          "startDate": null,
-          "endDate": null,
+          "startDate": "2026-05-15",
+          "endDate": "2026-05-21",
           "done": false,
-          "pct": 0,
           "assignedTo": null,
-          "dependsOn": [],
-          "notes": "",
-          "subTasks": []
+          "notes": ""
         },
         {
+          "pct": 0,
+          "dependsOn": [],
+          "subTasks": [],
           "id": "t-bom-4",
           "name": "SUBA00085 — JK6 (10m) Skirt and Tool Box Assembly",
+          "itemCode": "SUBA00085",
           "department": "Assembly",
-          "startDate": null,
-          "endDate": null,
+          "startDate": "2026-05-16",
+          "endDate": "2026-05-17",
           "done": false,
-          "pct": 0,
           "assignedTo": null,
-          "dependsOn": [],
-          "notes": "",
-          "subTasks": []
+          "notes": ""
         },
         {
+          "pct": 0,
+          "dependsOn": [],
+          "subTasks": [],
           "id": "t-bom-5",
           "name": "SUBA00033 — JK6 (10m) LHS Skirt Main Assembly",
+          "itemCode": "SUBA00033",
           "department": "Assembly",
-          "startDate": null,
-          "endDate": null,
+          "startDate": "2026-05-16",
+          "endDate": "2026-05-23",
           "done": false,
-          "pct": 0,
           "assignedTo": null,
-          "dependsOn": [],
-          "notes": "MECP00168 — Lock Paddle, S/S, 4 Holes, W/Keys | Qty: 11 EA\nMECP00255 — Hinge 50x50 Black | Qty: 12 EA\nRAWP00060 — STEEL - Square Tube - 38 X 38 X 1.5mm | Qty: 18 M\nRAWP00121 — RECTANGULAR TUBE - STEEL, 25 X 12 X 1.6MM | Qty: 78 M\nRAWP00508 — STEEL - Angle, 30 x 30 x 3mm | Qty: 12 M",
-          "subTasks": []
+          "notes": ""
         },
         {
+          "pct": 0,
+          "dependsOn": [],
+          "subTasks": [],
           "id": "t-bom-6",
           "name": "SUBA00043 — JK6 (10m) RHS Skirt Main Assembly",
+          "itemCode": "SUBA00043",
           "department": "Assembly",
-          "startDate": null,
-          "endDate": null,
+          "startDate": "2026-05-14",
+          "endDate": "2026-05-25",
           "done": false,
-          "pct": 0,
           "assignedTo": null,
-          "dependsOn": [],
-          "notes": "MECP00168 — Lock Paddle, S/S, 4 Holes, W/Keys | Qty: 11 EA\nMECP00255 — Hinge 50x50 Black | Qty: 12 EA\nRAWP00060 — STEEL - Square Tube - 38 X 38 X 1.5mm | Qty: 18 M\nRAWP00121 — RECTANGULAR TUBE - STEEL, 25 X 12 X 1.6MM | Qty: 78 M\nRAWP00508 — STEEL - Angle, 30 x 30 x 3mm | Qty: 12 M",
-          "subTasks": []
+          "notes": ""
         },
         {
+          "pct": 0,
+          "dependsOn": [],
+          "subTasks": [],
           "id": "t-bom-7",
           "name": "SUBA00001-4 — Interior Cladding - 10m Truck (SIOC Dental Truck Layout)",
+          "itemCode": "SUBA00001-4",
           "department": "Assembly",
-          "startDate": null,
-          "endDate": null,
+          "startDate": "2026-05-15",
+          "endDate": "2026-05-22",
           "done": false,
-          "pct": 0,
           "assignedTo": null,
-          "dependsOn": [],
-          "notes": "CABP00125 — FLOORING - Brazil Blue | Qty: 40 M2\nCONP00153 — GLUE - WEB SPRAY HI-TEMP HM 22LITRE | Qty: 2 EA\nCONP01190 — ADHESIVE - Flexible Tile Adhesive, Pro Grip, Premix - 5L | Qty: 8 EA\nOPEP00001 — MATTING - Dirt Trapper C/FALL, INDOOR, GREY, 1.2M (w) | Qty: 2 M\nRAWP00001 — 2.900 Gelcoat GRP Skin 2.00mm Thick | Qty: 45 M2\nRAWP00038 — Plywood - 9MM Commercial EXT 2440 X 1220 | Qty: 10 EA",
-          "subTasks": []
+          "notes": ""
         },
         {
+          "pct": 0,
+          "dependsOn": [],
+          "subTasks": [],
           "id": "t-bom-8",
           "name": "RAWA00005 — CLADDING - Interior Wall - Pocket Door Assembly",
+          "itemCode": "RAWA00005",
           "department": "Raw Materials",
-          "startDate": null,
-          "endDate": null,
+          "startDate": "2026-04-20",
+          "endDate": "2026-04-26",
           "done": false,
-          "pct": 0,
           "assignedTo": null,
-          "dependsOn": [],
-          "notes": "CABP00028 — Commercial 813 1CE Door | Qty: 2 EA\nCABP00067 — DOOR HANGER MODENA SENIOR S3 | Qty: 2 EA\nCABP00160 — HPL - White, Matt Finish, 1220 x 2440 x 0.6mm, Post Forming (White Formica) | Qty: 4 EA\nFIXP00009 — Pocket Door, 22 X 200 X 125MM Handle ENG (Stainless Steel Finish) | Qty: 2 Set\nFIXP00246 — RUBBER - Rope, Door Retainer, Dog Bone | Qty: 4 EA\nMECP00051 — DOOR RETAINER - RUBBER, COMPLETE | Qty: 4 EA\nRAWP00001 — 2.900 Gelcoat GRP Skin 2.00mm Thick | Qty: 12 M2\nRAWP00004 — Plywood -18MM, Commercial EXT, 2440 X 1220 | Qty: 8 EA\nRAWP00033 — ALUMINIUM - 25 X 25 X 1.60MM, ANGLE | Qty: 36 M\nRAWP00039 — ALUMINIUM - Angle, 25 X 12 X 1.60MM, 6M | Qty: 108 M\nRAWP00154 — ALUMINIUM - U Channel, 44 X 28 X 1.78MM | Qty: 12 M",
-          "subTasks": []
+          "notes": ""
         },
         {
+          "pct": 0,
+          "dependsOn": [],
+          "subTasks": [],
           "id": "t-bom-9",
           "name": "RAWA00006 — CLADDING - Interior Walls - Toilet Cubical (Agains Pocket Wall)",
+          "itemCode": "RAWA00006",
           "department": "Raw Materials",
-          "startDate": null,
-          "endDate": null,
+          "startDate": "2026-04-20",
+          "endDate": "2026-04-25",
           "done": false,
-          "pct": 0,
           "assignedTo": null,
-          "dependsOn": [],
-          "notes": "CABP00028 — Commercial 813 1CE Door | Qty: 1 EA\nCABP00119 — HINGE - Butt Stainless - 76x40mm - Pair | Qty: 1 Set\nCABP00160 — HPL - White, Matt Finish, 1220 x 2440 x 0.6mm, Post Forming (White Formica) | Qty: 2 EA\nFIXP00017 — DOOR KNOB - TUBULAR, S/S | Qty: 1 EA\nRAWP00001 — 2.900 Gelcoat GRP Skin 2.00mm Thick | Qty: 5 M2\nRAWP00004 — Plywood -18MM, Commercial EXT, 2440 X 1220 | Qty: 2 EA\nRAWP00033 — ALUMINIUM - 25 X 25 X 1.60MM, ANGLE | Qty: 12 M\nRAWP00039 — ALUMINIUM - Angle, 25 X 12 X 1.60MM, 6M | Qty: 18 M\nRAWP00057 — ALUMINIUM - ALUMINIUM TOILET DOOR FRAME, SMALL C MILL | Qty: 12 M\nRAWP00154 — ALUMINIUM - U Channel, 44 X 28 X 1.78MM | Qty: 12 M",
-          "subTasks": []
+          "notes": ""
         },
         {
+          "pct": 0,
+          "dependsOn": [
+            "t-bom-9"
+          ],
+          "subTasks": [],
           "id": "t-bom-10",
           "name": "RAWA00016 — CLADDING - Interior Wall - Entrance Pocket Door Assembly",
+          "itemCode": "RAWA00016",
           "department": "Raw Materials",
-          "startDate": null,
-          "endDate": null,
+          "startDate": "2026-04-26",
+          "endDate": "2026-05-01",
           "done": false,
-          "pct": 0,
           "assignedTo": null,
-          "dependsOn": [],
-          "notes": "CABP00028 — Commercial 813 1CE Door | Qty: 2 EA\nCABP00067 — DOOR HANGER MODENA SENIOR S3 | Qty: 2 EA\nCABP00160 — HPL - White, Matt Finish, 1220 x 2440 x 0.6mm, Post Forming (White Formica) | Qty: 4 EA\nFIXP00009 — Pocket Door, 22 X 200 X 125MM Handle ENG (Stainless Steel Finish) | Qty: 2 Set\nFIXP00246 — RUBBER - Rope, Door Retainer, Dog Bone | Qty: 4 EA\nRAWP00001 — 2.900 Gelcoat GRP Skin 2.00mm Thick | Qty: 25 M2\nRAWP00004 — Plywood -18MM, Commercial EXT, 2440 X 1220 | Qty: 4 EA\nRAWP00033 — ALUMINIUM - 25 X 25 X 1.60MM, ANGLE | Qty: 24 M\nRAWP00039 — ALUMINIUM - Angle, 25 X 12 X 1.60MM, 6M | Qty: 96 M\nRAWP00154 — ALUMINIUM - U Channel, 44 X 28 X 1.78MM | Qty: 12 M",
-          "subTasks": []
+          "notes": ""
         },
         {
+          "pct": 0,
+          "dependsOn": [],
+          "subTasks": [],
           "id": "t-bom-11",
           "name": "SUBA00060-5 — Cabinetry - FINA00031 - SIOC Dental",
+          "itemCode": "SUBA00060-5",
           "department": "Assembly",
-          "startDate": null,
-          "endDate": null,
+          "startDate": "2026-04-29",
+          "endDate": "2026-05-02",
           "done": false,
-          "pct": 0,
           "assignedTo": null,
-          "dependsOn": [],
-          "notes": "CABP00121 — PUSH LOCK - SET | Qty: 40 Set\nCABP00161 — HPL - Blue - Matt Finish, 1220 x 3660 x 0.6mm, Post Forming (Blue Formica) | Qty: 3 EA\nCABP00166 — HINGE - Cupboard Hinge, Soft Close, Full Overlay 110 deg, 0mm Offset, 4 Hole Plate | Qty: 52 EA\nCABP00167 — RUNNER - Telescopic, 45mm Soft Close Ball Bearing, 500mm, H45, 35kg | Qty: 1 EA\nCABP00168 — RUNNER - Telescopic, 45mm Soft Close Ball Bearing, 400mm | Qty: 8 EA\nCABP00179 — DIVIDER - Draw Divider - 359 x 105 x 2mm - ABS Plastic, Black | Qty: 32 EA",
-          "subTasks": []
+          "notes": ""
         },
         {
+          "pct": 0,
+          "dependsOn": [],
+          "subTasks": [],
           "id": "t-bom-12",
           "name": "CLWA00003 — Cabinetry Cutting List for FINA00032",
+          "itemCode": "CLWA00003",
           "department": "Cutting List / Fabrication",
-          "startDate": null,
-          "endDate": null,
+          "startDate": "2026-05-07",
+          "endDate": "2026-05-08",
           "done": false,
-          "pct": 0,
           "assignedTo": null,
-          "dependsOn": [],
-          "notes": "",
-          "subTasks": []
+          "notes": ""
         },
         {
+          "pct": 0,
+          "dependsOn": [],
+          "subTasks": [],
           "id": "t-bom-13",
           "name": "SUBA00048 — Lighting Assembly",
+          "itemCode": "SUBA00048",
           "department": "Assembly",
-          "startDate": null,
-          "endDate": null,
+          "startDate": "2026-05-01",
+          "endDate": "2026-05-07",
           "done": false,
-          "pct": 0,
           "assignedTo": null,
-          "dependsOn": [],
-          "notes": "ELEP00071 — LIGHT - 24V, LED STRIP, COOL WHITE | Qty: 90 M\nRAWP00033 — ALUMINIUM - 25 X 25 X 1.60MM, ANGLE | Qty: 24 M\nRAWP00495 — ACRYLIC - Plexi XT UHI, Opal, 1m x 1m x 2mm | Qty: 2 EA\nRAWP00524 — Square Tubing - Aluminium Tubing - 50 x 50 x 1.5mm | Qty: 24 M",
-          "subTasks": []
+          "notes": ""
         },
         {
+          "pct": 0,
+          "dependsOn": [],
+          "subTasks": [],
           "id": "t-bom-14",
           "name": "SUBA00014-1 — Black Water System - Truck, JK6",
+          "itemCode": "SUBA00014-1",
           "department": "Assembly",
-          "startDate": null,
-          "endDate": null,
+          "startDate": "2026-04-20",
+          "endDate": "2026-04-25",
           "done": false,
-          "pct": 0,
           "assignedTo": null,
-          "dependsOn": [],
-          "notes": "MECP00226 — TANK BREATHER - NIPPLE, STAINLESS STEEL | Qty: 1 EA\nRAWP00483 — STEEL - Square Tube - 25 x 25 x 1.6, Mild Steel | Qty: 6 EA\nRAWP00060 — STEEL - Square Tube - 38 X 38 X 1.5mm | Qty: 3 M\nRAWP00508 — STEEL - Angle, 30 x 30 x 3mm | Qty: 6 M\nPLUP00007 — TANK CONNECTOR - JOHN GUEST, 15MM | Qty: 1 EA\nPLUP00038 — PIPE - SANITARY HOSE, 38MM | Qty: 3 M\nPLUP00104 — TANK - WATER, 120L | Qty: 1 EA\nPLUP00191 — HATCH KIT - WATER TANK | Qty: 1 EA\nPLUP00293 — GAUGE - Water Tank Level. ISSUE with PLUP00294 | Qty: 1 EA\nPLUP00294 — SENSOR - Fresh Water Level (320mm) ISSUE with PLUP00293 | Qty: 1 EA\nPLUP00381 — TANK FITTING - 90 Degree Elbow, Tank Fitting, 40mm, PVC socket | Qty: 1 EA\nPLUP00354 — PUMP - Black Water, Macerator Pump, 24V (12GPM, 6A Max) | Qty: 1 EA",
-          "subTasks": []
+          "notes": ""
         },
         {
+          "pct": 0,
+          "dependsOn": [],
+          "subTasks": [],
           "id": "t-bom-15",
           "name": "SUBA00012-1 — Fresh Water System - Truck, JK6",
+          "itemCode": "SUBA00012-1",
           "department": "Assembly",
-          "startDate": null,
-          "endDate": null,
+          "startDate": "2026-04-25",
+          "endDate": "2026-05-03",
           "done": false,
-          "pct": 0,
           "assignedTo": null,
-          "dependsOn": [],
-          "notes": "PLUP00104 — TANK - WATER, 120L | Qty: 1 EA\nPLUP00191 — HATCH KIT - WATER TANK | Qty: 1 EA\nPLUP00003 — COUPLING - MALE, JOHN GUEST, 15MM TO 1/2\" | Qty: 5 EA\nMECP00226 — TANK BREATHER - NIPPLE, STAINLESS STEEL | Qty: 1 EA\nPLUP00076 — ELBOW - EQUAL, JOHN GUEST, 15MM | Qty: 30 EA\nPLUP00180 — JOHN GUEST - PIPE CLIPS, BRACKET, SADDLE | Qty: 30 EA\nPLUP00077 — TEE - EQUAL, JOHN GUEST, 15MM | Qty: 5 EA\nPLUP00004 — COUPLING - FEMALE, JOHN GUEST, 15MM TO 1/2\" | Qty: 20 EA\nRAWP00483 — STEEL - Square Tube - 25 x 25 x 1.6, Mild Steel | Qty: 6 EA\nRAWP00060 — STEEL - Square Tube - 38 X 38 X 1.5mm | Qty: 3 M\nPLUP00294 — SENSOR - Fresh Water Level (320mm) ISSUE with PLUP00293 | Qty: 1 EA\nPLUP00293 — GAUGE - Water Tank Level. ISSUE with PLUP00294 | Qty: 1 EA\nPLUP00381 — TANK FITTING - 90 Degree Elbow, Tank Fitting, 40mm, PVC socket | Qty: 1 EA\nPLUP00007 — TANK CONNECTOR - JOHN GUEST, 15MM | Qty: 1 EA\nRAWP00508 — STEEL - Angle, 30 x 30 x 3mm | Qty: 6 M\nPLUP00383 — PIPE - John Guest, 15mm (Blue), LLDPE Tube, Fresh Water | Qty: 25 M",
-          "subTasks": []
+          "notes": ""
         },
         {
+          "pct": 0,
+          "dependsOn": [],
+          "subTasks": [],
           "id": "t-bom-16",
           "name": "SUBA00065-1 — Red Water Tank System (Dental) - JK6 Dental",
+          "itemCode": "SUBA00065-1",
           "department": "Assembly",
-          "startDate": null,
-          "endDate": null,
+          "startDate": "2026-04-28",
+          "endDate": "2026-04-30",
           "done": false,
-          "pct": 0,
           "assignedTo": null,
-          "dependsOn": [],
-          "notes": "PLUP00104 — TANK - WATER, 120L | Qty: 1 EA\nPLUP00191 — HATCH KIT - WATER TANK | Qty: 1 EA\nPLUP00156 — TANK FITTING - 38MM | Qty: 1 EA\nPLUP00003 — COUPLING - MALE, JOHN GUEST, 15MM TO 1/2\" | Qty: 1 EA\nMECP00226 — TANK BREATHER - NIPPLE, STAINLESS STEEL | Qty: 1 EA\nPLUP00013 — WASTE PIPE - PVC, 40MM, WHITE | Qty: 20 M\nPLUP00010 — ELBOW - EQUAL, PVC, 90DEG, 40MM, WHITE | Qty: 20 EA\nPLUP00009 — ELBOW - EQUAL, PVC, 45DEG, 40MM, WHITE | Qty: 5 EA\nPLUP00065 — TEE - EQUAL, PVC, 40MM, WHITE, PLAIN | Qty: 5 EA\nRAWP00483 — STEEL - Square Tube - 25 x 25 x 1.6, Mild Steel | Qty: 6 EA\nRAWP00060 — STEEL - Square Tube - 38 X 38 X 1.5mm | Qty: 3 M\nPLUP00294 — SENSOR - Fresh Water Level (320mm) ISSUE with PLUP00293 | Qty: 1 EA\nPLUP00293 — GAUGE - Water Tank Level. ISSUE with PLUP00294 | Qty: 1 EA",
-          "subTasks": []
+          "notes": ""
         },
         {
+          "pct": 0,
+          "dependsOn": [],
+          "subTasks": [],
           "id": "t-bom-17",
           "name": "SUBA00013-1 — Grey Water System - Truck, JK6",
+          "itemCode": "SUBA00013-1",
           "department": "Assembly",
-          "startDate": null,
-          "endDate": null,
+          "startDate": "2026-04-27",
+          "endDate": "2026-05-02",
           "done": false,
-          "pct": 0,
           "assignedTo": null,
-          "dependsOn": [],
-          "notes": "PLUP00104 — TANK - WATER, 120L | Qty: 1 EA\nPLUP00191 — HATCH KIT - WATER TANK | Qty: 1 EA\nPLUP00003 — COUPLING - MALE, JOHN GUEST, 15MM TO 1/2\" | Qty: 5 EA\nMECP00226 — TANK BREATHER - NIPPLE, STAINLESS STEEL | Qty: 1 EA\nPLUP00013 — WASTE PIPE - PVC, 40MM, WHITE | Qty: 20 M\nPLUP00010 — ELBOW - EQUAL, PVC, 90DEG, 40MM, WHITE | Qty: 20 EA\nPLUP00009 — ELBOW - EQUAL, PVC, 45DEG, 40MM, WHITE | Qty: 5 EA\nPLUP00065 — TEE - EQUAL, PVC, 40MM, WHITE, PLAIN | Qty: 5 EA\nRAWP00483 — STEEL - Square Tube - 25 x 25 x 1.6, Mild Steel | Qty: 6 EA\nRAWP00060 — STEEL - Square Tube - 38 X 38 X 1.5mm | Qty: 3 M\nPLUP00294 — SENSOR - Fresh Water Level (320mm) ISSUE with PLUP00293 | Qty: 1 EA\nPLUP00293 — GAUGE - Water Tank Level. ISSUE with PLUP00294 | Qty: 1 EA\nPLUP00381 — TANK FITTING - 90 Degree Elbow, Tank Fitting, 40mm, PVC socket | Qty: 1 EA\nPLUP00007 — TANK CONNECTOR - JOHN GUEST, 15MM | Qty: 1 EA\nRAWP00508 — STEEL - Angle, 30 x 30 x 3mm | Qty: 6 M",
-          "subTasks": []
+          "notes": ""
         },
         {
+          "pct": 0,
+          "dependsOn": [],
+          "subTasks": [],
           "id": "t-bom-18",
           "name": "SUBA00011-1 — Water Enclosure - FAW Truck",
+          "itemCode": "SUBA00011-1",
           "department": "Assembly",
-          "startDate": null,
-          "endDate": null,
+          "startDate": "2026-04-27",
+          "endDate": "2026-05-02",
           "done": false,
-          "pct": 0,
           "assignedTo": null,
-          "dependsOn": [],
-          "notes": "ELEP00195 — SWITCH - BELL, IP55 | Qty: 1 EA\nMECP00168 — Lock Paddle, S/S, 4 Holes, W/Keys | Qty: 1 EA\nMECP00255 — Hinge 50x50 Black | Qty: 2 EA\nMECP00438 — GAS STRUT - 250mm, 150N, (including Ball and Steel End Fittings) | Qty: 1 EA\nPLUP00002 — ACCUMULATOR - Accumulator Tank, 0.75L, 125psi | Qty: 1 EA\nPLUP00003 — COUPLING - MALE, JOHN GUEST, 15MM TO 1/2\" | Qty: 5 EA\nPLUP00004 — COUPLING - FEMALE, JOHN GUEST, 15MM TO 1/2\" | Qty: 5 EA\nPLUP00018 — FILTER - GAC CARTRIDGE, 19000 L | Qty: 1 EA\nPLUP00019 — FILTER - MELT BLOWN, POLYPROPYLENE | Qty: 1 EA\nPLUP00031 — CAMLOCK - CAMLOCK - TYPE F-150, 11/2\" 40mm | Qty: 1 EA\nPLUP00035 — BACK NUT - BACK NUT NYLON, 3/4\" | Qty: 0 EA\nPLUP00037 — BUSH - REDUCING, NYLON, 3/4\" TO 1/2\" | Qty: 5 EA\nPLUP00038 — PIPE - SANITARY HOSE, 38MM | Qty: 3 M\nPLUP00044 — FILTER - WATER SYSTEM, DBL HOUSING, 3/4 | Qty: 1 EA\nPLUP00058 — RUNNING NIPPLE - Brass, 3/4\" | Qty: 3 EA\nPLUP00076 — ELBOW - EQUAL, JOHN GUEST, 15MM | Qty: 4 EA\nPLUP00077 — TEE - EQUAL, JOHN GUEST, 15MM | Qty: 1 EA\nPLUP00081 — VALVE - VALVE - BALL, SS, 3/4\" | Qty: 3 EA\nPLUP00082 — ELBOW - 40MM HOSETAIL TO 11/2\" FEMALE BSP | Qty: 1 EA\nPLUP00084 — CAMLOCK - CAMLOCK - TYPE C-150 11/2\" 38-40mm | Qty: 1 EA\nPLUP00099 — Tap Adaptor - 3/4\" | Qty: 3 EA\nPLUP00293 — GAUGE - Water Tank Level. ISSUE with PLUP00294 | Qty: 1 EA\nPLUP00294 — SENSOR - Fresh Water Level (320mm) ISSUE with PLUP00293 | Qty: 1 EA\nPLUP00298 — VALVE - Stainless Steel BSP Ball Valve - 40mm / 1 1/2'' | Qty: 1 EA\nPLUP00355 — PUMP - Fresh Water Pump, 24V, 5GPM, 4.2BAR, 8A max | Qty: 1 EA\nPLUP00366 — Reducing Socket - 3/4\" to 1/2\" | Qty: 5 EA",
-          "subTasks": []
+          "notes": ""
         },
         {
+          "pct": 0,
+          "dependsOn": [],
+          "subTasks": [],
           "id": "t-bom-19",
           "name": "CLMA00018 — JK6 (Standard) Water Inspection Enclosure",
+          "itemCode": "CLMA00018",
           "department": "Cutting List / Fabrication",
-          "startDate": null,
-          "endDate": null,
+          "startDate": "2026-05-07",
+          "endDate": "2026-05-07",
           "done": false,
-          "pct": 0,
           "assignedTo": null,
-          "dependsOn": [],
-          "notes": "CLMP00106 — JK6 (10m) Water Inspection Enclosure | Qty: 1 EA\nCLMP00107 — JK6 (10m) Water Inspection Enclosure Side | Qty: 1 EA\nCLMP00108 — JK6 (10m) Water Inspection Enclosure Side | Qty: 1 EA",
-          "subTasks": []
+          "notes": ""
         },
         {
+          "pct": 0,
+          "dependsOn": [],
+          "subTasks": [],
           "id": "t-bom-20",
           "name": "SUBA00015 — Toilet Cubical",
+          "itemCode": "SUBA00015",
           "department": "Assembly",
-          "startDate": null,
-          "endDate": null,
+          "startDate": "2026-04-26",
+          "endDate": "2026-04-30",
           "done": false,
-          "pct": 0,
           "assignedTo": null,
-          "dependsOn": [],
-          "notes": "",
-          "subTasks": []
+          "notes": ""
         },
         {
+          "pct": 0,
+          "dependsOn": [],
+          "subTasks": [],
           "id": "t-bom-21",
           "name": "PLUA00004 — TOILET - Pedastal, fully assembled",
+          "itemCode": "PLUA00004",
           "department": "Plumbing",
-          "startDate": null,
-          "endDate": null,
+          "startDate": "2026-04-30",
+          "endDate": "2026-05-06",
           "done": false,
-          "pct": 0,
           "assignedTo": null,
-          "dependsOn": [],
-          "notes": "PLUP00003 — COUPLING - MALE, JOHN GUEST, 15MM TO 1/2\" | Qty: 1 EA\nPLUP00086 — VALVE - BALL, 1/2\", MALE TO FEMALE | Qty: 1 EA\nPLUP00090 — WASTE FITTING - WASTE&PLUG, 40MM S/STEEL | Qty: 1 EA\nPLUP00116 — TAP - PILLARTAP IN TOILET | Qty: 1 EA\nPLUP00119 — BOTTLE TRAP - BOTTLE TRAP 40MM | Qty: 1 EA",
-          "subTasks": []
+          "notes": ""
         },
         {
+          "pct": 0,
+          "dependsOn": [],
+          "subTasks": [],
           "id": "t-bom-22",
           "name": "SUBA00004-2 — Electrical System - Hybrid Solar and Generator System, 10m Truck (8 Panel, 2x5kVA, 4 Battery System)",
+          "itemCode": "SUBA00004-2",
           "department": "Assembly",
-          "startDate": null,
-          "endDate": null,
+          "startDate": "2026-05-02",
+          "endDate": "2026-05-05",
           "done": false,
-          "pct": 0,
           "assignedTo": null,
-          "dependsOn": [],
-          "notes": "",
-          "subTasks": []
+          "notes": ""
         },
         {
+          "pct": 0,
+          "dependsOn": [],
+          "subTasks": [],
           "id": "t-bom-23",
           "name": "ELEA00014 — POWER SYSTEM - Generator & Shore Assembly",
+          "itemCode": "ELEA00014",
           "department": "Electrical",
-          "startDate": null,
-          "endDate": null,
+          "startDate": "2026-05-04",
+          "endDate": "2026-05-07",
           "done": false,
-          "pct": 0,
           "assignedTo": null,
-          "dependsOn": [],
-          "notes": "ELEP00063 — WIRE - 4.0MM2, 3 CORE, CABTYRE | Qty: 10 M\nELEP00072 — CHARGER - CHARGER BATTERY, 24V, 12A, 3 STAGE | Qty: 1 EA\nMECP00467 — GENERATOR - 7.8kVA, RATO R8750ID | Qty: 1 EA\nRAWP00487 — FOAM - Sound Proof - Procell Flame Proof 25mm Black, Plain, 2m x 1m (NOT PYROSORB) | Qty: 2 EA",
-          "subTasks": []
+          "notes": ""
         },
         {
+          "pct": 0,
+          "dependsOn": [],
+          "subTasks": [],
           "id": "t-bom-24",
           "name": "ELEA00015 — POWER SYSTEM - Solar Panel Assembly (8 Panel, Truck, Flat Roof)",
+          "itemCode": "ELEA00015",
           "department": "Electrical",
-          "startDate": null,
-          "endDate": null,
+          "startDate": "2026-05-17",
+          "endDate": "2026-05-18",
           "done": false,
-          "pct": 0,
           "assignedTo": null,
-          "dependsOn": [],
-          "notes": "CONP01192 — ADHESIVE - Loctite | Qty: 1 EA\nCONP01199 — NUT - M8 T-Nut for PG40 Profile (2.21.10.M8) | Qty: 50 EA\nELEP00131 — WIRE - Panelflex, 10mm2, Red | Qty: 50 M\nELEP00132 — WIRE - Panelflex, 10mm2, Black | Qty: 50 M\nELEP00332 — SWITCH - BATTERY, DISCONNECT | Qty: 1 EA\nELEP00470 — CONNECTOR - MC4 Male 4-6mm / 6.5-7.5Omm | Qty: 12 Set\nELEP00471 — CONNECTOR - MC4 Female 4-6mm / 6.5-7.5OMM | Qty: 12 Set\nELEP00474 — CONNECTOR - PV MC4 FEMALE BRANCH CONNECTOR | Qty: 6 EA\nELEP00475 — CONNECTOR - PV MC4 FMM BRANCH | Qty: 6 EA\nELEP00642 — SURGE PROTECTOR - Din Rail Mount - 40kA, 2P, 1000Vdc, IP20 | Qty: 1 EA\nELEP00683 — FUSE HOLDER - MC4 10 x 38 fuse holder, 30A Max, inline (includes 20A Fuse) | Qty: 4 EA\nELEP00684 — SOLAR PANEL - Canadian Solar 585W, N-Type, CS-585W-N | Qty: 8 EA\nFIXP00257 — Solar Mounting Clamp - End Clamp, 30mm, Z-Shape | Qty: 8 EA\nFIXP00258 — Solar Mounting Clamp - Middle Clamp U-Shape, 20-40mm | Qty: 12 EA\nRAWP00484 — ALUMINIUM - Strut Profile, PG40, 40 x 40, 4 Slots 5.8m ea | Qty: 23.2 M\nRAWP00485 — STEEL - Laser Cutting - Solar Mounting for PG40 Modular Profile | Qty: 66 EA\nRAWP00490 — STEEL - Laser Cutting - Solar, Connecting Bracket for PG40 Profile | Qty: 32 EA",
-          "subTasks": []
+          "notes": ""
         },
         {
+          "pct": 0,
+          "dependsOn": [],
+          "subTasks": [],
           "id": "t-bom-25",
           "name": "ELEA00016 — POWER SYSTEM - Inverter Assembly - 2x5kVA Rack Mounted System",
+          "itemCode": "ELEA00016",
           "department": "Electrical",
-          "startDate": null,
-          "endDate": null,
+          "startDate": "2026-05-14",
+          "endDate": "2026-05-14",
           "done": false,
-          "pct": 0,
           "assignedTo": null,
-          "dependsOn": [],
-          "notes": "ELEP00332 — SWITCH - BATTERY, DISCONNECT | Qty: 1 EA\nELEP00335 — DISTRIBUTION BOARD - DISTRIBUTION BOARD 6 WAY, SURFACE MOUNT | Qty: 1 EA\nELEP00619 — ISOLATOR - NH00 Fuse Disconnect Switch, 2P, 160A, (for Solar Battery Bank) | Qty: 1 EA\nELEP00620 — FUSE - Centered Tag Fuse, NH00, 125A | Qty: 2 EA\nELEP00624 — INVERTER - Solar, Axpert King, 5kVA Off-Grid Inverter, 4000W mppt, Rack Mounted (MPPT Input voltage 60-115VDC) | Qty: 2 EA\nELEP00651 — BREAKER - Dinrail Mount, Magnetic Circuit Breaker, 1P, 32A | Qty: 4 EA\nELEP00655 — WIRE - Cabtyre, 10mm2, 3 Core | Qty: 10 EA",
-          "subTasks": []
+          "notes": ""
         },
         {
+          "pct": 0,
+          "dependsOn": [],
+          "subTasks": [],
           "id": "t-bom-26",
           "name": "ELEA00017 — POWER SYSTEM - Solar Battery Assembly - 4 Rack Mount Battery System",
+          "itemCode": "ELEA00017",
           "department": "Electrical",
-          "startDate": null,
-          "endDate": null,
+          "startDate": "2026-05-07",
+          "endDate": "2026-05-07",
           "done": false,
-          "pct": 0,
           "assignedTo": null,
-          "dependsOn": [],
-          "notes": "ELEP00040 — WIRE - CAT5, SHIELDED, NETWORK CABLE (UV Protected) (Meters) | Qty: 10 EA\nELEP00464 — WIRE - 35MM2, PANELFLEX, BLACK | Qty: 20 M\nELEP00465 — WIRE - 35MM2, PANELFLEX, RED | Qty: 20 M\nELEP00473 — Hubble Lithium - Cloudlink (formerly RIOT) | Qty: 1 EA\nELEP00605 — BATTERY - Solar, Rack Mounted, Hubble Lithium X101 | Qty: 4 EA\nELEP00619 — ISOLATOR - NH00 Fuse Disconnect Switch, 2P, 160A, (for Solar Battery Bank) | Qty: 1 EA\nELEP00654 — FUSE - Centered Tag Fuse, NH00, 125A | Qty: 2 EA",
-          "subTasks": []
+          "notes": ""
         },
         {
+          "pct": 0,
+          "dependsOn": [],
+          "subTasks": [],
           "id": "t-bom-27",
           "name": "SUBA00007-1 — Airconditioning System - FAW Chassis, 3 Unit",
+          "itemCode": "SUBA00007-1",
           "department": "Assembly",
-          "startDate": null,
-          "endDate": null,
+          "startDate": "2026-05-18",
+          "endDate": "2026-05-19",
           "done": false,
-          "pct": 0,
           "assignedTo": null,
-          "dependsOn": [],
-          "notes": "MECP00329 — AIR CONDITIONER - Puremind, Inverter, 9000BTU, Heating & Cooling | Qty: 3 EA",
-          "subTasks": []
+          "notes": ""
         },
         {
+          "pct": 0,
+          "dependsOn": [],
+          "subTasks": [],
           "id": "t-bom-28",
           "name": "CLMA00007 — CUTTING LIST, METAL - Aircon Bracket Truck, Four, Assembled",
+          "itemCode": "CLMA00007",
           "department": "Cutting List / Fabrication",
-          "startDate": null,
-          "endDate": null,
+          "startDate": "2026-05-15",
+          "endDate": "2026-05-17",
           "done": false,
-          "pct": 0,
           "assignedTo": null,
-          "dependsOn": [],
-          "notes": "CLMP00013 — CUTTING LIST - Metal - Aircon Mount Chassis Foot Bracket, Three Aircons | Qty: 2 EA\nCLMP00014 — CUTTING LIST - Metal - Aircon Mount Upright, Three Aircons | Qty: 1 EA\nCLMP00014-1 — MIRROR - CUTTING LIST - Metal - Aircon Mount Upright, Three Aircons | Qty: 1 EA\nCLMP00019-1 — CUTTING LIST - Metal - Aircon Frame Bolt Bracket Top, Four Aircons, Driver Side | Qty: 1 EA\nCLMP00019-2 — CUTTING LIST - Metal - Aircon Frame Bolt Bracket Top, Four Aircons, Passenger Side | Qty: 1 EA\nCLMP00020 — CUTTING LIST - Metal - Aircon Frame Strut Brace, Three Aircons | Qty: 1 EA\nCLMP00020-1 — MIRROR - CUTTING LIST - Metal - Aircon Frame Strut Brace, Three Aircons | Qty: 1 EA\nCLMP00033 — CUTTING LIST - Metal - Aircon Frame Support, Bolt Bracket Top, Three Aircons | Qty: 2 EA\nCLMP00034 — CUTTING LIST - Metal - Aircon Frame Support, Bolt Bracket Rear, Three Aircons | Qty: 2 EA\nCLMP00035 — CUTTING LIST - Metal - Aircon Frame Support, Body Bracket Three Aircons | Qty: 2 EA\nCLMP00036 — CUTTING LIST - Metal - Aircon Frame Support, Top Bolt Bracket Three Aircons | Qty: 2 EA\nCLMP00056 — CUTTING LIST - Metal - Aircon Mount Main Bracket, Four Aircons | Qty: 1 EA\nCLMP00057-1 — CUTTING LIST - Metal - Aircon Frame Support Piece, 411.66mm | Qty: 1 EA\nCLMP00057-2 — CUTTING LIST - Metal - Aircon Frame Support Piece, 972.98mm | Qty: 3 EA\nCLMP00057-3 — CUTTING LIST - Metal - Aircon Frame Support Piece, 513.99mm | Qty: 1 EA",
-          "subTasks": []
+          "notes": ""
         },
         {
+          "pct": 0,
+          "dependsOn": [],
+          "subTasks": [],
           "id": "t-bom-29",
           "name": "MECA00015-2 — AIRCON - Standard Air Conditioning Connection Items (3 Aircon Unit)",
+          "itemCode": "MECA00015-2",
           "department": "Mechanical",
-          "startDate": null,
-          "endDate": null,
+          "startDate": "2026-05-01",
+          "endDate": "2026-05-06",
           "done": false,
-          "pct": 0,
           "assignedTo": null,
-          "dependsOn": [],
-          "notes": "MECP00329 — AIR CONDITIONER - Puremind, Inverter, 9000BTU, Heating & Cooling | Qty: 3 EA\nRAWP00513 — PVC - 20mm, Elbow | Qty: 5 EA\nRAWP00515 — PVC - 20mm, Pipe (6m) | Qty: 6 M\nELEP00658 — WIRE - 1.5mm, 4 Core, Cabtyre | Qty: 31 M\nELEP00530 — TRUNKING - 100 x 40mm. To be issued per metre | Qty: 6 M\nRAWP00522 — Aircon - 1/4 Inch Armaflex Insulation (per length) | Qty: 12 EA\nRAWP00521 — Aircon - 3/8 Inch Armaflex Insulation (per length) | Qty: 12 EA\nRAWP00535 — PVC - 20mm, TEE Piece | Qty: 4 EA\nRAWP00519 — Aircon - 1/4 Inch Copper Tubing - R410a (15.24m Coils) | Qty: 1 EA\nRAWP00520 — Aircon - 3/8 Inch Copper Tubing - R410a (15.24m Coils) | Qty: 1 EA\nELEP00055 — WIRE - 1.5MM2, 3 CORE, CABTYRE | Qty: 35 M",
-          "subTasks": []
+          "notes": ""
         },
         {
+          "pct": 0,
+          "dependsOn": [],
+          "subTasks": [],
           "id": "t-bom-30",
           "name": "SUBA00002-2 — Server Rack - Truck, Full Server Rack (SIOC Truck)",
+          "itemCode": "SUBA00002-2",
           "department": "Assembly",
-          "startDate": null,
-          "endDate": null,
+          "startDate": "2026-04-30",
+          "endDate": "2026-05-05",
           "done": false,
-          "pct": 0,
           "assignedTo": null,
-          "dependsOn": [],
-          "notes": "",
-          "subTasks": []
+          "notes": ""
         },
         {
+          "pct": 0,
+          "dependsOn": [],
+          "subTasks": [],
           "id": "t-bom-31",
           "name": "ITEA00005 — IT Installation - Server Rack Components",
+          "itemCode": "ITEA00005",
           "department": "IT",
-          "startDate": null,
-          "endDate": null,
+          "startDate": "2026-05-02",
+          "endDate": "2026-05-08",
           "done": false,
-          "pct": 0,
           "assignedTo": null,
-          "dependsOn": [],
-          "notes": "ELEP00313 — MULTIPLUG - 10WAY | Qty: 1 EA\nELEP00638 — PLUG - Adaptor, 3-pin to 2-pin, Euro plug adaptor | Qty: 1 EA\nITEP00169 — SWITCH - 24 Port | Qty: 1 EA\nITEP00304 — Server Rack - Brush Panel | Qty: 1 EA\nITEP00329 — ROUTER - RUTX50, 5G Router, Dual Sim | Qty: 1 EA\nITEP00330 — ANTENNA - Poynting 7-in-1 Transportation & Automotive Antenna, 617-7200mHZ, 4x4, LTE/5G (MIMO) | Qty: 1 EA\nITEP00338 — ROUTER - RUTX50 - Din Rail Mount for RUTX50 (Metal) | Qty: 1 EA\nITEP00358 — PC - NUC - H90, i7, 11390H, 16GB RAM, 512GB SSD | Qty: 1 EA\nITEP00363 — CAMERA - Indoor/Outdoor Dome/Turret IP POE Network Camera | Qty: 4 EA\nITEP00364 — Switch - 4/5 Port, POE | Qty: 2 EA",
-          "subTasks": []
+          "notes": ""
         },
         {
+          "pct": 0,
+          "dependsOn": [],
+          "subTasks": [],
           "id": "t-bom-32",
           "name": "SUBA00022-3 — Electrical Distribution (Trunking) - 10m Truck, Double Dental Truck",
+          "itemCode": "SUBA00022-3",
           "department": "Assembly",
-          "startDate": null,
-          "endDate": null,
+          "startDate": "2026-05-01",
+          "endDate": "2026-05-08",
           "done": false,
-          "pct": 0,
           "assignedTo": null,
-          "dependsOn": [],
-          "notes": "",
-          "subTasks": []
+          "notes": ""
         },
         {
+          "pct": 0,
+          "dependsOn": [],
+          "subTasks": [],
           "id": "t-bom-33",
           "name": "ELEA00006 — TRUNKING - Double Euro Outlet - Fully Assembled",
+          "itemCode": "ELEA00006",
           "department": "Electrical",
-          "startDate": null,
-          "endDate": null,
+          "startDate": "2026-05-04",
+          "endDate": "2026-05-08",
           "done": false,
-          "pct": 0,
           "assignedTo": null,
-          "dependsOn": [],
-          "notes": "ELEP00025 — TRUNKING - UNIVERSAL COVERSET, WHITE | Qty: 10 EA\nELEP00028 — SOCKET - EURO PLUG, 11850 | Qty: 20 EA\nELEP00029 — CRADLE - UNIVERSAL, 11000, STEEL | Qty: 10 EA\nELEP00181 — TRUNKING - BLANK INSERT, 11900 | Qty: 10 EA\nELEP00673 — WAGO CONNECTOR - 5-Way | Qty: 40 EA",
-          "subTasks": []
+          "notes": ""
         },
         {
+          "pct": 0,
+          "dependsOn": [],
+          "subTasks": [],
           "id": "t-bom-34",
           "name": "ELEA00007 — TRUNKING - 3-Pin Outlet - Fully Assembled",
+          "itemCode": "ELEA00007",
           "department": "Electrical",
-          "startDate": null,
-          "endDate": null,
+          "startDate": "2026-05-03",
+          "endDate": "2026-05-03",
           "done": false,
-          "pct": 0,
           "assignedTo": null,
-          "dependsOn": [],
-          "notes": "ELEP00032 — TRUNKING - 3-PIN PLUG COVERSET, WHT, BD461 | Qty: 15 EA\nELEP00034 — SOCKET - 3-PIN, PLUG OUTLET, 6896 | Qty: 15 EA\nELEP00673 — WAGO CONNECTOR - 5-Way | Qty: 45 EA",
-          "subTasks": []
+          "notes": ""
         },
         {
+          "pct": 0,
+          "dependsOn": [],
+          "subTasks": [],
           "id": "t-bom-35",
           "name": "ELEA00008 — TRUNKING - Double RJ45 Network Outlet - Fully Assembled",
+          "itemCode": "ELEA00008",
           "department": "Electrical",
-          "startDate": null,
-          "endDate": null,
+          "startDate": "2026-05-04",
+          "endDate": "2026-05-05",
           "done": false,
-          "pct": 0,
           "assignedTo": null,
-          "dependsOn": [],
-          "notes": "ELEP00025 — TRUNKING - UNIVERSAL COVERSET, WHITE | Qty: 5 EA\nELEP00029 — CRADLE - UNIVERSAL, 11000, STEEL | Qty: 5 EA\nELEP00033 — SOCKET - RJ45 DATA, 11894 | Qty: 10 EA\nELEP00181 — TRUNKING - BLANK INSERT, 11900 | Qty: 5 EA",
-          "subTasks": []
+          "notes": ""
         },
         {
+          "pct": 0,
+          "dependsOn": [],
+          "subTasks": [],
           "id": "t-bom-36",
           "name": "SUBA00023-1 — Branding - Exterior, 10m Truck (SIOC Truck)",
+          "itemCode": "SUBA00023-1",
           "department": "Assembly",
-          "startDate": null,
-          "endDate": null,
+          "startDate": "2026-05-04",
+          "endDate": "2026-05-10",
           "done": false,
-          "pct": 0,
           "assignedTo": null,
-          "dependsOn": [],
-          "notes": "BRAP00001 — BRANDING - Vinyl - Gloss White, Grey Back, Air Channel Adhesive, 1370 x 50m | Qty: 1 EA\nBRAP00002 — INK - ESM Diamond, F621.1761, 1L, Black | Qty: 1 EA\nBRAP00003 — INK - ESM Diamond D10, 1L, F621.1760 - Yellow | Qty: 1 EA\nBRAP00004 — INK - ESM Diamond D10, 1L, F621.1759 - Magenta | Qty: 1 EA\nBRAP00005 — INK - ESM Diamond D10, 1L, F621.1758 - Cyan | Qty: 1 EA",
-          "subTasks": []
+          "notes": ""
         },
         {
+          "pct": 0,
+          "dependsOn": [],
+          "subTasks": [],
           "id": "t-bom-37",
           "name": "SUBA00066-1 — Dental - SIOC 10m Truck",
+          "itemCode": "SUBA00066-1",
           "department": "Assembly",
-          "startDate": null,
-          "endDate": null,
+          "startDate": "2026-05-02",
+          "endDate": "2026-05-10",
           "done": false,
-          "pct": 0,
           "assignedTo": null,
-          "dependsOn": [],
-          "notes": "CONP00117 — HOSE CLAMP - 10-22MM | Qty: 10 EA\nCONP00448 — HOSE CLAMP - GSS12 14-32MM | Qty: 10 EA\nELEP00290 — FAN - Generator Bay Fan, 220V AC, Filter Size 148.5 x 148x5 x 13.5mm | Qty: 4 EA\nELEP00453 — FAN - BLOWER AC DBL - 006-B45-22 24V - BRUSHLESS | Qty: 2 EA\nMECP00456 — MOUNT - Anti-Vibration - M8 Male to Female Thread, (D30mm, H30mm) | Qty: 8 EA\nMEDP00088 — STOOL - Dental Assistant Chair, With Arm Rest | Qty: 2 EA\nMEDP00209 — DENTAL - Compressor, Oil Free, Single Head | Qty: 2 EA\nMEDP00346 — DENTAL - CHAIR SDS | Qty: 2 EA\nMEDP00349 — DENTAL - Dry Suction Pump incl Separator Tank | Qty: 2 EA\nMEDP00350 — DENTAL - Scaler, DTE5 Piezo | Qty: 2 EA\nMEDP00351 — DENTAL - Water Distiller | Qty: 2 EA\nMEDP00353 — DENTAL - Light Wall Mounted | Qty: 2 EA\nMEDP00359 — MEDICAL - Autoclave | Qty: 2 EA\nMEDP00374 — DENTAL - Curing Light | Qty: 2 EA\nMEDP00396 — DENTAL - Delivery Unit (DCI), Free Standing/Wall Mounted | Qty: 2 EA\nOPEP00142 — TUPPERWARE - Plastic Container, Lockable Lid, 2L | Qty: 40 EA\nOPEP00143 — TUPPERWARE - Plastic Container, Loose Lid, Rectangular | Qty: 20 EA\nPLUP00014 — PIPE - JOHN GUEST, 15MM | Qty: 40 M\nPLUP00076 — ELBOW - EQUAL, JOHN GUEST, 15MM | Qty: 12 EA\nPLUP00077 — TEE - EQUAL, JOHN GUEST, 15MM | Qty: 4 EA\nPLUP00138 — PIPE - PIPE NYLON, 8MM OD | Qty: 20 M\nPLUP00242 — PIPE - PIPE 32MM, UPVC, CLASS 12 | Qty: 24 M\nPLUP00302 — Union Plain/Female uPVC 32 x 1\" | Qty: 4 EA\nPLUP00304 — 90 Degree Elbow Plain/Female uPVC 32 x 1\" | Qty: 8 EA\nPLUP00306 — Union Plain uPVC 32 | Qty: 4 EA\nPLUP00308 — Cap Plain uPVC 32 | Qty: 4 EA\nPLUP00310 — 90 Degree Elbow Plain uPVC 32 | Qty: 12 EA\nPLUP00312 — 45 Degree Elbow Plain uPVC 32 | Qty: 12 EA\nPLUP00314 — 90 Degree Tee Plain uPVC 32 | Qty: 12 EA\nPLUP00316 — Socket Plain uPVC 32 | Qty: 12 EA\nPLUP00318 — Socket Plain/Female uPVC 32 | Qty: 8 EA\nPLUP00321 — Pipe Support Clips Without Retaining Bracket PP - 32 | Qty: 20 EA",
-          "subTasks": []
+          "notes": ""
         },
         {
+          "pct": 0,
+          "dependsOn": [],
+          "subTasks": [],
           "id": "t-bom-38",
           "name": "ITEA00006 — IT Installation - Dental",
+          "itemCode": "ITEA00006",
           "department": "IT",
-          "startDate": null,
-          "endDate": null,
+          "startDate": "2026-05-03",
+          "endDate": "2026-05-07",
           "done": false,
-          "pct": 0,
           "assignedTo": null,
-          "dependsOn": [],
-          "notes": "ITEP00324 — PC - AIO, Guangzhou Star, i7, 16GB RAM, 256GB SSD | Qty: 2 EA\nITEP00365 — WEBCAM - C17, 5MP, Auto Focus, Dual Mic, Privacy Cover Webcamera | Qty: 2 EA",
-          "subTasks": []
+          "notes": ""
         },
         {
+          "pct": 0,
+          "dependsOn": [],
+          "subTasks": [],
           "id": "t-bom-39",
           "name": "CLMA00001 — CUTTING LIST, METAL - PC, Vesa Mounting Case, Fully Assembled",
+          "itemCode": "CLMA00001",
           "department": "Cutting List / Fabrication",
-          "startDate": null,
-          "endDate": null,
+          "startDate": "2026-05-03",
+          "endDate": "2026-05-07",
           "done": false,
-          "pct": 0,
           "assignedTo": null,
-          "dependsOn": [],
-          "notes": "CLMP00001 — CUTTING LIST, METAL - PC, Vesa Mounting Case, Top | Qty: 2 EA\nCLMP00002 — CUTTING LIST, METAL - PC, Vesa Mounting Case, Bottom | Qty: 2 EA",
-          "subTasks": []
+          "notes": ""
         },
         {
+          "pct": 0,
+          "dependsOn": [],
+          "subTasks": [],
           "id": "t-bom-40",
           "name": "CLMA00060 — PC Bracket Assembly - Desk Mount, VESA",
+          "itemCode": "CLMA00060",
           "department": "Cutting List / Fabrication",
-          "startDate": null,
-          "endDate": null,
+          "startDate": "2026-05-03",
+          "endDate": "2026-05-09",
           "done": false,
-          "pct": 0,
           "assignedTo": null,
-          "dependsOn": [],
-          "notes": "CLMP00001 — CUTTING LIST, METAL - PC, Vesa Mounting Case, Top | Qty: 2 EA\nCLMP00002 — CUTTING LIST, METAL - PC, Vesa Mounting Case, Bottom | Qty: 2 EA",
-          "subTasks": []
+          "notes": ""
         },
         {
+          "pct": 0,
+          "dependsOn": [],
+          "subTasks": [],
           "id": "t-bom-41",
           "name": "MEDA00002 — DENTAL - Suction Station",
+          "itemCode": "MEDA00002",
           "department": "Medical / Dental",
-          "startDate": null,
-          "endDate": null,
+          "startDate": "2026-05-02",
+          "endDate": "2026-05-07",
           "done": false,
-          "pct": 0,
           "assignedTo": null,
-          "dependsOn": [],
-          "notes": "MEDP00422 — DENTAL - Holder - Single Frame for Dental Instruments | Qty: 4 EA\nMEDP00424 — DENTAL - Weak Suction Handle | Qty: 2 EA\nMEDP00425 — DENTAL - Strong Suction Handle | Qty: 2 EA\nMEDP00426 — DENTAL - Suction - Strong Suction Filter (Housing & Filter) | Qty: 2 EA\nMEDP00441 — DENTAL - Hand Piece, Slow | Qty: 2 EA\nMEDP00442 — DENTAL - Hand Piece Kit, Push Button | Qty: 2 EA",
-          "subTasks": []
+          "notes": ""
         },
         {
+          "pct": 0,
+          "dependsOn": [],
+          "subTasks": [],
           "id": "t-bom-42",
           "name": "MEDA00003 — DENTAL - Spitoon Assembly",
+          "itemCode": "MEDA00003",
           "department": "Medical / Dental",
-          "startDate": null,
-          "endDate": null,
+          "startDate": "2026-05-03",
+          "endDate": "2026-05-07",
           "done": false,
-          "pct": 0,
           "assignedTo": null,
-          "dependsOn": [],
-          "notes": "PLUP00003 — COUPLING - MALE, JOHN GUEST, 15MM TO 1/2\" | Qty: 2 EA\nPLUP00040 — SINK - 340MM with 38MM WASTE | Qty: 2 EA\nPLUP00112 — P-TRAP | Qty: 2 EA\nPLUP00131 — TAP - TAP Economy T-Style Faucet | Qty: 2 EA\nRAWP00459 — STEEL - Round Tubing - 152 x 3mm, Mild Steel | Qty: 2 M",
-          "subTasks": []
+          "notes": ""
         },
         {
+          "pct": 0,
+          "dependsOn": [],
+          "subTasks": [],
           "id": "t-bom-43",
           "name": "PLUA00006 — SINK - Wash Sink Assembly",
+          "itemCode": "PLUA00006",
           "department": "Plumbing",
-          "startDate": null,
-          "endDate": null,
+          "startDate": "2026-05-02",
+          "endDate": "2026-05-08",
           "done": false,
-          "pct": 0,
           "assignedTo": null,
-          "dependsOn": [],
-          "notes": "PLUP00003 — COUPLING - MALE, JOHN GUEST, 15MM TO 1/2\" | Qty: 4 EA\nPLUP00039 — TAP - HIGH RISE, SWIVEL, MIXER | Qty: 2 EA\nPLUP00086 — VALVE - BALL, 1/2\", MALE TO FEMALE | Qty: 4 EA\nPLUP00119 — BOTTLE TRAP - BOTTLE TRAP 40MM | Qty: 2 EA\nPLUP00363 — SINK - Single, Wash Sink with Drip Tray | Qty: 2 EA",
-          "subTasks": []
+          "notes": ""
         },
         {
+          "pct": 0,
+          "dependsOn": [],
+          "subTasks": [],
           "id": "t-bom-44",
           "name": "SUBA00071 — Middle Room - JK6 Double Dental",
+          "itemCode": "SUBA00071",
           "department": "Assembly",
-          "startDate": null,
-          "endDate": null,
+          "startDate": "2026-05-02",
+          "endDate": "2026-05-07",
           "done": false,
-          "pct": 0,
           "assignedTo": null,
-          "dependsOn": [],
-          "notes": "MEDP00359 — MEDICAL - Autoclave | Qty: 1 EA\nPLUP00003 — COUPLING - MALE, JOHN GUEST, 15MM TO 1/2\" | Qty: 2 EA\nPLUP00039 — TAP - HIGH RISE, SWIVEL, MIXER | Qty: 1 EA\nPLUP00086 — VALVE - BALL, 1/2\", MALE TO FEMALE | Qty: 1 EA\nPLUP00119 — BOTTLE TRAP - BOTTLE TRAP 40MM | Qty: 1 EA\nPLUP00362 — SINK - Double Wash Up Sink | Qty: 1 EA\nRAWP00487 — FOAM - Sound Proof - Procell Flame Proof 25mm Black, Plain, 2m x 1m | Qty: 4 EA",
-          "subTasks": []
+          "notes": ""
         },
         {
+          "pct": 0,
+          "dependsOn": [],
+          "subTasks": [],
           "id": "t-bom-45",
           "name": "SUBA00006-1 — Kitchen - 10m Truck (without sink)",
+          "itemCode": "SUBA00006-1",
           "department": "Assembly",
-          "startDate": null,
-          "endDate": null,
+          "startDate": "2026-05-03",
+          "endDate": "2026-05-07",
           "done": false,
-          "pct": 0,
           "assignedTo": null,
-          "dependsOn": [],
-          "notes": "APPP00002 — KETTLE (CORDLESS) | Qty: 1 EA\nAPPP00007 — MICROWAVE - 20L | Qty: 1 EA\nAPPP00012 — FRIDGE | Qty: 1 EA\nELEP00182 — CONNECTOR - CONNECTOR ANDERSON, 50A | Qty: 2 EA\nELEP00185 — PLUG - Plug with no cover (Microwave Plug) | Qty: 1 EA",
-          "subTasks": []
+          "notes": ""
         },
         {
+          "pct": 0,
+          "dependsOn": [],
+          "subTasks": [],
           "id": "t-bom-46",
           "name": "SUBA00047 — Stairs - Bus Stairs Assembly",
+          "itemCode": "SUBA00047",
           "department": "Assembly",
-          "startDate": null,
-          "endDate": null,
+          "startDate": "2026-05-02",
+          "endDate": "2026-05-05",
           "done": false,
-          "pct": 0,
           "assignedTo": null,
-          "dependsOn": [],
-          "notes": "",
-          "subTasks": []
+          "notes": ""
         },
         {
+          "pct": 0,
+          "dependsOn": [],
+          "subTasks": [],
           "id": "t-bom-47",
           "name": "CLMA00010 — ALUMINIUM - Folding Steps",
+          "itemCode": "CLMA00010",
           "department": "Cutting List / Fabrication",
-          "startDate": null,
-          "endDate": null,
+          "startDate": "2026-05-03",
+          "endDate": "2026-05-07",
           "done": false,
-          "pct": 0,
           "assignedTo": null,
-          "dependsOn": [],
-          "notes": "CLMP00083 — ALUMINIUM - Folding Stairs - Treadplate, 3mm | Qty: 12 EA\nCLMP00084 — ALUMINIUM - Folding Steps - Handrail Guide - LHS | Qty: 12 EA\nCLMP00085 — ALUMINIUM - Folding Steps - Step Side Plant | Qty: 24 EA\nCLMP00086 — ALUMINIUM - Folding Steps - Handrail Hinge Tab | Qty: 32 EA\nCLMP00087 — ALUMINIUM - Folding Steps - Step Hinging Tab | Qty: 16 EA\nCLMP00089 — ALUMINIUM - Folding Steps - Mounting Tab | Qty: 4 EA\nCLMP00090 — ALUMINIUM - Folding Steps - End Cap | Qty: 40 EA\nCLMP00091 — ALUMINIUM - Folding Steps - End Cap 3 | Qty: 4 EA\nCLMP00092 — ALUMINIUM - Folding Steps - Foot Plate | Qty: 4 EA\nCLMP00093 — ALUMINIUM - Folding Steps - Attachment Bracket Backing Plate | Qty: 8 EA\nCLMP00094 — ALUMINIUM - Folding Steps - Handrail Guide - RHS | Qty: 12 EA\nFIXP00253 — STEPS - Non-slip Step Edge, Including Reflective Tape, 1000 x 150 x 30mm | Qty: 6 EA\nRAWP00126 — SQUARE TUBE - ALU, 25 X 25 X 2MM | Qty: 18 M\nRAWP00225 — ALUMINIUM - Rec Tube - 50x25x2mm | Qty: 24 M\nCONP01231 — PAINT - Gladiator, Fire Engine Red (4L Kit) | Qty: 2 EA",
-          "subTasks": []
+          "notes": ""
         },
         {
+          "pct": 0,
+          "dependsOn": [],
+          "subTasks": [],
           "id": "t-bom-48",
           "name": "SUBA00027-1 — CONSUMABLES - Truck, JK6 (10m) - Guud Drivers (GD)",
+          "itemCode": "SUBA00027-1",
           "department": "Assembly",
-          "startDate": null,
-          "endDate": null,
+          "startDate": "2026-05-03",
+          "endDate": "2026-05-05",
           "done": false,
-          "pct": 0,
           "assignedTo": null,
-          "dependsOn": [],
-          "notes": "CONP00023 — CHALK - SOAPSTONE WHITE | Qty: 10 EA\nCONP00031 — CHIPBSCREW - 4 X 40mm, CSK Head, Zink | Qty: 50 EA\nCONP00033 — INSERT - WOODSERT, M6 X 13 | Qty: 80 EA\nCONP00050 — SANDING PAD - HOOKIT P120 | Qty: 5 EA\nCONP00056 — SCREW - BUTTON HEAD, SS, M5 X 16 | Qty: 40 EA\nCONP00061 — SCREW - BUTTON HEAD SS, M6 X 30 | Qty: 60 EA\nCONP00068 — TAPE - INSULATION, BLACK | Qty: 12 EA\nCONP00071 — DISC - Pferd, Cutting Disc, 115 X 1mm | Qty: 80 EA\nCONP00075 — Cutting Creme | Qty: 2 KG\nCONP00076 — SCREW - ZEBRA/WING TEK 5.5 X 38MM | Qty: 40 EA\nCONP00077 — SCREW - ZEBRA/WING TEK 4.2 X 32 | Qty: 100 EA\nCONP00079 — GLUE - CONTACT ADHESIVE | Qty: 5 L\nCONP00083 — NUT - NYLOCK, M10 | Qty: 50 EA\nCONP00084 — NUT - NYLOCK, M5 | Qty: 40 EA\nCONP00085 — NUT - NYLOCK, M6 | Qty: 20 EA\nCONP00086 — NUT - NYLOCK, M8 | Qty: 80 EA\nCONP00091 — WASHER - FLAT, M10 | Qty: 60 EA\nCONP00093 — WASHER - FLAT, M5 | Qty: 10 EA\nCONP00094 — WASHER - FLAT, M6 | Qty: 120 EA\nCONP00095 — WASHER - FLAT, M8 | Qty: 140 EA\nCONP00098 — CHIPBSCREW - 3.5 X 30mm, CSK Head, Zink | Qty: 1200 EA\nCONP00103 — WASHER - SPRING, M5 | Qty: 10 EA\nCONP00104 — WASHER - SPRING, M6 | Qty: 20 EA\nCONP00105 — WASHER - SPRING, M8 | Qty: 20 EA\nCONP00108 — BLADE - Trim Knife / Stanley | Qty: 40 EA\nCONP00109 — Wet & Dry Paper - 1000 Grit | Qty: 2 EA\nCONP00115 — Thinners - Paint Lacquer | Qty: 20 L\nCONP00116 — HOSE CLAMP - 40-60MM | Qty: 6 EA\nCONP00117 — HOSE CLAMP - 10-22MM | Qty: 2 EA\nCONP00132 — BLADE - HACKSAW, 24TPI | Qty: 2 EA\nCONP00134 — POZI - BIT, NO.2, PZ2 | Qty: 12 EA\nCONP00142 — HEAT SHRINK - 9MM, BLACK, SELF ADHESIVE | Qty: 3 M\nCONP00144 — HEAT SHRINK - 6MM, BLACK, SELF ADHESIVE | Qty: 5 M\nCONP00153 — GLUE - WEB SPRAY HI-TEMP HM 22LITRE | Qty: 2 EA\nCONP00154 — TAPE - TAPE DOUBLE SIDED, 12MM | Qty: 10 EA\nCONP00174 — DRILL BIT - 5.0mm | Qty: 30 EA\nCONP00176 — Wet & Dry Paper - 220 Grit | Qty: 1 EA\nCONP00178 — Wet & Dry Paper - 400 Grit | Qty: 1 EA\nCONP00179 — Wet & Dry Paper - 600 GRIT | Qty: 1 EA\nCONP00188 — FERRULE - 2.5MM, SINGLE BOOTLACE | Qty: 100 EA\nCONP00193 — DISC - GRINDING, 115MM | Qty: 12 EA\nCONP00205 — RAGS - Coloured, Economy, Clear Bag | Qty: 5 KG\nCONP00209 — GRP - Resin, Polyester, GP, Laminating | Qty: 5 KG\nCONP00210 — DISC - SANDING 120 GRIT | Qty: 5 EA\nCONP00212 — DISC - SANDING, 60 GRIT | Qty: 5 EA\nCONP00213 — DISC - SANDING, 80 GRIT | Qty: 5 EA\nCONP00215 — JOINT - BISCUIT, P20 | Qty: 10 EA\nCONP00242 — CRADLE - SELF ADHESIVE, BLACK, 19 X 19 | Qty: 20 EA\nCONP00243 — CRADLE - SELF ADHESIVE, BLACK, 28 X 28 | Qty: 30 EA\nCONP00263 — PAINT - PAINT STONECHIP, BLACK | Qty: 6 L\nCONP00313 — HEAT SHRINK - 20MM, BLACK | Qty: 3 M\nCONP00314 — HEAT SHRINK - 20MM, RED | Qty: 3 M\nCONP00316 — CHIPBSCREW - 3.5 X 50mm, CSK Head, Zink | Qty: 50 EA\nCONP00326 — HAND PADS - HAND PADS 150X230MM, VERY FINE, MAROON | Qty: 5 EA\nCONP00327 — HOSE CLAMP 17-38MM | Qty: 10 EA\nCONP00334 — FERRULE - 2.5MM, DOUBLE, BOOTLACE | Qty: 250 EA\nCONP00335 — FERRULE - 4mm Double | Qty: 50 EA\nCONP00337 — SET SCREW - M6 X 45, HEXAGON | Qty: 10 EA\nCONP00338 — SET SCREW - M6 X 65, HEXAGON | Qty: 40 EA\nCONP00339 — SET SCREW - M6 X 75, HEXAGON HE | Qty: 10 EA\nCONP00340 — SET SCREW - M8 X 35, HEXAGON | Qty: 60 EA\nCONP00342 — SET SCREW - M8 X 65, HEXAGON HE | Qty: 80 EA\nCONP00344 — SET SCREW - M10 X 45, HEX | Qty: 4 EA\nCONP00347 — SET SCREW - M10 X 75, HEXAGON HE | Qty: 10 EA\nCONP00358 — SCREW - MACHINE, M3 X 16MM | Qty: 40 EA\nCONP00359 — WASHER - FENDER, M10 | Qty: 30 EA\nCONP00370 — HEAT SHRINK - 25MM, BLACK | Qty: 2 M\nCONP00376 — SET SCREW - M12 X 30, HEXAGON | Qty: 20 EA\nCONP00383 — TAPE - Weather Strip - SELF ADHESIVE, SPONGE, 6 X 25M | Qty: 40 M\nCONP00384 — GROMMET - 7 X 10MM | Qty: 40 EA\nCONP00392 — HEAT SHRINK - 25MM, RED | Qty: 2 M\nCONP00397 — HEAT SHRINK - 9MM, RED | Qty: 2 M\nCONP00404 — NUT - M8, S/STEEL | Qty: 10 EA\nCONP00415 — CUTTING DISC - 300x3.6x25.4MM | Qty: 5 EA\nCONP00419 — CHIPBSCREW - 4 X 16mm, CSK Head, Zink | Qty: 1000 EA\nCONP00423 — RIVET - 6.4 X 27MM | Qty: 40 EA\nCONP00434 — CABLE TIE - CABLE TIE 104 X 2.5MM | Qty: 400 EA\nCONP00436 — TAPE - THREAD PTFE | Qty: 10 EA\nCONP00442 — PAINT - Etch Primer, Black | Qty: 5 L\nCONP00443 — SAND PAPER - PRODUCTION PAPER 120 GRIT | Qty: 2 M\nCONP00445 — SAND PAPER - PRODUCTION PAPER 80 GRIT | Qty: 2 M\nCONP00446 — RIVET - 4.8 x 21MM | Qty: 1000 EA\nCONP00447 — RIVET - 4.8 X 30MM | Qty: 200 EA\nCONP00451 — CHIPBSCREW - 3.5 X 40mm, CSK Head, Zink | Qty: 1500 EA\nCONP00452 — TAPE - TAPE REFLECTIVE 3M YELLOW | Qty: 30 M\nCONP00455 — NORMACLAMP - 40MM | Qty: 12 EA\nCONP00457 — RIVNUT - M4 | Qty: 20 EA\nCONP00475 — DRILL BIT - 3.0mm | Qty: 10 EA\nCONP00477 — DRILL BIT - 4.0MM | Qty: 30 EA\nCONP00478 — DRILL BIT - 6.0MM | Qty: 15 EA\nCONP00485 — CHIPBSCREW - 3.5 X 16mm, CSK Head, Zink | Qty: 1000 EA\nCONP00492 — PAINT BRUSH - 25mm F/G/FB | Qty: 5 EA\nCONP00493 — PAINT BRUSH - 38mm BRUSH F/G FB (12) | Qty: 15 EA\nCONP00495 — CHIPBSCREW - 4 X 35mm, CSK Head, Zink | Qty: 50 EA\nCONP00505 — WELDING - Anti-Spatter | Qty: 2 EA\nCONP00510 — RIVET - ZEBRA 15.6MM HD 4.8 X 17 | Qty: 100 EA\nCONP00520 — NAILS - F30 | Qty: 3000 EA\nCONP00527 — MASKING TAPE - 24MM 80 DEGREE (Wurth) | Qty: 15 EA\nCONP00529 — SCREW - PAN HEAD SS 3.5 X 16MM | Qty: 30 EA\nCONP00531 — SCREW - PAN HEAD SS 5.5 X 19MM | Qty: 20 EA\nCONP00533 — SET SCREW - M6 X 55 HEXAGON | Qty: 50 EA\nCONP00534 — SET SCREW - M8 X 45 HEXAGON | Qty: 15 EA\nCONP00535 — SET SCREW - M10 X 35 HEXAGON | Qty: 50 EA\nCONP00536 — POZI CAP - White, Plastic Cap | Qty: 500 EA\nCONP00537 — WASHER - FENDER M5 | Qty: 20 EA\nCONP00538 — WASHER - FENDER M6 | Qty: 40 EA\nCONP00539 — WASHER - FENDER M8 | Qty: 80 EA\nCONP00541 — CHIPBSCREW - 4 X 50mm, CSK Head, Zink | Qty: 20 EA\nCONP00545 — DRILL BIT - 5.5MM | Qty: 5 EA\nCONP00546 — DRILL BIT - 6.5MM | Qty: 5 EA\nCONP00547 — DRILL BIT - 7.0MM | Qty: 5 EA\nCONP00549 — DRILL BIT - 8.0MM | Qty: 10 EA\nCONP00550 — DRILL BIT - 8.5MM | Qty: 5 EA\nCONP00551 — DRILL BIT - 9.0mm | Qty: 5 EA\nCONP00552 — DRILL BIT - 10.0MM | Qty: 15 EA\nCONP00554 — DRILL BIT - 11.0MM | Qty: 5 EA\nCONP00558 — DRILL BIT - 13.0MM | Qty: 5 EA\nCONP00560 — DISC - SANDING 36 GRIT | Qty: 70 EA\nCONP00562 — Gel Coat - Brush Gelcoat - White | Qty: 5 KG\nCONP00563 — CABLE TIE - 200 x 4.5mm | Qty: 350 EA\nCONP00564 — CABLE TIE - 4.5 x 300mm | Qty: 200 EA\nCONP00565 — CABLE TIE - 400 X 4.7MM | Qty: 250 EA\nCONP00584 — NUT - HEX M6 | Qty: 50 EA\nCONP00585 — NUT - HEX M10 | Qty: 20 EA\nCONP00603 — SCREW - MACHINE DRAWER HANDLES M4 X 40M | Qty: 10 EA\nCONP00605 — CHIPBSCREW - 3.5 X 20mm, CSK Head, Zink | Qty: 100 EA\nCONP00626 — SCREW - MACHINE M4 X 16MM | Qty: 50 EA\nCONP00632 — TORX BIT - 1/4 TX20X25MM | Qty: 10 EA\nCONP00633 — TORX BIT - 1/4 TX25X25MM | Qty: 5 EA\nCONP00644 — SET SCREW - M6 X 50MM, HEX | Qty: 10 EA\nCONP00645 — EDGING - Bumper - 33mm Half Moon Knock In Black Smooth | Qty: 15 M\nCONP00651 — PLASTIC NUT COVER - WHITE 6MM | Qty: 10 EA\nCONP00652 — PLASTIC NUT COVER - WHITE, 8MM | Qty: 10 EA\nCONP00682 — WELD - MIG WIRE 0.8MM 15KG | Qty: 2 EA\nCONP00712 — BRUSH - 50MM, F/G BRUSH | Qty: 2 EA\nCONP00717 — RIVNUT - M6 FLAT HEAD | Qty: 50 EA\nCONP00733 — RIVNUT - M5, FLAT HEAD | Qty: 10 EA\nCONP00761 — CHIPBSCREW - 3 X 16mm, CSK Head, Zink | Qty: 60 EA\nCONP00784 — NUT - M12 Coupling Nut, Stainless Steel (Extended Nut) | Qty: 30 EA\nCONP00791 — STAPLES - RF, 806, 6MM | Qty: 1000 EA\nCONP00807 — INSERT - INSERT WOODSERT, M8 X 20 | Qty: 100 EA\nCONP00840 — SCREW - BUTTON HEAD SS, M6 x 20 | Qty: 100 EA\nCONP00844 — SANDING BELT - 80 GRIT, MAKITA - 100 x 610 mm | Qty: 4 EA\nCONP00866 — SCREW - BUTTON HEAD, SS, M6 x 16 | Qty: 20 EA\nCONP00887 — WELDING - Matweld Prepack Contact Tip | Qty: 5 EA\nCONP00910 — INSERT - Woodsert, M6x20mm | Qty: 100 EA\nCONP00911 — SCREW - BUTTON HEAD, SS, M6 x 25 | Qty: 10 EA\nCONP00912 — NUT - Dome nut, Stainless, M6 | Qty: 10 EA\nCONP00922 — Washer - Flat M8 SS | Qty: 200 EA\nCONP00923 — Nut - Nylock, M8, Stainless Steel | Qty: 120 EA\nCONP00927 — Putty - Fibre | Qty: 0 EA\nCONP00928 — Paint - 1K Gloss Black | Qty: 0 L\nCONP00938 — GLUE - Balcotan Rapid, 500ml | Qty: 2 EA\nCONP00939 — BLADE - Jigsaw - Wood+Plastic T101B | Qty: 10 EA\nCONP00959 — NITRILE GLOVES - MEDIUM | Qty: 20 EA\nCONP00960 — NITRILE GLOVES - LARGE | Qty: 20 EA\nCONP00965 — SANDING PAD - HOOKIT P80 | Qty: 10 EA\nCONP00966 — RIVET - 4.8 x 21MM COUNTERSUNK HEAD | Qty: 500 EA\nCONP00967 — PAINT BRUSH - 12MM F/G/FB | Qty: 10 EA\nCONP00968 — MASK - Dust/Spray mask | Qty: 10 EA\nCONP00970 — SIKAFLEX - 591 WHITE - 300ML | Qty: 36 EA\nCONP00971 — SIKAFLEX - 591 BLACK - 300ML | Qty: 12 EA\nCONP00975 — WELDING - TIP HOLDER BNZ.25A | Qty: 5 EA\nCONP00977 — SET SCREW - M12 x 60 GR8.8 GALV, HEXAGON | Qty: 10 EA\nCONP00980 — RIVET - ALU, 4.0x21mm | Qty: 250 EA\nCONP00981 — RIVET - ALU/WHITE 4.8 x 21MM | Qty: 200 EA\nCONP00987 — BLADE - JIGSAW METAL | Qty: 2 EA\nCONP01004 — PAINT - Mixing Cups (Size B) | Qty: 2 EA\nCONP01029 — SCREW - PAN HEAD, SS 4.2 x 19MM | Qty: 10 EA\nCONP01031 — NAILS - F38 | Qty: 1500 EA\nCONP01033 — Turpentine | Qty: 2 EA\nCONP01045 — SCREW - BUTTON HEAD, SS, M5 X 20 | Qty: 20 EA\nCONP01048 — Cable Tie - 7.6 x 400mm | Qty: 100 EA\nCONP01049 — SCREW - BUTTON HEAD, SS, M5 x 40 | Qty: 20 EA\nCONP01050 — Bolt - M8 x 60mm | Qty: 6 EA\nCONP01059 — POZI - Bit PH2 - 1/4 x 50mm | Qty: 5 EA\nCONP01070 — RIVNUT - M8, Flanged | Qty: 10 EA\nCONP01091 — NUT - Nylock, M6, Stainless Steel | Qty: 10 EA\nCONP01092 — WASHER - Flat, M6, SS | Qty: 10 EA\nCONP01098 — SCREW - BUTTON HEAD, SS, M5 x 50 | Qty: 20 EA\nCONP01121 — WASHER - Fender, M6 SS304 | Qty: 40 EA\nCONP01150 — FERRULE - 4mm, Single | Qty: 300 EA\nCONP01164 — CHIPBSCREW - 4 x 25 mm, CSK Head, Zink | Qty: 500 EA\nCONP01181 — BOLT - M8 x 35, SS | Qty: 100 EA\nCONP01190 — ADHESIVE - Flexible Tile Adhesive, Pro Grip, Premix - 5L | Qty: 5 EA\nCONP01193 — Screw - BUTTON HEAD, SS, M6 x 40 | Qty: 30 EA\nCONP01195 — RIVIT - Blind Rivit, 3.2 x 12mm | Qty: 20 EA\nCONP01196 — BOLT - M8 x 25, Stainless Steel | Qty: 40 EA\nCONP01203 — BOLT - Button Head, M4 x 16, Stainless Steel 304 | Qty: 100 EA\nCONP01154 — ROD - Thread Bar, M6 | Qty: 3 M\nELEP00081 — CONNECTOR - RJ45, DATA - Pull Through Crimp | Qty: 50 EA\nELEP00634 — CONNECTOR - Rj45, CAT6a, Rubber Boot | Qty: 50 EA",
-          "subTasks": []
+          "notes": ""
         }
       ],
-      "createdAt": "2026-04-21T16:44:28.557Z"
+      "createdAt": "2026-04-22T06:32:40.685Z",
+      "baseline": [
+        {
+          "taskId": "t-bom-0",
+          "startDate": "2026-04-25",
+          "endDate": "2026-04-30"
+        },
+        {
+          "taskId": "t-bom-1",
+          "startDate": "2026-04-24",
+          "endDate": "2026-04-27"
+        },
+        {
+          "taskId": "t-bom-2",
+          "startDate": "2026-04-26",
+          "endDate": "2026-04-30"
+        },
+        {
+          "taskId": "t-bom-3",
+          "startDate": "2026-05-27",
+          "endDate": "2026-05-27"
+        },
+        {
+          "taskId": "t-bom-4",
+          "startDate": "2026-05-17",
+          "endDate": "2026-05-18"
+        },
+        {
+          "taskId": "t-bom-5",
+          "startDate": "2026-04-23",
+          "endDate": "2026-04-30"
+        },
+        {
+          "taskId": "t-bom-6",
+          "startDate": "2026-05-08",
+          "endDate": "2026-05-19"
+        },
+        {
+          "taskId": "t-bom-7",
+          "startDate": "2026-04-22",
+          "endDate": "2026-04-29"
+        },
+        {
+          "taskId": "t-bom-8",
+          "startDate": "2026-05-01",
+          "endDate": "2026-05-01"
+        },
+        {
+          "taskId": "t-bom-9",
+          "startDate": "2026-05-05",
+          "endDate": "2026-05-10"
+        },
+        {
+          "taskId": "t-bom-10",
+          "startDate": "2026-05-11",
+          "endDate": "2026-05-16"
+        },
+        {
+          "taskId": "t-bom-11",
+          "startDate": "2026-04-23",
+          "endDate": "2026-04-26"
+        },
+        {
+          "taskId": "t-bom-12",
+          "startDate": "2026-05-06",
+          "endDate": "2026-05-07"
+        },
+        {
+          "taskId": "t-bom-13",
+          "startDate": "2026-04-23",
+          "endDate": "2026-04-29"
+        },
+        {
+          "taskId": "t-bom-14",
+          "startDate": "2026-04-20",
+          "endDate": "2026-04-25"
+        },
+        {
+          "taskId": "t-bom-15",
+          "startDate": "2026-04-25",
+          "endDate": "2026-05-03"
+        },
+        {
+          "taskId": "t-bom-16",
+          "startDate": "2026-04-28",
+          "endDate": "2026-04-30"
+        },
+        {
+          "taskId": "t-bom-17",
+          "startDate": "2026-04-27",
+          "endDate": "2026-05-02"
+        },
+        {
+          "taskId": "t-bom-18",
+          "startDate": "2026-04-27",
+          "endDate": "2026-05-02"
+        },
+        {
+          "taskId": "t-bom-19",
+          "startDate": "2026-05-07",
+          "endDate": "2026-05-07"
+        },
+        {
+          "taskId": "t-bom-20",
+          "startDate": null,
+          "endDate": null
+        },
+        {
+          "taskId": "t-bom-21",
+          "startDate": null,
+          "endDate": null
+        },
+        {
+          "taskId": "t-bom-22",
+          "startDate": null,
+          "endDate": null
+        },
+        {
+          "taskId": "t-bom-23",
+          "startDate": null,
+          "endDate": null
+        },
+        {
+          "taskId": "t-bom-24",
+          "startDate": null,
+          "endDate": null
+        },
+        {
+          "taskId": "t-bom-25",
+          "startDate": null,
+          "endDate": null
+        },
+        {
+          "taskId": "t-bom-26",
+          "startDate": "2026-05-07",
+          "endDate": "2026-05-07"
+        },
+        {
+          "taskId": "t-bom-27",
+          "startDate": null,
+          "endDate": null
+        },
+        {
+          "taskId": "t-bom-28",
+          "startDate": null,
+          "endDate": null
+        },
+        {
+          "taskId": "t-bom-29",
+          "startDate": null,
+          "endDate": null
+        },
+        {
+          "taskId": "t-bom-30",
+          "startDate": null,
+          "endDate": null
+        },
+        {
+          "taskId": "t-bom-31",
+          "startDate": null,
+          "endDate": null
+        },
+        {
+          "taskId": "t-bom-32",
+          "startDate": null,
+          "endDate": null
+        },
+        {
+          "taskId": "t-bom-33",
+          "startDate": null,
+          "endDate": null
+        },
+        {
+          "taskId": "t-bom-34",
+          "startDate": null,
+          "endDate": null
+        },
+        {
+          "taskId": "t-bom-35",
+          "startDate": null,
+          "endDate": null
+        },
+        {
+          "taskId": "t-bom-36",
+          "startDate": null,
+          "endDate": null
+        },
+        {
+          "taskId": "t-bom-37",
+          "startDate": null,
+          "endDate": null
+        },
+        {
+          "taskId": "t-bom-38",
+          "startDate": null,
+          "endDate": null
+        },
+        {
+          "taskId": "t-bom-39",
+          "startDate": null,
+          "endDate": null
+        },
+        {
+          "taskId": "t-bom-40",
+          "startDate": null,
+          "endDate": null
+        },
+        {
+          "taskId": "t-bom-41",
+          "startDate": null,
+          "endDate": null
+        },
+        {
+          "taskId": "t-bom-42",
+          "startDate": null,
+          "endDate": null
+        },
+        {
+          "taskId": "t-bom-43",
+          "startDate": null,
+          "endDate": null
+        },
+        {
+          "taskId": "t-bom-44",
+          "startDate": null,
+          "endDate": null
+        },
+        {
+          "taskId": "t-bom-45",
+          "startDate": null,
+          "endDate": null
+        },
+        {
+          "taskId": "t-bom-46",
+          "startDate": null,
+          "endDate": null
+        },
+        {
+          "taskId": "t-bom-47",
+          "startDate": null,
+          "endDate": null
+        },
+        {
+          "taskId": "t-bom-48",
+          "startDate": null,
+          "endDate": null
+        }
+      ]
     }
   ]
 }
