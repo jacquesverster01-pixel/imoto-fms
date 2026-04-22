@@ -15,7 +15,7 @@ export default function TaskWindow({ task, parentId, pos, onClose, onChangeName,
 
   const isSubTask = !!parentId
   const maxH = Math.round(window.innerHeight * 0.72)
-  const left = Math.min(pos.x + 340, window.innerWidth - 8) - 340
+  const left = Math.max(8, Math.min(pos.x + 340, window.innerWidth - 8) - 340)
   const top  = Math.max(8, Math.min(pos.y, window.innerHeight - maxH - 8))
 
   return (

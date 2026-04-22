@@ -21,9 +21,12 @@ export default function InventoryImportedBOMs() {
     setLoading(true)
     try {
       const res = await fetch(`${BASE}/boms`)
+      if (!res.ok) throw new Error(`Failed to load BOMs (${res.status})`)
       const data = await res.json()
       setBoms(Array.isArray(data) ? data : [])
-    } catch {
+    } catch (err) {
+      console.error('[fetchBoms]', err)
+      setImportError(err.message)
       setBoms([])
     } finally {
       setLoading(false)
@@ -36,10 +39,14 @@ export default function InventoryImportedBOMs() {
     setBomLoading(true)
     try {
       const res = await fetch(`${BASE}/boms/${id}`)
+      if (!res.ok) throw new Error(`Failed to load BOM (${res.status})`)
       const data = await res.json()
       setSelectedBom(data)
       setBomItems(data.items || [])
-    } catch {
+    } catch (err) {
+      console.error('[selectBom]', err)
+      setImportError(err.message)
+      setSelectedBom(null)
       setBomItems([])
     } finally {
       setBomLoading(false)
@@ -67,14 +74,16 @@ export default function InventoryImportedBOMs() {
   async function handleDelete() {
     if (!selectedBomId) return
     try {
-      await fetch(`${BASE}/boms/${selectedBomId}`, { method: 'DELETE' })
+      const res = await fetch(`${BASE}/boms/${selectedBomId}`, { method: 'DELETE' })
+      if (!res.ok) throw new Error(`Delete failed (${res.status})`)
       setSelectedBomId(null)
       setSelectedBom(null)
       setBomItems([])
       setDeleteConfirm(false)
       fetchBoms()
-    } catch {
-      // ignore
+    } catch (err) {
+      console.error('[handleDelete]', err)
+      setImportError(err.message)
     }
   }
 
