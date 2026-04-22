@@ -14,12 +14,13 @@ export default function TaskWindow({ task, parentId, pos, onClose, onChangeName,
   useClickOutside(windowRef, onClose)
 
   const isSubTask = !!parentId
+  const maxH = Math.round(window.innerHeight * 0.72)
   const left = Math.min(pos.x + 340, window.innerWidth - 8) - 340
-  const top  = Math.max(8, Math.min(pos.y, window.innerHeight - 420))
+  const top  = Math.max(8, Math.min(pos.y, window.innerHeight - maxH - 8))
 
   return (
     <div ref={windowRef} onClick={e => e.stopPropagation()}
-      style={{ position: 'fixed', left, top, zIndex: 300, width: 340, minHeight: 400, maxHeight: '70vh', background: '#fff', borderRadius: 10, boxShadow: '0 10px 36px rgba(0,0,0,0.22)', border: '1px solid #e0e3ef', display: 'flex', flexDirection: 'column' }}>
+      style={{ position: 'fixed', left, top, zIndex: 300, width: 340, minHeight: 400, maxHeight: maxH, background: '#fff', borderRadius: 10, boxShadow: '0 10px 36px rgba(0,0,0,0.22)', border: '1px solid #e0e3ef', display: 'flex', flexDirection: 'column' }}>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '10px 12px', background: '#f8f9fb', borderBottom: '1px solid #eef0f6', flexShrink: 0 }}>
         <button onClick={onDelete} title="Delete task"

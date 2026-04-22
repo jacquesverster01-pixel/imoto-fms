@@ -34,20 +34,42 @@ const STATUS_OPTIONS = [
 // Bug 1 fix: name is a read-only span; clicking anywhere on the row opens TaskWindow.
 // Buttons/checkbox stop propagation so they don't accidentally open the window.
 // Milestone diamond gets stopPropagation so clicking it only toggles done.
-function LeftPanelRow({ row, collapsed, onToggle, onCheck, rowIdx, onDragHandleDown, onRowOver, onToggleMilestone, onOpenMenu }) {
+function LeftPanelRow({ row, collapsed, onToggle, onCheck, rowIdx, onDragHandleDown, onRowOver, onToggleMilestone, onOpenMenu, onSubtaskDragStart, isSubtaskDragTarget }) {
   const { task, isParent, isSubTask } = row
   const isMile = isMilestone(task)
+  const rowBg = isSubtaskDragTarget ? 'rgba(79,103,228,0.13)'
+    : isParent ? '#eef0fb'
+    : isSubTask ? '#f6f7fd'
+    : isMile ? '#fffcf4'
+    : '#fff'
+  const rowShadow = isSubtaskDragTarget ? 'inset 3px 0 0 #4f67e4'
+    : isParent ? 'inset 3px 0 0 #4f67e4'
+    : isSubTask ? 'inset 3px 0 0 #c5cbf0'
+    : undefined
   return (
-    <div style={{ height: ROW_H, display: 'flex', alignItems: 'center', gap: 4, paddingLeft: isSubTask ? 24 : 4, paddingRight: 4, borderBottom: '1px solid #f0f1f5', cursor: 'pointer', userSelect: 'none' }}
+    <div
+      data-left-row-task-id={task.id}
+      data-left-row-parent-id={row.parentId || ''}
+      style={{ height: ROW_H, display: 'flex', alignItems: 'center', gap: 4, paddingLeft: isSubTask ? 24 : 4, paddingRight: 4, borderBottom: '1px solid #ecedf4', cursor: 'pointer', userSelect: 'none', background: rowBg, boxShadow: rowShadow, transition: 'background 0.12s' }}
       onMouseOver={() => onRowOver(rowIdx)}
       onClick={e => onOpenMenu(task.id, row.parentId, isParent, isMile, e)}>
-      {!isSubTask && <span onMouseDown={e => { e.stopPropagation(); e.preventDefault(); onDragHandleDown(rowIdx) }} style={{ fontSize: 9, color: '#ccc', cursor: 'grab', flexShrink: 0, letterSpacing: 1, userSelect: 'none' }}>⋮⋮</span>}
+      {!isSubTask && (
+        <span
+          onMouseDown={e => { e.stopPropagation(); e.preventDefault(); onDragHandleDown(rowIdx) }}
+          onClick={e => e.stopPropagation()}
+          style={{ fontSize: 9, color: isParent ? '#9298c4' : '#ccc', cursor: 'grab', flexShrink: 0, letterSpacing: 1, userSelect: 'none', padding: '0 3px' }}>⋮⋮</span>
+      )}
       {isMile
         ? <span onClick={e => { e.stopPropagation(); onToggleMilestone(task.id) }} style={{ cursor: 'pointer', color: task.done ? '#1a1d3b' : '#9298c4', fontSize: 12, flexShrink: 0 }}>◆</span>
         : isParent
-          ? <button onClick={e => { e.stopPropagation(); onToggle(task.id) }} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#9298c4', fontSize: 11, padding: 0, width: 14, flexShrink: 0 }}>{collapsed[task.id] ? '▸' : '▾'}</button>
-          : <input type="checkbox" checked={!!task.done} onChange={e => { e.stopPropagation(); onCheck(task.id, row.parentId) }} onClick={e => e.stopPropagation()} style={{ flexShrink: 0, cursor: 'pointer' }} />}
-      <span style={{ flex: 1, fontSize: 12, color: task.done ? '#b0b5cc' : '#1a1d3b', textDecoration: task.done ? 'line-through' : 'none', fontWeight: isParent ? 600 : 400, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', minWidth: 0 }}>
+          ? <button onClick={e => { e.stopPropagation(); onToggle(task.id) }} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#4f67e4', fontSize: 11, padding: 0, width: 14, flexShrink: 0 }}>{collapsed[task.id] ? '▸' : '▾'}</button>
+          : <div onClick={e => e.stopPropagation()} style={{ display: 'flex', alignItems: 'center', padding: '6px 4px', flexShrink: 0, cursor: 'pointer' }}>
+              <input type="checkbox" checked={!!task.done} onChange={e => { e.stopPropagation(); onCheck(task.id, row.parentId) }} style={{ cursor: 'pointer', margin: 0 }} />
+            </div>
+      }
+      <span
+        onMouseDown={e => { if (e.button !== 0) return; onSubtaskDragStart(task.id, row.parentId, e, task.name) }}
+        style={{ flex: 1, fontSize: 12, color: task.done ? '#b0b5cc' : isParent ? '#1a1d3b' : isSubTask ? '#3a3e5c' : '#1a1d3b', textDecoration: task.done ? 'line-through' : 'none', fontWeight: isParent ? 600 : 400, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', minWidth: 0 }}>
         {task.name}
       </span>
       {!isSubTask && (
@@ -184,12 +206,17 @@ export default function GanttModal({ job, onClose, onSaved, inline }) {
   const [dateRange,        setDateRange]        = useState(() => computeDateRange((job.tasks || []).map(t => ({ pct: 0, dependsOn: [], subTasks: [], ...t }))))
   const [bomItems,         setBomItems]         = useState([])
   const [ghostBar,         setGhostBar]         = useState(null)
+  const [subtaskDropHighlight, setSubtaskDropHighlight] = useState(null)
+  const [ghostCard,            setGhostCard]            = useState(null)
 
   const rightPanelRef = useRef(null)
   const { dragRef, reorderRef, taskRowsRef, linkDragRef, zoomColsRef, linkLine, setLinkLine, startLinkDrag, handleDragHandleDown, handleRowOver, panRef, handlePanStart } = useGanttDrag(setTasks, rightPanelRef)
   const leftPanelRef  = useRef(null)
   const dateDrawRef   = useRef(null)
   const colsWithLeftRef = useRef([])
+  const subtaskDragRef  = useRef(null)
+  const subtaskDropRef  = useRef(null)
+  const lastSubtaskDragEndRef = useRef(0)
 
   const flatRows    = flattenTasksForDisplay(tasks)
   const visibleRows = flatRows.filter(r => !r.isSubTask || !collapsed[r.parentId])
@@ -266,6 +293,40 @@ export default function GanttModal({ job, onClose, onSaved, inline }) {
     window.addEventListener('mouseup', handleMouseUp)
     return () => { window.removeEventListener('mousemove', handleMouseMove); window.removeEventListener('mouseup', handleMouseUp) }
   }, [])
+  useEffect(() => {
+    function onMove(e) {
+      if (!subtaskDragRef.current) return
+      const { startX, startY, taskName } = subtaskDragRef.current
+      if (Math.hypot(e.clientX - startX, e.clientY - startY) > 6) subtaskDragRef.current.dragging = true
+      if (!subtaskDragRef.current.dragging) return
+      setGhostCard({ name: taskName, x: e.clientX, y: e.clientY })
+      const el = document.elementFromPoint(e.clientX, e.clientY)
+      const rowEl = el?.closest('[data-left-row-task-id]')
+      if (!rowEl) { subtaskDropRef.current = null; setSubtaskDropHighlight(null); return }
+      const hoveredId = rowEl.dataset.leftRowTaskId
+      const hoveredParent = rowEl.dataset.leftRowParentId || null
+      const targetId = hoveredParent || hoveredId
+      const resolved = targetId === subtaskDragRef.current.taskId ? null : targetId
+      subtaskDropRef.current = resolved
+      setSubtaskDropHighlight(resolved)
+    }
+    function onUp() {
+      if (!subtaskDragRef.current) return
+      const { taskId, parentId, dragging } = subtaskDragRef.current
+      const dropTarget = subtaskDropRef.current
+      subtaskDragRef.current = null
+      subtaskDropRef.current = null
+      if (dragging) {
+        lastSubtaskDragEndRef.current = Date.now()
+        if (dropTarget) makeSubTask(taskId, parentId, dropTarget)
+      }
+      setGhostCard(null)
+      setSubtaskDropHighlight(null)
+    }
+    window.addEventListener('mousemove', onMove)
+    window.addEventListener('mouseup', onUp)
+    return () => { window.removeEventListener('mousemove', onMove); window.removeEventListener('mouseup', onUp) }
+  }, [])
 
   async function handleClose() {
     try {
@@ -328,10 +389,39 @@ export default function GanttModal({ job, onClose, onSaved, inline }) {
   function deleteTaskFile(taskId, parentId, fileId) {
     setTasks(p => !parentId ? p.map(t => t.id===taskId ? {...t, files:(t.files||[]).filter(f=>f.id!==fileId)} : t) : p.map(t => t.id!==parentId ? t : {...t, subTasks: t.subTasks.map(s => s.id===taskId ? {...s, files:(s.files||[]).filter(f=>f.id!==fileId)} : s)}))
   }
-  // Bug 1 fix: position is based on the clicked element (row or ⋮ button); clamping is inside TaskWindow
+  function makeSubTask(taskId, fromParentId, newParentId) {
+    setTasks(prev => {
+      const src = fromParentId ? prev.find(t => t.id === fromParentId)?.subTasks?.find(s => s.id === taskId) : prev.find(t => t.id === taskId)
+      if (!src) return prev
+      if (!fromParentId && (src.subTasks?.length > 0)) return prev
+      if (newParentId === fromParentId) return prev
+      let extracted = null
+      const u = prev.map(t => {
+        if (!fromParentId && t.id === taskId) { extracted = { ...t, subTasks: undefined }; return null }
+        if (fromParentId && t.id === fromParentId) {
+          const sub = t.subTasks?.find(s => s.id === taskId)
+          if (sub) { extracted = { ...sub }; return { ...t, subTasks: t.subTasks.filter(s => s.id !== taskId) } }
+        }
+        return t
+      }).filter(Boolean)
+      if (!extracted) return prev
+      return u.map(t => t.id !== newParentId ? t : { ...t, subTasks: [...(t.subTasks || []), extracted] })
+    })
+  }
+  function startSubtaskDrag(taskId, parentId, e, taskName) {
+    subtaskDragRef.current = { taskId, parentId, taskName, startX: e.clientX, startY: e.clientY, dragging: false }
+  }
   function openTaskMenu(taskId, parentId, isParent, isMile, e) {
-    const rect = e.currentTarget.getBoundingClientRect()
-    setTaskWindow({ taskId, parentId, isParent, isMile, x: rect.right + 8, y: rect.top })
+    if (Date.now() - lastSubtaskDragEndRef.current < 200) return
+    const row = e.currentTarget
+    const rect = row.getBoundingClientRect()
+    const maxH = Math.round(window.innerHeight * 0.72)
+    const neededTop = window.innerHeight - maxH - 8
+    if (rect.top > neededTop && leftPanelRef.current) {
+      leftPanelRef.current.scrollTop += rect.top - neededTop
+    }
+    const r = row.getBoundingClientRect()
+    setTaskWindow({ taskId, parentId, isParent, isMile, x: r.right + 8, y: r.top })
   }
   async function handleSetBaseline() {
     const snap = tasks.map(t => ({ taskId:t.id, startDate:t.startDate, endDate:t.endDate }))
@@ -361,7 +451,9 @@ export default function GanttModal({ job, onClose, onSaved, inline }) {
               onToggle={id => setCollapsed(c => ({...c,[id]:!c[id]}))}
               onCheck={onCheckTask} rowIdx={taskIdx}
               onDragHandleDown={handleDragHandleDown} onRowOver={handleRowOver}
-              onToggleMilestone={onToggleMilestone} onOpenMenu={openTaskMenu} />
+              onToggleMilestone={onToggleMilestone} onOpenMenu={openTaskMenu}
+              onSubtaskDragStart={startSubtaskDrag}
+              isSubtaskDragTarget={subtaskDropHighlight === row.task.id} />
           })}
           <div style={{ display:'flex', borderTop:'1px solid #f0f1f5' }}>
             <button onClick={addTask} style={{ flex:1, padding:'8px 12px', fontSize:12, color:'#4f67e4', background:'none', border:'none', textAlign:'left', cursor:'pointer' }}>+ Add task</button>
@@ -444,6 +536,19 @@ export default function GanttModal({ job, onClose, onSaved, inline }) {
             </defs>
             <line x1={linkLine.x1} y1={linkLine.y1} x2={linkLine.x2} y2={linkLine.y2} stroke="#4f67e4" strokeWidth="2" strokeDasharray="6,3" markerEnd="url(#ld-arrow)" />
           </svg>
+        </>
+      )}
+      {ghostCard && (
+        <>
+          <style>{`* { cursor: grabbing !important; }`}</style>
+          <div style={{ position:'fixed', left: ghostCard.x + 16, top: ghostCard.y - 14, zIndex:300, pointerEvents:'none', userSelect:'none',
+            background:'#4f67e4', color:'#fff', borderRadius:7, padding:'5px 11px 5px 9px',
+            fontSize:12, fontWeight:500, boxShadow:'0 6px 18px rgba(79,103,228,0.45)',
+            maxWidth:180, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap', opacity:0.93,
+            display:'flex', alignItems:'center', gap:5 }}>
+            <span style={{ fontSize:10, opacity:0.8 }}>⤵</span>
+            {ghostCard.name}
+          </div>
         </>
       )}
     </>
