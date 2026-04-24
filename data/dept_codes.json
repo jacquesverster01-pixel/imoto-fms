@@ -1,20 +1,9 @@
 {
-  "prefixes": [
+  "prefixes": [],
+  "assemblyPhases": [
     {
-      "prefix": "ELE",
-      "department": "Electrcal",
-      "colour": "#6c63ff"
-    },
-    {
-      "prefix": "PLU",
-      "department": "PLumbing ",
-      "colour": "#6c63ff"
-    },
-    {
-      "prefix": "MEC",
-      "department": "Welding",
-      "colour": "#6c63ff"
+      "code": "ELEA000165",
+      "phase": "pre-assembly"
     }
-  ],
-  "assemblyPhases": []
+  ]
 }

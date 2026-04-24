@@ -73,13 +73,13 @@ export default function jobsRouter(readData, writeData, upload, uploadsDir) {
     } catch (err) { res.status(500).json({ error: err.message }) }
   })
 
-  // PUT /api/jobs/:id — update job header fields
+  // PUT /api/jobs/:id — update job fields (includes tasks for planner)
   router.put('/jobs/:id', (req, res) => {
     try {
       const data = readData('jobs.json')
       const idx = data.jobs.findIndex(j => j.id === req.params.id)
       if (idx === -1) return res.status(404).json({ error: 'Job not found' })
-      const allowed = ['title', 'status', 'colour', 'startDate', 'dueDate', 'assemblyId', 'bomId']
+      const allowed = ['title', 'status', 'colour', 'startDate', 'dueDate', 'assemblyId', 'bomId', 'tasks', 'sourceBomId', 'sourceProductCode']
       allowed.forEach(k => {
         if (req.body[k] !== undefined) data.jobs[idx][k] = req.body[k]
       })
@@ -129,7 +129,7 @@ export default function jobsRouter(readData, writeData, upload, uploadsDir) {
       if (jobIdx === -1) return res.status(404).json({ error: 'Job not found' })
       const taskIdx = data.jobs[jobIdx].tasks.findIndex(t => t.id === req.params.taskId)
       if (taskIdx === -1) return res.status(404).json({ error: 'Task not found' })
-      const allowed = ['kanbanStatus', 'done', 'dependsOnAssembly', 'assignee', 'note']
+      const allowed = ['kanbanStatus', 'done', 'dependsOnAssembly', 'assignee', 'note', 'name', 'assemblyCode', 'startDate', 'endDate', 'dependsOn', 'assignedTo', 'notes']
       allowed.forEach(k => {
         if (req.body[k] !== undefined) data.jobs[jobIdx].tasks[taskIdx][k] = req.body[k]
       })
