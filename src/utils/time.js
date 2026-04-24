@@ -64,6 +64,14 @@ export function fmtDDMMM(dateStr) {
   return `${d.getUTCDate()} ${MONTHS_SHORT[d.getUTCMonth()]}`
 }
 
+export function fmtHHMMSS(date) {
+  const d = new Date(date.getTime() + 2 * 60 * 60 * 1000)
+  const h = d.getUTCHours().toString().padStart(2, '0')
+  const m = d.getUTCMinutes().toString().padStart(2, '0')
+  const s = d.getUTCSeconds().toString().padStart(2, '0')
+  return `${h}:${m}:${s}`
+}
+
 export function relativeTime(isoStr) {
   if (!isoStr) return ''
   const diffMs = nowSAST().getTime() - new Date(isoStr).getTime()

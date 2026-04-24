@@ -18,8 +18,9 @@ import ShiftsSection from './settings/ShiftsSection'
 import LeaveEditorSection from './settings/LeaveEditorSection'
 import AutoClockOutSection from './settings/AutoClockOutSection'
 import OvertimeSection from './settings/OvertimeSection'
+import DeptCodesSettings from './settings/DeptCodesSettings'
 
-const SECTIONS = ['Company details', 'Departments', 'Users & roles', 'Shift editor', 'Leave editor', 'Auto clock-out', 'Overtime', 'Alert rules', 'WhatsApp bot', 'Data & backup']
+const SECTIONS = ['Company details', 'Departments', 'Department Codes', 'Users & roles', 'Shift editor', 'Leave editor', 'Auto clock-out', 'Overtime', 'Alert rules', 'WhatsApp bot', 'Data & backup']
 
 export default function Settings() {
   const [activeSection, setActiveSection] = useState('Company details')
@@ -52,6 +53,7 @@ export default function Settings() {
         {loading && !settings && <div style={{ color: '#b0b5cc', fontSize: 13, padding: 20 }}>Loading…</div>}
         {(!loading || settings) && activeSection === 'Company details' && <CompanySection settings={settings} onSaved={handleSave} />}
         {(!loading || settings) && activeSection === 'Departments' && <DepartmentsSection settings={settings} onSaved={handleSave} />}
+        {activeSection === 'Department Codes' && <DeptCodesSettings />}
         {(!loading || settings) && activeSection === 'Users & roles' && <UsersSection settings={settings} onSaved={handleSave} />}
         {(!loading || settings) && activeSection === 'Shift editor' && <ShiftsSection settings={settings} onSaved={handleSave} />}
         {(!loading || settings) && activeSection === 'Leave editor' && <LeaveEditorSection settings={settings} onSaved={handleSave} />}

@@ -8,12 +8,14 @@ import Tools from './pages/Tools'
 import Inventory from './pages/Inventory'
 import Settings from './pages/Settings'
 import InspectionPage from './pages/InspectionPage'
+import DepartmentBoards from './pages/DepartmentBoards'
 
 const inspectionMatch = window.location.pathname.match(/^\/inspection\/(.+)$/)
 
 const pageTitles = {
   dashboard: 'Dashboard',
   production: 'Production overview',
+  'department-boards': 'Department boards',
   tools: 'Tool tracker',
   inventory: 'Inventory',
   'time-attendance': 'Time & Attendance',
@@ -28,6 +30,7 @@ function PageContent({ page, onNavigate }) {
   switch (page) {
     case 'dashboard': return <Dashboard onNavigate={onNavigate} />
     case 'production': return <Production />
+    case 'department-boards': return <DepartmentBoards onNavigate={onNavigate} />
     case 'time-attendance': return <HR section="time-attendance" />
     case 'employees': return <HR section="employees" />
     case 'leave-management': return <HR section="leave-management" />

@@ -1,174 +1,107 @@
-import { useState } from 'react'
-import { useGet, apiFetch } from '../hooks/useApi'
-import { fmtDDMMM } from '../utils/time'
-import NewJobModal from './production/NewJobModal' // TODO: Phase C
-import GanttModal  from './production/GanttModal'  // TODO: Phase D
+import { useState, useEffect } from 'react'
+import { useGet } from '../hooks/useApi'
+import { fmtHHMMSS } from '../utils/time'
+import ProductionGantt from './production/ProductionGantt.jsx'
+import ProductionKanbanWall from '../components/production/ProductionKanbanWall.jsx'
 
-function getAssemblyName(assemblyId, assemblies) {
-  if (!assemblyId) return 'Custom job'
-  const asm = assemblies.find(a => a.id === assemblyId)
-  return asm ? asm.name : 'Custom job'
+const btnBase = {
+  padding: '6px 16px', borderRadius: 6, fontSize: 13, fontWeight: 600, cursor: 'pointer',
 }
+const activeBtn  = { ...btnBase, background: '#4f67e4', color: '#fff', border: 'none' }
+const inactiveBtn = { ...btnBase, background: 'none', color: '#9298c4', border: '1px solid #e4e6ea' }
 
-function jobProgress(job) {
-  const total = job.tasks?.length || 0
-  const done  = job.tasks?.filter(t => t.done).length || 0
-  return { total, done, pct: total ? Math.round((done / total) * 100) : 0 }
-}
+export default function Production() {
+  const [viewMode,     setViewMode]     = useState('gantt')
+  const [lastRefresh,  setLastRefresh]  = useState(new Date())
+  const [now,          setNow]          = useState(new Date())
+  const [isFullscreen, setIsFullscreen] = useState(false)
 
-const STATUS_LABELS = {
-  quote: 'Quote', in_progress: 'In progress', qc: 'QC', dispatch: 'Dispatch', done: 'Done'
-}
-const STATUS_COLOURS = {
-  quote:       { bg: '#f1f0ea', text: '#5f5e5a' },
-  in_progress: { bg: '#e6f1fb', text: '#185fa5' },
-  qc:          { bg: '#faeeda', text: '#854f0b' },
-  dispatch:    { bg: '#eeedfe', text: '#534ab7' },
-  done:        { bg: '#eaf3de', text: '#3b6d11' },
-}
-const TABS = [
-  { key: 'all', label: 'All' },
-  { key: 'quote', label: 'Quote' },
-  { key: 'in_progress', label: 'In progress' },
-  { key: 'done', label: 'Done' },
-]
+  const { data: jobsData,  refetch: refetchJobs } = useGet('/jobs')
+  const { data: codesData }                        = useGet('/dept-codes')
 
-function JobCard({ job, assemblies, onClick, onDelete }) {
-  const { total, done, pct } = jobProgress(job)
-  const sc = STATUS_COLOURS[job.status] || STATUS_COLOURS.quote
-  const dateRange = [fmtDDMMM(job.startDate), fmtDDMMM(job.dueDate)].filter(Boolean).join(' → ')
-  return (
-    <div onClick={() => onClick(job)}
-      style={{ position: 'relative', border: '1px solid #e4e6ea', borderLeft: `4px solid ${job.colour || '#dbeafe'}`,
-        background: '#fff', borderRadius: 10, padding: '14px 16px', cursor: 'pointer' }}>
-      <button
-        onClick={e => { e.stopPropagation(); onDelete(job.id) }}
-        style={{ position: 'absolute', top: 8, right: 8, background: 'none', border: 'none', cursor: 'pointer',
-          color: '#9ca3af', padding: '2px 4px', borderRadius: 4, lineHeight: 1 }}
-        title="Delete job"
-      >🗑</button>
-      <div style={{ fontWeight: 700, fontSize: 14, color: '#1a1d3b', marginBottom: 6,
-        whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', paddingRight: 20 }}>{job.title}</div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
-        <span style={{ fontSize: 11, fontWeight: 600, padding: '2px 8px', borderRadius: 20,
-          background: sc.bg, color: sc.text }}>{STATUS_LABELS[job.status] || job.status}</span>
-        <span style={{ fontSize: 12, color: '#9298c4' }}>{getAssemblyName(job.assemblyId, assemblies)}</span>
-      </div>
-      {dateRange && <div style={{ fontSize: 12, color: '#b0b5cc', marginBottom: 8 }}>{dateRange}</div>}
-      <div style={{ fontSize: 11, color: '#9298c4', marginBottom: 4 }}>{done}/{total} tasks</div>
-      <div style={{ background: '#f0f1f5', borderRadius: 4, height: 4 }}>
-        <div style={{ width: `${pct}%`, background: '#4f67e4', borderRadius: 4, height: 4 }} />
-      </div>
-    </div>
-  )
-}
+  const jobs           = Array.isArray(jobsData?.jobs)    ? jobsData.jobs           : []
+  const prefixes       = codesData?.prefixes       || []
+  const assemblyPhases = codesData?.assemblyPhases || []
 
-function DeleteConfirmOverlay({ jobId, jobs, onCancel, onConfirm }) {
-  const job = jobs.find(j => j.id === jobId)
-  return (
-    <div style={{ position: 'fixed', inset: 0, zIndex: 200, background: 'rgba(0,0,0,0.35)',
-      display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <div style={{ background: '#fff', borderRadius: 10, padding: '24px 28px',
-        boxShadow: '0 8px 32px rgba(0,0,0,0.18)', maxWidth: 360, width: '90%', textAlign: 'center' }}>
-        <div style={{ fontSize: 32, marginBottom: 12 }}>🗑</div>
-        <div style={{ fontWeight: 600, fontSize: 16, marginBottom: 8 }}>Delete "{job?.title}"?</div>
-        <div style={{ color: '#6b7280', fontSize: 14, marginBottom: 20 }}>
-          This will permanently remove the job and all its tasks. This cannot be undone.
-        </div>
-        <div style={{ display: 'flex', gap: 10, justifyContent: 'center' }}>
-          <button onClick={onCancel}
-            style={{ padding: '8px 20px', borderRadius: 6, border: '1px solid #d1d5db', background: '#fff', cursor: 'pointer', fontSize: 14 }}>
-            Cancel
-          </button>
-          <button onClick={() => onConfirm(jobId)}
-            style={{ padding: '8px 20px', borderRadius: 6, border: 'none', background: '#ef4444', color: '#fff', cursor: 'pointer', fontSize: 14, fontWeight: 600 }}>
-            Delete
-          </button>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-export default function Production({ onNavigate }) {
-  const [activeTab,     setActiveTab]     = useState('all')
-  const [selectedJob,   setSelectedJob]   = useState(null)
-  const [showNewJob,    setShowNewJob]    = useState(false)
-  const [confirmDelete, setConfirmDelete] = useState(null)
-
-  const { data: jobsData,      refetch: refetchJobs } = useGet('/jobs')
-  const { data: assembliesData }                       = useGet('/jobs/assemblies')
-
-  const jobs       = Array.isArray(jobsData?.jobs)            ? jobsData.jobs            : []
-  const assemblies = Array.isArray(assembliesData?.assemblies) ? assembliesData.assemblies : []
-
-  const filtered = activeTab === 'all' ? jobs : jobs.filter(j => j.status === activeTab)
-
-  async function handleDeleteJob(jobId) {
-    try {
-      await apiFetch('/jobs/' + jobId, { method: 'DELETE' })
-      setConfirmDelete(null)
+  useEffect(() => {
+    const id = setInterval(() => {
       refetchJobs()
-    } catch (e) {
-      console.error('Delete failed', e)
-      setConfirmDelete(null)
+      setLastRefresh(new Date())
+    }, 30000)
+    return () => clearInterval(id)
+  }, [refetchJobs])
+
+  useEffect(() => {
+    const id = setInterval(() => setNow(new Date()), 1000)
+    return () => clearInterval(id)
+  }, [])
+
+  useEffect(() => {
+    function onFsChange() {
+      setIsFullscreen(!!document.fullscreenElement)
+    }
+    document.addEventListener('fullscreenchange', onFsChange)
+    return () => document.removeEventListener('fullscreenchange', onFsChange)
+  }, [])
+
+  function handleFullscreen() {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen()
+    } else {
+      document.exitFullscreen()
     }
   }
 
-  const btnStyle = { background: '#4f67e4', color: '#fff', border: 'none',
-    borderRadius: 8, padding: '8px 16px', fontSize: 13, fontWeight: 600, cursor: 'pointer' }
-
   return (
     <div>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
-        <div style={{ display: 'flex', gap: 2 }}>
-          {TABS.map(t => (
-            <button key={t.key} onClick={() => setActiveTab(t.key)} style={{
-              padding: '6px 14px', background: 'none', border: 'none', cursor: 'pointer',
-              fontSize: 13, color: activeTab === t.key ? '#1a1d3b' : '#9298c4',
-              fontWeight: activeTab === t.key ? 700 : 400,
-              borderBottom: activeTab === t.key ? '2px solid #4f67e4' : '2px solid transparent',
-            }}>{t.label}</button>
-          ))}
+      {/* Top bar */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16, flexWrap: 'wrap' }}>
+        <div style={{ fontWeight: 700, fontSize: 15, color: '#1a1d3b', flex: 1, minWidth: 160 }}>
+          Production Overview
         </div>
-        {!selectedJob && <button onClick={() => setShowNewJob(true)} style={btnStyle}>+ New job</button>}
+
+        {/* View toggle */}
+        <div style={{ display: 'flex', gap: 4 }}>
+          <button
+            onClick={() => setViewMode('gantt')}
+            style={viewMode === 'gantt' ? activeBtn : inactiveBtn}
+          >
+            Gantt
+          </button>
+          <button
+            onClick={() => setViewMode('kanban')}
+            style={viewMode === 'kanban' ? activeBtn : inactiveBtn}
+          >
+            Kanban Wall
+          </button>
+        </div>
+
+        {/* Clock + refresh + fullscreen */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, color: '#9298c4', fontSize: 13 }}>
+          <span style={{ fontWeight: 700, color: '#1a1d3b', fontVariantNumeric: 'tabular-nums' }}>
+            {fmtHHMMSS(now)}
+          </span>
+          <span style={{ fontVariantNumeric: 'tabular-nums' }}>
+            Last refresh: {fmtHHMMSS(lastRefresh)}
+          </span>
+          <button
+            onClick={handleFullscreen}
+            title={isFullscreen ? 'Exit fullscreen' : 'Fullscreen'}
+            style={{
+              background: 'none', border: '1px solid #e4e6ea', borderRadius: 6,
+              padding: '4px 8px', cursor: 'pointer', color: '#9298c4', fontSize: 14, lineHeight: 1,
+            }}
+          >
+            {isFullscreen ? '⊡' : '⛶'}
+          </button>
+        </div>
       </div>
 
-      {selectedJob ? (
-        <GanttModal
-          inline
-          job={selectedJob}
-          onClose={() => setSelectedJob(null)}
-          onSaved={() => refetchJobs()}
-        />
-      ) : filtered.length === 0 ? (
-        <div style={{ textAlign: 'center', padding: '60px 0', color: '#9298c4' }}>
-          <div style={{ fontSize: 15, marginBottom: 12 }}>No jobs yet</div>
-          <button onClick={() => setShowNewJob(true)} style={btnStyle}>Create your first job</button>
-        </div>
-      ) : (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 16 }}>
-          {filtered.map(job => (
-            <JobCard key={job.id} job={job} assemblies={assemblies} onClick={setSelectedJob} onDelete={id => setConfirmDelete(id)} />
-          ))}
-        </div>
-      )}
-
-      {showNewJob && (
-        <NewJobModal
-          assemblies={assemblies}
-          onClose={() => setShowNewJob(false)}
-          onSaved={() => { setShowNewJob(false); refetchJobs() }}
-        />
-      )}
-      {confirmDelete && (
-        <DeleteConfirmOverlay
-          jobId={confirmDelete}
-          jobs={jobs}
-          onCancel={() => setConfirmDelete(null)}
-          onConfirm={handleDeleteJob}
-        />
-      )}
+      {/* Body */}
+      {viewMode === 'gantt'
+        ? <ProductionGantt jobs={jobs} readOnly />
+        : <ProductionKanbanWall jobs={jobs} prefixes={prefixes} assemblyPhases={assemblyPhases} />
+      }
     </div>
   )
 }

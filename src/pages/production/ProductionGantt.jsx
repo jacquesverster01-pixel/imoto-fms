@@ -29,7 +29,7 @@ function fmtDue(iso) {
   return `${d.getUTCDate()} ${MONTH_NAMES_SHORT[d.getUTCMonth()]}`
 }
 
-export default function ProductionGantt({ jobs }) {
+export default function ProductionGantt({ jobs, readOnly = false }) {
   return (
     <div className="bg-white rounded-xl border overflow-hidden" style={{ borderColor: '#e4e6ea' }}>
       <div className="flex items-center gap-3 px-4 py-3 border-b" style={{ borderColor: '#f0f2f5' }}>
@@ -78,9 +78,9 @@ export default function ProductionGantt({ jobs }) {
                     <div className="flex items-start gap-2">
                       <div className="w-0.5 h-8 rounded-full mt-0.5 flex-shrink-0" style={{ background: s.bar }} />
                       <div>
-                        <div className="text-xs font-medium" style={{ color: '#1a1d3b' }}>{job.name}</div>
+                        <div className="text-xs font-medium" style={{ color: '#1a1d3b' }}>{job.name || job.title}</div>
                         <div className="text-xs" style={{ color: '#b0b5cc' }}>{job.client}</div>
-                        {job.flags.map((f, fi) => (
+                        {(job.flags || []).map((f, fi) => (
                           <div key={fi} className="flex items-center gap-1 mt-0.5" style={{ color: '#dc2626', fontSize: 10 }}>
                             <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                               <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>

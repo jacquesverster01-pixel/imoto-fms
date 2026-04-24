@@ -121,6 +121,23 @@ export default function jobsRouter(readData, writeData, upload, uploadsDir) {
     } catch (err) { res.status(500).json({ error: err.message }) }
   })
 
+  // PATCH /api/jobs/:id/task/:taskId — partial update a single task
+  router.patch('/jobs/:id/task/:taskId', (req, res) => {
+    try {
+      const data = readData('jobs.json')
+      const jobIdx = data.jobs.findIndex(j => j.id === req.params.id)
+      if (jobIdx === -1) return res.status(404).json({ error: 'Job not found' })
+      const taskIdx = data.jobs[jobIdx].tasks.findIndex(t => t.id === req.params.taskId)
+      if (taskIdx === -1) return res.status(404).json({ error: 'Task not found' })
+      const allowed = ['kanbanStatus', 'done', 'dependsOnAssembly', 'assignee', 'note']
+      allowed.forEach(k => {
+        if (req.body[k] !== undefined) data.jobs[jobIdx].tasks[taskIdx][k] = req.body[k]
+      })
+      writeData('jobs.json', data)
+      res.json(data.jobs[jobIdx].tasks[taskIdx])
+    } catch (err) { res.status(500).json({ error: err.message }) }
+  })
+
   // DELETE /api/jobs/:id
   router.delete('/jobs/:id', async (req, res) => {
     try {

@@ -353,7 +353,8 @@
           "endDate": null,
           "done": false,
           "assignedTo": null,
-          "notes": ""
+          "notes": "",
+          "kanbanStatus": "todo"
         },
         {
           "pct": 0,
