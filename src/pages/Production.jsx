@@ -16,12 +16,13 @@ export default function Production() {
   const [now,          setNow]          = useState(new Date())
   const [isFullscreen, setIsFullscreen] = useState(false)
 
-  const { data: jobsData,  refetch: refetchJobs } = useGet('/jobs')
-  const { data: codesData }                        = useGet('/dept-codes')
+  const { data: jobsData,     refetch: refetchJobs } = useGet('/jobs')
+  const { data: codesData }                          = useGet('/dept-codes')
+  const { data: settingsData }                       = useGet('/settings')
 
-  const jobs           = Array.isArray(jobsData?.jobs)    ? jobsData.jobs           : []
-  const prefixes       = codesData?.prefixes       || []
-  const assemblyPhases = codesData?.assemblyPhases || []
+  const jobs            = Array.isArray(jobsData?.jobs) ? jobsData.jobs : []
+  const prefixMappings  = codesData?.prefixMappings || []
+  const assemblyPhases  = codesData?.assemblyPhases || []
 
   useEffect(() => {
     const id = setInterval(() => {
@@ -100,7 +101,7 @@ export default function Production() {
       {/* Body */}
       {viewMode === 'gantt'
         ? <ProductionGantt jobs={jobs} readOnly />
-        : <ProductionKanbanWall jobs={jobs} prefixes={prefixes} assemblyPhases={assemblyPhases} />
+        : <ProductionKanbanWall jobs={jobs} prefixMappings={prefixMappings} assemblyPhases={assemblyPhases} settingsData={settingsData} />
       }
     </div>
   )

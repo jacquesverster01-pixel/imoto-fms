@@ -2,107 +2,110 @@ import { useState, useEffect } from 'react'
 import { useGet, apiFetch } from '../../hooks/useApi'
 import { Card } from './settingsUi'
 
-const PREFIX_REGEX = /^[A-Z]{3}$/
-const CODE_REGEX = /^[A-Z]{3}[A-Z]\d{6}$/
+const PHASE_CODE_REGEX = /^[A-Z]{3}[A-Z]\d{4,6}$/
 
-function validatePrefixes(prefixes) {
+function validateAssemblyPhases(phases) {
   const errors = {}
   const seen = new Set()
-  prefixes.forEach((row, i) => {
-    if (!PREFIX_REGEX.test(row.prefix)) {
-      errors[`p_${i}`] = 'Must be exactly 3 uppercase letters'
-    } else if (seen.has(row.prefix)) {
-      errors[`p_${i}`] = 'Duplicate prefix'
-    } else {
-      seen.add(row.prefix)
-    }
-    if (!row.department?.trim()) errors[`d_${i}`] = 'Required'
+  phases.forEach((p, i) => {
+    if (!PHASE_CODE_REGEX.test(p.code)) errors[`phase-${i}-code`] = 'Invalid code format'
+    if (seen.has(p.code)) errors[`phase-${i}-code`] = 'Duplicate code'
+    seen.add(p.code)
   })
   return errors
 }
 
-function validatePhases(phases) {
-  const errors = {}
-  const seen = new Set()
-  phases.forEach((row, i) => {
-    if (!CODE_REGEX.test(row.code)) {
-      errors[`c_${i}`] = 'Must match XXXYDDDDDD (e.g. ELEA000184)'
-    } else if (seen.has(row.code)) {
-      errors[`c_${i}`] = 'Duplicate code'
-    } else {
-      seen.add(row.code)
-    }
-  })
-  return errors
-}
-
-const cellStyle = { padding: '4px 6px', verticalAlign: 'top' }
+const cellStyle = { padding: '4px 6px', verticalAlign: 'middle' }
 const inputBase = { fontSize: 12, padding: '5px 8px', borderRadius: 8, border: '1px solid #e4e6ea', outline: 'none', color: '#1a1d3b' }
-const errStyle = { fontSize: 11, color: '#dc2626', marginTop: 2 }
-const thStyle = { fontSize: 11, color: '#b0b5cc', fontWeight: 500, textAlign: 'left', padding: '4px 6px', borderBottom: '1px solid #f0f2f5' }
+const errStyle  = { fontSize: 11, color: '#dc2626', marginTop: 2 }
+const thStyle   = { fontSize: 11, color: '#b0b5cc', fontWeight: 500, textAlign: 'left', padding: '4px 6px', borderBottom: '1px solid #f0f2f5' }
 
 export default function DeptCodesSettings() {
-  const { data, loading } = useGet('/dept-codes')
-  const [prefixes, setPrefixes] = useState([])
-  const [phases, setPhases] = useState([])
-  const [search, setSearch] = useState('')
-  const [saving, setSaving] = useState(false)
-  const [savedMsg, setSavedMsg] = useState('')
+  const [prefixMappings, setPrefixMappings] = useState([])
+  const [assemblyPhases, setAssemblyPhases] = useState([])
+  const [discovered,     setDiscovered]     = useState({ discovered: [], mapped: [], unmapped: [] })
+  const [phaseSearch,    setPhaseSearch]    = useState('')
+  const [saving,         setSaving]         = useState(false)
+  const [toast,          setToast]          = useState(null)
+  const [errors,         setErrors]         = useState({})
+
+  const { data: codesData, loading } = useGet('/dept-codes')
+  const { data: discoveredData }     = useGet('/dept-codes/discovered-prefixes')
+  const { data: settingsData }       = useGet('/settings')
 
   useEffect(() => {
-    if (data) {
-      setPrefixes(data.prefixes || [])
-      setPhases(data.assemblyPhases || [])
+    if (codesData) {
+      setPrefixMappings(codesData.prefixMappings || [])
+      setAssemblyPhases(codesData.assemblyPhases || [])
     }
-  }, [data])
+  }, [codesData])
 
-  const prefixErrors = validatePrefixes(prefixes)
-  const phaseErrors = validatePhases(phases)
-  const hasErrors = Object.keys(prefixErrors).length > 0 || Object.keys(phaseErrors).length > 0
+  useEffect(() => {
+    if (discoveredData) setDiscovered(discoveredData)
+  }, [discoveredData])
 
-  function addPrefix() {
-    setPrefixes(p => [...p, { prefix: '', department: '', colour: '#6c63ff' }])
+  useEffect(() => {
+    setErrors(validateAssemblyPhases(assemblyPhases))
+  }, [assemblyPhases])
+
+  const departmentOptions = (settingsData?.departments || []).map(d =>
+    typeof d === 'string' ? d : d.name
+  )
+
+  function getMappedDept(prefix) {
+    return prefixMappings.find(m => m.prefix === prefix)?.department || ''
   }
-  function removePrefix(i) {
-    setPrefixes(p => p.filter((_, idx) => idx !== i))
-  }
-  function updatePrefix(i, field, val) {
-    setPrefixes(p => p.map((row, idx) => idx === i ? { ...row, [field]: val } : row))
+
+  function handlePrefixDeptChange(prefix, dept) {
+    if (!dept) {
+      setPrefixMappings(m => m.filter(x => x.prefix !== prefix))
+    } else {
+      setPrefixMappings(m => {
+        const exists = m.find(x => x.prefix === prefix)
+        if (exists) return m.map(x => x.prefix === prefix ? { ...x, department: dept } : x)
+        return [...m, { prefix, department: dept }]
+      })
+    }
   }
 
   function addPhase() {
-    setPhases(p => [...p, { code: '', phase: 'pre-assembly' }])
+    setAssemblyPhases(p => [...p, { code: '', phase: 'pre-assembly' }])
   }
+
   function removePhase(i) {
-    setPhases(p => p.filter((_, idx) => idx !== i))
+    setAssemblyPhases(p => p.filter((_, idx) => idx !== i))
   }
+
   function updatePhase(i, field, val) {
-    setPhases(p => p.map((row, idx) => idx === i ? { ...row, [field]: val } : row))
+    setAssemblyPhases(p => p.map((row, idx) => idx === i ? { ...row, [field]: val } : row))
   }
 
   async function handleSave() {
-    if (hasErrors) return
+    if (Object.keys(errors).length > 0) return
     setSaving(true)
     try {
       await apiFetch('/dept-codes', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prefixes, assemblyPhases: phases })
+        body: JSON.stringify({ prefixMappings, assemblyPhases })
       })
-      setSavedMsg('Saved')
-      setTimeout(() => setSavedMsg(''), 2000)
-    } catch {
-      setSavedMsg('Error')
+      setToast({ msg: 'Saved', type: 'success' })
+    } catch (err) {
+      setToast({ msg: `Save failed: ${err.message}`, type: 'error' })
     } finally {
       setSaving(false)
+      setTimeout(() => setToast(null), 2500)
     }
   }
 
-  const filteredPhases = phases
+  const filteredPhases = assemblyPhases
     .map((row, i) => ({ ...row, _idx: i }))
-    .filter(row => row.code.toLowerCase().includes(search.toLowerCase()))
+    .filter(row => row.code.toLowerCase().includes(phaseSearch.toLowerCase()))
 
-  if (loading && !data) {
+  const { discovered: allDiscovered = [], mapped = [], unmapped = [] } = discovered
+  const hasErrors = Object.keys(errors).length > 0
+
+  if (loading && !codesData) {
     return <Card><div style={{ color: '#b0b5cc', fontSize: 13 }}>Loading…</div></Card>
   }
 
@@ -110,79 +113,81 @@ export default function DeptCodesSettings() {
     <Card>
       <div style={{ fontSize: 14, fontWeight: 600, color: '#1a1d3b', marginBottom: 4 }}>Department Codes</div>
       <div style={{ fontSize: 11, color: '#b0b5cc', marginBottom: 20 }}>
-        Map 3-letter product code prefixes to departments, and assign full assembly codes to production phases.
+        Map product code prefixes (auto-discovered from imported BOMs) to departments, and tag assembly codes as pre-assembly or installation.
       </div>
 
+      {/* Panel 1 — Prefix Mappings */}
       <div style={{ marginBottom: 24 }}>
-        <div style={{ fontSize: 12, fontWeight: 600, color: '#4a4f7a', marginBottom: 10 }}>Prefix Mappings</div>
-        {prefixes.length > 0 && (
-          <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: 8 }}>
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginBottom: 10 }}>
+          <div style={{ fontSize: 12, fontWeight: 600, color: '#4a4f7a' }}>Prefix Mappings</div>
+          {allDiscovered.length > 0 && (
+            <div style={{ fontSize: 11, color: '#9298c4' }}>
+              {allDiscovered.length} discovered, {mapped.length} mapped, {unmapped.length} unmapped
+            </div>
+          )}
+        </div>
+
+        {allDiscovered.length === 0 ? (
+          <div style={{ fontSize: 12, color: '#b0b5cc', padding: '12px 0' }}>
+            No prefixes discovered yet. Import a BOM in Inventory → Imported BOMs to get started.
+          </div>
+        ) : (
+          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
               <tr>
                 <th style={thStyle}>Prefix</th>
                 <th style={thStyle}>Department</th>
-                <th style={thStyle}>Colour</th>
-                <th style={thStyle} />
+                <th style={thStyle}>Status</th>
               </tr>
             </thead>
             <tbody>
-              {prefixes.map((row, i) => (
-                <tr key={i}>
-                  <td style={cellStyle}>
-                    <input
-                      style={{ ...inputBase, width: 60 }}
-                      maxLength={3}
-                      value={row.prefix}
-                      onChange={e => updatePrefix(i, 'prefix', e.target.value.toUpperCase())}
-                      placeholder="ELE"
-                    />
-                    {prefixErrors[`p_${i}`] && <div style={errStyle}>{prefixErrors[`p_${i}`]}</div>}
-                  </td>
-                  <td style={cellStyle}>
-                    <input
-                      style={{ ...inputBase, width: 160 }}
-                      value={row.department}
-                      onChange={e => updatePrefix(i, 'department', e.target.value)}
-                      placeholder="Electrical"
-                    />
-                    {prefixErrors[`d_${i}`] && <div style={errStyle}>{prefixErrors[`d_${i}`]}</div>}
-                  </td>
-                  <td style={cellStyle}>
-                    <input
-                      type="color"
-                      value={row.colour}
-                      onChange={e => updatePrefix(i, 'colour', e.target.value)}
-                      style={{ width: 40, height: 30, borderRadius: 6, border: '1px solid #e4e6ea', cursor: 'pointer', padding: 2 }}
-                    />
-                  </td>
-                  <td style={cellStyle}>
-                    <button
-                      onClick={() => removePrefix(i)}
-                      style={{ fontSize: 11, padding: '5px 10px', borderRadius: 6, background: '#fef2f2', color: '#dc2626', border: 'none', cursor: 'pointer' }}
-                    >
-                      Remove
-                    </button>
-                  </td>
-                </tr>
-              ))}
+              {allDiscovered.map(prefix => {
+                const dept = getMappedDept(prefix)
+                const isMapped = !!dept
+                return (
+                  <tr key={prefix}>
+                    <td style={cellStyle}>
+                      <span style={{ fontFamily: 'monospace', fontWeight: 600, fontSize: 12, color: '#1a1d3b' }}>{prefix}</span>
+                    </td>
+                    <td style={cellStyle}>
+                      <select
+                        value={dept}
+                        onChange={e => handlePrefixDeptChange(prefix, e.target.value)}
+                        style={{ ...inputBase, minWidth: 160, cursor: 'pointer' }}
+                      >
+                        <option value="">— Select —</option>
+                        {departmentOptions.map(d => (
+                          <option key={d} value={d}>{d}</option>
+                        ))}
+                      </select>
+                    </td>
+                    <td style={cellStyle}>
+                      {isMapped
+                        ? <span style={{ fontSize: 11, color: '#22c55e', fontWeight: 500 }}>✓ Mapped</span>
+                        : <span style={{ fontSize: 11, color: '#f59e0b', fontWeight: 500 }}>⚠ Unmapped</span>
+                      }
+                    </td>
+                  </tr>
+                )
+              })}
             </tbody>
           </table>
         )}
-        <button
-          onClick={addPrefix}
-          style={{ fontSize: 12, padding: '6px 14px', borderRadius: 8, background: '#f4f5f7', color: '#5a5f8a', border: 'none', cursor: 'pointer', fontWeight: 500 }}
-        >
-          + Add Prefix
-        </button>
       </div>
 
+      {/* Panel 2 — Assembly Phase Tags */}
       <div style={{ marginBottom: 16 }}>
-        <div style={{ fontSize: 12, fontWeight: 600, color: '#4a4f7a', marginBottom: 10 }}>Assembly Phase Mappings</div>
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginBottom: 10 }}>
+          <div style={{ fontSize: 12, fontWeight: 600, color: '#4a4f7a' }}>Assembly Phase Tags</div>
+          <div style={{ fontSize: 11, color: '#9298c4' }}>
+            {assemblyPhases.length} mapping{assemblyPhases.length !== 1 ? 's' : ''}
+          </div>
+        </div>
         <input
           style={{ ...inputBase, width: '100%', marginBottom: 10, boxSizing: 'border-box' }}
           placeholder="Search by code…"
-          value={search}
-          onChange={e => setSearch(e.target.value)}
+          value={phaseSearch}
+          onChange={e => setPhaseSearch(e.target.value)}
         />
         {filteredPhases.length > 0 && (
           <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: 8 }}>
@@ -197,13 +202,17 @@ export default function DeptCodesSettings() {
               {filteredPhases.map(row => (
                 <tr key={row._idx}>
                   <td style={cellStyle}>
-                    <input
-                      style={{ ...inputBase, width: 130 }}
-                      value={row.code}
-                      onChange={e => updatePhase(row._idx, 'code', e.target.value.toUpperCase())}
-                      placeholder="ELEA000184"
-                    />
-                    {phaseErrors[`c_${row._idx}`] && <div style={errStyle}>{phaseErrors[`c_${row._idx}`]}</div>}
+                    <div>
+                      <input
+                        style={{ ...inputBase, width: 130 }}
+                        value={row.code}
+                        onChange={e => updatePhase(row._idx, 'code', e.target.value.toUpperCase())}
+                        placeholder="ELEA000184"
+                      />
+                      {errors[`phase-${row._idx}-code`] && (
+                        <div style={errStyle}>{errors[`phase-${row._idx}-code`]}</div>
+                      )}
+                    </div>
                   </td>
                   <td style={cellStyle}>
                     <select
@@ -236,20 +245,23 @@ export default function DeptCodesSettings() {
         </button>
       </div>
 
+      {/* Save bar */}
       <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 10, marginTop: 14 }}>
-        {savedMsg && (
-          <span style={{ fontSize: 12, color: savedMsg === 'Saved' ? '#22c55e' : '#dc2626' }}>{savedMsg}</span>
+        {toast && (
+          <span style={{ fontSize: 12, color: toast.type === 'success' ? '#22c55e' : '#dc2626' }}>{toast.msg}</span>
         )}
         <button
           onClick={handleSave}
           disabled={saving || hasErrors}
           style={{
             fontSize: 12, padding: '7px 18px', borderRadius: 8, border: 'none',
-            background: saving || hasErrors ? '#b0b5cc' : '#6c63ff', color: '#fff',
-            cursor: saving || hasErrors ? 'default' : 'pointer', fontWeight: 500
+            background: saving || hasErrors ? '#b0b5cc' : '#6c63ff',
+            color: '#fff',
+            cursor: saving || hasErrors ? 'default' : 'pointer',
+            fontWeight: 500
           }}
         >
-          {saving ? 'Saving…' : 'Save changes'}
+          {saving ? 'Saving…' : 'Save Changes'}
         </button>
       </div>
     </Card>

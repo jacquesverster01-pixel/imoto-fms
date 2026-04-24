@@ -1,8 +1,14 @@
 import { useState, useEffect } from 'react'
 import { useGet, apiFetch } from '../hooks/useApi'
-import { groupTasks, countUnallocated, checkDependency, flattenTasks } from '../components/production/kanbanUtils.js'
+import { groupTasks, countUnallocated, checkDependency, listMappedDepartments, colourForDepartment } from '../components/production/kanbanUtils.js'
 import DeptKanbanBoard from '../components/production/DeptKanbanBoard.jsx'
 import UnallocatedPanel from '../components/production/UnallocatedPanel.jsx'
+
+function getDeptColour(deptName, settings) {
+  const dept = (settings?.departments || []).find(d => d.name === deptName)
+  if (dept?.color) return dept.color
+  return colourForDepartment(deptName)
+}
 
 export default function DepartmentBoards({ onNavigate }) {
   const [activeDept,   setActiveDept]   = useState(null)
@@ -11,16 +17,18 @@ export default function DepartmentBoards({ onNavigate }) {
 
   const { data: jobsData, refetch: refetchJobs } = useGet('/jobs')
   const { data: codesData } = useGet('/dept-codes')
+  const { data: settingsData } = useGet('/settings')
 
-  const jobs          = Array.isArray(jobsData) ? jobsData : (Array.isArray(jobsData?.jobs) ? jobsData.jobs : [])
-  const prefixes      = codesData?.prefixes || []
+  const jobs           = Array.isArray(jobsData) ? jobsData : (Array.isArray(jobsData?.jobs) ? jobsData.jobs : [])
+  const prefixMappings = codesData?.prefixMappings || []
   const assemblyPhases = codesData?.assemblyPhases || []
+  const mappedDepts    = listMappedDepartments(prefixMappings)
 
   useEffect(() => {
-    if (activeDept === null && prefixes.length > 0) {
-      setActiveDept(prefixes[0].department)
+    if (activeDept === null && mappedDepts.length > 0) {
+      setActiveDept(mappedDepts[0])
     }
-  }, [prefixes, activeDept])
+  }, [mappedDepts, activeDept])
 
   function showToast(msg, type = 'warn') {
     setToast({ msg, type })
@@ -51,16 +59,15 @@ export default function DepartmentBoards({ onNavigate }) {
     }
   }
 
-  const groups      = groupTasks(jobs, prefixes)
-  const unallocCount = countUnallocated(jobs, prefixes)
-  const activePrefixObj = prefixes.find(p => p.department === activeDept)
+  const groups       = groupTasks(jobs, prefixMappings)
+  const unallocCount = countUnallocated(jobs, prefixMappings)
 
-  if (prefixes.length === 0) {
+  if (mappedDepts.length === 0) {
     return (
       <div style={{ background: '#fff', borderRadius: 14, border: '1px solid #e4e6ea', padding: '40px 32px', textAlign: 'center' }}>
         <div style={{ fontSize: 14, color: '#1a1d3b', fontWeight: 600, marginBottom: 8 }}>No departments configured</div>
         <div style={{ fontSize: 12, color: '#9298c4', marginBottom: 20 }}>
-          Set up code prefixes in Settings → Department Codes before using Department Boards.
+          Discover prefixes and assign them in Settings → Department Codes.
         </div>
         <button
           onClick={() => onNavigate('settings')}
@@ -86,25 +93,27 @@ export default function DepartmentBoards({ onNavigate }) {
         </div>
       )}
 
-      {/* Tab bar */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 2, marginBottom: 16, borderBottom: '1px solid #e4e6ea', paddingBottom: 0 }}>
-        {prefixes.map(p => (
-          <button
-            key={p.department}
-            onClick={() => setActiveDept(p.department)}
-            style={{
-              display: 'flex', alignItems: 'center', gap: 6,
-              fontSize: 12, fontWeight: 500, padding: '8px 14px',
-              border: 'none', cursor: 'pointer', borderRadius: '8px 8px 0 0',
-              borderBottom: activeDept === p.department ? `2px solid ${p.colour || '#6c63ff'}` : '2px solid transparent',
-              background: activeDept === p.department ? '#fff' : 'transparent',
-              color: activeDept === p.department ? '#1a1d3b' : '#9298c4',
-            }}
-          >
-            <span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', background: p.colour || '#6c63ff', flexShrink: 0 }} />
-            {p.department}
-          </button>
-        ))}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 2, marginBottom: 16, borderBottom: '1px solid #e4e6ea' }}>
+        {mappedDepts.map(deptName => {
+          const colour = getDeptColour(deptName, settingsData)
+          return (
+            <button
+              key={deptName}
+              onClick={() => setActiveDept(deptName)}
+              style={{
+                display: 'flex', alignItems: 'center', gap: 6,
+                fontSize: 12, fontWeight: 500, padding: '8px 14px',
+                border: 'none', cursor: 'pointer', borderRadius: '8px 8px 0 0',
+                borderBottom: activeDept === deptName ? `2px solid ${colour}` : '2px solid transparent',
+                background: activeDept === deptName ? '#fff' : 'transparent',
+                color: activeDept === deptName ? '#1a1d3b' : '#9298c4',
+              }}
+            >
+              <span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', background: colour, flexShrink: 0 }} />
+              {deptName}
+            </button>
+          )
+        })}
         <button
           onClick={() => setActiveDept('__unallocated__')}
           style={{
@@ -125,7 +134,6 @@ export default function DepartmentBoards({ onNavigate }) {
         </button>
       </div>
 
-      {/* Board */}
       <div style={{ background: '#fff', borderRadius: 12, border: '1px solid #e4e6ea', padding: 16 }}>
         {activeDept === '__unallocated__' ? (
           <UnallocatedPanel
@@ -135,7 +143,7 @@ export default function DepartmentBoards({ onNavigate }) {
         ) : activeDept && groups[activeDept] ? (
           <DeptKanbanBoard
             deptName={activeDept}
-            deptColour={activePrefixObj?.colour || '#6c63ff'}
+            deptColour={getDeptColour(activeDept, settingsData)}
             tasks={groups[activeDept]}
             assemblyPhases={assemblyPhases}
             allJobs={jobs}

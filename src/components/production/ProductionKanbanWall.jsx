@@ -1,4 +1,4 @@
-import { groupTasks, checkDependency, flattenTasks } from './kanbanUtils.js'
+import { groupTasks, checkDependency, flattenTasks, listMappedDepartments, colourForDepartment } from './kanbanUtils.js'
 import CompactKanbanCard from './CompactKanbanCard.jsx'
 
 const COLS = [
@@ -27,8 +27,13 @@ const emptyStyle = {
   fontSize: 14,
 }
 
-export default function ProductionKanbanWall({ jobs, prefixes, assemblyPhases = [] }) {
-  if (!prefixes.length) {
+function getDeptColour(deptName, settingsData) {
+  const match = settingsData?.departments?.find(d => d.name === deptName)
+  return match?.colour || colourForDepartment(deptName)
+}
+
+export default function ProductionKanbanWall({ jobs, prefixMappings, assemblyPhases = [], settingsData }) {
+  if (!prefixMappings?.length) {
     return (
       <div style={emptyStyle}>
         No departments configured. Set up code prefixes in Settings → Department Codes.
@@ -42,16 +47,18 @@ export default function ProductionKanbanWall({ jobs, prefixes, assemblyPhases = 
     return <div style={emptyStyle}>No active jobs.</div>
   }
 
-  const groups = groupTasks(jobs, prefixes)
+  const groups = groupTasks(jobs, prefixMappings)
+  const departments = listMappedDepartments(prefixMappings)
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-      {prefixes.map(prefix => {
-        const deptGroup = groups[prefix.department] || EMPTY_COLS
+      {departments.map(dept => {
+        const deptColour = getDeptColour(dept, settingsData)
+        const deptGroup = groups[dept] || EMPTY_COLS
         const totalCount = COLS.reduce((s, c) => s + (deptGroup[c.key]?.length || 0), 0)
 
         return (
-          <div key={prefix.department} style={{
+          <div key={dept} style={{
             display: 'flex',
             background: '#fff',
             borderRadius: 8,
@@ -63,7 +70,7 @@ export default function ProductionKanbanWall({ jobs, prefixes, assemblyPhases = 
             <div style={{
               width: 120,
               flexShrink: 0,
-              borderLeft: `4px solid ${prefix.colour || '#9298c4'}`,
+              borderLeft: `4px solid ${deptColour}`,
               padding: '12px 10px',
               background: '#fafbff',
               borderRight: '1px solid #f0f2f5',
@@ -72,7 +79,7 @@ export default function ProductionKanbanWall({ jobs, prefixes, assemblyPhases = 
               justifyContent: 'center',
             }}>
               <div style={{ fontWeight: 700, fontSize: 13, color: '#1a1d3b', marginBottom: 4, wordBreak: 'break-word' }}>
-                {prefix.department}
+                {dept}
               </div>
               <div style={{ fontSize: 11, color: '#9298c4' }}>{totalCount} tasks</div>
             </div>
@@ -99,7 +106,7 @@ export default function ProductionKanbanWall({ jobs, prefixes, assemblyPhases = 
                           <CompactKanbanCard
                             key={task.id}
                             task={task}
-                            deptColour={prefix.colour}
+                            deptColour={deptColour}
                             dependencyStatus={depStatus}
                           />
                         )

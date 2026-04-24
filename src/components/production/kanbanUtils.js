@@ -59,3 +59,15 @@ export function countUnallocated(jobs, prefixes) {
   const flat = flattenTasks(jobs)
   return flat.filter(t => isUnallocated(t, prefixes)).length
 }
+
+export function listMappedDepartments(prefixMappings) {
+  if (!Array.isArray(prefixMappings)) return []
+  return Array.from(new Set(prefixMappings.map(p => p.department))).sort()
+}
+
+const PALETTE = ['#fbbf24', '#a78bfa', '#60a5fa', '#34d399', '#f87171', '#fb923c', '#22d3ee', '#a3e635']
+export function colourForDepartment(deptName) {
+  let hash = 0
+  for (let i = 0; i < deptName.length; i++) hash = (hash * 31 + deptName.charCodeAt(i)) | 0
+  return PALETTE[Math.abs(hash) % PALETTE.length]
+}

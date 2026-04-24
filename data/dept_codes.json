@@ -1,9 +1,33 @@
 {
-  "prefixes": [],
-  "assemblyPhases": [
+  "prefixMappings": [
     {
-      "code": "ELEA000165",
-      "phase": "pre-assembly"
+      "prefix": "CAB",
+      "department": "Cabinet Making"
+    },
+    {
+      "prefix": "BRA",
+      "department": "Branding"
+    },
+    {
+      "prefix": "CLM",
+      "department": "Welding"
+    },
+    {
+      "prefix": "CLW",
+      "department": "Cabinet Making"
+    },
+    {
+      "prefix": "ELE",
+      "department": "Electrical"
+    },
+    {
+      "prefix": "MEC",
+      "department": "Welding"
+    },
+    {
+      "prefix": "PLU",
+      "department": "Plumbing"
     }
-  ]
+  ],
+  "assemblyPhases": []
 }

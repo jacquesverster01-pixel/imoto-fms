@@ -16,7 +16,7 @@ export default function ProductionPlanner() {
   const { data: bomsData } = useGet('/boms')
 
   const jobs = Array.isArray(jobsData) ? jobsData : (jobsData?.jobs || [])
-  const prefixMappings = codesData?.prefixes || []
+  const prefixMappings = codesData?.prefixMappings || []
   const assemblyPhases = codesData?.assemblyPhases || []
   const boms = bomsData || []
 

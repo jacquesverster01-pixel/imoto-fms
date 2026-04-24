@@ -69,7 +69,7 @@ const DATA_INITS = {
   'zk_unmatched.json':           [],
   'settings.json':               {},
   'boms.json':                   { boms: [] },
-  'dept_codes.json':             { prefixes: [], assemblyPhases: [] },
+  'dept_codes.json':             { prefixMappings: [], assemblyPhases: [] },
 }
 for (const [file, empty] of Object.entries(DATA_INITS)) {
   const fp = path.join(__dirname, 'data', file)
