@@ -1,8 +1,88 @@
 # Session Handoff
 
-## Last updated: 2026-04-24 (Phase 3B corrected — tab deduplication + colour resolution)
+## Last updated: 2026-04-24 (FIX 5 — Two-Line Task Rows + Resizable Left Panel)
 
 ## Current state
+
+### FIX 5 complete — Two-Line Task Rows + Resizable Left Panel (`GanttModal.jsx` only)
+
+- Left-panel task rows now show task name on the top line (clamped to 2 lines) and `itemCode` / `assemblyCode` in 10px muted monospace below — rows with no code render single-line at the usual 32px minimum
+- **Option B** implemented: right-panel bar rows match left-panel heights per-row via `useLayoutEffect` + `getBoundingClientRect` (`rowElsRef` map → `rowHeights` state). `DependencyOverlay` SVG height and arrow Y positions updated accordingly. No flash of misalignment — layout effect runs before paint.
+- Left panel is now user-resizable: drag the 4px divider between panels (160–480 px range). Resize uses direct DOM mutation during drag, commits to state on mouseup (same ref-based pattern as bar drag).
+- Panel width persists across page reloads via `localStorage` key `gantt-left-panel-width`.
+- Scroll-sync between left and right panels unchanged.
+
+`npm run build` passes with no errors.
+
+---
+
+### FIX 4 complete — Restore Parent/Child Relationships on BOM Import
+
+- BOM import now preserves the full parent/child Assembly hierarchy
+- `NewJobModal` uses `buildTasksFromBom` from `inventory/bom/bomUtils.js` (correct recursive builder)
+- Broken `buildTasksFromBomAssemblies` flat builder removed from `plannerUtils.js`
+- Tasks created from BOM include `components: [...]` (Parts) on each Assembly and `children: [...]` for sub-assemblies
+- `taskMigration.js` now defaults `kanbanStatus: 'todo'` and `dependsOnAssembly: null` (moved from the old broken builder)
+
+`npm run build` passes with no errors.
+
+---
+
+### FIX 3 complete — Delete job from Production Planner
+
+- Job deletion now available from `JobListPanel` via inline two-click confirm (✕ → Delete?)
+- Reuses existing `DELETE /api/jobs/:id` route (already returned `{ ok: true }`, no backend changes needed)
+- Confirm state auto-resets after 4 seconds; hovering off card hides the button
+- Deleted job clears selection if it was active; toast confirms deletion
+
+`npm run build` passes with no errors.
+
+---
+
+### FIX 2 complete — Gantt verification pass
+
+**Verification report:** `GANTT_VERIFICATION_REPORT.md` (project root)
+
+**One bug fixed:**
+- `src/utils/ganttExport.js` — Print CSS rewritten from `display:none` strategy to `visibility:hidden/visible`. Old CSS produced a blank print page because `display:none` on `#root` (a `body > *` child) cannot be overridden by `display:flex` on a nested descendant; `visibility` can. Also added `position: absolute; top: 0; left: 0` to anchor the Gantt at viewport origin during print.
+
+**Open issues (non-blocking, deferred):**
+- Inline rename in left panel: works via TaskWindow, not direct row edit
+- Delete has no confirmation dialog
+- Done tasks shown by green colour, not stripe pattern
+- `cascadeTasksForward` only applies to root-level tasks, not sub-tasks
+- Baseline snapshot misses sub-task dates
+- `DELETE /api/jobs/:id` cleanup uses `t.subTasks` (old schema) instead of `t.children`
+
+**GanttModal.jsx is 554 lines** — over the 400-line guideline. A component-extraction refactor (`GanttHeader`, `GanttLeftPanel`, `GanttChartArea`, `GanttDependencyLayer`) is needed as a follow-up prompt.
+
+`npm run build` passes with no errors.
+
+---
+
+### FIX 1 complete — Restored Instagantt-style Gantt in Production Planner
+
+**What changed:**
+- `src/pages/ProductionPlanner.jsx` — rewritten: imports `GanttModal` instead of stub Gantt; left panel is `JobListPanel` (280 px), right panel renders `<GanttModal key={selectedJob.id} job={selectedJob} embedded onSaved={refetchJobs} />` when a job is selected; empty-state message when none selected; `NewJobModal` stays for job creation
+- `src/pages/production/GanttModal.jsx` — added `embedded` prop (replaces old `inline`); when embedded: no fixed overlay/backdrop, `panelStyle` uses `height: 100% / width: 100%`, header shows a "Save" button instead of ×, `onClose`/`onSaved` are guarded (optional)
+
+**Files deleted:**
+- `src/components/planner/EditableJobGantt.jsx` — stub Gantt replaced by real GanttModal
+- `src/components/planner/TaskEditModal.jsx` — replaced by TaskWindow (opened by GanttModal itself)
+
+**Files kept:**
+- `src/components/planner/JobListPanel.jsx` — still the left panel
+- `src/components/planner/NewJobModal.jsx` — still used for job creation
+- `src/components/planner/plannerUtils.js` — still used by NewJobModal
+
+**All Phase 4 Gantt features accessible from Production Planner:** recursive sub-tasks, dependency arrows, milestones (diamonds), day/week/month zoom + scale, critical path toggle, baseline ghost bars, print-to-PDF, TaskWindow side panel.
+
+**Production Overview TV mode (`/production`) unchanged.**
+**Phase 3 Kanban / Dept Codes unchanged.**
+
+`npm run build` passes with no errors.
+
+---
 
 ### Phase 3D complete — Production Planner (Editable Gantt + Import from BOM)
 

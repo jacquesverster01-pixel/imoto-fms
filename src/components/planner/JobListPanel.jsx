@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 const MONTH_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
 
 function fmtDate(iso) {
@@ -6,7 +8,23 @@ function fmtDate(iso) {
   return `${d.getUTCDate()} ${MONTH_SHORT[d.getUTCMonth()]} ${d.getUTCFullYear()}`
 }
 
-export default function JobListPanel({ jobs, selectedJobId, onSelect, onNewJob }) {
+export default function JobListPanel({ jobs, selectedJobId, onSelect, onNewJob, onDelete }) {
+  const [confirmDeleteId, setConfirmDeleteId] = useState(null)
+  const [hoveredCardId, setHoveredCardId] = useState(null)
+  const [btnHoverId, setBtnHoverId] = useState(null)
+
+  const handleDeleteClick = (e, jobId) => {
+    e.stopPropagation()
+    setConfirmDeleteId(jobId)
+    setTimeout(() => setConfirmDeleteId(id => id === jobId ? null : id), 4000)
+  }
+
+  const handleConfirmDelete = (e, jobId) => {
+    e.stopPropagation()
+    setConfirmDeleteId(null)
+    onDelete(jobId)
+  }
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       <div style={{ padding: 12, borderBottom: '1px solid #e4e6ea', flexShrink: 0 }}>
@@ -31,20 +49,24 @@ export default function JobListPanel({ jobs, selectedJobId, onSelect, onNewJob }
         ) : (
           jobs.map(job => {
             const isActive = job.id === selectedJobId
+            const isHovered = hoveredCardId === job.id
+            const isConfirming = confirmDeleteId === job.id
+            const showDeleteBtn = isHovered || isConfirming
             const taskCount = (job.tasks || []).length
             return (
-              <button
+              <div
                 key={job.id}
                 onClick={() => onSelect(job.id)}
+                onMouseEnter={() => setHoveredCardId(job.id)}
+                onMouseLeave={() => setHoveredCardId(null)}
                 style={{
                   width: '100%', textAlign: 'left', padding: '10px 12px',
                   borderRadius: 8, border: 'none', cursor: 'pointer',
-                  marginBottom: 2, display: 'block',
-                  background: isActive ? '#ededff' : 'transparent',
+                  marginBottom: 2, display: 'block', position: 'relative',
+                  background: isActive ? '#ededff' : (isHovered ? '#f7f8fa' : 'transparent'),
                   borderLeft: `3px solid ${isActive ? '#6c63ff' : 'transparent'}`,
+                  boxSizing: 'border-box',
                 }}
-                onMouseEnter={e => { if (!isActive) e.currentTarget.style.background = '#f7f8fa' }}
-                onMouseLeave={e => { if (!isActive) e.currentTarget.style.background = 'transparent' }}
               >
                 <div style={{ fontSize: 10, color: '#9298c4', marginBottom: 2 }}>[{job.id}]</div>
                 <div style={{ fontSize: 13, fontWeight: 600, color: '#1a1d3b' }}>{job.title}</div>
@@ -56,7 +78,39 @@ export default function JobListPanel({ jobs, selectedJobId, onSelect, onNewJob }
                     {taskCount} task{taskCount !== 1 ? 's' : ''}
                   </span>
                 </div>
-              </button>
+                {showDeleteBtn && (
+                  isConfirming ? (
+                    <button
+                      onClick={e => handleConfirmDelete(e, job.id)}
+                      style={{
+                        position: 'absolute', top: 6, right: 6,
+                        background: '#fef2f2', color: '#dc2626', border: 'none',
+                        borderRadius: 10, fontSize: 10, padding: '2px 6px',
+                        cursor: 'pointer', fontWeight: 600,
+                      }}
+                    >
+                      Delete?
+                    </button>
+                  ) : (
+                    <button
+                      onClick={e => handleDeleteClick(e, job.id)}
+                      onMouseEnter={e => { e.stopPropagation(); setBtnHoverId(job.id) }}
+                      onMouseLeave={e => { e.stopPropagation(); setBtnHoverId(null) }}
+                      style={{
+                        position: 'absolute', top: 6, right: 6,
+                        width: 18, height: 18, border: 'none',
+                        background: btnHoverId === job.id ? '#fef2f2' : 'transparent',
+                        color: btnHoverId === job.id ? '#dc2626' : '#b0b5cc',
+                        borderRadius: 4, fontSize: 12, cursor: 'pointer',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        padding: 0,
+                      }}
+                    >
+                      ✕
+                    </button>
+                  )
+                )}
+              </div>
             )
           })
         )}

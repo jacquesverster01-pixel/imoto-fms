@@ -1,23 +1,18 @@
 import { useState } from 'react'
 import { useGet, apiFetch } from '../hooks/useApi'
 import JobListPanel from '../components/planner/JobListPanel'
-import EditableJobGantt from '../components/planner/EditableJobGantt'
 import NewJobModal from '../components/planner/NewJobModal'
-import TaskEditModal from '../components/planner/TaskEditModal'
+import GanttModal from './production/GanttModal'
 
 export default function ProductionPlanner() {
   const [selectedJobId, setSelectedJobId] = useState(null)
   const [showNewJob, setShowNewJob] = useState(false)
-  const [taskEditModal, setTaskEditModal] = useState(null)
   const [toast, setToast] = useState(null)
 
   const { data: jobsData, refetch: refetchJobs } = useGet('/jobs')
-  const { data: codesData } = useGet('/dept-codes')
   const { data: bomsData } = useGet('/boms')
 
   const jobs = Array.isArray(jobsData) ? jobsData : (jobsData?.jobs || [])
-  const prefixMappings = codesData?.prefixMappings || []
-  const assemblyPhases = codesData?.assemblyPhases || []
   const boms = bomsData || []
 
   const selectedJob = jobs.find(j => j.id === selectedJobId) || null
@@ -33,16 +28,12 @@ export default function ProductionPlanner() {
     showToast('Job created')
   }
 
-  const handleTaskDelete = async (taskId) => {
-    if (!selectedJob) return
-    const updatedJob = { ...selectedJob, tasks: (selectedJob.tasks || []).filter(t => t.id !== taskId) }
+  const handleJobDelete = async (jobId) => {
     try {
-      await apiFetch(`/jobs/${selectedJobId}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(updatedJob)
-      })
+      await apiFetch(`/jobs/${jobId}`, { method: 'DELETE' })
+      if (selectedJobId === jobId) setSelectedJobId(null)
       refetchJobs()
+      showToast('Job deleted')
     } catch (err) {
       showToast(`Error: ${err.message}`)
     }
@@ -58,19 +49,14 @@ export default function ProductionPlanner() {
           selectedJobId={selectedJobId}
           onSelect={setSelectedJobId}
           onNewJob={() => setShowNewJob(true)}
+          onDelete={handleJobDelete}
         />
       </div>
 
-      {/* Right panel — editable gantt */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0, background: '#fff' }}>
+      {/* Right panel — real Gantt */}
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0, background: '#fff', overflow: 'hidden' }}>
         {selectedJob ? (
-          <EditableJobGantt
-            job={selectedJob}
-            prefixMappings={prefixMappings}
-            onTaskEdit={(task) => setTaskEditModal({ mode: 'edit', task })}
-            onTaskAdd={() => setTaskEditModal({ mode: 'add' })}
-            onTaskDelete={handleTaskDelete}
-          />
+          <GanttModal key={selectedJob.id} job={selectedJob} embedded onSaved={refetchJobs} />
         ) : (
           <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <span style={{ fontSize: 14, color: '#b0b5cc' }}>
@@ -80,23 +66,12 @@ export default function ProductionPlanner() {
         )}
       </div>
 
-      {/* Modals */}
+      {/* New job modal */}
       {showNewJob && (
         <NewJobModal
           boms={boms}
           onClose={() => setShowNewJob(false)}
           onCreated={handleJobCreated}
-        />
-      )}
-      {taskEditModal && selectedJob && (
-        <TaskEditModal
-          mode={taskEditModal.mode}
-          task={taskEditModal.task}
-          job={selectedJob}
-          prefixMappings={prefixMappings}
-          assemblyPhases={assemblyPhases}
-          onClose={() => setTaskEditModal(null)}
-          onSaved={() => { refetchJobs(); setTaskEditModal(null) }}
         />
       )}
 

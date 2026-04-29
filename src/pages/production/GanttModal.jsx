@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useLayoutEffect } from 'react'
 import { useGanttDrag } from '../../hooks/useGanttDrag'
 import { apiFetch, BASE, UPLOADS_BASE } from '../../hooks/useApi'
 import { useClickOutside } from '../../hooks/useClickOutside'
@@ -36,7 +36,7 @@ const STATUS_OPTIONS = [
 // Bug 1 fix: name is a read-only span; clicking anywhere on the row opens TaskWindow.
 // Buttons/checkbox stop propagation so they don't accidentally open the window.
 // Milestone diamond gets stopPropagation so clicking it only toggles done.
-function LeftPanelRow({ row, collapsed, onToggle, onCheck, rowIdx, onDragHandleDown, onRowOver, onToggleMilestone, onOpenMenu, onSubtaskDragStart, isSubtaskDragTarget }) {
+function LeftPanelRow({ row, collapsed, onToggle, onCheck, rowIdx, onDragHandleDown, onRowOver, onToggleMilestone, onOpenMenu, onSubtaskDragStart, isSubtaskDragTarget, rowRef }) {
   const { task, isParent, isSubTask } = row
   const isMile = isMilestone(task)
   const rowBg = isSubtaskDragTarget ? 'rgba(79,103,228,0.13)'
@@ -48,11 +48,13 @@ function LeftPanelRow({ row, collapsed, onToggle, onCheck, rowIdx, onDragHandleD
     : isParent ? 'inset 3px 0 0 #4f67e4'
     : isSubTask ? 'inset 3px 0 0 #c5cbf0'
     : undefined
+  const code = task.itemCode || task.assemblyCode || null
   return (
     <div
+      ref={rowRef}
       data-left-row-task-id={task.id}
       data-left-row-parent-id={row.parentId || ''}
-      style={{ height: ROW_H, display: 'flex', alignItems: 'center', gap: 4, paddingLeft: 4 + (row.depth * 20), paddingRight: 4, borderBottom: '1px solid #ecedf4', cursor: 'pointer', userSelect: 'none', background: rowBg, boxShadow: rowShadow, transition: 'background 0.12s' }}
+      style={{ minHeight: ROW_H, display: 'flex', alignItems: 'center', gap: 4, paddingLeft: 4 + (row.depth * 20), paddingRight: 4, paddingTop: 4, paddingBottom: 4, borderBottom: '1px solid #ecedf4', cursor: 'pointer', userSelect: 'none', background: rowBg, boxShadow: rowShadow, transition: 'background 0.12s' }}
       onMouseOver={() => onRowOver(rowIdx)}
       onClick={e => onOpenMenu(task.id, row.parentId, isParent, isMile, e)}>
       {row.depth === 0 && (
@@ -69,11 +71,18 @@ function LeftPanelRow({ row, collapsed, onToggle, onCheck, rowIdx, onDragHandleD
               <input type="checkbox" checked={!!task.done} onChange={e => { e.stopPropagation(); onCheck(task.id, row.parentId) }} style={{ cursor: 'pointer', margin: 0 }} />
             </div>
       }
-      <span
+      <div
         onMouseDown={e => { if (e.button !== 0) return; onSubtaskDragStart(task.id, row.parentId, e, task.name) }}
-        style={{ flex: 1, fontSize: 12, color: task.done ? '#b0b5cc' : isParent ? '#1a1d3b' : isSubTask ? '#3a3e5c' : '#1a1d3b', textDecoration: task.done ? 'line-through' : 'none', fontWeight: isParent ? 600 : 400, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', minWidth: 0 }}>
-        {task.name}
-      </span>
+        style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+        <span style={{ fontSize: 12, color: task.done ? '#b0b5cc' : isParent ? '#1a1d3b' : isSubTask ? '#3a3e5c' : '#1a1d3b', textDecoration: task.done ? 'line-through' : 'none', fontWeight: isParent ? 600 : 400, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', lineHeight: 1.3 }}>
+          {task.name}
+        </span>
+        {code && (
+          <span style={{ fontSize: 10, color: '#9298c4', fontFamily: 'monospace', marginTop: 2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+            {code}
+          </span>
+        )}
+      </div>
       {row.depth === 0 && (
         <button onClick={e => { e.stopPropagation(); onOpenMenu(task.id, row.parentId, isParent, isMile, e) }}
           style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#9298c4', fontSize: 16, padding: '0 3px', flexShrink: 0, lineHeight: 1, borderRadius: 4 }}>⋮</button>
@@ -81,7 +90,7 @@ function LeftPanelRow({ row, collapsed, onToggle, onCheck, rowIdx, onDragHandleD
     </div>
   )
 }
-function GanttHeader({ title, setTitle, status, setStatus, zoom, setZoom, zoomScale, setZoomScale, showCriticalPath, setShowCriticalPath, showBaseline, setShowBaseline, progress, onClose, onExport, onSetBaseline }) {
+function GanttHeader({ title, setTitle, status, setStatus, zoom, setZoom, zoomScale, setZoomScale, showCriticalPath, setShowCriticalPath, showBaseline, setShowBaseline, progress, onClose, onExport, onSetBaseline, embedded }) {
   const tog = on => ({ padding: '4px 10px', borderRadius: 6, border: '1px solid #dde0ea', fontSize: 12, cursor: 'pointer', background: on ? '#4f67e4' : '#fff', color: on ? '#fff' : '#1a1d3b' })
   const zBtn = { padding: '4px 8px', border: 'none', fontSize: 13, cursor: 'pointer', background: '#fff', color: '#1a1d3b', lineHeight: 1 }
   return (
@@ -103,7 +112,10 @@ function GanttHeader({ title, setTitle, status, setStatus, zoom, setZoom, zoomSc
       <button onClick={onSetBaseline} style={tog(false)}>Set baseline</button>
       <button onClick={() => setShowBaseline(v => !v)} style={tog(showBaseline)}>Show baseline</button>
       <button onClick={onExport} style={tog(false)}>Export PDF</button>
-      <button onClick={onClose} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 24, color: '#9298c4', lineHeight: 1, padding: 0 }}>×</button>
+      {embedded
+        ? <button onClick={onClose} style={{ padding: '4px 12px', borderRadius: 6, border: '1px solid #4f67e4', fontSize: 12, cursor: 'pointer', background: '#4f67e4', color: '#fff', fontWeight: 600 }}>Save</button>
+        : <button onClick={onClose} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 24, color: '#9298c4', lineHeight: 1, padding: 0 }}>×</button>
+      }
     </div>
   )
 }
@@ -158,7 +170,13 @@ function GanttBar({ row, job, zoomCols, criticalIds, showBaseline, baseline, dra
     </>
   )
 }
-function DependencyOverlay({ rows, zoomCols, chartWidth }) {
+function DependencyOverlay({ rows, zoomCols, chartWidth, rowHeights }) {
+  function rowTopY(i) {
+    let y = HDR_H
+    for (let j = 0; j < i; j++) y += (rowHeights[j] || ROW_H)
+    return y
+  }
+  const totalH = HDR_H + rows.reduce((s, _, i) => s + (rowHeights[i] || ROW_H), 0)
   const arrows = []
   rows.forEach((row, i) => {
     if (!row.task.dependsOn?.length) return
@@ -166,11 +184,11 @@ function DependencyOverlay({ rows, zoomCols, chartWidth }) {
     row.task.dependsOn.forEach(depId => {
       const pi = rows.findIndex(r => r.task.id === depId); if (pi === -1) return
       const pp2 = taskBarPosition(rows[pi].task, zoomCols)
-      arrows.push(<path key={`${depId}>${row.task.id}`} d={dependencyArrowPath(pp2.left, pp2.width, sp.left, HDR_H+pi*ROW_H+6, HDR_H+i*ROW_H+6, zoomCols[0]?.widthPx||28)} fill="none" stroke="#888" strokeWidth="1.5" markerEnd="url(#da)" />)
+      arrows.push(<path key={`${depId}>${row.task.id}`} d={dependencyArrowPath(pp2.left, pp2.width, sp.left, rowTopY(pi)+6, rowTopY(i)+6, zoomCols[0]?.widthPx||28)} fill="none" stroke="#888" strokeWidth="1.5" markerEnd="url(#da)" />)
     })
   })
   return (
-    <svg style={{ position: 'absolute', top: 0, left: 0, width: chartWidth, height: HDR_H + rows.length * ROW_H, pointerEvents: 'none', zIndex: 1 }}>
+    <svg style={{ position: 'absolute', top: 0, left: 0, width: chartWidth, height: totalH, pointerEvents: 'none', zIndex: 1 }}>
       <defs><marker id="da" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="4" markerHeight="4" orient="auto-start-reverse"><path d="M1 1L7 4L1 7" fill="none" stroke="#888" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></marker></defs>
       {arrows}
     </svg>
@@ -193,7 +211,7 @@ function CtxMenu({ ctxMenu, onClose, onRemoveDep, flatRows }) {
   )
 }
 
-export default function GanttModal({ job, onClose, onSaved, inline }) {
+export default function GanttModal({ job, onClose, onSaved, embedded }) {
   const [tasks,            setTasks]            = useState(() => migrateTasksSchema((job.tasks || []).map(t => ({ pct: 0, dependsOn: [], children: [], components: [], itemCode: null, department: null, ...t }))))
   const [title,            setTitle]            = useState(job.title || '')
   const [status,           setStatus]           = useState(job.status || 'quote')
@@ -210,6 +228,12 @@ export default function GanttModal({ job, onClose, onSaved, inline }) {
   const [ghostBar,         setGhostBar]         = useState(null)
   const [subtaskDropHighlight, setSubtaskDropHighlight] = useState(null)
   const [ghostCard,            setGhostCard]            = useState(null)
+  const [leftPanelWidth,       setLeftPanelWidth]       = useState(() => {
+    const saved = parseInt(localStorage.getItem('gantt-left-panel-width'), 10)
+    return Number.isFinite(saved) && saved >= 160 && saved <= 480 ? saved : 220
+  })
+  const [rowHeights,           setRowHeights]           = useState({})
+  const [resizeHandleHovered,  setResizeHandleHovered]  = useState(false)
 
   const rightPanelRef = useRef(null)
   const { dragRef, reorderRef, taskRowsRef, linkDragRef, zoomColsRef, linkLine, setLinkLine, startLinkDrag, handleDragHandleDown, handleRowOver, panRef, handlePanStart } = useGanttDrag(setTasks, rightPanelRef)
@@ -219,6 +243,8 @@ export default function GanttModal({ job, onClose, onSaved, inline }) {
   const subtaskDragRef  = useRef(null)
   const subtaskDropRef  = useRef(null)
   const lastSubtaskDragEndRef = useRef(0)
+  const resizeRef       = useRef(null)
+  const rowElsRef       = useRef({})
 
   const flatRows    = flattenTasksForDisplay(tasks)
   const visibleRows = filterVisibleRows(flatRows, collapsed)
@@ -324,14 +350,54 @@ export default function GanttModal({ job, onClose, onSaved, inline }) {
     window.addEventListener('mouseup', onUp)
     return () => { window.removeEventListener('mousemove', onMove); window.removeEventListener('mouseup', onUp) }
   }, [])
+  useEffect(() => {
+    function onMove(e) {
+      if (!resizeRef.current) return
+      const dx = e.clientX - resizeRef.current.startMouseX
+      const next = Math.max(160, Math.min(480, resizeRef.current.startWidth + dx))
+      if (leftPanelRef.current) leftPanelRef.current.style.width = next + 'px'
+    }
+    function onUp(e) {
+      if (!resizeRef.current) return
+      const dx = e.clientX - resizeRef.current.startMouseX
+      const next = Math.max(160, Math.min(480, resizeRef.current.startWidth + dx))
+      setLeftPanelWidth(next)
+      resizeRef.current = null
+      document.body.style.cursor = ''
+      document.body.style.userSelect = ''
+    }
+    window.addEventListener('mousemove', onMove)
+    window.addEventListener('mouseup', onUp)
+    return () => { window.removeEventListener('mousemove', onMove); window.removeEventListener('mouseup', onUp) }
+  }, [])
+  useEffect(() => {
+    localStorage.setItem('gantt-left-panel-width', String(leftPanelWidth))
+  }, [leftPanelWidth])
+  useLayoutEffect(() => {
+    function measure() {
+      const heights = {}
+      visibleRows.forEach((_, i) => {
+        const el = rowElsRef.current[i]
+        if (el) heights[i] = el.getBoundingClientRect().height
+      })
+      setRowHeights(prev => {
+        const same = Object.keys(heights).length === Object.keys(prev).length &&
+          Object.keys(heights).every(k => heights[k] === prev[k])
+        return same ? prev : heights
+      })
+    }
+    measure()
+    window.addEventListener('resize', measure)
+    return () => window.removeEventListener('resize', measure)
+  }, [tasks, collapsed, leftPanelWidth, zoom, zoomScale])
 
   async function handleClose() {
     try {
       await apiFetch(`/jobs/${job.id}/tasks`, { method: 'PUT', body: JSON.stringify({ tasks }) })
       await apiFetch(`/jobs/${job.id}`, { method: 'PUT', body: JSON.stringify({ title, status }) })
-      onSaved()
+      if (onSaved) onSaved()
     } catch (e) { console.error('[GanttModal save on close]', e) }
-    onClose()
+    if (onClose) onClose()
   }
   function addTask() {
     const id = `t-${Date.now()}`
@@ -404,9 +470,15 @@ export default function GanttModal({ job, onClose, onSaved, inline }) {
   }
   function onLeftScroll(e)  { if (rightPanelRef.current) rightPanelRef.current.scrollTop = e.target.scrollTop }
   function onRightScroll(e) { if (leftPanelRef.current)  leftPanelRef.current.scrollTop  = e.target.scrollTop }
+  function handlePanelResizeStart(e) {
+    e.preventDefault()
+    resizeRef.current = { startMouseX: e.clientX, startWidth: leftPanelWidth }
+    document.body.style.cursor = 'col-resize'
+    document.body.style.userSelect = 'none'
+  }
 
-  const panelStyle = inline
-    ? { width: '100%', height: 'calc(100vh - 130px)', display: 'flex', flexDirection: 'column', background: '#fff', overflow: 'hidden', borderRadius: 10, border: '1px solid #e4e6ea' }
+  const panelStyle = embedded
+    ? { display: 'flex', flexDirection: 'column', width: '100%', height: '100%', background: '#fff', overflow: 'hidden' }
     : { width: '100%', height: '100vh', display: 'flex', flexDirection: 'column', background: '#fff', overflow: 'hidden' }
 
   const ganttPanel = (
@@ -416,11 +488,12 @@ export default function GanttModal({ job, onClose, onSaved, inline }) {
         showCriticalPath={showCriticalPath} setShowCriticalPath={setShowCriticalPath}
         showBaseline={showBaseline} setShowBaseline={setShowBaseline}
         progress={`${doneTasks}/${totalLeaf} tasks complete`}
-        onClose={handleClose} onExport={() => window.print()} onSetBaseline={handleSetBaseline} />
+        onClose={handleClose} onExport={() => window.print()} onSetBaseline={handleSetBaseline}
+        embedded={embedded} />
       <div style={{ flex:1, display:'flex', overflow:'hidden' }}>
-        <div ref={leftPanelRef} onScroll={onLeftScroll} style={{ width:220, flexShrink:0, overflowY:'auto', overflowX:'hidden', borderRight:'1px solid #e4e6ea' }}>
+        <div ref={leftPanelRef} onScroll={onLeftScroll} style={{ width: leftPanelWidth, flexShrink:0, overflowY:'auto', overflowX:'hidden' }}>
           <div style={{ height:HDR_H, background:'#f8f9fb', borderBottom:'1px solid #e4e6ea' }} />
-          {visibleRows.map(row => {
+          {visibleRows.map((row, ri) => {
             const taskIdx = row.depth > 0 ? -1 : tasks.findIndex(t => t.id === row.task.id)
             return <LeftPanelRow key={`${row.parentId||''}-${row.task.id}`} row={row} collapsed={collapsed}
               onToggle={id => setCollapsed(c => ({...c,[id]:!c[id]}))}
@@ -428,13 +501,21 @@ export default function GanttModal({ job, onClose, onSaved, inline }) {
               onDragHandleDown={handleDragHandleDown} onRowOver={handleRowOver}
               onToggleMilestone={onToggleMilestone} onOpenMenu={openTaskMenu}
               onSubtaskDragStart={startSubtaskDrag}
-              isSubtaskDragTarget={subtaskDropHighlight === row.task.id} />
+              isSubtaskDragTarget={subtaskDropHighlight === row.task.id}
+              rowRef={el => { rowElsRef.current[ri] = el }} />
           })}
           <div style={{ display:'flex', borderTop:'1px solid #f0f1f5' }}>
             <button onClick={addTask} style={{ flex:1, padding:'8px 12px', fontSize:12, color:'#4f67e4', background:'none', border:'none', textAlign:'left', cursor:'pointer' }}>+ Add task</button>
             <button onClick={addMilestone} style={{ padding:'8px 10px', fontSize:12, color:'#9298c4', background:'none', border:'none', cursor:'pointer' }}>◆ Milestone</button>
           </div>
         </div>
+        <div
+          style={{ width: 4, flexShrink: 0, cursor: 'col-resize', background: resizeHandleHovered ? 'rgba(79,103,228,0.2)' : '#e4e6ea', zIndex: 10, userSelect: 'none' }}
+          onMouseDown={handlePanelResizeStart}
+          onMouseEnter={() => setResizeHandleHovered(true)}
+          onMouseLeave={() => setResizeHandleHovered(false)}
+          title="Drag to resize"
+        />
         <div ref={rightPanelRef} onScroll={onRightScroll} className="gantt-right-panel"
           style={{ flex:1, overflowX:'auto', overflowY:'auto', position:'relative', cursor:'grab' }}
           onMouseDown={e => {
@@ -455,7 +536,7 @@ export default function GanttModal({ job, onClose, onSaved, inline }) {
               const noDate = !rt.startDate && !isMilestone(rt) && !rip
               return (
                 <div key={`${row.parentId||''}-${rt.id}`}
-                  style={{ height:ROW_H, position:'relative', background:ri%2===0?'#fff':'#fafafa', cursor:noDate?'crosshair':undefined }}
+                  style={{ height: rowHeights[ri] || ROW_H, position:'relative', background:ri%2===0?'#fff':'#fafafa', cursor:noDate?'crosshair':undefined }}
                   onMouseDown={noDate ? e => {
                     if (e.button !== 0) return
                     const rect = rightPanelRef.current?.getBoundingClientRect()
@@ -476,7 +557,7 @@ export default function GanttModal({ job, onClose, onSaved, inline }) {
                 </div>
               )
             })}
-            <DependencyOverlay rows={visibleRows} zoomCols={zoomCols} chartWidth={chartWidth} />
+            <DependencyOverlay rows={visibleRows} zoomCols={zoomCols} chartWidth={chartWidth} rowHeights={rowHeights} />
           </div>
         </div>
       </div>
@@ -529,7 +610,7 @@ export default function GanttModal({ job, onClose, onSaved, inline }) {
     </>
   )
 
-  if (inline) {
+  if (embedded) {
     return (
       <>
         {ganttPanel}

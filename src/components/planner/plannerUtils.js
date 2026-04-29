@@ -1,24 +1,3 @@
-export function buildTasksFromBomAssemblies(bom) {
-  if (!bom?.items) return []
-  return bom.items
-    .filter(i => i?.itemType === 'Assembly')
-    .map((a, i) => ({
-      id: `task-${Date.now()}-${i}`,
-      name: a.itemDescription || a.itemCode,
-      assemblyCode: a.itemCode,
-      parentCode: a.parentCode,
-      startDate: null,
-      endDate: null,
-      done: false,
-      pct: 0,
-      kanbanStatus: 'todo',
-      dependsOn: [],
-      dependsOnAssembly: null,
-      assignedTo: '',
-      notes: ''
-    }))
-}
-
 export function generateJobId(existingJobs) {
   const used = new Set((existingJobs || []).map(j => j?.id))
   let n = 1

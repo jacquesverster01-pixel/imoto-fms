@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { apiFetch } from '../../hooks/useApi'
-import { buildTasksFromBomAssemblies } from './plannerUtils'
+import { buildTasksFromBom } from '../inventory/bom/bomUtils'
 
 const inputStyle = {
   display: 'block', width: '100%', marginTop: 4, padding: '8px 10px',
@@ -47,7 +47,7 @@ export default function NewJobModal({ boms, onClose, onCreated }) {
     setSaving(true)
     try {
       const bom = await apiFetch(`/boms/${selectedBomId}`)
-      const tasks = buildTasksFromBomAssemblies(bom)
+      const tasks = buildTasksFromBom(bom?.items || [])
       const created = await apiFetch('/jobs', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
