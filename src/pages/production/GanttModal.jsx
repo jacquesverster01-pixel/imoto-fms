@@ -13,6 +13,9 @@ import { groupCols, ppd } from '../../utils/ganttLogic'
 import { injectGanttPrintStyle } from '../../utils/ganttExport'
 import TaskWindow from './TaskWindow'
 import { migrateTasksSchema } from './taskMigration'
+import GanttHeader from './gantt/GanttHeader'
+import MilestoneRow from './gantt/MilestoneRow'
+import DependencyOverlay from './gantt/DependencyOverlay'
 
 const ROW_H = 32, HDR_H = 48
 
@@ -28,11 +31,6 @@ function computeDateRange(tasks, padDays = 7) {
   max.setDate(max.getDate() + padDays)
   return { minDate: min, maxDate: max }
 }
-const STATUS_OPTIONS = [
-  { value: 'quote', label: 'Quote' }, { value: 'in_progress', label: 'In progress' },
-  { value: 'qc', label: 'QC' }, { value: 'dispatch', label: 'Dispatch' }, { value: 'done', label: 'Done' },
-]
-
 // Bug 1 fix: name is a read-only span; clicking anywhere on the row opens TaskWindow.
 // Buttons/checkbox stop propagation so they don't accidentally open the window.
 // Milestone diamond gets stopPropagation so clicking it only toggles done.
@@ -90,45 +88,6 @@ function LeftPanelRow({ row, collapsed, onToggle, onCheck, rowIdx, onDragHandleD
     </div>
   )
 }
-function GanttHeader({ title, setTitle, status, setStatus, zoom, setZoom, zoomScale, setZoomScale, showCriticalPath, setShowCriticalPath, showBaseline, setShowBaseline, progress, onClose, onExport, onSetBaseline, embedded }) {
-  const tog = on => ({ padding: '4px 10px', borderRadius: 6, border: '1px solid #dde0ea', fontSize: 12, cursor: 'pointer', background: on ? '#4f67e4' : '#fff', color: on ? '#fff' : '#1a1d3b' })
-  const zBtn = { padding: '4px 8px', border: 'none', fontSize: 13, cursor: 'pointer', background: '#fff', color: '#1a1d3b', lineHeight: 1 }
-  return (
-    <div style={{ minHeight: 56, display: 'flex', alignItems: 'center', gap: 6, padding: '0 14px', borderBottom: '1px solid #e4e6ea', flexShrink: 0, flexWrap: 'wrap' }}>
-      <input value={title} onChange={e => setTitle(e.target.value)} style={{ flex: 1, fontWeight: 700, fontSize: 16, border: 'none', outline: 'none', color: '#1a1d3b', background: 'transparent', minWidth: 100 }} />
-      <select value={status} onChange={e => setStatus(e.target.value)} style={{ fontSize: 12, border: '1px solid #dde0ea', borderRadius: 6, padding: '4px 8px', color: '#1a1d3b', background: '#fff' }}>
-        {STATUS_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
-      </select>
-      <span style={{ fontSize: 12, color: '#9298c4', whiteSpace: 'nowrap' }}>{progress}</span>
-      <div style={{ display: 'flex', border: '1px solid #dde0ea', borderRadius: 6, overflow: 'hidden' }}>
-        {['day','week','month'].map(z => <button key={z} onClick={() => setZoom(z)} style={{ padding: '4px 9px', border: 'none', borderRight: z !== 'month' ? '1px solid #dde0ea' : 'none', fontSize: 12, cursor: 'pointer', background: zoom === z ? '#4f67e4' : '#fff', color: zoom === z ? '#fff' : '#1a1d3b' }}>{z[0].toUpperCase()+z.slice(1)}</button>)}
-      </div>
-      <div style={{ display: 'flex', alignItems: 'center', border: '1px solid #dde0ea', borderRadius: 6, overflow: 'hidden' }}>
-        <button onClick={() => setZoomScale(s => Math.max(0.4, Math.round((s - 0.1) * 10) / 10))} style={{ ...zBtn, borderRight: '1px solid #dde0ea' }}>−</button>
-        <button onClick={() => setZoomScale(1.0)} style={{ ...zBtn, borderRight: '1px solid #dde0ea', fontSize: 11, minWidth: 44, textAlign: 'center' }}>{Math.round(zoomScale * 100)}%</button>
-        <button onClick={() => setZoomScale(s => Math.min(3.0, Math.round((s + 0.1) * 10) / 10))} style={zBtn}>+</button>
-      </div>
-      <button onClick={() => setShowCriticalPath(v => !v)} style={tog(showCriticalPath)}>Critical path</button>
-      <button onClick={onSetBaseline} style={tog(false)}>Set baseline</button>
-      <button onClick={() => setShowBaseline(v => !v)} style={tog(showBaseline)}>Show baseline</button>
-      <button onClick={onExport} style={tog(false)}>Export PDF</button>
-      {embedded
-        ? <button onClick={onClose} style={{ padding: '4px 12px', borderRadius: 6, border: '1px solid #4f67e4', fontSize: 12, cursor: 'pointer', background: '#4f67e4', color: '#fff', fontWeight: 600 }}>Save</button>
-        : <button onClick={onClose} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 24, color: '#9298c4', lineHeight: 1, padding: 0 }}>×</button>
-      }
-    </div>
-  )
-}
-function MilestoneRow({ task, zoomCols, job, onToggleDone, dragRef, taskRowsRef }) {
-  const pos = taskBarPosition(task, zoomCols), p = ppd(zoomCols), colour = job.colour || '#4f67e4'
-  return (
-    <div ref={el => { if (el) taskRowsRef.current[task.id] = el }}
-      onMouseDown={e => { e.stopPropagation(); dragRef.current = { type: 'move', taskId: task.id, parentId: null, isMilestone: true, startMouseX: e.clientX, origStartDate: task.startDate, origEndDate: task.endDate, pixPerDay: p } }}
-      onClick={() => onToggleDone(task.id)}
-      style={{ position: 'absolute', left: pos.left + pos.width / 2 - 8, top: 6, width: 16, height: 16, background: task.done ? colour : 'transparent', border: `2px solid ${colour}`, transform: 'rotate(45deg)', borderRadius: 2, cursor: 'pointer', zIndex: 2, userSelect: 'none' }}
-      title={task.name} />
-  )
-}
 function GanttBar({ row, job, zoomCols, criticalIds, showBaseline, baseline, dragRef, taskRowsRef, onBarRightClick, barColor, onLinkStart }) {
   const { task, isParent, parentId } = row
   const [hovered, setHovered] = useState(false)
@@ -170,31 +129,6 @@ function GanttBar({ row, job, zoomCols, criticalIds, showBaseline, baseline, dra
     </>
   )
 }
-function DependencyOverlay({ rows, zoomCols, chartWidth, rowHeights }) {
-  function rowTopY(i) {
-    let y = HDR_H
-    for (let j = 0; j < i; j++) y += (rowHeights[j] || ROW_H)
-    return y
-  }
-  const totalH = HDR_H + rows.reduce((s, _, i) => s + (rowHeights[i] || ROW_H), 0)
-  const arrows = []
-  rows.forEach((row, i) => {
-    if (!row.task.dependsOn?.length) return
-    const sp = taskBarPosition(row.task, zoomCols)
-    row.task.dependsOn.forEach(depId => {
-      const pi = rows.findIndex(r => r.task.id === depId); if (pi === -1) return
-      const pp2 = taskBarPosition(rows[pi].task, zoomCols)
-      arrows.push(<path key={`${depId}>${row.task.id}`} d={dependencyArrowPath(pp2.left, pp2.width, sp.left, rowTopY(pi)+6, rowTopY(i)+6, zoomCols[0]?.widthPx||28)} fill="none" stroke="#888" strokeWidth="1.5" markerEnd="url(#da)" />)
-    })
-  })
-  return (
-    <svg style={{ position: 'absolute', top: 0, left: 0, width: chartWidth, height: totalH, pointerEvents: 'none', zIndex: 1 }}>
-      <defs><marker id="da" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="4" markerHeight="4" orient="auto-start-reverse"><path d="M1 1L7 4L1 7" fill="none" stroke="#888" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></marker></defs>
-      {arrows}
-    </svg>
-  )
-}
-
 function CtxMenu({ ctxMenu, onClose, onRemoveDep, flatRows }) {
   const ref = useRef(null)
   useClickOutside(ref, onClose)

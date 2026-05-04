@@ -21813,5 +21813,13 @@
     "timestamp": "2026-05-04T06:51:27.000Z",
     "source": "biometric",
     "zkUserId": "720313504"
+  },
+  {
+    "timestamp": "2026-05-04T06:18:00.000Z",
+    "employeeId": "E006",
+    "name": "Marlon Arendse",
+    "dept": "",
+    "type": "in",
+    "id": "TL1777891957563"
   }
 ]
