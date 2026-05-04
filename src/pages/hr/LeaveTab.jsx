@@ -8,7 +8,7 @@ import AddLeaveModal from './AddLeaveModal'
 
 const MONTH_NAMES = ['January','February','March','April','May','June','July','August','September','October','November','December']
 const LEAVE_TYPES = ['Annual', 'Sick', 'Family Responsibility', 'Unpaid']
-const LEAVE_LIMITS = { Annual: 15, Sick: 30, 'Family Responsibility': 3, Unpaid: null }
+const DEFAULT_LEAVE_LIMITS = { Annual: 15, Sick: 30, 'Family Responsibility': 3, Unpaid: null }
 const LEAVE_COLORS = { Annual: '#6c63ff', Sick: '#ef4444', 'Family Responsibility': '#f59e0b', Unpaid: '#9ca3af' }
 
 function leaveDays(record) {
@@ -52,7 +52,7 @@ function detectLeavePatterns(employeeId, leaveRecords) {
   return patterns
 }
 
-function calcBalances(employeeId, leaveRecords, absentDays = 0, leaveLimits = LEAVE_LIMITS) {
+function calcBalances(employeeId, leaveRecords, absentDays = 0, leaveLimits = DEFAULT_LEAVE_LIMITS) {
   const approved = leaveRecords.filter(r => r.employeeId === employeeId && r.status === 'approved')
   const result = {}
   for (const type of LEAVE_TYPES) {
@@ -110,7 +110,9 @@ export default function LeaveTab({ employees, settingsData }) {
   const leaveRecords = Array.isArray(leaveData) ? leaveData : []
   const timelog = Array.isArray(tlData) ? tlData : []
   const excusedRecords = Array.isArray(excusedData) ? excusedData : []
-  const leaveLimits = { ...LEAVE_LIMITS, ...(settingsData?.leaveLimits || {}) }
+  const leaveLimits = (settingsData?.leaveLimits && Object.keys(settingsData.leaveLimits).length > 0)
+    ? settingsData.leaveLimits
+    : DEFAULT_LEAVE_LIMITS
 
   const [addForEmployee, setAddForEmployee] = useState(null)
   const [search, setSearch] = useState('')
