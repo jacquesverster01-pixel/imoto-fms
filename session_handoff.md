@@ -1,3 +1,45 @@
+
+## May 5 2026 — Bump
+
+This section supersedes the April 21 handoff for current state. The
+April 21 handoff remains accurate as historical context.
+
+### Changes since April 21
+
+**April 21–22 — Phase 1–4 schema refactor (committed).**
+Recursive task schema: `subTasks` → `children` across the entire
+codebase. Migration helper at src/pages/production/taskMigration.js
+upgrades old jobs on load. New helpers in taskTreeOps.js
+(updateNodeById, removeNodeById, appendChildTo, moveNodeTo,
+findNodeById, filterVisibleRows). ganttUtils.js gained recursive
+deriveParentBounds, flattenTasksForDisplay, enforceDependencies.
+NewJobModal.jsx "From BOM" mode wires through correctly.
+
+**April 24 — routes/deptCodes.js added (committed).**
+Auto-extracts 3-letter department prefixes from imported BOM item
+codes (regex `^([A-Z]{3})([A-Z])\d{4,6}$`, e.g. FINA00031 → FIN).
+Persists to data/dept_codes.json. Endpoint:
+GET /api/deptcodes/discovered-prefixes.
+
+**April 24+ — src/components/production/ Kanban work started
+(committed).**
+New components: CompactKanbanCard, DeptKanbanBoard, KanbanCard,
+ProductionKanbanWall, UnallocatedPanel, kanbanUtils.js. This is
+Layer 2 of the production planning framework (department screens
+consuming Gantt task data). Not yet feature-complete.
+
+**April 29 — GANTT_VERIFICATION_REPORT.md (committed).**
+40-feature audit table covering every Gantt behaviour. 38 green, 3
+warnings (all design choices, not regressions), 1 fix applied
+(print-to-PDF blank page CSS strategy switched from display:none to
+visibility:hidden). Recommended GanttModal extraction refactor.
+
+**May 4–5 — GanttModal extraction refactor (committed).**
+GanttModal.jsx 631 → 424 lines (33% reduction). Seven new files
+under src/pages/production/gantt/. Full report in
+GANTT_REFACTOR_REPORT.md.
+
+### Current production module structure
 # Session Handoff
 
 ## Last updated: 2026-04-24 (FIX 5 — Two-Line Task Rows + Resizable Left Panel)

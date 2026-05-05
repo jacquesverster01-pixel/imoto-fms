@@ -1,3 +1,10 @@
+
+// Layout primitives — duplicated in src/pages/production/gantt/* files
+// for component locality. If you tune either of these, update all
+// gantt/* files together. Stable since the April 2026 verification.
+export const ROW_H = 32
+export const HDR_H = 48
+
 function flattenAll(tasks) {
   const out = []
   const walk = n => { out.push(n); (n.children || []).forEach(walk) }
