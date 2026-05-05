@@ -5519,7 +5519,119 @@
           "children": []
         }
       ],
-      "createdAt": "2026-04-29T06:13:00.900Z"
+      "createdAt": "2026-04-29T06:13:00.900Z",
+      "baseline": [
+        {
+          "taskId": "t-bom-0",
+          "startDate": null,
+          "endDate": null
+        },
+        {
+          "taskId": "t-bom-4",
+          "startDate": null,
+          "endDate": null
+        },
+        {
+          "taskId": "t-bom-5",
+          "startDate": null,
+          "endDate": null
+        },
+        {
+          "taskId": "t-bom-9",
+          "startDate": null,
+          "endDate": null
+        },
+        {
+          "taskId": "t-bom-11",
+          "startDate": null,
+          "endDate": null
+        },
+        {
+          "taskId": "t-bom-12",
+          "startDate": null,
+          "endDate": null
+        },
+        {
+          "taskId": "t-bom-13",
+          "startDate": null,
+          "endDate": null
+        },
+        {
+          "taskId": "t-bom-14",
+          "startDate": null,
+          "endDate": null
+        },
+        {
+          "taskId": "t-bom-15",
+          "startDate": null,
+          "endDate": null
+        },
+        {
+          "taskId": "t-bom-16",
+          "startDate": null,
+          "endDate": null
+        },
+        {
+          "taskId": "t-bom-18",
+          "startDate": null,
+          "endDate": null
+        },
+        {
+          "taskId": "t-bom-19",
+          "startDate": null,
+          "endDate": null
+        },
+        {
+          "taskId": "t-bom-24",
+          "startDate": null,
+          "endDate": null
+        },
+        {
+          "taskId": "t-bom-27",
+          "startDate": null,
+          "endDate": null
+        },
+        {
+          "taskId": "t-bom-28",
+          "startDate": null,
+          "endDate": null
+        },
+        {
+          "taskId": "t-bom-29",
+          "startDate": null,
+          "endDate": null
+        },
+        {
+          "taskId": "t-bom-30",
+          "startDate": null,
+          "endDate": null
+        },
+        {
+          "taskId": "t-bom-37",
+          "startDate": null,
+          "endDate": null
+        },
+        {
+          "taskId": "t-bom-39",
+          "startDate": "2026-05-12",
+          "endDate": "2026-05-15"
+        },
+        {
+          "taskId": "t-bom-40",
+          "startDate": null,
+          "endDate": null
+        },
+        {
+          "taskId": "t-1777964170562",
+          "startDate": "2026-05-08",
+          "endDate": "2026-05-08"
+        },
+        {
+          "taskId": "t-1777964187141",
+          "startDate": "2026-05-08",
+          "endDate": "2026-05-08"
+        }
+      ]
     }
   ]
 }
