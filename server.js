@@ -21,6 +21,7 @@ import ohsRouter         from './routes/ohs.js'
 import dashboardRouter   from './routes/dashboard.js'
 import bomsRouter        from './routes/boms.js'
 import deptCodesRouter   from './routes/deptCodes.js'
+import stockAllocationRouter, { refreshStockCache } from './routes/stockAllocation.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const app = express()
@@ -70,6 +71,7 @@ const DATA_INITS = {
   'settings.json':               {},
   'boms.json':                   { boms: [] },
   'dept_codes.json':             { prefixMappings: [], assemblyPhases: [] },
+  'stock_cache.json':            { updatedAt: null, byCode: {} },
 }
 for (const [file, empty] of Object.entries(DATA_INITS)) {
   const fp = path.join(__dirname, 'data', file)
@@ -160,6 +162,11 @@ startPollLoop()
 
 setInterval(() => runAutoClockOut(readData, writeData), 60000)
 
+// ─── STOCK CACHE AUTO-REFRESH ─────────────────────────────────────────────────
+
+setTimeout(() => refreshStockCache().catch(e => console.error('[stock-refresh]', e.message)), 10_000)
+setInterval(() => refreshStockCache().catch(e => console.error('[stock-refresh]', e.message)), 60 * 60 * 1000)
+
 // ─── ROUTES ───────────────────────────────────────────────────────────────────
 
 // Serve uploaded files — must be registered BEFORE /api routes
@@ -179,6 +186,7 @@ app.use('/api', dashboardRouter(readData))
 app.use('/api', bomsRouter(readData, writeData))
 app.use('/api/dept-codes', deptCodesRouter(readData, writeData))
 app.use('/api/unleashed', unleashedRouter)
+app.use('/api', stockAllocationRouter)
 
 
 // React app catch-all for /inspection/:id (production)
