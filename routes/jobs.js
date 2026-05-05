@@ -146,11 +146,20 @@ export default function jobsRouter(readData, writeData, upload, uploadsDir) {
       if (!job) return res.status(404).json({ error: 'Job not found' })
 
       // Clean up uploaded task files from disk before removing the record.
+      // The task schema is recursive (t.children) — walk all descendants, not
+      // just the first level. Pre-migration jobs may still have t.subTasks on
+      // disk; accept either field defensively.
       // A missing file must not block the delete, so each unlink is wrapped individually.
-      const allTasks = [
-        ...(job.tasks || []),
-        ...(job.tasks || []).flatMap(t => t.subTasks || []),
-      ]
+      function walkTasks(tasks) {
+        const out = []
+        for (const t of tasks || []) {
+          out.push(t)
+          const kids = t.children || t.subTasks || []
+          if (kids.length) out.push(...walkTasks(kids))
+        }
+        return out
+      }
+      const allTasks = walkTasks(job.tasks)
       for (const task of allTasks) {
         for (const f of (task.files || [])) {
           const filePath = nodePath.join(uploadsDir, nodePath.basename(f.url || ''))
