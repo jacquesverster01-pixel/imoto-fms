@@ -63,7 +63,7 @@ function printComponentsList(task) {
   setTimeout(() => { win.print() }, 200)
 }
 
-export default function TaskWindow({ task, parentId, pos, onClose, onChangeName, onCheckTask, onAddSubTask, onUpdateNotes, onUpdatePct, onUploadFile, onDeleteFile, onDelete }) {
+export default function TaskWindow({ task, parentId, pos, onClose, onChangeName, onCheckTask, onAddSubTask, onUpdateNotes, onUpdatePct, onUploadFile, onDeleteFile, onDelete, stockByTaskId }) {
   const windowRef    = useRef(null)
   const fileInputRef = useRef(null)
   const [uploading, setUploading] = useState(false)
@@ -131,6 +131,7 @@ export default function TaskWindow({ task, parentId, pos, onClose, onChangeName,
                       <th style={{ textAlign: 'left', color: '#9298c4', fontWeight: 600, paddingBottom: 6, fontSize: 11 }}>Code</th>
                       <th style={{ textAlign: 'left', color: '#9298c4', fontWeight: 600, paddingBottom: 6, fontSize: 11, paddingLeft: 6 }}>Description</th>
                       <th style={{ textAlign: 'right', color: '#9298c4', fontWeight: 600, paddingBottom: 6, fontSize: 11 }}>Qty</th>
+                      <th style={{ textAlign: 'right', color: '#9298c4', fontWeight: 600, paddingBottom: 6, fontSize: 11, paddingLeft: 6 }}>Available</th>
                       <th style={{ textAlign: 'right', color: '#9298c4', fontWeight: 600, paddingBottom: 6, fontSize: 11, paddingLeft: 6 }}>Unit cost</th>
                       <th style={{ textAlign: 'right', color: '#9298c4', fontWeight: 600, paddingBottom: 6, fontSize: 11, paddingLeft: 6 }}>Total</th>
                     </tr>
@@ -140,11 +141,20 @@ export default function TaskWindow({ task, parentId, pos, onClose, onChangeName,
                       const qty = c.quantity ?? null
                       const unitCost = c.unitCost ?? null
                       const total = c.totalCost ?? (qty != null && unitCost != null ? qty * unitCost : null)
+                      const taskStock = stockByTaskId?.get(task.id)
+                      const compStock = taskStock?.components?.find(s => s.itemCode === c.itemCode)
+                      const availBg = compStock?.status === 'short' ? '#fee2e2' : undefined
+                      const availCell = compStock
+                        ? compStock.status === 'unknown'
+                          ? <span title="Not in stock cache." style={{ color: '#9298c4' }}>—</span>
+                          : compStock.available
+                        : '—'
                       return (
                         <tr key={i} style={{ borderTop: '1px solid #f0f1f5', height: 28 }}>
                           <td style={{ padding: '4px 4px 4px 0', fontFamily: 'monospace', color: '#1a1d3b', fontSize: 11, whiteSpace: 'nowrap' }}>{c.itemCode || '—'}</td>
-                          <td style={{ padding: '4px 6px', color: '#3a3e5c', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 160 }}>{c.itemDescription || '—'}</td>
+                          <td style={{ padding: '4px 6px', color: '#3a3e5c', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 120 }}>{c.itemDescription || '—'}</td>
                           <td style={{ padding: '4px 0', textAlign: 'right', color: '#1a1d3b', whiteSpace: 'nowrap' }}>{qty != null ? `${qty}${c.unit ? ' ' + c.unit : ''}` : '—'}</td>
+                          <td style={{ padding: '4px 0 4px 6px', textAlign: 'right', color: '#1a1d3b', whiteSpace: 'nowrap', background: availBg }}>{availCell}</td>
                           <td style={{ padding: '4px 0 4px 6px', textAlign: 'right', color: '#1a1d3b', whiteSpace: 'nowrap' }}>{unitCost != null ? `R${Number(unitCost).toFixed(2)}` : '—'}</td>
                           <td style={{ padding: '4px 0 4px 6px', textAlign: 'right', color: '#1a1d3b', whiteSpace: 'nowrap' }}>{total != null ? `R${Number(total).toFixed(2)}` : '—'}</td>
                         </tr>
