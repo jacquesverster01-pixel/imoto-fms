@@ -1,23 +1,20 @@
 import { useState, useRef, useEffect, useLayoutEffect } from 'react'
 import { useGanttDrag } from '../../hooks/useGanttDrag'
-import { apiFetch, BASE, UPLOADS_BASE } from '../../hooks/useApi'
+import { apiFetch, BASE } from '../../hooks/useApi'
 import { useClickOutside } from '../../hooks/useClickOutside'
 import {
-  parseDate, toDateStr, addDays, getChartBounds, cascadeTasksForward,
-  flattenTasksForDisplay, enforceDependencies, dependencyArrowPath,
-  isMilestone, taskBarPosition, buildZoomColumns, getTodayScrollX, computeCriticalPath,
-  getTaskBarColor, collectAllSubTasks, pixelXToDate
+  parseDate, toDateStr, addDays,
+  flattenTasksForDisplay, buildZoomColumns, getTodayScrollX, computeCriticalPath,
+  collectAllSubTasks, pixelXToDate
 } from './ganttUtils'
 import { updateNodeById, removeNodeById, appendChildTo, moveNodeTo, findNodeById, filterVisibleRows } from './taskTreeOps'
-import { groupCols, ppd } from '../../utils/ganttLogic'
+import { groupCols } from '../../utils/ganttLogic'
 import { injectGanttPrintStyle } from '../../utils/ganttExport'
 import TaskWindow from './TaskWindow'
 import { migrateTasksSchema } from './taskMigration'
 import GanttHeader from './gantt/GanttHeader'
-import MilestoneRow from './gantt/MilestoneRow'
-import DependencyOverlay from './gantt/DependencyOverlay'
-
-const ROW_H = 32, HDR_H = 48
+import GanttLeftPanel from './gantt/GanttLeftPanel'
+import GanttChartArea from './gantt/GanttChartArea'
 
 function computeDateRange(tasks, padDays = 7) {
   const dates = tasks.flatMap(t => [t.startDate, t.endDate]).filter(Boolean)
@@ -30,104 +27,6 @@ function computeDateRange(tasks, padDays = 7) {
   min.setDate(min.getDate() - padDays)
   max.setDate(max.getDate() + padDays)
   return { minDate: min, maxDate: max }
-}
-// Bug 1 fix: name is a read-only span; clicking anywhere on the row opens TaskWindow.
-// Buttons/checkbox stop propagation so they don't accidentally open the window.
-// Milestone diamond gets stopPropagation so clicking it only toggles done.
-function LeftPanelRow({ row, collapsed, onToggle, onCheck, rowIdx, onDragHandleDown, onRowOver, onToggleMilestone, onOpenMenu, onSubtaskDragStart, isSubtaskDragTarget, rowRef }) {
-  const { task, isParent, isSubTask } = row
-  const isMile = isMilestone(task)
-  const rowBg = isSubtaskDragTarget ? 'rgba(79,103,228,0.13)'
-    : isParent ? '#eef0fb'
-    : isSubTask ? '#f6f7fd'
-    : isMile ? '#fffcf4'
-    : '#fff'
-  const rowShadow = isSubtaskDragTarget ? 'inset 3px 0 0 #4f67e4'
-    : isParent ? 'inset 3px 0 0 #4f67e4'
-    : isSubTask ? 'inset 3px 0 0 #c5cbf0'
-    : undefined
-  const code = task.itemCode || task.assemblyCode || null
-  return (
-    <div
-      ref={rowRef}
-      data-left-row-task-id={task.id}
-      data-left-row-parent-id={row.parentId || ''}
-      style={{ minHeight: ROW_H, display: 'flex', alignItems: 'center', gap: 4, paddingLeft: 4 + (row.depth * 20), paddingRight: 4, paddingTop: 4, paddingBottom: 4, borderBottom: '1px solid #ecedf4', cursor: 'pointer', userSelect: 'none', background: rowBg, boxShadow: rowShadow, transition: 'background 0.12s' }}
-      onMouseOver={() => onRowOver(rowIdx)}
-      onClick={e => onOpenMenu(task.id, row.parentId, isParent, isMile, e)}>
-      {row.depth === 0 && (
-        <span
-          onMouseDown={e => { e.stopPropagation(); e.preventDefault(); onDragHandleDown(rowIdx) }}
-          onClick={e => e.stopPropagation()}
-          style={{ fontSize: 9, color: isParent ? '#9298c4' : '#ccc', cursor: 'grab', flexShrink: 0, letterSpacing: 1, userSelect: 'none', padding: '0 3px' }}>⋮⋮</span>
-      )}
-      {isMile
-        ? <span onClick={e => { e.stopPropagation(); onToggleMilestone(task.id) }} style={{ cursor: 'pointer', color: task.done ? '#1a1d3b' : '#9298c4', fontSize: 12, flexShrink: 0 }}>◆</span>
-        : isParent
-          ? <button onClick={e => { e.stopPropagation(); onToggle(task.id) }} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#4f67e4', fontSize: 11, padding: 0, width: 14, flexShrink: 0 }}>{collapsed[task.id] ? '▸' : '▾'}</button>
-          : <div onClick={e => e.stopPropagation()} style={{ display: 'flex', alignItems: 'center', padding: '6px 4px', flexShrink: 0, cursor: 'pointer' }}>
-              <input type="checkbox" checked={!!task.done} onChange={e => { e.stopPropagation(); onCheck(task.id, row.parentId) }} style={{ cursor: 'pointer', margin: 0 }} />
-            </div>
-      }
-      <div
-        onMouseDown={e => { if (e.button !== 0) return; onSubtaskDragStart(task.id, row.parentId, e, task.name) }}
-        style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-        <span style={{ fontSize: 12, color: task.done ? '#b0b5cc' : isParent ? '#1a1d3b' : isSubTask ? '#3a3e5c' : '#1a1d3b', textDecoration: task.done ? 'line-through' : 'none', fontWeight: isParent ? 600 : 400, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', lineHeight: 1.3 }}>
-          {task.name}
-        </span>
-        {code && (
-          <span style={{ fontSize: 10, color: '#9298c4', fontFamily: 'monospace', marginTop: 2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-            {code}
-          </span>
-        )}
-      </div>
-      {row.depth === 0 && (
-        <button onClick={e => { e.stopPropagation(); onOpenMenu(task.id, row.parentId, isParent, isMile, e) }}
-          style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#9298c4', fontSize: 16, padding: '0 3px', flexShrink: 0, lineHeight: 1, borderRadius: 4 }}>⋮</button>
-      )}
-    </div>
-  )
-}
-function GanttBar({ row, job, zoomCols, criticalIds, showBaseline, baseline, dragRef, taskRowsRef, onBarRightClick, barColor, onLinkStart }) {
-  const { task, isParent, parentId } = row
-  const [hovered, setHovered] = useState(false)
-  if (isMilestone(task)) return null
-  const pos = taskBarPosition(task, zoomCols), p = ppd(zoomCols)
-  const hasCp = criticalIds.length > 0, isCrit = criticalIds.includes(task.id), isLocked = !!(task.dependsOn?.length)
-  const bl = showBaseline ? baseline.find(b => b.taskId === task.id) : null
-  const blPos = bl ? taskBarPosition(bl, zoomCols) : null
-  return (
-    <>
-      {blPos && <div style={{ position: 'absolute', left: blPos.left, width: blPos.width, top: 9, height: 14, background: '#888', opacity: 0.25, borderRadius: 3, pointerEvents: 'none' }} />}
-      <div ref={el => { if (el) taskRowsRef.current[task.id] = el }}
-        data-task-id={task.id}
-        data-parent-id={parentId || ''}
-        onMouseDown={e => { if (isParent) return; e.stopPropagation(); dragRef.current = { type: 'move', taskId: task.id, parentId: parentId || null, isMilestone: false, startMouseX: e.clientX, origStartDate: task.startDate, origEndDate: task.endDate, pixPerDay: p } }}
-        onContextMenu={e => { e.preventDefault(); if (task.dependsOn?.length) onBarRightClick(e, task.id, parentId, task.dependsOn) }}
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-        style={{ position: 'absolute', top: isParent ? 4 : 6, left: pos.left, width: pos.width, height: isParent ? 24 : 20, borderRadius: 4,
-          background: isParent ? barColor + 'bb' : barColor, cursor: isParent ? 'default' : 'grab',
-          userSelect: 'none', display: 'flex', alignItems: 'center', overflow: 'visible',
-          borderLeft: hasCp && isCrit && !isParent ? '3px solid #D85A30' : undefined,
-          opacity: hasCp && !isCrit && !isParent ? 0.6 : undefined }}>
-        <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: `${task.pct||0}%`, background: 'rgba(0,0,0,0.18)', borderRadius: 'inherit', pointerEvents: 'none', overflow: 'hidden' }} />
-        {isLocked && <span style={{ fontSize: 9, position: 'absolute', left: 2, top: 2, pointerEvents: 'none' }}>🔒</span>}
-        <span style={{ fontSize: 11, color: '#fff', padding: `0 ${isLocked ? 14 : 6}px 0 6px`, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', flex: 1, pointerEvents: 'none', position: 'relative' }}>
-          {isParent ? `${task.name} · ${task.pct||0}%` : task.name}
-        </span>
-        {!isParent && <div onMouseDown={e => { e.stopPropagation(); dragRef.current = { type: 'resize', taskId: task.id, parentId: parentId||null, startMouseX: e.clientX, origEndDate: task.endDate, taskStartDate: task.startDate, pixPerDay: p } }} style={{ width: 8, height: '100%', cursor: 'ew-resize', flexShrink: 0, position: 'relative', zIndex: 1 }} />}
-        {!isParent && (
-          <div onMouseDown={e => { e.stopPropagation(); onLinkStart(e, task.id, parentId || null, 'left') }}
-            style={{ position: 'absolute', left: -7, top: '50%', transform: 'translateY(-50%)', width: 12, height: 12, borderRadius: '50%', background: '#fff', border: `2px solid ${barColor}`, cursor: 'crosshair', zIndex: 3, boxShadow: '0 1px 4px rgba(0,0,0,0.35)', opacity: hovered ? 1 : 0, pointerEvents: hovered ? 'all' : 'none', transition: 'opacity 0.15s' }} />
-        )}
-        {!isParent && (
-          <div onMouseDown={e => { e.stopPropagation(); onLinkStart(e, task.id, parentId || null, 'right') }}
-            style={{ position: 'absolute', right: -7, top: '50%', transform: 'translateY(-50%)', width: 12, height: 12, borderRadius: '50%', background: '#fff', border: `2px solid ${barColor}`, cursor: 'crosshair', zIndex: 3, boxShadow: '0 1px 4px rgba(0,0,0,0.35)', opacity: hovered ? 1 : 0, pointerEvents: hovered ? 'all' : 'none', transition: 'opacity 0.15s' }} />
-        )}
-      </div>
-    </>
-  )
 }
 function CtxMenu({ ctxMenu, onClose, onRemoveDep, flatRows }) {
   const ref = useRef(null)
@@ -195,7 +94,6 @@ export default function GanttModal({ job, onClose, onSaved, embedded }) {
   const criticalIds = showCriticalPath ? computeCriticalPath(tasks) : []
   const allDescendants = collectAllSubTasks(tasks)
 
-  // No IIFE: compute task for TaskWindow before JSX
   const taskWindowTask = taskWindow ? findNodeById(tasks, taskWindow.taskId) : null
 
   useEffect(() => {
@@ -325,6 +223,8 @@ export default function GanttModal({ job, onClose, onSaved, embedded }) {
     return () => window.removeEventListener('resize', measure)
   }, [tasks, collapsed, leftPanelWidth, zoom, zoomScale])
 
+  function onToggle(id) { setCollapsed(c => ({ ...c, [id]: !c[id] })) }
+
   async function handleClose() {
     try {
       await apiFetch(`/jobs/${job.id}/tasks`, { method: 'PUT', body: JSON.stringify({ tasks }) })
@@ -425,24 +325,16 @@ export default function GanttModal({ job, onClose, onSaved, embedded }) {
         onClose={handleClose} onExport={() => window.print()} onSetBaseline={handleSetBaseline}
         embedded={embedded} />
       <div style={{ flex:1, display:'flex', overflow:'hidden' }}>
-        <div ref={leftPanelRef} onScroll={onLeftScroll} style={{ width: leftPanelWidth, flexShrink:0, overflowY:'auto', overflowX:'hidden' }}>
-          <div style={{ height:HDR_H, background:'#f8f9fb', borderBottom:'1px solid #e4e6ea' }} />
-          {visibleRows.map((row, ri) => {
-            const taskIdx = row.depth > 0 ? -1 : tasks.findIndex(t => t.id === row.task.id)
-            return <LeftPanelRow key={`${row.parentId||''}-${row.task.id}`} row={row} collapsed={collapsed}
-              onToggle={id => setCollapsed(c => ({...c,[id]:!c[id]}))}
-              onCheck={onCheckTask} rowIdx={taskIdx}
-              onDragHandleDown={handleDragHandleDown} onRowOver={handleRowOver}
-              onToggleMilestone={onToggleMilestone} onOpenMenu={openTaskMenu}
-              onSubtaskDragStart={startSubtaskDrag}
-              isSubtaskDragTarget={subtaskDropHighlight === row.task.id}
-              rowRef={el => { rowElsRef.current[ri] = el }} />
-          })}
-          <div style={{ display:'flex', borderTop:'1px solid #f0f1f5' }}>
-            <button onClick={addTask} style={{ flex:1, padding:'8px 12px', fontSize:12, color:'#4f67e4', background:'none', border:'none', textAlign:'left', cursor:'pointer' }}>+ Add task</button>
-            <button onClick={addMilestone} style={{ padding:'8px 10px', fontSize:12, color:'#9298c4', background:'none', border:'none', cursor:'pointer' }}>◆ Milestone</button>
-          </div>
-        </div>
+        <GanttLeftPanel
+          visibleRows={visibleRows} tasks={tasks}
+          collapsed={collapsed} onToggle={onToggle}
+          leftPanelWidth={leftPanelWidth} leftPanelRef={leftPanelRef}
+          onLeftScroll={onLeftScroll}
+          subtaskDropHighlight={subtaskDropHighlight} rowElsRef={rowElsRef}
+          onCheck={onCheckTask} onToggleMilestone={onToggleMilestone}
+          onOpenMenu={openTaskMenu} onDragHandleDown={handleDragHandleDown}
+          onRowOver={handleRowOver} onSubtaskDragStart={startSubtaskDrag}
+          onAddTask={addTask} onAddMilestone={addMilestone} />
         <div
           style={{ width: 4, flexShrink: 0, cursor: 'col-resize', background: resizeHandleHovered ? 'rgba(79,103,228,0.2)' : '#e4e6ea', zIndex: 10, userSelect: 'none' }}
           onMouseDown={handlePanelResizeStart}
@@ -450,50 +342,17 @@ export default function GanttModal({ job, onClose, onSaved, embedded }) {
           onMouseLeave={() => setResizeHandleHovered(false)}
           title="Drag to resize"
         />
-        <div ref={rightPanelRef} onScroll={onRightScroll} className="gantt-right-panel"
-          style={{ flex:1, overflowX:'auto', overflowY:'auto', position:'relative', cursor:'grab' }}
-          onMouseDown={e => {
-            if (e.button !== 0) return
-            if (e.target.closest('[data-task-id]')) return
-            if (dateDrawRef.current) return
-            handlePanStart(e)
-          }}>
-          <div style={{ width:chartWidth, minWidth:'100%', position:'relative' }}>
-            <div style={{ height:24, display:'flex', position:'sticky', top:0, zIndex:2, background:'#f8f9fb', borderBottom:'1px solid #e4e6ea' }}>
-              {colGroups.map((g,i) => <div key={i} style={{ width:g.w, flexShrink:0, fontSize:11, fontWeight:600, color:'#5f5e5a', padding:'0 6px', display:'flex', alignItems:'center', borderRight:'1px solid #e4e6ea' }}>{g.label}</div>)}
-            </div>
-            <div style={{ height:24, display:'flex', position:'sticky', top:24, zIndex:2, background:'#f8f9fb', borderBottom:'1px solid #e4e6ea' }}>
-              {zoomCols.map(c => <div key={c.key} style={{ width:c.widthPx, flexShrink:0, fontSize:10, color:'#9298c4', display:'flex', alignItems:'center', justifyContent:'center', background:c.isWeekend?'rgba(0,0,0,0.05)':(c.isToday?'rgba(79,103,228,0.08)':undefined), borderLeft:c.isToday?'2px solid #185fa5':undefined }}>{c.subLabel}</div>)}
-            </div>
-            {visibleRows.map((row,ri) => {
-              const { task: rt, isParent: rip } = row
-              const noDate = !rt.startDate && !isMilestone(rt) && !rip
-              return (
-                <div key={`${row.parentId||''}-${rt.id}`}
-                  style={{ height: rowHeights[ri] || ROW_H, position:'relative', background:ri%2===0?'#fff':'#fafafa', cursor:noDate?'crosshair':undefined }}
-                  onMouseDown={noDate ? e => {
-                    if (e.button !== 0) return
-                    const rect = rightPanelRef.current?.getBoundingClientRect()
-                    if (!rect) return
-                    const x = e.clientX - rect.left + (rightPanelRef.current?.scrollLeft || 0)
-                    dateDrawRef.current = { taskId: rt.id, parentId: row.parentId, rowIndex: ri, startPx: x }
-                  } : undefined}>
-                  {zoom==='day' && colsWithLeft.filter(c=>c.isWeekend).map(c => <div key={c.key} style={{ position:'absolute', left:c.left, top:0, width:c.widthPx, height:'100%', background:'rgba(0,0,0,0.03)', pointerEvents:'none' }} />)}
-                  {isMilestone(rt)
-                    ? <MilestoneRow task={rt} zoomCols={zoomCols} job={job} onToggleDone={onToggleMilestone} dragRef={dragRef} taskRowsRef={taskRowsRef} />
-                    : rt.startDate && rt.endDate
-                      ? <GanttBar row={row} job={job} zoomCols={zoomCols} criticalIds={criticalIds} showBaseline={showBaseline} baseline={baseline} dragRef={dragRef} taskRowsRef={taskRowsRef} onBarRightClick={onBarRightClick} barColor={getTaskBarColor(rt, tasks, allDescendants)} onLinkStart={startLinkDrag} />
-                      : noDate && !ghostBar && <div style={{ position:'absolute', inset:0, display:'flex', alignItems:'center', paddingLeft:8, pointerEvents:'none' }}><span style={{ fontSize:11, color:'#c0c5d8' }}>Click & drag to set dates</span></div>
-                  }
-                  {ghostBar && ghostBar.rowIndex === ri && ghostBar.width > 2 && (
-                    <div style={{ position:'absolute', left:ghostBar.left, top:6, width:ghostBar.width, height:20, border:'2px dashed #2563eb', background:'rgba(37,99,235,0.08)', borderRadius:4, pointerEvents:'none' }} />
-                  )}
-                </div>
-              )
-            })}
-            <DependencyOverlay rows={visibleRows} zoomCols={zoomCols} chartWidth={chartWidth} rowHeights={rowHeights} />
-          </div>
-        </div>
+        <GanttChartArea
+          visibleRows={visibleRows} tasks={tasks}
+          zoomCols={zoomCols} colsWithLeft={colsWithLeft} colGroups={colGroups}
+          chartWidth={chartWidth} criticalIds={criticalIds} zoom={zoom}
+          job={job} showBaseline={showBaseline} baseline={baseline}
+          allDescendants={allDescendants} ghostBar={ghostBar}
+          rowHeights={rowHeights} rightPanelRef={rightPanelRef}
+          dragRef={dragRef} taskRowsRef={taskRowsRef} dateDrawRef={dateDrawRef}
+          onRightScroll={onRightScroll} handlePanStart={handlePanStart}
+          onToggleMilestone={onToggleMilestone} onBarRightClick={onBarRightClick}
+          startLinkDrag={startLinkDrag} />
       </div>
     </div>
   )
