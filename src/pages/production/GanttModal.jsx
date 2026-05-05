@@ -67,6 +67,9 @@ export default function GanttModal({ job, onClose, onSaved, embedded }) {
   })
   const [rowHeights,           setRowHeights]           = useState({})
   const [resizeHandleHovered,  setResizeHandleHovered]  = useState(false)
+  const [stockByTaskId,        setStockByTaskId]        = useState(null)
+  const [stockMeta,            setStockMeta]            = useState(null)
+  const [stockRefreshing,      setStockRefreshing]      = useState(false)
 
   const rightPanelRef = useRef(null)
   const { dragRef, reorderRef, taskRowsRef, linkDragRef, zoomColsRef, linkLine, setLinkLine, startLinkDrag, handleDragHandleDown, handleRowOver, panRef, handlePanStart } = useGanttDrag(setTasks, rightPanelRef)
@@ -123,6 +126,14 @@ export default function GanttModal({ job, onClose, onSaved, embedded }) {
   useEffect(() => {
     if (job.bomId) apiFetch(`/boms/${job.bomId}`).then(bom => { if (Array.isArray(bom?.items)) setBomItems(bom.items) }).catch(() => {})
   }, [])
+  useEffect(() => {
+    apiFetch(`/stock/allocation?jobId=${job.id}`)
+      .then(data => {
+        setStockByTaskId(new Map(Object.entries(data.byTask || {})))
+        setStockMeta({ cacheUpdatedAt: data.cacheUpdatedAt, cacheStale: data.cacheStale })
+      })
+      .catch(() => {})
+  }, [job.id])
   useEffect(() => {
     function handleMouseMove(e) {
       if (!dateDrawRef.current) return
@@ -298,6 +309,16 @@ export default function GanttModal({ job, onClose, onSaved, embedded }) {
     const r = row.getBoundingClientRect()
     setTaskWindow({ taskId, parentId, isParent, isMile, x: r.right + 8, y: r.top })
   }
+  async function handleRefreshStock() {
+    setStockRefreshing(true)
+    try {
+      await apiFetch('/stock/refresh', { method: 'POST' })
+      const data = await apiFetch(`/stock/allocation?jobId=${job.id}`)
+      setStockByTaskId(new Map(Object.entries(data.byTask || {})))
+      setStockMeta({ cacheUpdatedAt: data.cacheUpdatedAt, cacheStale: data.cacheStale })
+    } catch (e) { console.error('[stock refresh]', e) }
+    setStockRefreshing(false)
+  }
   async function handleSetBaseline() {
     const snap = tasks.map(t => ({ taskId:t.id, startDate:t.startDate, endDate:t.endDate }))
     try { await apiFetch(`/jobs/${job.id}/baseline`, { method:'PUT', body:JSON.stringify({baseline:snap}) }); setBaseline(snap) } catch {}
@@ -323,7 +344,8 @@ export default function GanttModal({ job, onClose, onSaved, embedded }) {
         showBaseline={showBaseline} setShowBaseline={setShowBaseline}
         progress={`${doneTasks}/${totalLeaf} tasks complete`}
         onClose={handleClose} onExport={() => window.print()} onSetBaseline={handleSetBaseline}
-        embedded={embedded} />
+        embedded={embedded}
+        stockMeta={stockMeta} onRefreshStock={handleRefreshStock} stockRefreshing={stockRefreshing} />
       <div style={{ flex:1, display:'flex', overflow:'hidden' }}>
         <GanttLeftPanel
           visibleRows={visibleRows} tasks={tasks}
@@ -352,7 +374,7 @@ export default function GanttModal({ job, onClose, onSaved, embedded }) {
           dragRef={dragRef} taskRowsRef={taskRowsRef} dateDrawRef={dateDrawRef}
           onRightScroll={onRightScroll} handlePanStart={handlePanStart}
           onToggleMilestone={onToggleMilestone} onBarRightClick={onBarRightClick}
-          startLinkDrag={startLinkDrag} />
+          startLinkDrag={startLinkDrag} stockByTaskId={stockByTaskId} />
       </div>
     </div>
   )
@@ -372,7 +394,8 @@ export default function GanttModal({ job, onClose, onSaved, embedded }) {
           onUpdatePct={v => updatePct(taskWindow.taskId, taskWindow.parentId, v)}
           onUploadFile={file => uploadTaskFile(taskWindow.taskId, taskWindow.parentId, file)}
           onDeleteFile={fileId => deleteTaskFile(taskWindow.taskId, taskWindow.parentId, fileId)}
-          onDelete={() => deleteTask(taskWindow.taskId, taskWindow.parentId)} />
+          onDelete={() => deleteTask(taskWindow.taskId, taskWindow.parentId)}
+          stockByTaskId={stockByTaskId} />
       )}
       {linkLine && (
         <>

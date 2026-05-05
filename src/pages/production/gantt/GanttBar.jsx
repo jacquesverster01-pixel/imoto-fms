@@ -2,11 +2,19 @@ import { useState } from 'react'
 import { isMilestone, taskBarPosition } from '../ganttUtils'
 import { ppd } from '../../../utils/ganttLogic'
 
-export default function GanttBar({ row, job, zoomCols, criticalIds, showBaseline, baseline, dragRef, taskRowsRef, onBarRightClick, barColor, onLinkStart }) {
+export default function GanttBar({ row, job, zoomCols, criticalIds, showBaseline, baseline, dragRef, taskRowsRef, onBarRightClick, barColor, onLinkStart, stockSummary }) {
   const { task, isParent, parentId } = row
   const [hovered, setHovered] = useState(false)
   if (isMilestone(task)) return null
   const pos = taskBarPosition(task, zoomCols), p = ppd(zoomCols)
+  const dotColor = stockSummary
+    ? stockSummary.short > 0 ? '#ef4444' : stockSummary.unknown > 0 ? '#9ca3af' : '#22c55e'
+    : null
+  const dotTitle = stockSummary
+    ? stockSummary.short > 0
+      ? `${stockSummary.short} component${stockSummary.short > 1 ? 's' : ''} short`
+      : stockSummary.unknown > 0 ? 'Stock data unavailable' : 'All components available'
+    : null
   const hasCp = criticalIds.length > 0, isCrit = criticalIds.includes(task.id), isLocked = !!(task.dependsOn?.length)
   const bl = showBaseline ? baseline.find(b => b.taskId === task.id) : null
   const blPos = bl ? taskBarPosition(bl, zoomCols) : null
@@ -38,6 +46,9 @@ export default function GanttBar({ row, job, zoomCols, criticalIds, showBaseline
         {!isParent && (
           <div onMouseDown={e => { e.stopPropagation(); onLinkStart(e, task.id, parentId || null, 'right') }}
             style={{ position: 'absolute', right: -7, top: '50%', transform: 'translateY(-50%)', width: 12, height: 12, borderRadius: '50%', background: '#fff', border: `2px solid ${barColor}`, cursor: 'crosshair', zIndex: 3, boxShadow: '0 1px 4px rgba(0,0,0,0.35)', opacity: hovered ? 1 : 0, pointerEvents: hovered ? 'all' : 'none', transition: 'opacity 0.15s' }} />
+        )}
+        {!isParent && task.components?.length > 0 && dotColor && (
+          <div title={dotTitle} style={{ position: 'absolute', right: 6, top: '50%', transform: 'translateY(-50%)', width: 8, height: 8, borderRadius: '50%', background: dotColor, pointerEvents: 'none', zIndex: 2 }} />
         )}
       </div>
     </>

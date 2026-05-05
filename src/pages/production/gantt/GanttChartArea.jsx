@@ -5,7 +5,7 @@ import { isMilestone, getTaskBarColor } from '../ganttUtils'
 
 const ROW_H = 32
 
-export default function GanttChartArea({ visibleRows, tasks, zoomCols, colsWithLeft, colGroups, chartWidth, criticalIds, zoom, job, showBaseline, baseline, allDescendants, ghostBar, rowHeights, rightPanelRef, dragRef, taskRowsRef, dateDrawRef, onRightScroll, handlePanStart, onToggleMilestone, onBarRightClick, startLinkDrag }) {
+export default function GanttChartArea({ visibleRows, tasks, zoomCols, colsWithLeft, colGroups, chartWidth, criticalIds, zoom, job, showBaseline, baseline, allDescendants, ghostBar, rowHeights, rightPanelRef, dragRef, taskRowsRef, dateDrawRef, onRightScroll, handlePanStart, onToggleMilestone, onBarRightClick, startLinkDrag, stockByTaskId }) {
   return (
     <div ref={rightPanelRef} onScroll={onRightScroll} className="gantt-right-panel"
       style={{ flex: 1, overflowX: 'auto', overflowY: 'auto', position: 'relative', cursor: 'grab' }}
@@ -39,7 +39,7 @@ export default function GanttChartArea({ visibleRows, tasks, zoomCols, colsWithL
               {isMilestone(rt)
                 ? <MilestoneRow task={rt} zoomCols={zoomCols} job={job} onToggleDone={onToggleMilestone} dragRef={dragRef} taskRowsRef={taskRowsRef} />
                 : rt.startDate && rt.endDate
-                  ? <GanttBar row={row} job={job} zoomCols={zoomCols} criticalIds={criticalIds} showBaseline={showBaseline} baseline={baseline} dragRef={dragRef} taskRowsRef={taskRowsRef} onBarRightClick={onBarRightClick} barColor={getTaskBarColor(rt, tasks, allDescendants)} onLinkStart={startLinkDrag} />
+                  ? <GanttBar row={row} job={job} zoomCols={zoomCols} criticalIds={criticalIds} showBaseline={showBaseline} baseline={baseline} dragRef={dragRef} taskRowsRef={taskRowsRef} onBarRightClick={onBarRightClick} barColor={getTaskBarColor(rt, tasks, allDescendants)} onLinkStart={startLinkDrag} stockSummary={stockByTaskId?.get(rt.id)?.summary} />
                   : noDate && !ghostBar && <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', paddingLeft: 8, pointerEvents: 'none' }}><span style={{ fontSize: 11, color: '#c0c5d8' }}>Click & drag to set dates</span></div>
               }
               {ghostBar && ghostBar.rowIndex === ri && ghostBar.width > 2 && (

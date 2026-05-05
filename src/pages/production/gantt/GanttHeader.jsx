@@ -3,10 +3,34 @@ const STATUS_OPTIONS = [
   { value: 'qc', label: 'QC' }, { value: 'dispatch', label: 'Dispatch' }, { value: 'done', label: 'Done' },
 ]
 
-export default function GanttHeader({ title, setTitle, status, setStatus, zoom, setZoom, zoomScale, setZoomScale, showCriticalPath, setShowCriticalPath, showBaseline, setShowBaseline, progress, onClose, onExport, onSetBaseline, embedded }) {
+function relativeAge(isoString) {
+  if (!isoString) return null
+  const ms = Date.now() - new Date(isoString).getTime()
+  const mins = Math.floor(ms / 60000)
+  if (mins < 60) return `${mins}m`
+  const hrs = Math.floor(mins / 60)
+  if (hrs < 24) return `${hrs}h`
+  return `${Math.floor(hrs / 24)}d`
+}
+
+export default function GanttHeader({ title, setTitle, status, setStatus, zoom, setZoom, zoomScale, setZoomScale, showCriticalPath, setShowCriticalPath, showBaseline, setShowBaseline, progress, onClose, onExport, onSetBaseline, embedded, stockMeta, onRefreshStock, stockRefreshing }) {
   const tog = on => ({ padding: '4px 10px', borderRadius: 6, border: '1px solid #dde0ea', fontSize: 12, cursor: 'pointer', background: on ? '#4f67e4' : '#fff', color: on ? '#fff' : '#1a1d3b' })
   const zBtn = { padding: '4px 8px', border: 'none', fontSize: 13, cursor: 'pointer', background: '#fff', color: '#1a1d3b', lineHeight: 1 }
+  const showStockBanner = stockMeta && (stockMeta.cacheStale || !stockMeta.cacheUpdatedAt)
+  const stockBannerText = stockMeta?.cacheUpdatedAt
+    ? `Stock data is ${relativeAge(stockMeta.cacheUpdatedAt)} old`
+    : 'Stock data not yet loaded'
   return (
+    <>
+    {showStockBanner && (
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '5px 14px', background: '#fffbeb', borderBottom: '1px solid #fde68a', fontSize: 12, color: '#92400e', flexShrink: 0 }}>
+        <span style={{ flex: 1 }}>{stockBannerText} — data may be inaccurate</span>
+        <button onClick={onRefreshStock} disabled={stockRefreshing}
+          style={{ padding: '3px 10px', borderRadius: 5, border: '1px solid #f59e0b', background: '#fef3c7', color: '#92400e', fontSize: 12, cursor: stockRefreshing ? 'not-allowed' : 'pointer', opacity: stockRefreshing ? 0.6 : 1 }}>
+          {stockRefreshing ? 'Refreshing…' : 'Refresh stock'}
+        </button>
+      </div>
+    )}
     <div style={{ minHeight: 56, display: 'flex', alignItems: 'center', gap: 6, padding: '0 14px', borderBottom: '1px solid #e4e6ea', flexShrink: 0, flexWrap: 'wrap' }}>
       <input value={title} onChange={e => setTitle(e.target.value)} style={{ flex: 1, fontWeight: 700, fontSize: 16, border: 'none', outline: 'none', color: '#1a1d3b', background: 'transparent', minWidth: 100 }} />
       <select value={status} onChange={e => setStatus(e.target.value)} style={{ fontSize: 12, border: '1px solid #dde0ea', borderRadius: 6, padding: '4px 8px', color: '#1a1d3b', background: '#fff' }}>
@@ -30,5 +54,6 @@ export default function GanttHeader({ title, setTitle, status, setStatus, zoom, 
         : <button onClick={onClose} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 24, color: '#9298c4', lineHeight: 1, padding: 0 }}>×</button>
       }
     </div>
+    </>
   )
 }
