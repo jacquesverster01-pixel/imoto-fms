@@ -3,7 +3,7 @@ import { useGet } from '../hooks/useApi'
 import FactoryFloorList from './dashboard/FactoryFloorList'
 import ZkUnmatchedBanner from '../components/ZkUnmatchedBanner'
 
-const CARD = { background: '#fff', border: '1px solid #e4e6ea', borderRadius: 14, padding: '24px 28px' }
+const CARD = { background: '#fff', border: '1px solid #e4e6ea', borderRadius: 14, padding: '16px 20px' }
 
 function jobStatusStyle(status) {
   if (status === 'on-track') return { bg: '#e8f8f0', text: '#16a34a' }
@@ -75,17 +75,17 @@ export default function Dashboard({ onNavigate }) {
             <div
               key={grp.title}
               onClick={() => onNavigate(grp.nav)}
-              style={{ ...CARD, cursor: 'pointer', flex: '1 1 160px', minWidth: 160 }}
+              style={{ ...CARD, cursor: 'pointer', flex: '1 1 160px', minWidth: 160, ...(grp.title === 'Stock' && (stk.lowStockCount ?? 0) > 0 ? { borderLeft: '4px solid #f87171' } : {}) }}
               onMouseEnter={e => { e.currentTarget.style.boxShadow = '0 4px 16px rgba(108,99,255,0.14)' }}
               onMouseLeave={e => { e.currentTarget.style.boxShadow = 'none' }}
             >
-              <div style={{ fontSize: 10, fontWeight: 700, color: '#6c63ff', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 14 }}>
+              <div style={{ fontSize: 9, fontWeight: 700, color: '#6c63ff', textTransform: 'uppercase', letterSpacing: '0.09em', marginBottom: 10 }}>
                 {grp.title}
               </div>
               <div style={{ display: 'flex', gap: 18, flexWrap: 'wrap' }}>
                 {grp.stats.map(s => (
                   <div key={s.label}>
-                    <div style={{ fontSize: 32, fontWeight: 800, lineHeight: 1, color: s.problem && s.value > 0 ? '#dc2626' : s.value === 0 ? '#cbd5e1' : '#6c63ff' }}>
+                    <div style={{ fontSize: s.value > 0 ? 32 : 26, fontWeight: s.value > 0 ? 800 : 600, lineHeight: 1, color: s.problem && s.value > 0 ? '#dc2626' : s.value === 0 ? '#cbd5e1' : '#6c63ff' }}>
                       {s.value}
                     </div>
                     <div style={{ fontSize: 11, color: '#94a3b8', marginTop: 4 }}>{s.label}</div>

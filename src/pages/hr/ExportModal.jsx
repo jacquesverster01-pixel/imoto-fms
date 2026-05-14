@@ -232,7 +232,7 @@ export default function ExportModal({ allShifts, employees, onClose }) {
               value={calMonth}
               onChange={e => setCalMonth(Number(e.target.value))}
             >
-              {CAL_MONTHS.map((m, i) => <option key={i} value={i}>{m}</option>)}
+              {CAL_MONTHS.map((m, i) => <option key={m} value={i}>{m}</option>)}
             </select>
             <select
               style={{ ...styles.input, marginBottom: 0, width: 90 }}

@@ -105,7 +105,6 @@ export default function ohsRouter(readData, writeData, upload, uploadsDir) {
       const aIdx = actions.findIndex(a => a.id === req.params.actionId)
       if (aIdx === -1) return res.status(404).json({ error: 'Action not found' })
       actions[aIdx] = { ...actions[aIdx], ...req.body }
-      records[idx].correctiveActions = actions
       writeData('ohs.json', records)
       res.json(actions[aIdx])
     } catch (err) { res.status(500).json({ error: err.message }) }
@@ -205,35 +204,37 @@ export default function ohsRouter(readData, writeData, upload, uploadsDir) {
       if (idx === -1) return res.status(404).json({ error: 'Inspection not found' })
       inspections[idx] = { ...inspections[idx], ...req.body }
       const inspection = inspections[idx]
-      if (req.body.status === 'Complete') {
-        const scoreable = inspection.items.filter(i => i.result === 'Pass' || i.result === 'Fail')
-        inspection.maxScore = scoreable.length
-        inspection.score = scoreable.filter(i => i.result === 'Pass').length
-        inspection.completedDate = new Date().toISOString().slice(0, 10)
-        // Auto-create OHS incidents for each failed item
-        const failedItems = inspection.items.filter(i => i.result === 'Fail')
-        if (failedItems.length > 0) {
-          const ohsRecords = readData('ohs.json')
-          for (const item of failedItems) {
-            ohsRecords.push({
-              id: 'OHS' + Date.now() + Math.random().toString(36).slice(2, 6),
-              type: 'Hazard',
-              title: `Inspection failure: ${item.question.slice(0, 60)}`,
-              description: `Failed during inspection "${inspection.templateName}" on ${inspection.completedDate}. Notes: ${item.notes || 'None'}`,
-              reportedBy: inspection.performedBy,
-              department: inspection.department,
-              location: inspection.location,
-              severity: 2, likelihood: 2, riskScore: 4,
-              status: 'Open',
-              date: inspection.completedDate,
-              createdAt: new Date().toISOString(),
-              correctiveActions: []
-            })
+      try {
+        if (req.body.status === 'Complete') {
+          const scoreable = inspection.items.filter(i => i.result === 'Pass' || i.result === 'Fail')
+          inspection.maxScore = scoreable.length
+          inspection.score = scoreable.filter(i => i.result === 'Pass').length
+          inspection.completedDate = new Date().toISOString().slice(0, 10)
+          // Auto-create OHS incidents for each failed item
+          const failedItems = inspection.items.filter(i => i.result === 'Fail')
+          if (failedItems.length > 0) {
+            const ohsRecords = readData('ohs.json')
+            for (const item of failedItems) {
+              ohsRecords.push({
+                id: 'OHS' + Date.now() + Math.random().toString(36).slice(2, 6),
+                type: 'Hazard',
+                title: `Inspection failure: ${item.question.slice(0, 60)}`,
+                description: `Failed during inspection "${inspection.templateName}" on ${inspection.completedDate}. Notes: ${item.notes || 'None'}`,
+                reportedBy: inspection.performedBy,
+                department: inspection.department,
+                location: inspection.location,
+                severity: 2, likelihood: 2, riskScore: 4,
+                status: 'Open',
+                date: inspection.completedDate,
+                createdAt: new Date().toISOString(),
+                correctiveActions: []
+              })
+            }
+            writeData('ohs.json', ohsRecords)
           }
-          writeData('ohs.json', ohsRecords)
         }
-      }
-      writeData('ohs_inspections.json', inspections)
+        writeData('ohs_inspections.json', inspections)
+      } catch { return res.status(500).json({ error: 'Save failed' }) }
       res.json(inspections[idx])
     } catch (err) { res.status(500).json({ error: err.message }) }
   })

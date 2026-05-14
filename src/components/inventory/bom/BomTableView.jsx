@@ -35,7 +35,7 @@ export default function BomTableView({ items, search, deptFilter, hideLabour }) 
         </thead>
         <tbody>
           {filtered.map((item, i) => (
-            <tr key={i} style={{ borderBottom: '1px solid #f0f2f5', background: i % 2 === 0 ? '#fff' : '#fafafa' }}>
+            <tr key={item.itemCode + '_' + item.level} style={{ borderBottom: '1px solid #f0f2f5', background: i % 2 === 0 ? '#fff' : '#fafafa' }}>
               <td style={{ ...styles.td, paddingLeft: (INDENT_PX[item.level] || 0) + 12, fontFamily: 'monospace', fontSize: 12, color: '#6c63ff' }}>
                 {item.itemCode}
               </td>

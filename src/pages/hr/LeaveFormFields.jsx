@@ -91,7 +91,7 @@ export default function LeaveFormFields({
       >
         {pendingFiles.length === 0
           ? 'Click or drag files here (sick notes, etc.)'
-          : pendingFiles.map((f, i) => <div key={i} style={{ color: '#6c63ff' }}>{f.name}</div>)
+          : pendingFiles.map((f, i) => <div key={f.name + '_' + f.size} style={{ color: '#6c63ff' }}>{f.name}</div>)
         }
       </div>
       <input id="leave-file-input" type="file" multiple style={{ display: 'none' }} onChange={e => setPendingFiles(f => [...f, ...Array.from(e.target.files)])} />

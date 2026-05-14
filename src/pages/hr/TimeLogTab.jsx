@@ -286,7 +286,9 @@ export default function TimeLogTab({ employees }) {
                             {isoToHHMM(s.outTimestamp)}
                             {s.outSource === 'biometric' && <FingerprintIcon title="Biometric clock-out" />}
                           </>
-                        : <span style={{ ...styles.pill, background: '#fef9ec', color: '#d97706' }}>No clock-out</span>
+                        : new Date(s.inTimestamp).toDateString() === new Date().toDateString()
+                            ? <span style={{ ...styles.pill, background: '#fef9ec', color: '#d97706' }}>No clock-out</span>
+                            : <span style={{ ...styles.pill, background: '#f3f4f6', color: '#9ca3af' }}>Not recorded</span>
                     }
                   </td>
                   <td style={styles.td}>

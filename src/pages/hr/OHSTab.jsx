@@ -26,7 +26,8 @@ export default function OHSTab({ employees, settingsData }) {
   const allEquipment      = Array.isArray(equipRaw)    ? equipRaw    : []
   const activeInspections = Array.isArray(activeRaw)   ? activeRaw   : []
 
-  const [ohsSubTab, setOhsSubTab] = useState('dashboard')
+  const [activeSection, setActiveSection] = useState('monitor')
+  const [activeTab,     setActiveTab]     = useState('dashboard')
 
   const today    = todayStr()
   const cutoff14 = daysAgoStr(14)
@@ -62,51 +63,101 @@ export default function OHSTab({ employees, settingsData }) {
     }
   })
 
-  const SUB_TABS = [
-    { key: 'dashboard',    label: 'Dashboard' },
-    { key: 'inspections',  label: 'Inspections' },
-    { key: 'templates',    label: 'Templates' },
-    { key: 'notifications', label: 'Notifications' },
-    { key: 'equipment',    label: 'Equipment' },
-    { key: 'risks',        label: 'Risk Register' },
-    { key: 'map',          label: 'Factory Map' },
-    { key: 'appointments', label: 'Appointments' },
-    { key: 'library',      label: 'OHS Library' },
-    { key: 'law',          label: 'OHS Law' },
-    { key: 'calendar',     label: 'Calendar' },
+  const SECTIONS = [
+    {
+      key: 'monitor',     label: 'Monitor',
+      tabs: [
+        { key: 'dashboard',     label: 'Dashboard' },
+        { key: 'incidents',     label: 'Incidents' },
+        { key: 'risks',         label: 'Risk Register' },
+      ],
+    },
+    {
+      key: 'inspections', label: 'Inspections',
+      tabs: [
+        { key: 'inspections',   label: 'Inspections' },
+        { key: 'templates',     label: 'Templates' },
+        { key: 'notifications', label: 'Notifications' },
+      ],
+    },
+    {
+      key: 'resources',   label: 'Resources',
+      tabs: [
+        { key: 'equipment',     label: 'Equipment' },
+        { key: 'appointments',  label: 'Appointments' },
+        { key: 'calendar',      label: 'Compliance Calendar' },
+      ],
+    },
+    {
+      key: 'site',        label: 'Site',
+      tabs: [
+        { key: 'map',           label: 'Factory Map' },
+        { key: 'library',       label: 'Library' },
+        { key: 'law',           label: 'Law Reference' },
+      ],
+    },
   ]
 
+  const currentSection = SECTIONS.find(s => s.key === activeSection)
+
+  function handleSectionClick(section) {
+    setActiveSection(section.key)
+    setActiveTab(section.tabs[0].key)
+  }
+
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-      {/* Scrollable tab bar */}
-      <div style={{ overflowX: 'auto', paddingBottom: 4 }}>
-        <div style={{ display: 'flex', gap: 6, minWidth: 'max-content' }}>
-          {SUB_TABS.map(({ key, label }) => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+      {/* Top-level section pills */}
+      <div style={{ display: 'flex', gap: 8, marginBottom: 12 }}>
+        {SECTIONS.map(section => (
+          <button
+            key={section.key}
+            onClick={() => handleSectionClick(section)}
+            style={{
+              padding: '7px 20px', borderRadius: 20, fontSize: 13, fontWeight: 600,
+              border: 'none', cursor: 'pointer', whiteSpace: 'nowrap',
+              background: activeSection === section.key ? '#6c63ff' : '#2a2a3a',
+              color: activeSection === section.key ? '#fff' : '#9ca3af',
+              transition: 'background 0.15s, color 0.15s',
+            }}
+          >
+            {section.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Secondary tab bar — underline style */}
+      <div style={{ display: 'flex', gap: 0, borderBottom: '2px solid #2a2a3a', marginBottom: 20 }}>
+        {currentSection.tabs.map(({ key, label }) => {
+          const isActive = activeTab === key
+          return (
             <button
               key={key}
-              onClick={() => setOhsSubTab(key)}
+              onClick={() => setActiveTab(key)}
               style={{
-                padding: '6px 16px', borderRadius: 20, fontSize: 13, fontWeight: 600,
-                border: 'none', cursor: 'pointer', whiteSpace: 'nowrap',
-                background: ohsSubTab === key ? '#6c63ff' : '#f3f4f6',
-                color: ohsSubTab === key ? '#fff' : '#374151',
+                padding: '8px 20px', background: 'transparent', border: 'none',
+                cursor: 'pointer', fontSize: 13, fontWeight: 600, whiteSpace: 'nowrap',
+                color: isActive ? '#6c63ff' : '#9ca3af',
+                borderBottom: isActive ? '2px solid #6c63ff' : '2px solid transparent',
+                marginBottom: -2,
+                transition: 'color 0.15s, border-color 0.15s',
               }}
             >
               {label}
               {key === 'notifications' && alerts.length > 0 && (
                 <span style={{
                   marginLeft: 6, borderRadius: 10, padding: '1px 6px', fontSize: 11, color: '#fff',
-                  background: ohsSubTab === 'notifications' ? 'rgba(255,255,255,0.3)' : '#ef4444',
+                  background: isActive ? 'rgba(108,99,255,0.4)' : '#ef4444',
                 }}>
                   {alerts.length}
                 </span>
               )}
             </button>
-          ))}
-        </div>
+          )
+        })}
       </div>
 
-      {ohsSubTab === 'dashboard'    && (
+      {activeTab === 'dashboard'     && (
         <OHSDashboard
           incidents={incidents}
           refreshOhs={refreshOhs}
@@ -116,16 +167,27 @@ export default function OHSTab({ employees, settingsData }) {
           allEquipment={allEquipment}
         />
       )}
-      {ohsSubTab === 'inspections'  && <InspectionRunsTab />}
-      {ohsSubTab === 'templates'    && <InspectionTemplatesTab />}
-      {ohsSubTab === 'notifications' && <OHSNotifications alerts={alerts} />}
-      {ohsSubTab === 'equipment'    && <EquipmentTab settingsData={settingsData} />}
-      {ohsSubTab === 'risks'        && <RiskRegisterTab settingsData={settingsData} />}
-      {ohsSubTab === 'map'          && <FactoryMapTab />}
-      {ohsSubTab === 'appointments' && <AppointmentsTab />}
-      {ohsSubTab === 'library'      && <OHSLibraryTab />}
-      {ohsSubTab === 'law'          && <OHSLawTab />}
-      {ohsSubTab === 'calendar'     && <ComplianceCalendarTab />}
+      {activeTab === 'incidents'     && (
+        <OHSDashboard
+          incidents={incidents}
+          refreshOhs={refreshOhs}
+          employees={employees || []}
+          appointments={appointments}
+          appointmentTypes={appointmentTypes}
+          allEquipment={allEquipment}
+          defaultView="incidents"
+        />
+      )}
+      {activeTab === 'inspections'   && <InspectionRunsTab />}
+      {activeTab === 'templates'     && <InspectionTemplatesTab />}
+      {activeTab === 'notifications' && <OHSNotifications alerts={alerts} />}
+      {activeTab === 'equipment'     && <EquipmentTab settingsData={settingsData} />}
+      {activeTab === 'risks'         && <RiskRegisterTab settingsData={settingsData} />}
+      {activeTab === 'map'           && <FactoryMapTab />}
+      {activeTab === 'appointments'  && <AppointmentsTab />}
+      {activeTab === 'library'       && <OHSLibraryTab />}
+      {activeTab === 'law'           && <OHSLawTab />}
+      {activeTab === 'calendar'      && <ComplianceCalendarTab />}
     </div>
   )
 }

@@ -25,7 +25,6 @@ export default function InventoryImportedBOMs() {
       const data = await res.json()
       setBoms(Array.isArray(data) ? data : [])
     } catch (err) {
-      console.error('[fetchBoms]', err)
       setImportError(err.message)
       setBoms([])
     } finally {
@@ -44,7 +43,6 @@ export default function InventoryImportedBOMs() {
       setSelectedBom(data)
       setBomItems(data.items || [])
     } catch (err) {
-      console.error('[selectBom]', err)
       setImportError(err.message)
       setSelectedBom(null)
       setBomItems([])
@@ -59,6 +57,7 @@ export default function InventoryImportedBOMs() {
     form.append('file', file)
     try {
       const res = await fetch(`${BASE}/boms/import`, { method: 'POST', body: form })
+      if (!res.ok) throw new Error(await res.text())
       const data = await res.json()
       if (!data.ok) {
         setImportError(data.error || 'Import failed.')
@@ -82,7 +81,6 @@ export default function InventoryImportedBOMs() {
       setDeleteConfirm(false)
       fetchBoms()
     } catch (err) {
-      console.error('[handleDelete]', err)
       setImportError(err.message)
     }
   }

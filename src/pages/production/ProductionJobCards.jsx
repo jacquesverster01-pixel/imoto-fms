@@ -27,7 +27,7 @@ function syncOpportunity(job, assemblies) {
   )
   if (!match) return null
   const asmTask = (job.tasks || []).find(t => t.type === 'assembly' && t.status !== 'Complete')
-  return asmTask ? asmTask : null
+  return asmTask
 }
 
 function SyncBanner({ task, jobId, onDone }) {

@@ -7,7 +7,7 @@ export function saveZones(updated, refetch) {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ zones: updated }),
-  }).then(() => refetch?.()).catch(err => console.error('saveZones failed:', err))
+  }).then(() => refetch?.())
 }
 
 // ── Coordinate helpers ────────────────────────────────────────────────────────

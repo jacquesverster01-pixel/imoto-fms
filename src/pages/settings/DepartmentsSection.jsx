@@ -155,13 +155,15 @@ export default function DepartmentsSection({ settings, onSaved }) {
         </button>
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
-        {departments.map(d => (
+        {departments.map(d => {
+          const count = staffCount(d.name)
+          return (
           <div key={d.name} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 12px', borderRadius: 10, border: '1px solid #f0f2f5' }}>
             <div style={{ width: 8, height: 40, borderRadius: 4, background: d.color, flexShrink: 0 }} />
             <div style={{ flex: 1, minWidth: 0 }}>
               <div style={{ fontSize: 12, fontWeight: 600, color: '#1a1d3b' }}>{d.name}</div>
               <div style={{ fontSize: 11, color: '#b0b5cc' }}>
-                {staffCount(d.name)} staff member{staffCount(d.name) !== 1 ? 's' : ''}
+                {count} staff member{count !== 1 ? 's' : ''}
               </div>
             </div>
             <button
@@ -171,7 +173,8 @@ export default function DepartmentsSection({ settings, onSaved }) {
               Edit
             </button>
           </div>
-        ))}
+        )
+        })}
       </div>
       {departments.length === 0 && (
         <div style={{ textAlign: 'center', color: '#b0b5cc', fontSize: 12, padding: '24px 0' }}>

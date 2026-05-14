@@ -5,13 +5,20 @@ import { styles } from '../../utils/hrStyles'
 export default function AddEmployeeModal({ onClose, onSaved, departments = [] }) {
   const [form, setForm] = useState({ name: '', dept: '', color: '#6c63ff' })
   const [saving, setSaving] = useState(false)
+  const [saveError, setSaveError] = useState(null)
 
   async function handleSave() {
     if (!form.name.trim() || !form.dept) return
     setSaving(true)
-    await apiFetch('/employees', { method: 'POST', body: JSON.stringify(form) })
-    setSaving(false)
-    onSaved()
+    setSaveError(null)
+    try {
+      await apiFetch('/employees', { method: 'POST', body: JSON.stringify(form) })
+      onSaved()
+    } catch {
+      setSaveError('Failed to save employee. Please try again.')
+    } finally {
+      setSaving(false)
+    }
   }
 
   return (
@@ -27,6 +34,7 @@ export default function AddEmployeeModal({ onClose, onSaved, departments = [] })
         </select>
         <label style={styles.label}>Colour</label>
         <input type="color" value={form.color} onChange={e => setForm(f => ({ ...f, color: e.target.value }))} style={{ marginBottom: 20, cursor: 'pointer' }} />
+        {saveError && <p style={{ color: '#dc2626', fontSize: 13, margin: '0 0 10px' }}>{saveError}</p>}
         <div style={styles.modalBtns}>
           <button style={styles.btnSecondary} onClick={onClose}>Cancel</button>
           <button style={styles.btnPrimary} onClick={handleSave} disabled={saving || !form.dept}>{saving ? 'Saving…' : 'Save'}</button>

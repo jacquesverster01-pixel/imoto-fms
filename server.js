@@ -71,6 +71,7 @@ const DATA_INITS = {
   'settings.json':               {},
   'boms.json':                   { boms: [] },
   'dept_codes.json':             { prefixMappings: [], assemblyPhases: [] },
+  'ohs_law_reference.json':      [],
   'stock_cache.json':            { updatedAt: null, byCode: {} },
 }
 for (const [file, empty] of Object.entries(DATA_INITS)) {
@@ -208,7 +209,7 @@ app.get('/api/health', (req, res) => {
 // ─── GLOBAL ERROR HANDLER ─────────────────────────────────────────────────────
 
 app.use((err, req, res, _next) => {
-  console.error(`[API error] ${req.method} ${req.path}:`, err)
+  if (process.env.NODE_ENV !== 'production') console.error(`[API error] ${req.method} ${req.path}:`, err)
   res.status(500).json({ error: 'Internal server error' })
 })
 

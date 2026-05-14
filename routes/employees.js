@@ -51,7 +51,9 @@ export default function employeesRouter(readData, writeData, upload) {
       const { from, to } = req.body
       if (!from || !to) return res.status(400).json({ error: 'from and to required' })
       const employees = readData('employees.json')
-      employees.forEach(e => { if (e.dept === from) e.dept = to })
+      let updated = 0
+      employees.forEach(e => { if (e.dept === from) { e.dept = to; updated++ } })
+      if (updated === 0) return res.status(404).json({ error: 'Department not found' })
       writeData('employees.json', employees)
       res.json({ ok: true })
     } catch (err) { res.status(500).json({ error: err.message }) }

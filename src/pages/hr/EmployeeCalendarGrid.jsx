@@ -12,7 +12,7 @@ export default function EmployeeCalendarGrid({ firstDow, daysInMonth, monthPrefi
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gridTemplateRows: 'repeat(6, 70px)', gap: 3 }}>
         {Array.from({ length: 42 }).map((_, i) => {
           const day = i - firstDow + 1
-          if (day < 1 || day > daysInMonth) return <div key={i} />
+          if (day < 1 || day > daysInMonth) return <div key={'empty_' + i} />
           const dateStr = `${monthPrefix}-${String(day).padStart(2, '0')}`
           const { status, leaveRecord, excusedRecord, shifts, totalHours, late, overtime, isWeekend } = getDayData(dateStr)
           const isCurrentDay = dateStr === today
@@ -34,7 +34,7 @@ export default function EmployeeCalendarGrid({ firstDow, daysInMonth, monthPrefi
 
           return (
             <div
-              key={i}
+              key={dateStr}
               onClick={isClickable ? handleCellClick : undefined}
               title={status === 'absent' ? 'Click to add excuse' : status === 'excused' ? 'Click to remove excuse' : isCalendarLeave ? `Click to remove ${leaveRecord.type}` : undefined}
               style={{ borderRadius: 6, background: cellBg, border: isCurrentDay ? '2px solid #6c63ff' : status === 'excused' ? '1px solid #86efac' : isCalendarLeave ? '1px solid #c4b5fd' : '1px solid #eee', padding: '4px 5px', overflow: 'hidden', cursor: isClickable ? 'pointer' : 'default' }}

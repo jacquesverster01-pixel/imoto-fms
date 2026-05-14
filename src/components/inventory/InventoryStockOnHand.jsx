@@ -134,7 +134,7 @@ export default function InventoryStockOnHand() {
                 const isLow    = avail <= 0 || (minLevel != null && avail <= minLevel)
                 return (
                   <tr
-                    key={i}
+                    key={item.ProductCode}
                     style={{
                       borderBottom: '1px solid #f0f2f5',
                       background: isLow ? '#fffbeb' : i % 2 === 0 ? '#fff' : '#fafafa',

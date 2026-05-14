@@ -8,6 +8,7 @@ export default function ProductionPlanner() {
   const [selectedJobId, setSelectedJobId] = useState(null)
   const [showNewJob, setShowNewJob] = useState(false)
   const [toast, setToast] = useState(null)
+  const [panelCollapsed, setPanelCollapsed] = useState(false)
 
   const { data: jobsData, refetch: refetchJobs } = useGet('/jobs')
   const { data: bomsData } = useGet('/boms')
@@ -39,17 +40,24 @@ export default function ProductionPlanner() {
     }
   }
 
+  const panelWidth = panelCollapsed ? 40 : (selectedJobId ? 200 : 300)
+
   return (
     <div style={{ display: 'flex', height: 'calc(100vh - 112px)', gap: 0, overflow: 'hidden' }}>
       {/* Left panel — job list */}
-      <div style={{ width: 280, flexShrink: 0, borderRight: '1px solid #e4e6ea',
-        background: '#fff', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+      <div style={{
+        width: panelWidth, flexShrink: 0, borderRight: '1px solid #e4e6ea',
+        background: '#fff', overflow: 'hidden', display: 'flex', flexDirection: 'column',
+        transition: 'width 0.2s ease',
+      }}>
         <JobListPanel
           jobs={jobs}
           selectedJobId={selectedJobId}
           onSelect={setSelectedJobId}
           onNewJob={() => setShowNewJob(true)}
           onDelete={handleJobDelete}
+          panelCollapsed={panelCollapsed}
+          onToggleCollapse={() => setPanelCollapsed(c => !c)}
         />
       </div>
 

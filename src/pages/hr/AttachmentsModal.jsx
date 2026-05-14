@@ -18,7 +18,7 @@ export default function AttachmentsModal({ record, onClose }) {
               const file = att.file || att
               return (
                 <a
-                  key={i}
+                  key={att.file || att}
                   href={`${UPLOADS_URL}/${file}`}
                   target="_blank"
                   rel="noopener noreferrer"

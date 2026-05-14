@@ -52,7 +52,7 @@ function readCache() {
 }
 
 function readAllJobs() {
-  try { return JSON.parse(fs.readFileSync(JOBS_FILE, 'utf-8')).jobs || [] }
+  try { const data = JSON.parse(fs.readFileSync(JOBS_FILE, 'utf-8')); return Array.isArray(data) ? data : (data.jobs || []) }
   catch { return [] }
 }
 
@@ -74,7 +74,6 @@ export async function refreshStockCache() {
   }
   const cache = { updatedAt: now, byCode }
   fs.writeFileSync(CACHE_FILE, JSON.stringify(cache, null, 2))
-  console.log(`[stock-refresh] cached ${Object.keys(byCode).length} SKUs at ${now}`)
   return { ok: true, count: Object.keys(byCode).length, updatedAt: now }
 }
 

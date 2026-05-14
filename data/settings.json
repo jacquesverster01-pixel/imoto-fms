@@ -85,5 +85,9 @@
     "Family Responsibility": 3
   },
   "factoryMapBg": "29aebfa0-3388-4dd1-a5f1-8697cd91454e.png",
-  "biometricImportFrom": "2026-01-01"
+  "biometricImportFrom": "2026-01-01",
+  "autoClockOut": {
+    "enabled": true,
+    "time": "16:00"
+  }
 }

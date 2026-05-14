@@ -12,7 +12,7 @@ export default function BomLibraryPanel({ boms, selectedBomId, onSelect, onImpor
 
   return (
     <div style={{
-      width: 220, minWidth: 220, background: '#fff', border: '1px solid #e4e6ea',
+      width: 260, minWidth: 260, background: '#fff', border: '1px solid #e4e6ea',
       borderRadius: 12, display: 'flex', flexDirection: 'column', overflow: 'hidden',
     }}>
       <div style={{ padding: '12px 12px 8px', borderBottom: '1px solid #f0f2f5' }}>
@@ -54,7 +54,7 @@ export default function BomLibraryPanel({ boms, selectedBomId, onSelect, onImpor
               onMouseLeave={e => { if (!active) e.currentTarget.style.background = 'transparent' }}
             >
               <div style={{ fontSize: 12, fontFamily: 'monospace', color: '#6c63ff', fontWeight: 700 }}>{b.productCode}</div>
-              <div style={{ fontSize: 11, color: '#555', marginTop: 2, lineHeight: 1.3 }}>{b.productDescription}</div>
+              <div style={{ fontSize: 11, color: '#555', marginTop: 2, overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>{b.productDescription}</div>
               <div style={{ fontSize: 10, color: '#aaa', marginTop: 3 }}>{b.bomReference} · {b.rowCount} rows</div>
             </button>
           )

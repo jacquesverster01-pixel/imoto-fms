@@ -4,21 +4,6 @@ import AddEmployeeModal from './AddEmployeeModal'
 import EmployeeEditModal from './EmployeeEditModal'
 import EmployeeDetailModal from './EmployeeDetailModal'
 
-// ─── Constants ────────────────────────────────────────────────────────────────
-
-const DOC_SLOTS = [
-  { key: 'cv',             label: 'CV / Résumé' },
-  { key: 'driversLicense', label: "Driver's Licence" },
-  { key: 'contract',       label: 'Signed Contract' },
-  { key: 'teamInfoSheet',  label: 'Team Info Sheet' },
-  { key: 'workPermit',     label: 'Work Permit' },
-]
-
-function getOutstandingDocCount(emp) {
-  const docs = emp.documents || {}
-  return DOC_SLOTS.filter(slot => !docs[slot.key]).length
-}
-
 // AddEmployeeModal    → ./AddEmployeeModal.jsx
 // EmployeeEditModal   → ./EmployeeEditModal.jsx
 // EmployeeDetailModal → ./EmployeeDetailModal.jsx
@@ -92,9 +77,7 @@ export default function EmployeesTab({ employees, settingsData, refetchEmployees
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-        {filtered.map(emp => {
-          const outCount = getOutstandingDocCount(emp)
-          return (
+        {filtered.map(emp => (
             <div
               key={emp.id}
               onClick={() => setViewEmployee(emp)}
@@ -108,19 +91,13 @@ export default function EmployeesTab({ employees, settingsData, refetchEmployees
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ fontWeight: 600, fontSize: 14, color: '#1e1f3b' }}>{emp.name}</div>
                 <div style={{ fontSize: 12, color: '#aaa', marginTop: 1 }}>
-                  {emp.dept || <span style={{ color: '#f59e0b' }}>No department set</span>}
+                  {emp.dept || <span style={{ color: '#bbb' }}>No department set</span>}
                   {emp.zkUserId && <span style={{ marginLeft: 8 }}>· ZK {emp.zkUserId}</span>}
                 </div>
               </div>
-              {outCount > 0 && (
-                <span style={{ fontSize: 10, fontWeight: 700, padding: '2px 8px', borderRadius: 10, background: '#fff7ed', color: '#d97706', border: '1px solid #fcd34d', flexShrink: 0 }}>
-                  {outCount} doc{outCount !== 1 ? 's' : ''} missing
-                </span>
-              )}
               <div style={{ fontSize: 11, color: '#ccc' }}>{emp.id}</div>
             </div>
-          )
-        })}
+        ))}
         {filtered.length === 0 && (
           <div style={{ textAlign: 'center', padding: 40, color: '#ccc', fontSize: 14 }}>No employees found</div>
         )}

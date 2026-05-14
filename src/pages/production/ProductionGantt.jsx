@@ -33,7 +33,7 @@ export default function ProductionGantt({ jobs, readOnly = false }) {
   return (
     <div className="bg-white rounded-xl border overflow-hidden" style={{ borderColor: '#e4e6ea' }}>
       <div className="flex items-center gap-3 px-4 py-3 border-b" style={{ borderColor: '#f0f2f5' }}>
-        <span className="font-semibold text-xs" style={{ color: '#1a1d3b' }}>Production schedule — March 2026</span>
+        <span className="font-semibold text-xs" style={{ color: '#1a1d3b' }}>Production schedule — {new Date().toLocaleDateString('en-ZA', { month: 'long', year: 'numeric' })}</span>
         <div className="flex gap-1 ml-auto">
           {['Week', 'Month', 'Quarter'].map((v, i) => (
             <button key={v} className="px-2.5 py-1 rounded text-xs font-medium border"

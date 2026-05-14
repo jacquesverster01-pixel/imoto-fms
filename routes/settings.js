@@ -71,7 +71,7 @@ export default function settingsRouter(readData, writeData) {
     try {
       writeData('timelog.json', [])
       writeData('leave.json', [])
-      writeData('jobs.json', [])
+      writeData('jobs.json', { jobs: [] })
       writeData('tools.json', [])
       writeData('stock.json', [])
       res.json({ ok: true })

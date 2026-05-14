@@ -44,6 +44,7 @@ export default function FactoryMapTab() {
   const [selectedAsset,   setSelectedAsset]   = useState(null)
   const [confirmDelAsset, setConfirmDelAsset] = useState(null)
   const [selectedZone,    setSelectedZone]    = useState(null)
+  const [mapError,        setMapError]        = useState(null)
 
   const showToast = (msg, type = 'info') => { setToast({ msg, type }); setTimeout(() => setToast(null), 2200) }
 
@@ -111,12 +112,15 @@ export default function FactoryMapTab() {
   async function handleAddZone() {
     if (!addForm.name.trim()) return
     setAddSaving(true)
+    setMapError(null)
     try {
       const { width: cW, height: cH } = canvasRef.current?.getBoundingClientRect() || { width: 900, height: 506 }
       const id = `Z${Date.now()}`
       const z = { id, name: addForm.name.trim(), colour: addForm.colour, rects: [{ id: id + '-r0', xPct: 20 / cW, yPct: 20 / cH, widthPct: 140 / cW, heightPct: 90 / cH }] }
       await saveZones([...zones, z], refetchRef.current)
       setShowAdd(false); setAddForm({ name: '', colour: '#dbeafe' })
+    } catch {
+      setMapError('Save failed. Please try again.')
     } finally { setAddSaving(false) }
   }
 
@@ -124,7 +128,8 @@ export default function FactoryMapTab() {
 
   function handleFloorPlanUpload(e) {
     const file = e.target.files[0]; if (!file) return
-    uploadFloorPlan(file, setFloorPlan, msg => showToast(msg, 'error'), setFpLoading)
+    setMapError(null)
+    uploadFloorPlan(file, setFloorPlan, msg => { showToast(msg, 'error'); setMapError('Save failed. Please try again.') }, setFpLoading)
   }
 
   async function handleRemoveFloorPlan() {
@@ -133,11 +138,12 @@ export default function FactoryMapTab() {
   }
 
   async function handleAddAsset(newAsset) {
+    setMapError(null)
     try {
       const updated = [...assets, newAsset]
       await apiFetch('/ohs-map-assets', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ assets: updated }) })
       setAssets(updated); setAddAssetPos(null)
-    } catch (err) { console.error('Add asset failed:', err) }
+    } catch (err) { console.error('Add asset failed:', err); setMapError('Save failed. Please try again.') }
   }
 
   async function handleDeleteAsset(asset) {
@@ -242,6 +248,7 @@ export default function FactoryMapTab() {
             setTooltip(null); setIncPop(null); setSelectedAsset(null)
           }}>
           {toast && <div style={{ position: 'absolute', top: 8, right: 8, zIndex: 10, padding: '5px 12px', borderRadius: 6, fontSize: 12, fontWeight: 500, color: '#fff', pointerEvents: 'none', background: toast.type === 'error' ? 'rgba(163,45,45,0.9)' : 'rgba(15,110,86,0.9)' }}>{toast.msg}</div>}
+          {mapError && <div style={{ position: 'absolute', top: 8, left: 8, zIndex: 10, padding: '5px 12px', borderRadius: 6, fontSize: 12, fontWeight: 500, color: '#fff', background: 'rgba(220,38,38,0.9)' }}>{mapError}</div>}
           <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', overflow: 'hidden', zIndex: 5 }}>
             {snapLines.map((line, i) =>
               line.axis === 'x'

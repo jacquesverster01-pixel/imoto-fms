@@ -257,7 +257,6 @@ export async function pullHistoricalLogs({ since = null } = {}) {
       if (!emp) {
         unmatched++
         const unmatchedTs = new Date(record.recordTime).toISOString()
-        console.warn('[ZK] Unmatched employee ID', { zkId: String(record.deviceUserId), timestamp: unmatchedTs, deviceSerial: DEVICE_IP })
         _logUnmatched(String(record.deviceUserId), unmatchedTs)
         continue
       }

@@ -8,7 +8,11 @@ function fmtDate(iso) {
   return `${d.getUTCDate()} ${MONTH_SHORT[d.getUTCMonth()]} ${d.getUTCFullYear()}`
 }
 
-export default function JobListPanel({ jobs, selectedJobId, onSelect, onNewJob, onDelete }) {
+function jobInitial(job) {
+  return (job.title || job.id || '?')[0].toUpperCase()
+}
+
+export default function JobListPanel({ jobs, selectedJobId, onSelect, onNewJob, onDelete, panelCollapsed, onToggleCollapse }) {
   const [confirmDeleteId, setConfirmDeleteId] = useState(null)
   const [hoveredCardId, setHoveredCardId] = useState(null)
   const [btnHoverId, setBtnHoverId] = useState(null)
@@ -25,18 +29,72 @@ export default function JobListPanel({ jobs, selectedJobId, onSelect, onNewJob, 
     onDelete(jobId)
   }
 
+  if (panelCollapsed) {
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', height: '100%', width: 40, alignItems: 'center', paddingTop: 6, gap: 4, overflow: 'hidden' }}>
+        <button
+          onClick={onToggleCollapse}
+          title="Expand panel"
+          style={{
+            width: 28, height: 28, border: '1px solid #e4e6ea', borderRadius: 6,
+            background: '#fff', color: '#9298c4', cursor: 'pointer',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            fontSize: 15, flexShrink: 0, padding: 0, lineHeight: 1,
+          }}
+        >
+          ›
+        </button>
+        <div style={{ width: 28, height: 1, background: '#e4e6ea', flexShrink: 0 }} />
+        {(jobs || []).map(job => {
+          const isActive = job.id === selectedJobId
+          return (
+            <div
+              key={job.id}
+              onClick={() => onSelect(job.id)}
+              title={job.title}
+              style={{
+                width: 28, height: 28, borderRadius: '50%',
+                background: isActive ? '#6c63ff' : '#f0f2f5',
+                color: isActive ? '#fff' : '#9298c4',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                cursor: 'pointer', fontSize: 11, fontWeight: 700,
+                flexShrink: 0, userSelect: 'none',
+                outline: isActive ? '2px solid #6c63ff33' : 'none',
+                outlineOffset: 2,
+              }}
+            >
+              {jobInitial(job)}
+            </div>
+          )
+        })}
+      </div>
+    )
+  }
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-      <div style={{ padding: 12, borderBottom: '1px solid #e4e6ea', flexShrink: 0 }}>
+      <div style={{ padding: '10px 10px 10px 12px', borderBottom: '1px solid #e4e6ea', flexShrink: 0, display: 'flex', gap: 6, alignItems: 'center' }}>
         <button
           onClick={onNewJob}
           style={{
-            width: '100%', padding: '8px 12px', borderRadius: 8,
+            flex: 1, padding: '8px 10px', borderRadius: 8,
             background: '#6c63ff', color: '#fff', border: 'none',
-            fontSize: 13, fontWeight: 600, cursor: 'pointer'
+            fontSize: 13, fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
           }}
         >
           + New Job
+        </button>
+        <button
+          onClick={onToggleCollapse}
+          title="Collapse panel"
+          style={{
+            width: 28, height: 28, flexShrink: 0, border: '1px solid #e4e6ea', borderRadius: 6,
+            background: '#fff', color: '#9298c4', cursor: 'pointer',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            fontSize: 15, padding: 0, lineHeight: 1,
+          }}
+        >
+          ‹
         </button>
       </div>
       <div style={{ flex: 1, overflowY: 'auto', padding: 8 }}>

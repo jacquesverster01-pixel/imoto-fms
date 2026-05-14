@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import multer from 'multer'
 import { parse } from 'csv-parse/sync'
+import { randomUUID } from 'crypto'
 
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 10 * 1024 * 1024 } })
 
@@ -37,17 +38,21 @@ export default function bomsRouter(readData, writeData) {
   const router = Router()
 
   router.get('/boms', (req, res) => {
-    const { boms } = readData('boms.json')
-    res.json(boms.map(({ id, productCode, productDescription, bomReference, importedAt, rowCount }) =>
-      ({ id, productCode, productDescription, bomReference, importedAt, rowCount })
-    ))
+    try {
+      const { boms } = readData('boms.json')
+      res.json(boms.map(({ id, productCode, productDescription, bomReference, importedAt, rowCount }) =>
+        ({ id, productCode, productDescription, bomReference, importedAt, rowCount })
+      ))
+    } catch (err) { res.status(500).json({ error: 'Internal server error' }) }
   })
 
   router.get('/boms/:id', (req, res) => {
-    const { boms } = readData('boms.json')
-    const bom = boms.find(b => b.id === req.params.id)
-    if (!bom) return res.status(404).json({ error: 'BOM not found' })
-    res.json(bom)
+    try {
+      const { boms } = readData('boms.json')
+      const bom = boms.find(b => b.id === req.params.id)
+      if (!bom) return res.status(404).json({ error: 'BOM not found' })
+      res.json(bom)
+    } catch (err) { res.status(500).json({ error: 'Internal server error' }) }
   })
 
   router.post('/boms/import', upload.single('file'), (req, res) => {
@@ -62,7 +67,7 @@ export default function bomsRouter(readData, writeData) {
     const first = items[0]
     const data = readData('boms.json')
     const existing = data.boms.find(b => b.productCode === first.productCode)
-    const id = existing ? existing.id : crypto.randomUUID()
+    const id = existing ? existing.id : randomUUID()
     const entry = {
       id,
       productCode:        first.productCode,
@@ -82,12 +87,14 @@ export default function bomsRouter(readData, writeData) {
   })
 
   router.delete('/boms/:id', (req, res) => {
-    const data = readData('boms.json')
-    const before = data.boms.length
-    data.boms = data.boms.filter(b => b.id !== req.params.id)
-    if (data.boms.length === before) return res.status(404).json({ error: 'BOM not found' })
-    writeData('boms.json', data)
-    res.json({ ok: true })
+    try {
+      const data = readData('boms.json')
+      const before = data.boms.length
+      data.boms = data.boms.filter(b => b.id !== req.params.id)
+      if (data.boms.length === before) return res.status(404).json({ error: 'BOM not found' })
+      writeData('boms.json', data)
+      res.json({ ok: true })
+    } catch (err) { res.status(500).json({ error: 'Internal server error' }) }
   })
 
   return router

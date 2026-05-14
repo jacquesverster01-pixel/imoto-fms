@@ -20,7 +20,12 @@ import AutoClockOutSection from './settings/AutoClockOutSection'
 import OvertimeSection from './settings/OvertimeSection'
 import DeptCodesSettings from './settings/DeptCodesSettings'
 
-const SECTIONS = ['Company details', 'Departments', 'Department Codes', 'Users & roles', 'Shift editor', 'Leave editor', 'Auto clock-out', 'Overtime', 'Alert rules', 'WhatsApp bot', 'Data & backup']
+const NAV_GROUPS = [
+  { label: 'COMPANY',    items: ['Company details', 'Departments', 'Department Codes'] },
+  { label: 'PEOPLE',     items: ['Users & roles', 'Shift editor', 'Leave editor', 'Overtime'] },
+  { label: 'AUTOMATION', items: ['Auto clock-out', 'Alert rules', 'WhatsApp bot'] },
+  { label: 'SYSTEM',     items: ['Data & backup'] },
+]
 
 export default function Settings() {
   const [activeSection, setActiveSection] = useState('Company details')
@@ -38,15 +43,22 @@ export default function Settings() {
   return (
     <div className="grid gap-4" style={{ gridTemplateColumns: '180px 1fr' }}>
       <div className="bg-white rounded-xl border p-2 self-start" style={{ borderColor: '#e4e6ea' }}>
-        {SECTIONS.map(s => (
-          <button
-            key={s}
-            onClick={() => setActiveSection(s)}
-            className="w-full text-left px-3 py-2 rounded-lg text-xs font-medium transition-colors block"
-            style={{ background: activeSection === s ? '#6c63ff15' : 'transparent', color: activeSection === s ? '#6c63ff' : '#9298c4' }}
-          >
-            {s}
-          </button>
+        {NAV_GROUPS.map((group, gi) => (
+          <div key={group.label} style={{ marginTop: gi > 0 ? 8 : 0 }}>
+            <div className="px-3 pt-1 pb-1 text-xs tracking-widest uppercase" style={{ color: '#b0b5cc', fontWeight: 600, fontSize: 10 }}>
+              {group.label}
+            </div>
+            {group.items.map(s => (
+              <button
+                key={s}
+                onClick={() => setActiveSection(s)}
+                className="w-full text-left px-3 py-2 rounded-lg text-xs font-medium transition-colors block"
+                style={{ background: activeSection === s ? '#6c63ff15' : 'transparent', color: activeSection === s ? '#6c63ff' : '#9298c4' }}
+              >
+                {s}
+              </button>
+            ))}
+          </div>
         ))}
       </div>
       <div>

@@ -13,6 +13,14 @@ const TABS = [
   { id: 'importedboms', label: 'Imported BOMs' },
 ]
 
+const TAB_SUBTITLES = {
+  stock:        'Live stock positions via Unleashed',
+  products:     'Live product catalogue via Unleashed',
+  bom:          'Live bill of materials via Unleashed',
+  assemblies:   'Live assembly structures via Unleashed',
+  importedboms: 'Imported BOMs from CSV — stored locally',
+}
+
 export default function Inventory() {
   const [activeTab, setActiveTab] = useState('stock')
 
@@ -21,7 +29,7 @@ export default function Inventory() {
       <div style={{ marginBottom: 20 }}>
         <h2 style={{ fontSize: 20, fontWeight: 700, color: '#1a1d3b', margin: 0 }}>Inventory</h2>
         <p style={{ fontSize: 13, color: '#9298c4', margin: '4px 0 0' }}>
-          Live stock positions, products and manufacturing BOMs via Unleashed
+          {TAB_SUBTITLES[activeTab]}
         </p>
       </div>
 
