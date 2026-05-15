@@ -1,6 +1,5 @@
 import { Router } from 'express'
 import multer from 'multer'
-import { parse } from 'csv-parse/sync'
 
 const memUpload = multer({ storage: multer.memoryStorage() })
 
@@ -39,24 +38,32 @@ export default function stockRouter(readData, writeData) {
       let rows, headers
       try {
         const text = req.file.buffer.toString('latin1')
-        const allRows = parse(text, { skip_empty_lines: true, trim: true, relax_column_count: true })
-        if (!allRows.length) return res.status(400).json({ error: 'CSV file is empty.' })
+        const lines = text.split(/\r?\n/).filter(l => l.trim())
+        if (!lines.length) return res.status(400).json({ error: 'CSV file is empty.' })
 
-        const KNOWN_HEADERS = ['product code', 'productcode', 'code', 'item_code', 'itemcode']
-        let headerRowIndex = 0
-        for (let i = 0; i < Math.min(5, allRows.length); i++) {
-          const rowLower = allRows[i].map(c => String(c).toLowerCase().trim())
-          if (KNOWN_HEADERS.some(h => rowLower.includes(h))) { headerRowIndex = i; break }
+        const KNOWN = ['product code', 'productcode', 'code', 'item_code', 'itemcode']
+        let headerIdx = 0
+        for (let i = 0; i < Math.min(5, lines.length); i++) {
+          const cells = lines[i].split(',').map(c => c.trim().toLowerCase())
+          if (KNOWN.some(k => cells.includes(k))) { headerIdx = i; break }
         }
 
-        headers = allRows[headerRowIndex].map(c => String(c).trim())
+        headers = lines[headerIdx].split(',').map(c => c.trim())
         console.log('[import-csv] detected headers:', headers)
-        const dataRows = allRows.slice(headerRowIndex + 1).filter(r => r.some(c => c !== ''))
-        if (!dataRows.length) return res.status(400).json({ error: 'No data rows found after header.' })
+        const dataLines = lines.slice(headerIdx + 1).filter(l => l.trim())
+        if (!dataLines.length) return res.status(400).json({ error: 'No data rows found after header.' })
 
-        rows = dataRows.map(r => {
+        rows = dataLines.map(line => {
+          const cells = []
+          let cur = '', inQ = false
+          for (const ch of line) {
+            if (ch === '"') { inQ = !inQ }
+            else if (ch === ',' && !inQ) { cells.push(cur.trim()); cur = '' }
+            else cur += ch
+          }
+          cells.push(cur.trim())
           const obj = {}
-          headers.forEach((h, i) => { obj[h] = r[i] ?? '' })
+          headers.forEach((h, i) => { obj[h] = cells[i] ?? '' })
           return obj
         })
       } catch (e) {
