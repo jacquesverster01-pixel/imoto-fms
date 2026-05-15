@@ -1,6 +1,6 @@
 import KanbanCard from './KanbanCard.jsx'
 
-export default function KanbanSwimLane({ department, deptColour, tasks, expandedTaskId, onExpand, onStatusChange, updatingTaskId }) {
+export default function KanbanSwimLane({ department, deptColour, tasks, expandedTaskId, onExpand, onStatusChange, updatingTaskId, stockCache, globalAllocations, stockCacheData }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', background: '#fff', borderRadius: 10, border: '1px solid #e4e6ea', overflow: 'hidden', minHeight: 120 }}>
       <div style={{ borderTop: `3px solid ${deptColour}`, padding: '10px 12px', borderBottom: '1px solid #f0f2f5', background: '#fafbff' }}>
@@ -25,6 +25,9 @@ export default function KanbanSwimLane({ department, deptColour, tasks, expanded
               onExpand={onExpand}
               onStatusChange={onStatusChange}
               isUpdating={updatingTaskId === task.id}
+              stockCache={stockCache}
+              globalAllocations={globalAllocations}
+              stockCacheData={stockCacheData}
             />
           ))
         )}

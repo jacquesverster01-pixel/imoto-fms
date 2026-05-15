@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useGet, apiFetch } from '../../../hooks/useApi.js'
 import { getTaskDepartments, taskOverlapsWeek, getWeekStart, getWeekEnd } from '../../../utils/deptAllocation.js'
+import { computeGlobalAllocations } from '../../../utils/stockAllocation.js'
 import KanbanSwimLane from './KanbanSwimLane.jsx'
 
 function walk(tasks, jobId, jobTitle, jobColour, jobPriority) {
@@ -56,6 +57,7 @@ export default function KanbanBoard() {
   const { data: jobsData, refetch } = useGet('/jobs')
   const { data: codesData } = useGet('/dept-codes')
   const { data: settingsData } = useGet('/settings')
+  const { data: stockCacheData } = useGet('/stock-cache/data')
   const [weekOffset, setWeekOffset] = useState(0)
   const [expandedTaskId, setExpandedTaskId] = useState(null)
   const [updatingTaskId, setUpdatingTaskId] = useState(null)
@@ -63,6 +65,8 @@ export default function KanbanBoard() {
   const jobs = Array.isArray(jobsData?.jobs) ? jobsData.jobs : (Array.isArray(jobsData) ? jobsData : [])
   const prefixMappings = codesData?.prefixMappings || []
   const departments = settingsData?.departments || []
+  const stockCache = stockCacheData?.byCode ?? {}
+  const globalAllocations = computeGlobalAllocations(jobs)
 
   const weekStart = getWeekStart(offsetDate(new Date(), weekOffset))
   const weekEnd = getWeekEnd(weekStart)
@@ -132,6 +136,9 @@ export default function KanbanBoard() {
               onExpand={handleExpand}
               onStatusChange={handleStatusChange}
               updatingTaskId={updatingTaskId}
+              stockCache={stockCache}
+              globalAllocations={globalAllocations}
+              stockCacheData={stockCacheData}
             />
           )
         })}

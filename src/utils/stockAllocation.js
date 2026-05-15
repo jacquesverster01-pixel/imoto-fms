@@ -23,7 +23,7 @@ export function computeGlobalAllocations(allOpenJobs) {
 
 export function checkTaskAllocation(task, stockByCode, globalAllocations) {
   return (task.components || []).map(comp => {
-    const cached = stockByCode[comp.itemCode]
+    const cached = stockByCode[comp.itemCode?.toUpperCase()]
     const totalAllocated = globalAllocations.get(comp.itemCode) || 0
     if (!cached) {
       return {

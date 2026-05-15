@@ -1,3 +1,4 @@
+import { checkTaskAllocation } from '../../../utils/stockAllocation.js'
 import KanbanCardDetail from './KanbanCardDetail.jsx'
 
 function formatDate(d) {
@@ -5,19 +6,28 @@ function formatDate(d) {
   return new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })
 }
 
-function stockDotColor(task) {
-  const s = task.stockSummary || task.allocationStatus?.summary
-  if (!s) return task.components?.length > 0 ? '#9ca3af' : '#3b82f6'
-  if (s.out > 0) return '#ef4444'
-  if (s.short > 0) return '#f59e0b'
-  if (s.unknown > 0) return '#9ca3af'
-  return '#22c55e'
+function computeAllocStatus(task, stockCache, globalAllocations) {
+  const comps = task.components || []
+  if (comps.length === 0) return 'none'
+  const results = checkTaskAllocation(task, stockCache || {}, globalAllocations || new Map())
+  if (results.some(r => r.status === 'out'))     return 'out'
+  if (results.some(r => r.status === 'short'))   return 'low'
+  if (results.some(r => r.status === 'unknown')) return 'unknown'
+  return 'ok'
 }
 
-export default function KanbanCard({ task, isExpanded, onExpand, onStatusChange, isUpdating }) {
+const ALLOC_DOT_COLOR = {
+  ok:      '#22c55e',
+  low:     '#f59e0b',
+  out:     '#ef4444',
+  unknown: '#9298c4',
+}
+
+export default function KanbanCard({ task, isExpanded, onExpand, onStatusChange, isUpdating, stockCache, globalAllocations, stockCacheData }) {
   const borderColor = task.dueThisWeek ? '#f59e0b' : (task.jobColour || '#dbeafe')
   const bgColor = task.dueThisWeek ? '#fffbeb' : '#fff'
-  const dot = stockDotColor(task)
+  const allocStatus = computeAllocStatus(task, stockCache, globalAllocations)
+  const dotColor = ALLOC_DOT_COLOR[allocStatus]
 
   return (
     <div style={{ marginBottom: 6, borderRadius: 6, border: '1px solid #e4e6ea', overflow: 'hidden' }}>
@@ -30,10 +40,12 @@ export default function KanbanCard({ task, isExpanded, onExpand, onStatusChange,
             {task.name}
           </span>
           <div style={{ display: 'flex', alignItems: 'center', gap: 4, flexShrink: 0, marginLeft: 4 }}>
-            <div
-              title="Stock status"
-              style={{ width: 8, height: 8, borderRadius: '50%', background: dot, flexShrink: 0 }}
-            />
+            {allocStatus !== 'none' && (
+              <div
+                title="Stock status"
+                style={{ width: 8, height: 8, borderRadius: '50%', background: dotColor, flexShrink: 0 }}
+              />
+            )}
             <span style={{ fontSize: 10, color: '#b0b5cc', whiteSpace: 'nowrap', fontFamily: 'monospace' }}>
               {task.jobId ? task.jobId.slice(-8) : ''}
             </span>
@@ -51,7 +63,14 @@ export default function KanbanCard({ task, isExpanded, onExpand, onStatusChange,
         </div>
       </div>
       {isExpanded && (
-        <KanbanCardDetail task={task} onStatusChange={onStatusChange} isUpdating={isUpdating} />
+        <KanbanCardDetail
+          task={task}
+          onStatusChange={onStatusChange}
+          isUpdating={isUpdating}
+          stockCache={stockCache}
+          globalAllocations={globalAllocations}
+          stockCacheData={stockCacheData}
+        />
       )}
     </div>
   )
