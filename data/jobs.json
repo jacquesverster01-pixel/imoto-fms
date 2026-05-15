@@ -5610,8 +5610,8 @@
         },
         {
           "taskId": "t-bom-4",
-          "startDate": null,
-          "endDate": null
+          "startDate": "2026-05-06",
+          "endDate": "2026-05-15"
         },
         {
           "taskId": "t-bom-5",
@@ -5625,18 +5625,18 @@
         },
         {
           "taskId": "t-bom-11",
-          "startDate": null,
-          "endDate": null
+          "startDate": "2026-05-03",
+          "endDate": "2026-05-10"
         },
         {
           "taskId": "t-bom-12",
-          "startDate": null,
-          "endDate": null
+          "startDate": "2026-04-28",
+          "endDate": "2026-05-08"
         },
         {
           "taskId": "t-bom-13",
-          "startDate": null,
-          "endDate": null
+          "startDate": "2026-05-05",
+          "endDate": "2026-05-14"
         },
         {
           "taskId": "t-bom-14",
@@ -5645,8 +5645,8 @@
         },
         {
           "taskId": "t-bom-15",
-          "startDate": null,
-          "endDate": null
+          "startDate": "2026-05-06",
+          "endDate": "2026-05-14"
         },
         {
           "taskId": "t-bom-16",
@@ -5695,23 +5695,13 @@
         },
         {
           "taskId": "t-bom-39",
-          "startDate": "2026-05-12",
-          "endDate": "2026-05-15"
+          "startDate": null,
+          "endDate": null
         },
         {
           "taskId": "t-bom-40",
           "startDate": null,
           "endDate": null
-        },
-        {
-          "taskId": "t-1777964170562",
-          "startDate": "2026-05-08",
-          "endDate": "2026-05-08"
-        },
-        {
-          "taskId": "t-1777964187141",
-          "startDate": "2026-05-08",
-          "endDate": "2026-05-08"
         }
       ]
     }

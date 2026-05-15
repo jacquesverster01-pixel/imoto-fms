@@ -27,6 +27,14 @@
     {
       "prefix": "PLU",
       "department": "Plumbing"
+    },
+    {
+      "prefix": "APP",
+      "department": "Assembly"
+    },
+    {
+      "prefix": "CON",
+      "department": "Assembly"
     }
   ],
   "assemblyPhases": []

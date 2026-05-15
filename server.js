@@ -154,6 +154,21 @@ function writeData(file, data) {
   }
 }
 
+// ─── SETTINGS MIGRATION ───────────────────────────────────────────────────────
+// Migrate autoClockOut from old shape { enabled, time } to { enabled, clockOutTime, deadlineTime }
+try {
+  const s = readData('settings.json')
+  const aco = s?.autoClockOut
+  if (aco && aco.time !== undefined && aco.clockOutTime === undefined) {
+    s.autoClockOut = { enabled: aco.enabled ?? true, clockOutTime: aco.time, deadlineTime: '23:59' }
+    writeData('settings.json', s)
+    console.log('[Migration] autoClockOut migrated to new shape')
+  } else if (!aco) {
+    s.autoClockOut = { enabled: false, clockOutTime: '16:00', deadlineTime: '23:59' }
+    writeData('settings.json', s)
+  }
+} catch {}
+
 // ─── ZK SERVICE ───────────────────────────────────────────────────────────────
 
 initZKService(readData, writeData)

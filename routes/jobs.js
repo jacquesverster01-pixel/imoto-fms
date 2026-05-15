@@ -61,6 +61,18 @@ export default function jobsRouter(readData, writeData, upload, uploadsDir) {
     } catch (err) { res.status(500).json({ error: err.message }) }
   })
 
+  // PATCH /api/jobs/:id/labour — update labour estimate only
+  router.patch('/jobs/:id/labour', (req, res) => {
+    try {
+      const data = readData('jobs.json')
+      const job = data.jobs.find(j => j.id === req.params.id)
+      if (!job) return res.status(404).json({ error: 'Job not found' })
+      job.labourEstimate = parseFloat(req.body.labourEstimate) || 0
+      writeData('jobs.json', data)
+      res.json(job)
+    } catch (err) { res.status(500).json({ error: err.message }) }
+  })
+
   // PUT /api/jobs/:id/baseline — snapshot task dates as baseline
   router.put('/jobs/:id/baseline', (req, res) => {
     try {
@@ -79,7 +91,7 @@ export default function jobsRouter(readData, writeData, upload, uploadsDir) {
       const data = readData('jobs.json')
       const idx = data.jobs.findIndex(j => j.id === req.params.id)
       if (idx === -1) return res.status(404).json({ error: 'Job not found' })
-      const allowed = ['title', 'status', 'colour', 'startDate', 'dueDate', 'assemblyId', 'bomId', 'tasks', 'sourceBomId', 'sourceProductCode']
+      const allowed = ['title', 'status', 'colour', 'startDate', 'dueDate', 'assemblyId', 'bomId', 'tasks', 'sourceBomId', 'sourceProductCode', 'labourEstimate']
       allowed.forEach(k => {
         if (req.body[k] !== undefined) data.jobs[idx][k] = req.body[k]
       })
@@ -133,6 +145,12 @@ export default function jobsRouter(readData, writeData, upload, uploadsDir) {
       allowed.forEach(k => {
         if (req.body[k] !== undefined) data.jobs[jobIdx].tasks[taskIdx][k] = req.body[k]
       })
+      // 'status' from the department kanban board — maps to kanbanStatus + done
+      if (req.body.status !== undefined) {
+        const s = req.body.status
+        data.jobs[jobIdx].tasks[taskIdx].kanbanStatus = s === 'in-progress' ? 'inprogress' : s
+        data.jobs[jobIdx].tasks[taskIdx].done = s === 'done'
+      }
       writeData('jobs.json', data)
       res.json(data.jobs[jobIdx].tasks[taskIdx])
     } catch (err) { res.status(500).json({ error: err.message }) }

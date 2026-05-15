@@ -44,7 +44,7 @@ export function checkTaskAllocation(task, stockByCode, globalAllocations) {
       onHand,
       totalAllocatedAcrossJobs: totalAllocated,
       available,
-      status: available >= required ? 'ok' : 'short',
+      status: available >= required ? 'ok' : available <= 0 ? 'out' : 'short',
     }
   })
 }
@@ -59,6 +59,7 @@ export function checkJobAllocation(job, stockByCode, globalAllocations) {
       summary: {
         ok:      components.filter(c => c.status === 'ok').length,
         short:   components.filter(c => c.status === 'short').length,
+        out:     components.filter(c => c.status === 'out').length,
         unknown: components.filter(c => c.status === 'unknown').length,
       },
     }

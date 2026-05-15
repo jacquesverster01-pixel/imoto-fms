@@ -5,11 +5,13 @@ import Dashboard from './pages/Dashboard'
 import Production from './pages/Production'
 import HR from './pages/HR'
 import Tools from './pages/Tools'
+import Stock from './pages/Stock'
 import Inventory from './pages/Inventory'
 import Settings from './pages/Settings'
 import InspectionPage from './pages/InspectionPage'
-import DepartmentBoards from './pages/DepartmentBoards'
+import KanbanBoard from './pages/production/kanban/KanbanBoard.jsx'
 import ProductionPlanner from './pages/ProductionPlanner'
+import CostDashboard from './pages/CostDashboard'
 
 const inspectionMatch = window.location.pathname.match(/^\/inspection\/(.+)$/)
 
@@ -19,6 +21,7 @@ const pageTitles = {
   'production-planner': 'Production Planner',
   'department-boards': 'Department boards',
   tools: 'Tool tracker',
+  stock: 'Stock Tracker',
   inventory: 'Inventory',
   'time-attendance': 'Time & Attendance',
   employees: 'Employees',
@@ -26,6 +29,7 @@ const pageTitles = {
   disciplinary: 'Disciplinary',
   'health-safety': 'Health & Safety',
   settings: 'Settings',
+  'cost-dashboard': 'Cost to Completion',
 }
 
 function PageContent({ page, onNavigate }) {
@@ -33,15 +37,17 @@ function PageContent({ page, onNavigate }) {
     case 'dashboard': return <Dashboard onNavigate={onNavigate} />
     case 'production': return <Production />
     case 'production-planner': return <ProductionPlanner />
-    case 'department-boards': return <DepartmentBoards onNavigate={onNavigate} />
+    case 'department-boards': return <KanbanBoard />
     case 'time-attendance': return <HR section="time-attendance" />
     case 'employees': return <HR section="employees" />
     case 'leave-management': return <HR section="leave-management" />
     case 'disciplinary': return <HR section="disciplinary" />
     case 'health-safety': return <HR section="health-safety" />
     case 'tools': return <Tools />
+    case 'stock': return <Stock />
     case 'inventory': return <Inventory />
     case 'settings': return <Settings />
+    case 'cost-dashboard': return <CostDashboard />
     default: return (
       <div className="flex items-center justify-center h-40">
         <span className="text-sm" style={{ color: '#b0b5cc' }}>{pageTitles[page]} — coming soon</span>

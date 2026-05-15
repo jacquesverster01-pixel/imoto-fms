@@ -8,12 +8,17 @@ export default function GanttBar({ row, job, zoomCols, criticalIds, showBaseline
   if (isMilestone(task)) return null
   const pos = taskBarPosition(task, zoomCols), p = ppd(zoomCols)
   const dotColor = stockSummary
-    ? stockSummary.short > 0 ? '#ef4444' : stockSummary.unknown > 0 ? '#9ca3af' : '#22c55e'
+    ? stockSummary.out > 0 ? '#ef4444'
+      : stockSummary.short > 0 ? '#f59e0b'
+      : stockSummary.unknown > 0 ? '#9ca3af'
+      : '#22c55e'
     : null
   const dotTitle = stockSummary
-    ? stockSummary.short > 0
-      ? `${stockSummary.short} component${stockSummary.short > 1 ? 's' : ''} short`
-      : stockSummary.unknown > 0 ? 'Stock data unavailable' : 'All components available'
+    ? stockSummary.out > 0
+      ? `${stockSummary.out} component${stockSummary.out > 1 ? 's' : ''} out of stock`
+      : stockSummary.short > 0
+        ? `${stockSummary.short} component${stockSummary.short > 1 ? 's' : ''} insufficient`
+        : stockSummary.unknown > 0 ? 'Stock data unavailable' : 'All components available'
     : null
   const hasCp = criticalIds.length > 0, isCrit = criticalIds.includes(task.id), isLocked = !!(task.dependsOn?.length)
   const bl = showBaseline ? baseline.find(b => b.taskId === task.id) : null
@@ -49,6 +54,9 @@ export default function GanttBar({ row, job, zoomCols, criticalIds, showBaseline
         )}
         {!isParent && task.components?.length > 0 && dotColor && (
           <div title={dotTitle} style={{ position: 'absolute', right: 6, top: '50%', transform: 'translateY(-50%)', width: 8, height: 8, borderRadius: '50%', background: dotColor, pointerEvents: 'none', zIndex: 2 }} />
+        )}
+        {!isParent && !task.components?.length && (
+          <div title="No components linked" style={{ position: 'absolute', right: 6, top: '50%', transform: 'translateY(-50%)', width: 8, height: 8, borderRadius: '50%', background: '#3b82f6', pointerEvents: 'none', zIndex: 2 }} />
         )}
       </div>
     </>

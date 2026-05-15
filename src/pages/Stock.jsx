@@ -1,29 +1,10 @@
 import { useState } from 'react'
+import { useGet, apiFetch } from '../hooks/useApi'
+import AddEditStockModal from './stock/AddEditStockModal'
+import AdjustQtyModal from './stock/AdjustQtyModal'
 
-const metrics = [
-  { label: 'Total items', value: '124', sub: 'In catalogue' },
-  { label: 'Low stock', value: '6', sub: 'Below minimum level', color: '#f59e0b' },
-  { label: 'Out of stock', value: '2', sub: 'Blocking production', color: '#ef4444' },
-  { label: 'Pending orders', value: '3', sub: 'Awaiting delivery' },
-]
-
-const stock = [
-  { id: 'S001', name: 'Conduit 20mm', category: 'Electrical', unit: 'metres', qty: 12, min: 50, onOrder: 100, orderDate: '24 Mar', usedBy: ['SANDF Comms Vehicle'], status: 'low' },
-  { id: 'S002', name: 'Cable 2.5mm TwinEarth', category: 'Electrical', unit: 'metres', qty: 0, min: 100, onOrder: 200, orderDate: '23 Mar', usedBy: ['City of CT Canteen', 'SAPS Clinic #14'], status: 'out' },
-  { id: 'S003', name: '18mm Plywood sheets', category: 'Cabinet Making', unit: 'sheets', qty: 8, min: 20, onOrder: 0, orderDate: '—', usedBy: ['Glencore Mobile Lab'], status: 'low' },
-  { id: 'S004', name: 'MIG wire 0.8mm', category: 'Welding', unit: 'rolls', qty: 4, min: 10, onOrder: 10, orderDate: '25 Mar', usedBy: ['SANDF Comms Vehicle'], status: 'low' },
-  { id: 'S005', name: 'PVC pipe 15mm', category: 'Plumbing', unit: 'metres', qty: 45, min: 30, onOrder: 0, orderDate: '—', usedBy: [], status: 'ok' },
-  { id: 'S006', name: 'Stainless steel screws M6', category: 'Fasteners', unit: 'box', qty: 22, min: 10, onOrder: 0, orderDate: '—', usedBy: [], status: 'ok' },
-  { id: 'S007', name: 'Aluminium angle 40x40', category: 'Structural', unit: 'metres', qty: 0, min: 20, onOrder: 30, orderDate: '22 Mar', usedBy: ['SAPS Vehicle #15'], status: 'out' },
-  { id: 'S008', name: 'Silicone sealant', category: 'Consumables', unit: 'tubes', qty: 6, min: 15, onOrder: 0, orderDate: '—', usedBy: [], status: 'low' },
-  { id: 'S009', name: 'Brass fittings 15mm', category: 'Plumbing', unit: 'units', qty: 34, min: 20, onOrder: 0, orderDate: '—', usedBy: [], status: 'ok' },
-  { id: 'S010', name: 'Welding rods 3.2mm', category: 'Welding', unit: 'kg', qty: 18, min: 10, onOrder: 0, orderDate: '—', usedBy: [], status: 'ok' },
-]
-
-const statusConfig = {
-  ok: { label: 'In stock', color: '#16a34a', bg: '#e8f8f0' },
-  low: { label: 'Low stock', color: '#b45309', bg: '#fffbeb' },
-  out: { label: 'Out of stock', color: '#dc2626', bg: '#fef2f2' },
+function isLow(item) {
+  return item.qty <= item.min
 }
 
 function Th({ children }) {
@@ -36,145 +17,191 @@ function Th({ children }) {
 }
 
 function Td({ children }) {
-  return (
-    <td className="px-3 py-2.5 text-xs border-b" style={{ color: '#4a4f7a', borderColor: '#f7f8fa' }}>
-      {children}
-    </td>
-  )
-}
-
-function Pill({ text, color, bg }) {
-  return (
-    <span className="text-xs font-semibold px-2 py-0.5 rounded-full" style={{ color, background: bg }}>
-      {text}
-    </span>
-  )
-}
-
-function StockBar({ qty, min }) {
-  const pct = min === 0 ? 100 : Math.min(Math.round((qty / min) * 100), 100)
-  const color = qty === 0 ? '#ef4444' : pct < 50 ? '#f59e0b' : '#22c55e'
-  return (
-    <div className="flex items-center gap-2">
-      <div className="flex-1 h-1.5 rounded-full" style={{ background: '#f0f2f5', minWidth: 60 }}>
-        <div className="h-1.5 rounded-full" style={{ width: `${pct}%`, background: color }} />
-      </div>
-      <span className="text-xs font-medium" style={{ color, minWidth: 28, textAlign: 'right' }}>{qty}</span>
-    </div>
-  )
+  return <td className="px-3 py-2.5 text-xs border-b" style={{ color: '#4a4f7a', borderColor: '#f7f8fa' }}>{children}</td>
 }
 
 export default function Stock() {
-  const [filter, setFilter] = useState('all')
+  const { data: stockData, refetch } = useGet('/stock')
   const [search, setSearch] = useState('')
+  const [categoryFilter, setCategoryFilter] = useState('')
+  const [showAddModal, setShowAddModal] = useState(false)
+  const [editItem, setEditItem] = useState(null)
+  const [adjustItem, setAdjustItem] = useState(null)
+  const [deleteConfirm, setDeleteConfirm] = useState(null)
+  const [showLowOnly, setShowLowOnly] = useState(false)
 
-  const filters = [
-    { id: 'all', label: 'All items' },
-    { id: 'out', label: 'Out of stock' },
-    { id: 'low', label: 'Low stock' },
-    { id: 'ok', label: 'In stock' },
-  ]
+  const items = stockData || []
+  const categories = [...new Set(items.map(i => i.category).filter(Boolean))].sort()
 
-  const filtered = stock.filter(s => {
-    const matchFilter = filter === 'all' || s.status === filter
-    const matchSearch = s.name.toLowerCase().includes(search.toLowerCase()) ||
-      s.category.toLowerCase().includes(search.toLowerCase())
-    return matchFilter && matchSearch
+  const filtered = items.filter(i => {
+    const matchSearch = !search ||
+      i.name?.toLowerCase().includes(search.toLowerCase()) ||
+      i.id?.toLowerCase().includes(search.toLowerCase())
+    const matchCat = !categoryFilter || i.category === categoryFilter
+    const matchLow = !showLowOnly || isLow(i)
+    return matchSearch && matchCat && matchLow
   })
+
+  const lowStockCount = items.filter(isLow).length
+
+  async function handleDelete(id) {
+    await apiFetch(`/stock/${id}`, { method: 'DELETE' })
+    setDeleteConfirm(null)
+    refetch()
+  }
 
   return (
     <div>
-      {/* Metrics */}
-      <div className="grid grid-cols-4 gap-3 mb-4">
-        {metrics.map(m => (
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-sm font-semibold" style={{ color: '#1a1d3b' }}>Stock Tracker</h2>
+        <button
+          className="text-xs px-3 py-1.5 rounded-lg text-white font-medium"
+          style={{ background: '#6c63ff' }}
+          onClick={() => setShowAddModal(true)}
+        >
+          + Add Item
+        </button>
+      </div>
+
+      <div className="grid grid-cols-3 gap-3 mb-4">
+        {[
+          { label: 'Total Items', value: items.length },
+          { label: 'Low Stock', value: lowStockCount, color: lowStockCount > 0 ? '#f59e0b' : '#1a1d3b' },
+          { label: 'Categories', value: categories.length },
+        ].map(m => (
           <div key={m.label} className="bg-white rounded-xl p-3 border" style={{ borderColor: '#e4e6ea' }}>
             <div className="text-xs uppercase tracking-widest mb-1" style={{ color: '#9298c4' }}>{m.label}</div>
             <div className="text-2xl font-bold" style={{ color: m.color || '#1a1d3b', lineHeight: 1 }}>{m.value}</div>
-            <div className="text-xs mt-1" style={{ color: '#b0b5cc' }}>{m.sub}</div>
           </div>
         ))}
       </div>
 
-      {/* Toolbar */}
       <div className="flex items-center gap-3 mb-4 flex-wrap">
-        <div className="flex gap-1">
-          {filters.map(f => (
-            <button key={f.id} onClick={() => setFilter(f.id)}
-              className="px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors"
-              style={{
-                background: filter === f.id ? '#6c63ff15' : '#fff',
-                color: filter === f.id ? '#6c63ff' : '#9298c4',
-                borderColor: filter === f.id ? '#6c63ff30' : '#e4e6ea',
-              }}>
-              {f.label}
-            </button>
-          ))}
-        </div>
         <input
-          className="text-xs px-3 py-1.5 rounded-lg border outline-none ml-auto"
+          className="text-xs px-3 py-1.5 rounded-lg border outline-none"
           style={{ borderColor: '#e4e6ea', width: 200 }}
-          placeholder="Search items or category..."
+          placeholder="Search name or ID..."
           value={search}
           onChange={e => setSearch(e.target.value)}
         />
-        <button className="text-xs px-3 py-1.5 rounded-lg text-white font-medium" style={{ background: '#6c63ff' }}>
-          + Add item
-        </button>
-        <button className="text-xs px-3 py-1.5 rounded-lg border font-medium" style={{ borderColor: '#e4e6ea', color: '#5a5f8a' }}>
-          Import CSV
+        <select
+          className="text-xs px-3 py-1.5 rounded-lg border outline-none"
+          style={{ borderColor: '#e4e6ea', color: '#4a4f7a' }}
+          value={categoryFilter}
+          onChange={e => setCategoryFilter(e.target.value)}
+        >
+          <option value="">All categories</option>
+          {categories.map(c => <option key={c} value={c}>{c}</option>)}
+        </select>
+        <button
+          className="text-xs px-3 py-1.5 rounded-lg border font-medium"
+          style={{
+            background: showLowOnly ? '#fffbeb' : '#fff',
+            color: showLowOnly ? '#b45309' : '#9298c4',
+            borderColor: showLowOnly ? '#f59e0b' : '#e4e6ea',
+          }}
+          onClick={() => setShowLowOnly(v => !v)}
+        >
+          ⚠ Low stock only{lowStockCount > 0 ? ` (${lowStockCount})` : ''}
         </button>
       </div>
 
-      {/* Table */}
       <div className="bg-white rounded-xl border overflow-hidden" style={{ borderColor: '#e4e6ea' }}>
         <table className="w-full border-collapse">
           <thead>
             <tr>
-              <Th>Item ID</Th>
+              <Th>ID</Th>
               <Th>Name</Th>
               <Th>Category</Th>
               <Th>Unit</Th>
-              <Th>Qty vs minimum</Th>
-              <Th>Minimum</Th>
-              <Th>On order</Th>
-              <Th>Order date</Th>
-              <Th>Used by</Th>
-              <Th>Status</Th>
+              <Th>Qty</Th>
+              <Th>Reorder Level</Th>
+              <Th>Actions</Th>
             </tr>
           </thead>
           <tbody>
-            {filtered.map((s, i) => {
-              const st = statusConfig[s.status]
+            {filtered.map(item => {
+              const low = isLow(item)
               return (
-                <tr key={i} className="hover:bg-gray-50 transition-colors">
-                  <Td><span className="font-mono" style={{ color: '#9298c4' }}>{s.id}</span></Td>
-                  <Td><span className="font-medium" style={{ color: '#1a1d3b' }}>{s.name}</span></Td>
-                  <Td>{s.category}</Td>
-                  <Td>{s.unit}</Td>
-                  <Td><StockBar qty={s.qty} min={s.min} /></Td>
-                  <Td>{s.min} {s.unit}</Td>
+                <tr key={item.id} className="hover:bg-gray-50 transition-colors">
+                  <Td><span className="font-mono" style={{ color: '#9298c4' }}>{item.id}</span></Td>
+                  <Td><span className="font-medium" style={{ color: '#1a1d3b' }}>{item.name}</span></Td>
+                  <Td>{item.category}</Td>
+                  <Td>{item.unit}</Td>
                   <Td>
-                    {s.onOrder > 0
-                      ? <span className="font-medium" style={{ color: '#6c63ff' }}>{s.onOrder} {s.unit}</span>
-                      : <span style={{ color: '#b0b5cc' }}>—</span>
-                    }
+                    <span className="font-semibold" style={{ color: low ? '#b45309' : '#1a1d3b' }}>
+                      {item.qty}
+                    </span>
                   </Td>
-                  <Td>{s.orderDate}</Td>
                   <Td>
-                    {s.usedBy.length > 0
-                      ? <div>{s.usedBy.map((j, ji) => (
-                          <div key={ji} className="text-xs" style={{ color: s.status !== 'ok' ? '#dc2626' : '#4a4f7a' }}>{j}</div>
-                        ))}</div>
-                      : <span style={{ color: '#b0b5cc' }}>—</span>
-                    }
+                    <span style={{ color: low ? '#b45309' : '#4a4f7a' }}>
+                      {low && '⚠ '}{item.min}
+                    </span>
                   </Td>
-                  <Td><Pill text={st.label} color={st.color} bg={st.bg} /></Td>
+                  <Td>
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <button
+                        onClick={() => setAdjustItem(item)}
+                        className="text-xs px-2 py-1 rounded-md font-medium"
+                        style={{ background: '#f0f2f5', color: '#4a4f7a', border: 'none', cursor: 'pointer' }}
+                      >
+                        ±
+                      </button>
+                      <button
+                        onClick={() => setEditItem(item)}
+                        className="text-xs px-2 py-1 rounded-md font-medium"
+                        style={{ background: '#f0f2f5', color: '#4a4f7a', border: 'none', cursor: 'pointer' }}
+                      >
+                        Edit
+                      </button>
+                      {deleteConfirm === item.id
+                        ? <span className="flex items-center gap-1">
+                            <span style={{ color: '#dc2626', fontSize: 11 }}>Delete?</span>
+                            <button onClick={() => handleDelete(item.id)} style={{ background: '#fef2f2', color: '#dc2626', border: 'none', cursor: 'pointer', fontWeight: 600, fontSize: 11, padding: '2px 8px', borderRadius: 4 }}>Yes</button>
+                            <button onClick={() => setDeleteConfirm(null)} style={{ background: '#f0f2f5', color: '#555', border: 'none', cursor: 'pointer', fontSize: 11, padding: '2px 8px', borderRadius: 4 }}>No</button>
+                          </span>
+                        : <button
+                            onClick={() => setDeleteConfirm(item.id)}
+                            className="text-xs px-2 py-1 rounded-md font-medium"
+                            style={{ background: '#fef2f2', color: '#dc2626', border: 'none', cursor: 'pointer' }}
+                          >
+                            Delete
+                          </button>
+                      }
+                    </div>
+                  </Td>
                 </tr>
               )
             })}
           </tbody>
         </table>
+        {filtered.length === 0 && (
+          <div className="text-center py-8 text-xs" style={{ color: '#b0b5cc' }}>No items found.</div>
+        )}
       </div>
+
+      {showAddModal && (
+        <AddEditStockModal
+          categories={categories}
+          onClose={() => setShowAddModal(false)}
+          onSave={() => { setShowAddModal(false); refetch() }}
+        />
+      )}
+      {editItem && (
+        <AddEditStockModal
+          item={editItem}
+          categories={categories}
+          onClose={() => setEditItem(null)}
+          onSave={() => { setEditItem(null); refetch() }}
+        />
+      )}
+      {adjustItem && (
+        <AdjustQtyModal
+          item={adjustItem}
+          onClose={() => setAdjustItem(null)}
+          onSave={() => { setAdjustItem(null); refetch() }}
+        />
+      )}
     </div>
   )
 }

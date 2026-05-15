@@ -79,6 +79,10 @@ export async function refreshStockCache() {
 
 const router = Router()
 
+router.get('/stock-cache/data', (req, res) => {
+  res.json(readCache())
+})
+
 router.post('/stock/refresh', async (req, res) => {
   try {
     const result = await refreshStockCache()
@@ -112,6 +116,7 @@ router.get('/stock/allocation', (req, res) => {
     const summary = {
       ok:      components.filter(c => c.status === 'ok').length,
       short:   components.filter(c => c.status === 'short').length,
+      out:     components.filter(c => c.status === 'out').length,
       unknown: components.filter(c => c.status === 'unknown').length,
     }
     return res.json({ ok: true, ...meta, components, summary })

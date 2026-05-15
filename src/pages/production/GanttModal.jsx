@@ -395,7 +395,8 @@ export default function GanttModal({ job, onClose, onSaved, embedded }) {
           onUploadFile={file => uploadTaskFile(taskWindow.taskId, taskWindow.parentId, file)}
           onDeleteFile={fileId => deleteTaskFile(taskWindow.taskId, taskWindow.parentId, fileId)}
           onDelete={() => deleteTask(taskWindow.taskId, taskWindow.parentId)}
-          stockByTaskId={stockByTaskId} />
+          stockByTaskId={stockByTaskId}
+          stockMeta={stockMeta} />
       )}
       {linkLine && (
         <>
