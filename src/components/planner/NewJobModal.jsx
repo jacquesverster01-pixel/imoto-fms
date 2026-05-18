@@ -8,11 +8,17 @@ const inputStyle = {
   boxSizing: 'border-box', outline: 'none'
 }
 
-export default function NewJobModal({ boms, onClose, onCreated }) {
-  const [mode, setMode] = useState('scratch')
-  const [name, setName] = useState('')
+export default function NewJobModal({ boms, onClose, onCreated, initialMode = 'scratch', initialBomId = '' }) {
+  const [mode, setMode] = useState(initialMode)
+  const [name, setName] = useState(() => {
+    if (initialBomId && boms?.length) {
+      const bom = boms.find(b => b.id === initialBomId)
+      return bom ? bom.productDescription : ''
+    }
+    return ''
+  })
   const [dueDate, setDueDate] = useState('')
-  const [selectedBomId, setSelectedBomId] = useState('')
+  const [selectedBomId, setSelectedBomId] = useState(initialBomId)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState(null)
 

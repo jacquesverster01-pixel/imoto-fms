@@ -22,6 +22,7 @@ import dashboardRouter   from './routes/dashboard.js'
 import bomsRouter        from './routes/boms.js'
 import deptCodesRouter   from './routes/deptCodes.js'
 import stockAllocationRouter, { refreshStockCache } from './routes/stockAllocation.js'
+import bomFlatRouter from './routes/bomFlat.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const app = express()
@@ -203,6 +204,7 @@ app.use('/api', bomsRouter(readData, writeData))
 app.use('/api/dept-codes', deptCodesRouter(readData, writeData))
 app.use('/api/unleashed', unleashedRouter)
 app.use('/api', stockAllocationRouter)
+app.use('/api/bom-flat', bomFlatRouter)
 
 
 // React app catch-all for /inspection/:id (production)

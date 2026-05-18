@@ -1,7 +1,8 @@
-import { useState, useMemo } from 'react'
-import { useGet } from '../../hooks/useApi'
+import { useState, useMemo, useEffect, useCallback } from 'react'
+import { apiFetch } from '../../hooks/useApi'
 import { styles } from '../../utils/hrStyles'
-import JobCreateModal from '../jobs/JobCreateModal'
+import NewJobModal from '../planner/NewJobModal'
+import AssemblyJobModal from './AssemblyJobModal'
 
 const COLS = [
   { key: 'ProductCode',        label: 'Code' },
@@ -17,32 +18,123 @@ const COLS = [
 function n(v) { return v ?? 0 }
 function fmtQ(v) { return v == null ? '—' : Number(v).toFixed(0) }
 
+function isAssemblyCode(code) {
+  return typeof code === 'string' && code.length >= 4 && code[3].toUpperCase() === 'A'
+}
+
+function findMatchingBom(boms, itemCode) {
+  if (!itemCode || !boms?.length) return null
+  return boms.find(b => b.productCode === itemCode) || null
+}
+
+function localItemToRow(item) {
+  return {
+    ProductCode: item.code || item.id,
+    ProductDescription: item.name,
+    UOM: item.unit || 'EA',
+    QtyOnHand: item.qty ?? 0,
+    QtyAvailable: item.qty ?? 0,
+    QtyAllocated: 0,
+    QtyOnOrder: item.onOrder ?? 0,
+    WarehouseCode: item.location || 'Local',
+    _isLocal: true,
+  }
+}
+
 function ErrorBanner({ msg }) {
   return (
     <div style={{ background: '#fff3f3', border: '1px solid #fca5a5', borderRadius: 8, padding: '10px 14px', marginBottom: 16, fontSize: 13 }}>
       <span style={{ color: '#dc2626', fontWeight: 600 }}>Error: </span>
       <span style={{ color: '#b91c1c' }}>{msg}</span>
-      {msg.includes('not configured') && (
-        <div style={{ marginTop: 4, color: '#b91c1c' }}>
-          Add UNLEASHED_API_ID and UNLEASHED_API_SECRET to .env and restart the server.
-        </div>
-      )}
     </div>
   )
 }
 
-export default function InventoryStockOnHand() {
-  const [search, setSearch]       = useState('')
-  const [warehouse, setWarehouse] = useState('')
-  const [sortDir, setSortDir]     = useState('desc')
-  const [pushProduct, setPushProduct] = useState(null)
+function InfoBanner({ msg }) {
+  return (
+    <div style={{ background: '#eff6ff', border: '1px solid #93c5fd', borderRadius: 8, padding: '10px 14px', marginBottom: 16, fontSize: 13 }}>
+      <span style={{ color: '#1d4ed8' }}>{msg}</span>
+    </div>
+  )
+}
 
-  const { data, loading, error: hookError, refetch } = useGet('/unleashed/stock-on-hand')
-  const { data: wData } = useGet('/unleashed/warehouses')
+export default function InventoryStockOnHand({ onSubtitleChange }) {
+  const [search, setSearch]           = useState('')
+  const [warehouse, setWarehouse]     = useState('')
+  const [sortDir, setSortDir]         = useState('desc')
+  const [boms, setBoms]               = useState([])
+  const [jobModalItem, setJobModalItem] = useState(null)
+  const [dataSource, setDataSource]   = useState('unleashed')
+  const [loading, setLoading]         = useState(true)
+  const [rawItems, setRawItems]       = useState([])
+  const [warehouses, setWarehouses]   = useState([])
+  const [fetchError, setFetchError]   = useState(null)
+  const [lastUpdated, setLastUpdated] = useState(null)
+  const [assemblyJob, setAssemblyJob] = useState(null)
+  const [loadingJob, setLoadingJob]   = useState(null)
 
-  const fetchError = hookError || (data?.ok === false ? data.error : null)
-  const rawItems   = data?.ok ? data.items : []
-  const warehouses = wData?.ok ? wData.items : []
+  const loadData = useCallback(async () => {
+    setLoading(true)
+    setFetchError(null)
+    try {
+      const unData = await apiFetch('/unleashed/stock-on-hand')
+      if (unData.ok) {
+        setRawItems(unData.items || [])
+        setDataSource('unleashed')
+        setLastUpdated(null)
+        try {
+          const wData = await apiFetch('/unleashed/warehouses')
+          setWarehouses(wData.ok ? wData.items : [])
+        } catch { setWarehouses([]) }
+      } else {
+        const sData = await apiFetch('/stock')
+        const stockArr = Array.isArray(sData) ? sData : []
+        const latest = stockArr.reduce((acc, item) => {
+          if (!item.updatedAt) return acc
+          return !acc || item.updatedAt > acc ? item.updatedAt : acc
+        }, null)
+        setLastUpdated(latest)
+        setRawItems(stockArr.map(localItemToRow))
+        setDataSource('local')
+        setWarehouses([])
+      }
+      try {
+        const bomsData = await apiFetch('/boms')
+        setBoms(Array.isArray(bomsData) ? bomsData : [])
+      } catch { setBoms([]) }
+    } catch (err) {
+      setFetchError(err.message)
+      setRawItems([])
+    } finally {
+      setLoading(false)
+    }
+  }, [])
+
+  useEffect(() => { loadData() }, [loadData])
+
+  useEffect(() => {
+    if (!onSubtitleChange) return
+    if (dataSource === 'local') {
+      const dateStr = lastUpdated ? new Date(lastUpdated).toLocaleDateString() : '—'
+      onSubtitleChange(`Local stock · ${rawItems.length} items · Last updated ${dateStr}`)
+    } else {
+      onSubtitleChange('Live stock positions via Unleashed')
+    }
+  }, [dataSource, rawItems.length, lastUpdated]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  const warehouseOptions = useMemo(() => {
+    if (dataSource === 'local') {
+      const seen = new Set()
+      return rawItems.reduce((acc, item) => {
+        if (item.WarehouseCode && !seen.has(item.WarehouseCode)) {
+          seen.add(item.WarehouseCode)
+          acc.push({ WarehouseCode: item.WarehouseCode, WarehouseName: item.WarehouseCode })
+        }
+        return acc
+      }, [])
+    }
+    return warehouses
+  }, [dataSource, rawItems, warehouses])
 
   const items = useMemo(() => {
     const q = search.toLowerCase()
@@ -58,16 +150,41 @@ export default function InventoryStockOnHand() {
     )
   }, [rawItems, search, warehouse, sortDir])
 
+  async function handleJobClick(item) {
+    setLoadingJob(item.ProductCode)
+    try {
+      const data = await apiFetch(`/bom-flat/${item.ProductCode}`)
+      setAssemblyJob({ item, components: data.components })
+    } catch {
+      setJobModalItem({ code: item.ProductCode, name: item.ProductDescription, matchedBom: findMatchingBom(boms, item.ProductCode) })
+    } finally {
+      setLoadingJob(null)
+    }
+  }
+
   return (
     <div>
-      {pushProduct && (
-        <JobCreateModal
-          product={pushProduct}
-          onClose={() => setPushProduct(null)}
-          onCreated={() => setPushProduct(null)}
+      {assemblyJob && (
+        <AssemblyJobModal
+          item={assemblyJob.item}
+          components={assemblyJob.components}
+          onClose={() => setAssemblyJob(null)}
+          onCreated={() => setAssemblyJob(null)}
+        />
+      )}
+      {jobModalItem && (
+        <NewJobModal
+          boms={boms}
+          initialMode="bom"
+          initialBomId={jobModalItem.matchedBom?.id || ''}
+          onClose={() => setJobModalItem(null)}
+          onCreated={() => setJobModalItem(null)}
         />
       )}
       {fetchError && <ErrorBanner msg={fetchError} />}
+      {dataSource === 'local' && !fetchError && !loading && (
+        <InfoBanner msg="Showing local stock data. Connect Unleashed to see live ERP stock levels." />
+      )}
 
       <div style={{ display: 'flex', gap: 10, marginBottom: 14, flexWrap: 'wrap', alignItems: 'center' }}>
         <input
@@ -82,7 +199,7 @@ export default function InventoryStockOnHand() {
           onChange={e => setWarehouse(e.target.value)}
         >
           <option value=''>All warehouses</option>
-          {warehouses.map(w => (
+          {warehouseOptions.map(w => (
             <option key={w.WarehouseCode} value={w.WarehouseCode}>
               {w.WarehouseName || w.WarehouseCode}
             </option>
@@ -96,7 +213,7 @@ export default function InventoryStockOnHand() {
         </button>
         <button
           style={{ ...styles.btnSecondary, padding: '6px 12px', fontSize: 12, marginLeft: 'auto' }}
-          onClick={refetch}
+          onClick={loadData}
         >
           Refresh
         </button>
@@ -134,7 +251,7 @@ export default function InventoryStockOnHand() {
                 const isLow    = avail <= 0 || (minLevel != null && avail <= minLevel)
                 return (
                   <tr
-                    key={item.ProductCode}
+                    key={item.ProductCode || i}
                     style={{
                       borderBottom: '1px solid #f0f2f5',
                       background: isLow ? '#fffbeb' : i % 2 === 0 ? '#fff' : '#fafafa',
@@ -142,7 +259,7 @@ export default function InventoryStockOnHand() {
                   >
                     <td style={{ ...styles.td, fontFamily: 'monospace', fontSize: 12 }}>{item.ProductCode}</td>
                     <td style={styles.td}>{item.ProductDescription}</td>
-                    <td style={{ ...styles.td, color: '#888' }}>{item.UnitOfMeasure}</td>
+                    <td style={{ ...styles.td, color: '#888' }}>{item.UnitOfMeasure || item.UOM}</td>
                     <td style={{ ...styles.td, fontWeight: 600 }}>{fmtQ(item.QtyOnHand)}</td>
                     <td style={{ ...styles.td, color: isLow ? '#b45309' : '#16a34a', fontWeight: 600 }}>
                       {fmtQ(item.QtyAvailable)}
@@ -151,25 +268,23 @@ export default function InventoryStockOnHand() {
                     <td style={styles.td}>{fmtQ(item.QtyOnOrder)}</td>
                     <td style={{ ...styles.td, fontSize: 11, color: '#9298c4' }}>{item.WarehouseCode}</td>
                     <td style={styles.td}>
-                      <button
-                        disabled={n(item.QtyAvailable) <= 0}
-                        onClick={() => setPushProduct({
-                          productCode: item.ProductCode,
-                          productDescription: item.ProductDescription,
-                          guid: item.ProductGuid,
-                          qtyAvailable: item.QtyAvailable,
-                        })}
-                        style={{
-                          ...styles.btnSmall,
-                          background: n(item.QtyAvailable) > 0 ? '#f5f3ff' : '#f0f2f5',
-                          color: n(item.QtyAvailable) > 0 ? '#6c63ff' : '#bbb',
-                          border: `1px solid ${n(item.QtyAvailable) > 0 ? '#e0deff' : '#e4e6ea'}`,
-                          fontSize: 11,
-                          cursor: n(item.QtyAvailable) > 0 ? 'pointer' : 'not-allowed',
-                        }}
-                      >
-                        + Job
-                      </button>
+                      {isAssemblyCode(item.ProductCode) && (
+                        <button
+                          onClick={() => handleJobClick(item)}
+                          disabled={loadingJob === item.ProductCode}
+                          style={{
+                            ...styles.btnSmall,
+                            background: '#f5f3ff',
+                            color: '#6c63ff',
+                            border: '1px solid #e0deff',
+                            fontSize: 11,
+                            cursor: loadingJob === item.ProductCode ? 'not-allowed' : 'pointer',
+                            opacity: loadingJob === item.ProductCode ? 0.4 : 1,
+                          }}
+                        >
+                          {loadingJob === item.ProductCode ? '…' : '+ Job'}
+                        </button>
+                      )}
                     </td>
                   </tr>
                 )

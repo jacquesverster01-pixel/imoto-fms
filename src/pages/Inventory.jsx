@@ -22,14 +22,17 @@ const TAB_SUBTITLES = {
 }
 
 export default function Inventory() {
-  const [activeTab, setActiveTab] = useState('stock')
+  const [activeTab, setActiveTab]       = useState('stock')
+  const [stockSubtitle, setStockSubtitle] = useState('Live stock positions via Unleashed')
+
+  const subtitle = activeTab === 'stock' ? stockSubtitle : TAB_SUBTITLES[activeTab]
 
   return (
     <div>
       <div style={{ marginBottom: 20 }}>
         <h2 style={{ fontSize: 20, fontWeight: 700, color: '#1a1d3b', margin: 0 }}>Inventory</h2>
         <p style={{ fontSize: 13, color: '#9298c4', margin: '4px 0 0' }}>
-          {TAB_SUBTITLES[activeTab]}
+          {subtitle}
         </p>
       </div>
 
@@ -55,7 +58,7 @@ export default function Inventory() {
         ))}
       </div>
 
-      {activeTab === 'stock'      && <InventoryStockOnHand />}
+      {activeTab === 'stock'      && <InventoryStockOnHand onSubtitleChange={setStockSubtitle} />}
       {activeTab === 'products'   && <InventoryProducts />}
       {activeTab === 'bom'        && <InventoryBOM />}
       {activeTab === 'assemblies'   && <InventoryAssemblies />}
