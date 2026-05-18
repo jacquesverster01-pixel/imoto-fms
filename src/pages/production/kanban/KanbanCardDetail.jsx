@@ -1,15 +1,4 @@
 import { checkTaskAllocation } from '../../../utils/stockAllocation.js'
-import { getDisplayStatus } from '../../../utils/deptAllocation.js'
-
-const STATUSES = [
-  { key: 'todo', label: 'To Do' },
-  { key: 'in-progress', label: 'In Progress' },
-  { key: 'done', label: 'Done' },
-]
-
-const base = { fontSize: 11, padding: '4px 10px', borderRadius: 6, border: '1px solid #e4e6ea', cursor: 'pointer', background: '#fff', color: '#374151' }
-const active = { ...base, background: '#6c63ff', color: '#fff', border: '1px solid #6c63ff', fontWeight: 600 }
-const disabled = { ...base, opacity: 0.5, cursor: 'not-allowed' }
 
 function formatCacheAge(updatedAt) {
   if (!updatedAt) return '—'
@@ -28,7 +17,6 @@ function CompStatusIcon({ status }) {
 }
 
 export default function KanbanCardDetail({ task, onStatusChange, isUpdating, stockCache, globalAllocations, stockCacheData }) {
-  const current = getDisplayStatus(task)
   const comps = task.components || []
 
   const allocResults = comps.length > 0
@@ -78,19 +66,6 @@ export default function KanbanCardDetail({ task, onStatusChange, isUpdating, sto
           </div>
         </div>
       )}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
-        <span style={{ fontSize: 11, color: '#9298c4', marginRight: 2 }}>Status:</span>
-        {STATUSES.map(s => (
-          <button
-            key={s.key}
-            onClick={() => !isUpdating && s.key !== current && onStatusChange(task, s.key)}
-            style={isUpdating ? disabled : current === s.key ? active : base}
-          >
-            {s.label}
-          </button>
-        ))}
-        {isUpdating && <span style={{ fontSize: 11, color: '#9298c4' }}>Saving…</span>}
-      </div>
     </div>
   )
 }

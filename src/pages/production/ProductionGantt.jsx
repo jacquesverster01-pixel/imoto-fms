@@ -1,8 +1,9 @@
 const STATUS_MAP = {
-  'on-track': { label: 'On track', color: '#16a34a', bg: '#e8f8f0', bar: '#6c63ff' },
-  'at-risk':  { label: 'At risk',  color: '#b45309', bg: '#fffbeb', bar: '#f59e0b' },
-  'blocked':  { label: 'Blocked',  color: '#dc2626', bg: '#fef2f2', bar: '#ef4444' },
-  'planned':  { label: 'Planned',  color: '#9298c4', bg: '#f4f5f7', bar: '#9298c4' },
+  'on-track':      { label: 'On track',     color: '#16a34a', bg: '#e8f8f0', bar: '#6c63ff' },
+  'at-risk':       { label: 'At risk',      color: '#b45309', bg: '#fffbeb', bar: '#f59e0b' },
+  'blocked':       { label: 'Blocked',      color: '#dc2626', bg: '#fef2f2', bar: '#ef4444' },
+  'in-production': { label: 'In Production',color: '#1d4ed8', bg: '#dbeafe', bar: '#4f67e4' },
+  'planned':       { label: 'Planned',      color: '#9298c4', bg: '#f4f5f7', bar: '#9298c4' },
 }
 const WINDOW_START = new Date('2026-03-23')
 const WINDOW_DAYS = 7
@@ -17,14 +18,18 @@ const WINDOW_END = new Date(WINDOW_START)
 WINDOW_END.setDate(WINDOW_END.getDate() + WINDOW_DAYS)
 function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)) }
 function ganttBar(job) {
-  const jStart = new Date(job.start)
-  const jEnd   = new Date(job.due)
+  const start = job.startDate || job.start
+  const due   = job.dueDate   || job.due
+  if (!start || !due) return { startPct: 0, widthPct: 0 }
+  const jStart = new Date(start)
+  const jEnd   = new Date(due)
   const total  = WINDOW_END - WINDOW_START
   const barStart = clamp((jStart - WINDOW_START) / total, 0, 1) * 100
   const barEnd   = clamp((jEnd   - WINDOW_START) / total, 0, 1) * 100
   return { startPct: barStart, widthPct: barEnd - barStart }
 }
 function fmtDue(iso) {
+  if (!iso) return '—'
   const d = new Date(iso)
   return `${d.getUTCDate()} ${MONTH_NAMES_SHORT[d.getUTCMonth()]}`
 }
@@ -98,7 +103,7 @@ export default function ProductionGantt({ jobs, readOnly = false }) {
                       {job.status === 'planned' ? (
                         <div className="absolute inset-0 rounded flex items-center px-2.5"
                           style={{ border: '1.5px dashed #d1d5db' }}>
-                          <span className="text-xs" style={{ color: '#b0b5cc' }}>Starts {fmtDue(job.start)}</span>
+                          <span className="text-xs" style={{ color: '#b0b5cc' }}>Starts {fmtDue(job.startDate || job.start)}</span>
                         </div>
                       ) : job.status === 'blocked' ? (
                         <div className="absolute top-0 bottom-0 rounded flex items-center px-2.5"
@@ -129,14 +134,14 @@ export default function ProductionGantt({ jobs, readOnly = false }) {
                     </div>
                     <div className="flex justify-between mt-0.5" style={{ fontSize: 9, color: '#b0b5cc' }}>
                       <span>{job.status === 'planned' ? 'Planned' : job.status === 'blocked' ? 'Blocked' : 'Started'}</span>
-                      <span>Due {fmtDue(job.due)}</span>
+                      <span>Due {fmtDue(job.dueDate || job.due)}</span>
                     </div>
                   </td>
                   <td className="px-3 py-2.5">
                     <span className="text-xs font-semibold px-2 py-1 rounded-full" style={{ background: s.bg, color: s.color }}>{s.label}</span>
                   </td>
                   <td className="px-3 py-2.5 text-xs whitespace-nowrap" style={{ color: '#9298c4' }}>
-                    {fmtDue(job.due)}
+                    {fmtDue(job.dueDate || job.due)}
                   </td>
                 </tr>
               )

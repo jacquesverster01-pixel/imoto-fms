@@ -47,11 +47,6 @@ async function fetchAllPages(endpoint, query = {}) {
   return all
 }
 
-function readCache() {
-  try { return JSON.parse(fs.readFileSync(CACHE_FILE, 'utf-8')) }
-  catch { return { updatedAt: null, byCode: {} } }
-}
-
 function readAllJobs() {
   try { const data = JSON.parse(fs.readFileSync(JOBS_FILE, 'utf-8')); return Array.isArray(data) ? data : (data.jobs || []) }
   catch { return [] }
@@ -62,7 +57,20 @@ function readStock() {
   catch { return [] }
 }
 
-const CACHE_TTL_MS = 60 * 60 * 1000
+async function buildCacheFromStock() {
+  const stockList = readStock()
+  const byCode = {}
+  for (const item of stockList) {
+    if (!item.code) continue
+    byCode[item.code] = {
+      onHand: item.qty ?? 0,
+      available: item.qty ?? 0,
+      avgCost: item.unitCost ?? 0,
+      productDescription: item.name || ''
+    }
+  }
+  return byCode
+}
 
 export async function refreshStockCache() {
   const items = await fetchAllPages('StockOnHand', {})
@@ -85,8 +93,22 @@ export async function refreshStockCache() {
 
 const router = Router()
 
-router.get('/stock-cache/data', (req, res) => {
-  res.json(readCache())
+router.get('/stock-cache', async (req, res) => {
+  try {
+    const byCode = await buildCacheFromStock()
+    res.json({ updatedAt: new Date().toISOString(), itemCount: Object.keys(byCode).length })
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
+})
+
+router.get('/stock-cache/data', async (req, res) => {
+  try {
+    const byCode = await buildCacheFromStock()
+    res.json({ updatedAt: new Date().toISOString(), byCode })
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
 })
 
 router.post('/stock/refresh', async (req, res) => {
@@ -99,7 +121,7 @@ router.post('/stock/refresh', async (req, res) => {
   }
 })
 
-router.get('/stock/allocation', (req, res) => {
+router.get('/stock/allocation', async (req, res) => {
   const { jobId, taskId } = req.query
   if (!jobId) return res.status(400).json({ error: 'jobId is required' })
 
@@ -107,18 +129,14 @@ router.get('/stock/allocation', (req, res) => {
   const job = allJobs.find(j => j.id === jobId)
   if (!job) return res.status(404).json({ error: 'Job not found' })
 
-  const cache = readCache()
-  const cacheAgeMs = cache.updatedAt ? Date.now() - new Date(cache.updatedAt).getTime() : Infinity
-  const cacheStale = cacheAgeMs > CACHE_TTL_MS
-
+  const byCode = await buildCacheFromStock()
+  const meta = { cacheUpdatedAt: new Date().toISOString(), cacheStale: false }
   const globalAllocations = computeGlobalAllocations(allJobs)
-
-  const meta = { cacheUpdatedAt: cache.updatedAt, cacheStale }
 
   if (taskId) {
     const task = findTaskById(job.tasks || [], taskId)
     if (!task) return res.status(404).json({ error: 'Task not found' })
-    const components = checkTaskAllocation(task, cache.byCode, globalAllocations)
+    const components = checkTaskAllocation(task, byCode, globalAllocations)
     const summary = {
       ok:      components.filter(c => c.status === 'ok').length,
       short:   components.filter(c => c.status === 'short').length,
@@ -128,32 +146,14 @@ router.get('/stock/allocation', (req, res) => {
     return res.json({ ok: true, ...meta, components, summary })
   }
 
-  const byTask = checkJobAllocation(job, cache.byCode, globalAllocations)
+  const byTask = checkJobAllocation(job, byCode, globalAllocations)
   res.json({ ok: true, ...meta, byTask })
 })
 
 router.post('/stock-cache/sync-local', async (req, res) => {
   try {
-    const items = readStock()
-    const cache = readCache()
-    const byCode = cache.byCode || {}
-
-    let synced = 0
-    for (const item of items) {
-      if (!item.code) continue
-      byCode[item.code] = {
-        onHand: item.qty ?? 0,
-        available: item.qty ?? 0,
-        avgCost: item.unitCost ?? 0,
-        productDescription: item.name || ''
-      }
-      synced++
-    }
-
-    const updated = { updatedAt: new Date().toISOString(), byCode }
-    fs.writeFileSync(CACHE_FILE, JSON.stringify(updated, null, 2))
-
-    res.json({ ok: true, synced, updatedAt: updated.updatedAt })
+    const byCode = await buildCacheFromStock()
+    res.json({ ok: true, synced: Object.keys(byCode).length })
   } catch (err) {
     res.status(500).json({ error: err.message })
   }

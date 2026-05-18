@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { countAllTasks } from '../../utils/jobProgress.js'
 
 const MONTH_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
 
@@ -110,7 +111,7 @@ export default function JobListPanel({ jobs, selectedJobId, onSelect, onNewJob, 
             const isHovered = hoveredCardId === job.id
             const isConfirming = confirmDeleteId === job.id
             const showDeleteBtn = isHovered || isConfirming
-            const taskCount = (job.tasks || []).length
+            const taskCount = countAllTasks(job.tasks)
             return (
               <div
                 key={job.id}

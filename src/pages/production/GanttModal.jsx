@@ -319,14 +319,6 @@ export default function GanttModal({ job, onClose, onSaved, embedded }) {
     } catch (e) { console.error('[stock refresh]', e) }
     setStockRefreshing(false)
   }
-  async function handleSyncLocal() {
-    try {
-      await apiFetch('/stock-cache/sync-local', { method: 'POST' })
-      const data = await apiFetch(`/stock/allocation?jobId=${job.id}`)
-      setStockByTaskId(new Map(Object.entries(data.byTask || {})))
-      setStockMeta({ cacheUpdatedAt: data.cacheUpdatedAt, cacheStale: data.cacheStale })
-    } catch (e) { console.error('[sync local stock]', e) }
-  }
   async function handleSetBaseline() {
     const snap = tasks.map(t => ({ taskId:t.id, startDate:t.startDate, endDate:t.endDate }))
     try { await apiFetch(`/jobs/${job.id}/baseline`, { method:'PUT', body:JSON.stringify({baseline:snap}) }); setBaseline(snap) } catch {}
@@ -353,8 +345,7 @@ export default function GanttModal({ job, onClose, onSaved, embedded }) {
         progress={`${doneTasks}/${totalLeaf} tasks complete`}
         onClose={handleClose} onExport={() => window.print()} onSetBaseline={handleSetBaseline}
         embedded={embedded}
-        stockMeta={stockMeta} onRefreshStock={handleRefreshStock} stockRefreshing={stockRefreshing}
-        onSyncLocal={handleSyncLocal} />
+        stockMeta={stockMeta} onRefreshStock={handleRefreshStock} stockRefreshing={stockRefreshing} />
       <div style={{ flex:1, display:'flex', overflow:'hidden' }}>
         <GanttLeftPanel
           visibleRows={visibleRows} tasks={tasks}

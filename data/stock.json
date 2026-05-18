@@ -10106,13 +10106,14 @@
     "name": "MOUNT - VIBRATION, 90KG",
     "category": "",
     "unit": "EA",
-    "qty": 2,
+    "qty": 52,
     "unitCost": 0,
     "location": "Main Warehouse",
     "reorderLevel": 0,
     "status": "ok",
-    "updatedAt": "2026-05-18T07:18:04.506Z",
-    "importedAt": "2026-05-18T07:18:04.506Z"
+    "updatedAt": "2026-05-18T09:23:34.332Z",
+    "importedAt": "2026-05-18T07:18:04.506Z",
+    "lastNote": "test sync"
   },
   {
     "id": "S724",

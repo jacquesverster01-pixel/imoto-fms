@@ -7,6 +7,18 @@ function newId(prefix) {
   return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`
 }
 
+function findTaskById(tasks, id) {
+  for (const t of tasks) {
+    if (t.id === id) return t;
+    const children = t.children || t.subTasks || [];
+    if (children.length) {
+      const found = findTaskById(children, id);
+      if (found) return found;
+    }
+  }
+  return null;
+}
+
 export default function jobsRouter(readData, writeData, upload, uploadsDir) {
   const router = Router()
 
@@ -139,20 +151,26 @@ export default function jobsRouter(readData, writeData, upload, uploadsDir) {
       const data = readData('jobs.json')
       const jobIdx = data.jobs.findIndex(j => j.id === req.params.id)
       if (jobIdx === -1) return res.status(404).json({ error: 'Job not found' })
-      const taskIdx = data.jobs[jobIdx].tasks.findIndex(t => t.id === req.params.taskId)
-      if (taskIdx === -1) return res.status(404).json({ error: 'Task not found' })
+      const task = findTaskById(data.jobs[jobIdx].tasks, req.params.taskId)
+      if (!task) return res.status(404).json({ error: 'Task not found' })
       const allowed = ['kanbanStatus', 'done', 'dependsOnAssembly', 'assignee', 'note', 'name', 'assemblyCode', 'startDate', 'endDate', 'dependsOn', 'assignedTo', 'notes']
       allowed.forEach(k => {
-        if (req.body[k] !== undefined) data.jobs[jobIdx].tasks[taskIdx][k] = req.body[k]
+        if (req.body[k] !== undefined) task[k] = req.body[k]
       })
       // 'status' from the department kanban board — maps to kanbanStatus + done
       if (req.body.status !== undefined) {
         const s = req.body.status
-        data.jobs[jobIdx].tasks[taskIdx].kanbanStatus = s === 'in-progress' ? 'inprogress' : s
-        data.jobs[jobIdx].tasks[taskIdx].done = s === 'done'
+        task.kanbanStatus = s === 'in-progress' ? 'inprogress' : s
+        task.done = s === 'done'
+      }
+      // keep pct in sync with kanbanStatus whenever either changes
+      if (req.body.kanbanStatus !== undefined || req.body.status !== undefined) {
+        if (task.kanbanStatus === 'done')            { task.pct = 100; task.done = true  }
+        else if (task.kanbanStatus === 'inprogress') { task.pct = 50;  task.done = false }
+        else                                         { task.pct = 0;   task.done = false }
       }
       writeData('jobs.json', data)
-      res.json(data.jobs[jobIdx].tasks[taskIdx])
+      res.json(task)
     } catch (err) { res.status(500).json({ error: err.message }) }
   })
 

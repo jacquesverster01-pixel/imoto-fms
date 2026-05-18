@@ -3,6 +3,7 @@ import { useGet } from '../hooks/useApi'
 import { fmtHHMMSS } from '../utils/time'
 import ProductionGantt from './production/ProductionGantt.jsx'
 import ProductionKanbanWall from '../components/production/ProductionKanbanWall.jsx'
+import { computeJobPct } from '../utils/jobProgress.js'
 
 const btnBase = {
   padding: '6px 16px', borderRadius: 6, fontSize: 13, fontWeight: 600, cursor: 'pointer',
@@ -20,7 +21,8 @@ export default function Production() {
   const { data: codesData }                          = useGet('/dept-codes')
   const { data: settingsData }                       = useGet('/settings')
 
-  const jobs            = Array.isArray(jobsData?.jobs) ? jobsData.jobs : []
+  const rawJobs         = Array.isArray(jobsData?.jobs) ? jobsData.jobs : []
+  const jobs            = rawJobs.map(job => ({ ...job, pct: computeJobPct(job) }))
   const prefixMappings  = codesData?.prefixMappings || []
   const assemblyPhases  = codesData?.assemblyPhases || []
 

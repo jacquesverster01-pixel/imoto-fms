@@ -1,4 +1,5 @@
 import { checkTaskAllocation } from '../../../utils/stockAllocation.js'
+import { getDisplayStatus } from '../../../utils/deptAllocation.js'
 import KanbanCardDetail from './KanbanCardDetail.jsx'
 
 function formatDate(d) {
@@ -23,11 +24,24 @@ const ALLOC_DOT_COLOR = {
   unknown: '#9298c4',
 }
 
+const STATUS_DEFS = [
+  { key: 'todo',        label: 'To Do' },
+  { key: 'in-progress', label: 'In Progress' },
+  { key: 'done',        label: 'Done' },
+]
+
+const STATUS_ACTIVE_BG = {
+  'todo':        '#6b7280',
+  'in-progress': '#f59e0b',
+  'done':        '#16a34a',
+}
+
 export default function KanbanCard({ task, isExpanded, onExpand, onStatusChange, isUpdating, stockCache, globalAllocations, stockCacheData }) {
   const borderColor = task.dueThisWeek ? '#f59e0b' : (task.jobColour || '#dbeafe')
   const bgColor = task.dueThisWeek ? '#fffbeb' : '#fff'
   const allocStatus = computeAllocStatus(task, stockCache, globalAllocations)
   const dotColor = ALLOC_DOT_COLOR[allocStatus]
+  const currentStatus = getDisplayStatus(task)
 
   return (
     <div style={{ marginBottom: 6, borderRadius: 6, border: '1px solid #e4e6ea', overflow: 'hidden' }}>
@@ -60,6 +74,31 @@ export default function KanbanCard({ task, isExpanded, onExpand, onStatusChange,
           {task.dueThisWeek && (
             <span style={{ color: '#f59e0b', fontWeight: 600 }}>This week</span>
           )}
+        </div>
+        <div style={{ display: 'flex', gap: 4, marginTop: 8, paddingTop: 8, borderTop: '1px solid #f3f4f6' }}>
+          {STATUS_DEFS.map(s => {
+            const isActive = currentStatus === s.key
+            return (
+              <button
+                key={s.key}
+                onClick={e => { e.stopPropagation(); if (!isUpdating && s.key !== currentStatus) onStatusChange(task, s.key) }}
+                style={{
+                  fontSize: 11,
+                  padding: '2px 8px',
+                  borderRadius: 4,
+                  border: '1px solid',
+                  cursor: isUpdating ? 'not-allowed' : 'pointer',
+                  borderColor: isActive ? STATUS_ACTIVE_BG[s.key] : '#d1d5db',
+                  background: isActive ? STATUS_ACTIVE_BG[s.key] : 'transparent',
+                  color: isActive ? '#fff' : '#6b7280',
+                  fontWeight: isActive ? 600 : 400,
+                  opacity: isUpdating ? 0.5 : 1,
+                }}
+              >
+                {s.label}
+              </button>
+            )
+          })}
         </div>
       </div>
       {isExpanded && (
