@@ -44,11 +44,11 @@ export default function stockRouter(readData, writeData) {
         const KNOWN = ['product code', 'productcode', 'code', 'item_code', 'itemcode']
         let headerIdx = 0
         for (let i = 0; i < Math.min(5, lines.length); i++) {
-          const cells = lines[i].split(',').map(c => c.trim().toLowerCase())
+          const cells = lines[i].split(',').map(c => c.trim().replace(/^"|"$/g, '').toLowerCase())
           if (KNOWN.some(k => cells.includes(k))) { headerIdx = i; break }
         }
 
-        headers = lines[headerIdx].split(',').map(c => c.trim())
+        headers = lines[headerIdx].split(',').map(c => c.trim().replace(/^"|"$/g, ''))
         console.log('[import-csv] detected headers:', headers)
         const dataLines = lines.slice(headerIdx + 1).filter(l => l.trim())
         if (!dataLines.length) return res.status(400).json({ error: 'No data rows found after header.' })

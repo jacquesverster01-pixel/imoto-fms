@@ -5,12 +5,12 @@
     "category": "Power tools",
     "serial": "AG-2019-004",
     "dept": "Workshop",
-    "assignedTo": null,
-    "checkedOut": null,
+    "assignedTo": "E010",
+    "checkedOut": "2026-05-15T11:42:36.882Z",
     "due": "2026-03-23",
-    "status": "in",
+    "status": "out",
     "condition": "Needs repair",
-    "checkedOutTo": null
+    "checkedOutTo": "Clint Langley"
   },
   {
     "id": "T002",
@@ -18,12 +18,12 @@
     "category": "Welding",
     "serial": "MW-2021-002",
     "dept": "Welding",
-    "assignedTo": null,
-    "checkedOut": null,
+    "assignedTo": "E010",
+    "checkedOut": "2026-05-15T11:42:40.021Z",
     "due": "2026-03-25",
-    "status": "in",
+    "status": "out",
     "condition": "Good",
-    "checkedOutTo": null
+    "checkedOutTo": "Clint Langley"
   },
   {
     "id": "T003",
@@ -31,12 +31,12 @@
     "category": "Power tools",
     "serial": "CS-2020-001",
     "dept": "Cabinet Making",
-    "assignedTo": null,
-    "checkedOut": null,
+    "assignedTo": "E019",
+    "checkedOut": "2026-05-15T11:42:42.887Z",
     "due": "2026-03-24",
-    "status": "in",
+    "status": "out",
     "condition": "Good",
-    "checkedOutTo": null
+    "checkedOutTo": "Yaatie Weaver"
   },
   {
     "id": "T004",

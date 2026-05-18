@@ -10,5 +10,53 @@
     "status": "approved",
     "id": "LV1777963755597",
     "createdAt": "2026-05-05T06:49:15.597Z"
+  },
+  {
+    "employeeId": "E001",
+    "type": "Annual",
+    "startDate": "2026-05-19",
+    "endDate": "2026-05-19",
+    "reason": "",
+    "employeeName": "Lorenzo August",
+    "days": 1,
+    "status": "approved",
+    "id": "LV1778849363777",
+    "createdAt": "2026-05-15T12:49:23.777Z"
+  },
+  {
+    "employeeId": "E001",
+    "type": "Annual",
+    "startDate": "2026-05-29",
+    "endDate": "2026-05-29",
+    "reason": "",
+    "employeeName": "Lorenzo August",
+    "days": 1,
+    "status": "approved",
+    "id": "LV1778849376728",
+    "createdAt": "2026-05-15T12:49:36.728Z"
+  },
+  {
+    "employeeId": "E001",
+    "type": "Annual",
+    "startDate": "2026-06-01",
+    "endDate": "2026-06-01",
+    "reason": "",
+    "employeeName": "Lorenzo August",
+    "days": 1,
+    "status": "approved",
+    "id": "LV1778849383020",
+    "createdAt": "2026-05-15T12:49:43.020Z"
+  },
+  {
+    "employeeId": "E001",
+    "type": "Annual",
+    "startDate": "2026-06-03",
+    "endDate": "2026-06-03",
+    "reason": "",
+    "employeeName": "Lorenzo August",
+    "days": 1,
+    "status": "approved",
+    "id": "LV1778849386893",
+    "createdAt": "2026-05-15T12:49:46.893Z"
   }
 ]
