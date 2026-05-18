@@ -3,6 +3,7 @@ const STATUS_MAP = {
   'at-risk':       { label: 'At risk',      color: '#b45309', bg: '#fffbeb', bar: '#f59e0b' },
   'blocked':       { label: 'Blocked',      color: '#dc2626', bg: '#fef2f2', bar: '#ef4444' },
   'in-production': { label: 'In Production',color: '#1d4ed8', bg: '#dbeafe', bar: '#4f67e4' },
+  'in_progress':   { label: 'In Production',color: '#1d4ed8', bg: '#dbeafe', bar: '#4f67e4' },
   'planned':       { label: 'Planned',      color: '#9298c4', bg: '#f4f5f7', bar: '#9298c4' },
 }
 const WINDOW_START = new Date('2026-03-23')

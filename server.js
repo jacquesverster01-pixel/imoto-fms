@@ -170,6 +170,29 @@ try {
   }
 } catch {}
 
+// ─── JOBS MIGRATION: in_progress → in-production ─────────────────────────────
+try {
+  const jobsData = readData('jobs.json')
+  let jobsChanged = false
+  for (const job of jobsData.jobs) {
+    if (job.status === 'in_progress') { job.status = 'in-production'; jobsChanged = true }
+  }
+  if (jobsChanged) { writeData('jobs.json', jobsData); console.log('[Migration] Normalised job statuses in_progress → in-production') }
+} catch {}
+
+// ─── STOCK MIGRATION: recompute status with threshold-aware logic ─────────────
+try {
+  const stockData = readData('stock.json')
+  let stockChanged = false
+  for (const item of stockData) {
+    const rl = item.reorderLevel ?? item.min ?? 0
+    const qty = item.qty ?? 0
+    const newStatus = (!rl || rl <= 0) ? 'ok' : qty <= 0 ? 'out' : qty <= rl ? 'low' : 'ok'
+    if (item.status !== newStatus) { item.status = newStatus; stockChanged = true }
+  }
+  if (stockChanged) { writeData('stock.json', stockData); console.log('[Migration] Recomputed stock statuses') }
+} catch {}
+
 // ─── ZK SERVICE ───────────────────────────────────────────────────────────────
 
 initZKService(readData, writeData)

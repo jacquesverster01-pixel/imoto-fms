@@ -54,7 +54,9 @@ export default function jobsRouter(readData, writeData, upload, uploadsDir) {
   router.post('/jobs', (req, res) => {
     try {
       const data = readData('jobs.json')
-      const { title, status, assemblyId, bomId, colour, startDate, dueDate, tasks } = req.body
+      const { title, status, assemblyId, bomId, colour, dueDate, tasks } = req.body
+      const today = new Date().toISOString().split('T')[0]
+      const startDate = req.body.startDate || today
       const job = {
         id: newId('job'),
         title: title || 'Untitled job',
@@ -62,7 +64,7 @@ export default function jobsRouter(readData, writeData, upload, uploadsDir) {
         assemblyId: assemblyId || null,
         bomId: bomId || null,
         colour: colour || '#dbeafe',
-        startDate: startDate || null,
+        startDate,
         dueDate: dueDate || null,
         tasks: Array.isArray(tasks) ? tasks : [],
         createdAt: new Date().toISOString()
@@ -103,10 +105,14 @@ export default function jobsRouter(readData, writeData, upload, uploadsDir) {
       const data = readData('jobs.json')
       const idx = data.jobs.findIndex(j => j.id === req.params.id)
       if (idx === -1) return res.status(404).json({ error: 'Job not found' })
-      const allowed = ['title', 'status', 'colour', 'startDate', 'dueDate', 'assemblyId', 'bomId', 'tasks', 'sourceBomId', 'sourceProductCode', 'labourEstimate']
+      const existing = data.jobs[idx]
+      const rawStatus = req.body.status
+      const status = rawStatus === 'in_progress' ? 'in-production' : (rawStatus || existing.status)
+      const allowed = ['title', 'colour', 'startDate', 'dueDate', 'assemblyId', 'bomId', 'tasks', 'sourceBomId', 'sourceProductCode', 'labourEstimate']
       allowed.forEach(k => {
         if (req.body[k] !== undefined) data.jobs[idx][k] = req.body[k]
       })
+      data.jobs[idx].status = status
       writeData('jobs.json', data)
       res.json(data.jobs[idx])
     } catch (err) { res.status(500).json({ error: err.message }) }

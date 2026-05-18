@@ -17,8 +17,9 @@ function pickCol(headers, aliases) {
 }
 
 function computeStatus(qty, reorderLevel) {
+  if (!reorderLevel || reorderLevel <= 0) return 'ok'
   if (qty <= 0) return 'out'
-  if (reorderLevel > 0 && qty <= reorderLevel) return 'low'
+  if (qty <= reorderLevel) return 'low'
   return 'ok'
 }
 
@@ -146,6 +147,7 @@ export default function stockRouter(readData, writeData) {
     try {
       const stock = readData('stock.json')
       const newItem = { ...req.body, id: `S${String(stock.length + 1).padStart(3, '0')}` }
+      newItem.status = computeStatus(newItem.qty ?? 0, newItem.reorderLevel ?? newItem.min ?? 0)
       stock.push(newItem)
       writeData('stock.json', stock)
       res.json(newItem)
@@ -158,8 +160,10 @@ export default function stockRouter(readData, writeData) {
       const idx = stock.findIndex(s => s.id === req.params.id)
       if (idx === -1) return res.status(404).json({ error: 'Stock item not found' })
       stock[idx] = { ...stock[idx], ...req.body }
+      const item = stock[idx]
+      item.status = computeStatus(item.qty ?? 0, item.reorderLevel ?? item.min ?? 0)
       writeData('stock.json', stock)
-      res.json(stock[idx])
+      res.json(item)
     } catch (err) { res.status(500).json({ error: err.message }) }
   })
 
