@@ -13,7 +13,7 @@ function relativeAge(isoString) {
   return `${Math.floor(hrs / 24)}d`
 }
 
-export default function GanttHeader({ title, setTitle, status, setStatus, zoom, setZoom, zoomScale, setZoomScale, showCriticalPath, setShowCriticalPath, showBaseline, setShowBaseline, progress, onClose, onExport, onSetBaseline, embedded, stockMeta, onRefreshStock, stockRefreshing }) {
+export default function GanttHeader({ title, setTitle, status, setStatus, zoom, setZoom, zoomScale, setZoomScale, showCriticalPath, setShowCriticalPath, showBaseline, setShowBaseline, progress, onClose, onExport, onSetBaseline, embedded, stockMeta, onRefreshStock, stockRefreshing, onSyncLocal }) {
   const tog = on => ({ padding: '4px 10px', borderRadius: 6, border: '1px solid #dde0ea', fontSize: 12, cursor: 'pointer', background: on ? '#4f67e4' : '#fff', color: on ? '#fff' : '#1a1d3b' })
   const zBtn = { padding: '4px 8px', border: 'none', fontSize: 13, cursor: 'pointer', background: '#fff', color: '#1a1d3b', lineHeight: 1 }
   const showStockBanner = stockMeta && (stockMeta.cacheStale || !stockMeta.cacheUpdatedAt)
@@ -49,6 +49,15 @@ export default function GanttHeader({ title, setTitle, status, setStatus, zoom, 
       <button onClick={onSetBaseline} style={tog(false)}>Set baseline</button>
       <button onClick={() => setShowBaseline(v => !v)} style={tog(showBaseline)}>Show baseline</button>
       <button onClick={onExport} style={tog(false)}>Export PDF</button>
+      {onSyncLocal && (
+        <button
+          onClick={onSyncLocal}
+          className="px-3 py-1 text-xs rounded bg-blue-600 hover:bg-blue-700 text-white flex items-center gap-1"
+          title="Sync stock quantities from local Stock Tracker into production cache"
+        >
+          <span>↑</span> Sync Stock
+        </button>
+      )}
       {embedded
         ? <button onClick={onClose} style={{ padding: '4px 12px', borderRadius: 6, border: '1px solid #4f67e4', fontSize: 12, cursor: 'pointer', background: '#4f67e4', color: '#fff', fontWeight: 600 }}>Save</button>
         : <button onClick={onClose} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 24, color: '#9298c4', lineHeight: 1, padding: 0 }}>×</button>

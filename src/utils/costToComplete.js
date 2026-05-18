@@ -1,5 +1,5 @@
-// stockCache.byCode[code]?.avgCost takes priority when the cache is extended;
-// falls back to component.unitCost which is embedded at BOM-import time.
+// Unit cost: use component.unitCost from the BOM; override with stockCache avgCost only when > 0.
+// Stock availability must never reduce quantities — cost reflects the full BOM requirement.
 
 export function computeJobCost(job, stockCache) {
   const tasks = flattenTasks(job.tasks || [])
@@ -12,12 +12,13 @@ export function computeJobCost(job, stockCache) {
       const key = comp.itemCode
       if (!key) continue
       if (!componentMap[key]) {
+        const cacheAvg = stockCache?.byCode?.[key]?.avgCost
         componentMap[key] = {
           itemCode: key,
           description: comp.itemDescription || comp.description || '',
           unit: comp.unit || '',
           totalQty: 0,
-          unitCost: stockCache?.byCode?.[key]?.avgCost ?? comp.unitCost ?? 0,
+          unitCost: cacheAvg > 0 ? cacheAvg : (comp.unitCost ?? 0),
         }
       }
       componentMap[key].totalQty += (comp.quantity || 0) + (comp.wastageQty || 0)

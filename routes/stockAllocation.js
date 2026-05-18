@@ -8,6 +8,7 @@ import { computeGlobalAllocations, checkTaskAllocation, checkJobAllocation } fro
 const __dirname  = path.dirname(fileURLToPath(import.meta.url))
 const CACHE_FILE = path.join(__dirname, '..', 'data', 'stock_cache.json')
 const JOBS_FILE  = path.join(__dirname, '..', 'data', 'jobs.json')
+const STOCK_FILE = path.join(__dirname, '..', 'data', 'stock.json')
 
 const API_ID  = process.env.UNLEASHED_API_ID    || ''
 const API_KEY = process.env.UNLEASHED_API_SECRET || ''
@@ -53,6 +54,11 @@ function readCache() {
 
 function readAllJobs() {
   try { const data = JSON.parse(fs.readFileSync(JOBS_FILE, 'utf-8')); return Array.isArray(data) ? data : (data.jobs || []) }
+  catch { return [] }
+}
+
+function readStock() {
+  try { const data = JSON.parse(fs.readFileSync(STOCK_FILE, 'utf-8')); return Array.isArray(data) ? data : (data.items || []) }
   catch { return [] }
 }
 
@@ -124,6 +130,33 @@ router.get('/stock/allocation', (req, res) => {
 
   const byTask = checkJobAllocation(job, cache.byCode, globalAllocations)
   res.json({ ok: true, ...meta, byTask })
+})
+
+router.post('/stock-cache/sync-local', async (req, res) => {
+  try {
+    const items = readStock()
+    const cache = readCache()
+    const byCode = cache.byCode || {}
+
+    let synced = 0
+    for (const item of items) {
+      if (!item.code) continue
+      byCode[item.code] = {
+        onHand: item.qty ?? 0,
+        available: item.qty ?? 0,
+        avgCost: item.unitCost ?? 0,
+        productDescription: item.name || ''
+      }
+      synced++
+    }
+
+    const updated = { updatedAt: new Date().toISOString(), byCode }
+    fs.writeFileSync(CACHE_FILE, JSON.stringify(updated, null, 2))
+
+    res.json({ ok: true, synced, updatedAt: updated.updatedAt })
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
 })
 
 function findTaskById(tasks, id) {

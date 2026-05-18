@@ -3,7 +3,7 @@
     {
       "id": "job-1777443180900-v6pbc",
       "title": "FINA00031 - SIOC - FAW JK6 (10m) Dental Unit",
-      "status": "planned",
+      "status": "in-production",
       "assemblyId": null,
       "bomId": null,
       "colour": "#dbeafe",
@@ -357,10 +357,10 @@
           "name": "SUBA00003-3 — Vehicle, Chassis and Body Additions - 10m Truck (3 Rooms)",
           "startDate": null,
           "endDate": null,
-          "done": false,
+          "done": true,
           "assignedTo": null,
           "notes": "",
-          "kanbanStatus": "todo",
+          "kanbanStatus": "done",
           "dependsOnAssembly": null
         },
         {
@@ -817,10 +817,10 @@
           "name": "SUBA00001-4 — Interior Cladding - 10m Truck (SIOC Dental Truck Layout)",
           "startDate": null,
           "endDate": null,
-          "done": false,
+          "done": true,
           "assignedTo": null,
           "notes": "",
-          "kanbanStatus": "todo",
+          "kanbanStatus": "done",
           "dependsOnAssembly": null
         },
         {
@@ -913,10 +913,10 @@
           "name": "SUBA00060-5 — Cabinetry - FINA00031 - SIOC Dental",
           "startDate": null,
           "endDate": null,
-          "done": false,
+          "done": true,
           "assignedTo": null,
           "notes": "",
-          "kanbanStatus": "todo",
+          "kanbanStatus": "done",
           "dependsOnAssembly": null
         },
         {
@@ -971,10 +971,10 @@
           "name": "SUBA00048 — Lighting Assembly",
           "startDate": "2026-05-03",
           "endDate": "2026-05-10",
-          "done": false,
+          "done": true,
           "assignedTo": null,
           "notes": "",
-          "kanbanStatus": "todo",
+          "kanbanStatus": "done",
           "dependsOnAssembly": null
         },
         {
@@ -1287,10 +1287,10 @@
           "name": "SUBA00012-1 — Fresh Water System - Truck, JK6",
           "startDate": "2026-05-05",
           "endDate": "2026-05-14",
-          "done": false,
+          "done": true,
           "assignedTo": null,
           "notes": "",
-          "kanbanStatus": "todo",
+          "kanbanStatus": "done",
           "dependsOnAssembly": null
         },
         {
@@ -1435,10 +1435,10 @@
           "name": "SUBA00065-1 — Red Water Tank System (Dental) - JK6 Dental",
           "startDate": null,
           "endDate": null,
-          "done": false,
+          "done": true,
           "assignedTo": null,
           "notes": "",
-          "kanbanStatus": "todo",
+          "kanbanStatus": "done",
           "dependsOnAssembly": null
         },
         {
@@ -1930,10 +1930,10 @@
           "name": "SUBA00011-1 — Water Enclosure - FAW Truck",
           "startDate": null,
           "endDate": null,
-          "done": false,
+          "done": true,
           "assignedTo": null,
           "notes": "",
-          "kanbanStatus": "todo",
+          "kanbanStatus": "done",
           "dependsOnAssembly": null
         },
         {
@@ -2746,10 +2746,10 @@
           "name": "SUBA00022-3 — Electrical Distribution (Trunking) - 10m Truck, Double Dental Truck",
           "startDate": null,
           "endDate": null,
-          "done": false,
+          "done": true,
           "assignedTo": null,
           "notes": "",
-          "kanbanStatus": "todo",
+          "kanbanStatus": "done",
           "dependsOnAssembly": null
         },
         {
@@ -2814,10 +2814,10 @@
           "name": "SUBA00023-1 — Branding - Exterior, 10m Truck (SIOC Truck)",
           "startDate": null,
           "endDate": null,
-          "done": false,
+          "done": true,
           "assignedTo": null,
           "notes": "",
-          "kanbanStatus": "todo",
+          "kanbanStatus": "done",
           "dependsOnAssembly": null
         },
         {
@@ -3482,10 +3482,10 @@
           "name": "SUBA00066-1 — Dental - SIOC 10m Truck",
           "startDate": null,
           "endDate": null,
-          "done": false,
+          "done": true,
           "assignedTo": null,
           "notes": "",
-          "kanbanStatus": "todo",
+          "kanbanStatus": "done",
           "dependsOnAssembly": null
         },
         {
@@ -3639,10 +3639,10 @@
           "name": "SUBA00071 — Middle Room - JK6 Double Dental",
           "startDate": null,
           "endDate": null,
-          "done": false,
+          "done": true,
           "assignedTo": null,
           "notes": "",
-          "kanbanStatus": "todo",
+          "kanbanStatus": "done",
           "dependsOnAssembly": null
         },
         {
@@ -5594,10 +5594,10 @@
           "name": "SUBA00027-1 — CONSUMABLES - Truck, JK6 (10m) - Guud Drivers (GD)",
           "startDate": null,
           "endDate": null,
-          "done": false,
+          "done": true,
           "assignedTo": null,
           "notes": "",
-          "kanbanStatus": "todo",
+          "kanbanStatus": "done",
           "dependsOnAssembly": null
         }
       ],
@@ -5703,7 +5703,8 @@
           "startDate": null,
           "endDate": null
         }
-      ]
+      ],
+      "labourEstimate": 50000
     }
   ]
 }

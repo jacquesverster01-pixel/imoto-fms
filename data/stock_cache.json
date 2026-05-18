@@ -1,1 +1,7079 @@
-{"updatedAt":null,"byCode":{}}
+{
+  "updatedAt": "2026-05-18T08:01:38.740Z",
+  "byCode": {
+    "ABC-001": {
+      "onHand": 25,
+      "available": 25,
+      "avgCost": 12.5,
+      "productDescription": "Test Widget"
+    },
+    "ELEA00001": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "DB Panel (Fully Assembled)"
+    },
+    "ELEA00002": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "DC Power Selector Box (Fully Assembled)"
+    },
+    "ELEA00003": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "DC Fuse Box (Fully Assembled)"
+    },
+    "ELEA00004": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Shore Power Housing (Fully Assembled)"
+    },
+    "ELEA00006": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TRUNKING - Double Euro Outlet - Fully Assembled"
+    },
+    "ELEA00007": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TRUNKING - 3-Pin Outlet - Fully Assembled"
+    },
+    "ELEA00008": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TRUNKING - Double RJ45 Network Outlet - Fully Assembled"
+    },
+    "ELEA00009": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "POWER SYSTEM - Solar Panel Assembly (6 Panel)"
+    },
+    "ELEA00010": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Solar Battery Assembly - 3 Rack Mount Battery System"
+    },
+    "ELEA00011": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "POWER SYSTEM - Inverter Assembly - 5kVA Rack Mounted System"
+    },
+    "ELEA00012": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Radio System (Fully Assembled)"
+    },
+    "ELEA00013": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Toilet Ventilator (Fully Assembled)"
+    },
+    "ELEA00014": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "POWER SYSTEM - Generator & Shore Assembly"
+    },
+    "ELEA00015": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "POWER SYSTEM - Solar Panel Assembly (8 Panel, Truck, Flat Roof)"
+    },
+    "ELEA00016": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "POWER SYSTEM - Inverter Assembly - 2x5kVA Rack Mounted System"
+    },
+    "ELEA00017": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "POWER SYSTEM - Solar Battery Assembly - 4 Rack Mount Battery System"
+    },
+    "ELEA00018": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Shore Power Cable - Fully Assembled"
+    },
+    "ELEA00019": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "POWER SYSTEM - Shore Power Assembly"
+    },
+    "ELEA00020": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SOLAR - Solar Panel Junction Box"
+    },
+    "ELEA00021": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Auxilary Batteries Assembly - 2 x 657"
+    },
+    "ELEA00022": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SOLAR - Solar Panel Junction Box - Conversion Kit"
+    },
+    "ELEA00023": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SERVER RACK - Feed Through Panel Assembly"
+    },
+    "ELEA00024": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "POWER SYSTEM - Solar Battery Assembly"
+    },
+    "ELEA00025": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "POWER SYSTEM - Solar Panel Assembly"
+    },
+    "ELEA00026": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "POWER SYSTEM - Inverter Assembly"
+    },
+    "ELEA00030": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Bus 12.5m Trunking _Test"
+    },
+    "ELEA00031": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SOLAR - Solar Panel, 6mm2 Rewire Kit"
+    },
+    "ELEA00032": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Light Cornice Assembly - Bus Type, Standard Cornice"
+    },
+    "ELEP00001": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SWITCH - 2 PIN, 2 WAY, OFF-ON, 444006"
+    },
+    "ELEP00009": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "OUTLET - 16A, STANDARD"
+    },
+    "ELEP00013": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PLUG - PLUG RE-WIREABLE, BLACK"
+    },
+    "ELEP00014": {
+      "onHand": 8,
+      "available": 8,
+      "avgCost": 0,
+      "productDescription": "PLUG - IEC SOCKET FLANGE MOUNT"
+    },
+    "ELEP00019": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SOCKET - RCA, CHASSIS MOUNT"
+    },
+    "ELEP00021": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "BRACKET - MEDICAL LIGHT, WALL MOUNT"
+    },
+    "ELEP00024": {
+      "onHand": 20,
+      "available": 20,
+      "avgCost": 0,
+      "productDescription": "TRUNKING DBL - JOINT COVER, WHITE"
+    },
+    "ELEP00025": {
+      "onHand": 3,
+      "available": 3,
+      "avgCost": 0,
+      "productDescription": "TRUNKING - UNIVERSAL COVERSET, WHITE"
+    },
+    "ELEP00026": {
+      "onHand": 18,
+      "available": 18,
+      "avgCost": 0,
+      "productDescription": "TRUNKING - TRUNKING INTERNAL BEND, DBL TI"
+    },
+    "ELEP00027": {
+      "onHand": 35,
+      "available": 35,
+      "avgCost": 0,
+      "productDescription": "TRUNKING - TRUNKING EXTERNAL BEND, DBL TI"
+    },
+    "ELEP00028": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SOCKET - EURO PLUG, 11850"
+    },
+    "ELEP00029": {
+      "onHand": 4,
+      "available": 4,
+      "avgCost": 0,
+      "productDescription": "CRADLE - UNIVERSAL, 11000, STEEL"
+    },
+    "ELEP00030": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TRUNKING - END CAP, DOUBLE TIER, WHITE"
+    },
+    "ELEP00032": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TRUNKING - 3-PIN PLUG COVERSET, WHT,BD461"
+    },
+    "ELEP00033": {
+      "onHand": 5,
+      "available": 5,
+      "avgCost": 0,
+      "productDescription": "SOCKET - RJ45 DATA, 11894"
+    },
+    "ELEP00034": {
+      "onHand": 26,
+      "available": 26,
+      "avgCost": 0,
+      "productDescription": "SOCKET - 3-PIN, PLUG OUTLET, 6896"
+    },
+    "ELEP00035": {
+      "onHand": 30,
+      "available": 30,
+      "avgCost": 0,
+      "productDescription": "PLUG - 3 PIN, 16A, PLUGTOP"
+    },
+    "ELEP00040": {
+      "onHand": 5,
+      "available": 5,
+      "avgCost": 0,
+      "productDescription": "WIRE - CAT5, SHIELDED, NETWORK CABLE (UV Protected) (Meters)"
+    },
+    "ELEP00043": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SWITCH - DIMMER, 12/24V"
+    },
+    "ELEP00044": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LIGHT - SMD DOWNLIGHT RING, OPEL COVER"
+    },
+    "ELEP00047": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "POWER SUPPLY - POWER SUPPLY 24V, 480W 20AMP"
+    },
+    "ELEP00052": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "ENDPLATE - AP 2001.2"
+    },
+    "ELEP00054": {
+      "onHand": 100,
+      "available": 100,
+      "avgCost": 0,
+      "productDescription": "WIRE - 1.5mm, 2 Core, Cabtyre"
+    },
+    "ELEP00055": {
+      "onHand": 400,
+      "available": 400,
+      "avgCost": 0,
+      "productDescription": "WIRE - 1.5MM2, 3 CORE, CABTYRE"
+    },
+    "ELEP00057": {
+      "onHand": 200,
+      "available": 200,
+      "avgCost": 0,
+      "productDescription": "WIRE - 2.5MM2, 3 CORE, CABTYRE"
+    },
+    "ELEP00058": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "WIRE - 2.5MM2, PANELFLEX, BLACK"
+    },
+    "ELEP00059": {
+      "onHand": 100,
+      "available": 100,
+      "avgCost": 0,
+      "productDescription": "WIRE - 2.5MM2, PANELFLEX, BLUE"
+    },
+    "ELEP00060": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "WIRE - 2.5MM2, PANELFLEX, BROWN"
+    },
+    "ELEP00061": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "WIRE - 2.5MM2, PANELFLEX, GREEN/ YELL"
+    },
+    "ELEP00062": {
+      "onHand": 100,
+      "available": 100,
+      "avgCost": 0,
+      "productDescription": "WIRE - 2.5MM2, PANELFLEX, RED"
+    },
+    "ELEP00063": {
+      "onHand": 200,
+      "available": 200,
+      "avgCost": 0,
+      "productDescription": "WIRE - 4.0MM2, 3 CORE, CABTYRE"
+    },
+    "ELEP00064": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "BATTERY - BATTERY F657C"
+    },
+    "ELEP00066": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "RADIO - CAR, With CD Player / MP3 / AUX"
+    },
+    "ELEP00071": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "LIGHT - 24V, LED STRIP, COOL WHITE"
+    },
+    "ELEP00072": {
+      "onHand": 16,
+      "available": 16,
+      "avgCost": 0,
+      "productDescription": "CHARGER - CHARGER BATTERY , 24V, 12A, 3 STAGE"
+    },
+    "ELEP00075": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "REMOTE - ET RX, 1 CHANNEL, ROLLING CODE"
+    },
+    "ELEP00077": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "USB - FINGERPRINT READER"
+    },
+    "ELEP00078": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PLUG - 16A, RUB BB, LM1065"
+    },
+    "ELEP00079": {
+      "onHand": 4,
+      "available": 4,
+      "avgCost": 0,
+      "productDescription": "DIN RAIL - LENGTH"
+    },
+    "ELEP00081": {
+      "onHand": 4,
+      "available": 4,
+      "avgCost": 0,
+      "productDescription": "CONNECTOR - RJ45, DATA - Pull Through Crimp"
+    },
+    "ELEP00096": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "BUSH - 1/2-3/8, MALE/FEMALE, REDUCE"
+    },
+    "ELEP00100": {
+      "onHand": 13,
+      "available": 13,
+      "avgCost": 0,
+      "productDescription": "BATTERY - Terminal, Positive"
+    },
+    "ELEP00101": {
+      "onHand": 12,
+      "available": 12,
+      "avgCost": 0,
+      "productDescription": "BATTERY - Terminal, Negative"
+    },
+    "ELEP00102": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "OUTLET - RJ11, TELEPHONE, LS 30RJ64SMTW"
+    },
+    "ELEP00103": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "VENUS MINI SHROUD SET, WHITE (OBSOLETE)"
+    },
+    "ELEP00104": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PLATE - FRONT TWIN WHITE (OBSOLETE)"
+    },
+    "ELEP00114": {
+      "onHand": 3,
+      "available": 3,
+      "avgCost": 0,
+      "productDescription": "RADIO - Speakers"
+    },
+    "ELEP00121": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LUG - 4 X 5MM, RING, NON INSULATED"
+    },
+    "ELEP00122": {
+      "onHand": 550,
+      "available": 550,
+      "avgCost": 0,
+      "productDescription": "LUG - 4 X 6MM, RING, NON INSULATED"
+    },
+    "ELEP00123": {
+      "onHand": 300,
+      "available": 300,
+      "avgCost": 0,
+      "productDescription": "LUG - 25 X 6MM, RING, NON INSULATED"
+    },
+    "ELEP00125": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LUG - 35 X 6MM, RING, NON INSULATED"
+    },
+    "ELEP00126": {
+      "onHand": 200,
+      "available": 200,
+      "avgCost": 0,
+      "productDescription": "LUG - 35 X 8MM, RING, NON INSULATED"
+    },
+    "ELEP00127": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "ENCLOSURE - ENCLOSURE 190 X 140 X 70, PLAIN, IP56"
+    },
+    "ELEP00128": {
+      "onHand": 4,
+      "available": 4,
+      "avgCost": 0,
+      "productDescription": "ENCLOSURE - ENCLOSURE 190 X 140, CHASSIS PLATE"
+    },
+    "ELEP00129": {
+      "onHand": 6.5,
+      "available": 6.5,
+      "avgCost": 0,
+      "productDescription": "TRUNKING - 40 X 80, SLOTTED, NARROW, 2M"
+    },
+    "ELEP00130": {
+      "onHand": 10,
+      "available": 10,
+      "avgCost": 0,
+      "productDescription": "TRUNKING - 80 X 80, SLOTTED"
+    },
+    "ELEP00131": {
+      "onHand": 80,
+      "available": 80,
+      "avgCost": 0,
+      "productDescription": "WIRE - Panelflex, 10mm2, Red"
+    },
+    "ELEP00132": {
+      "onHand": 80,
+      "available": 80,
+      "avgCost": 0,
+      "productDescription": "WIRE - Panelflex, 10mm2, Black"
+    },
+    "ELEP00133": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "WIRE - 25MM2, PANELFLEX, RED"
+    },
+    "ELEP00134": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "WIRE - 25MM2, PANELFLEX, BLACK"
+    },
+    "ELEP00135": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "FUSE HOLDER - BF1, 200A"
+    },
+    "ELEP00136": {
+      "onHand": 49,
+      "available": 49,
+      "avgCost": 0,
+      "productDescription": "FUSE - 50A, MIDI"
+    },
+    "ELEP00137": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "Radio - Olympus Aerial"
+    },
+    "ELEP00141": {
+      "onHand": 20,
+      "available": 20,
+      "avgCost": 0,
+      "productDescription": "Cable Protection - Sleeving - Spiral Binding - 12MM"
+    },
+    "ELEP00142": {
+      "onHand": 6,
+      "available": 6,
+      "avgCost": 0,
+      "productDescription": "CRADLE - 5MM, NO ADHESIVE"
+    },
+    "ELEP00143": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CRADLE - 9MM, NO ADHESIVE"
+    },
+    "ELEP00147": {
+      "onHand": 20,
+      "available": 20,
+      "avgCost": 0,
+      "productDescription": "Cable Protection - Split sleeving - 25MM - Black -Sprague"
+    },
+    "ELEP00148": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "ENCLOSURE - 4 WAY, DIN"
+    },
+    "ELEP00149": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "ENCLOSURE - 4-WAY, DOOR"
+    },
+    "ELEP00151": {
+      "onHand": 6,
+      "available": 6,
+      "avgCost": 0,
+      "productDescription": "SWITCH - 40A, 2-Pole, Change Over"
+    },
+    "ELEP00152": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "SWITCH - 40A, 2-Pole, Earth Leakage (MJT 740)"
+    },
+    "ELEP00153": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "GLAND - 25MM, BLACK"
+    },
+    "ELEP00154": {
+      "onHand": 17,
+      "available": 17,
+      "avgCost": 0,
+      "productDescription": "PLUG - PLUG SHORE, FEMALE COUPLER, 2P+E, 3"
+    },
+    "ELEP00155": {
+      "onHand": 20,
+      "available": 20,
+      "avgCost": 0,
+      "productDescription": "PLUG - PLUG SHORE, INLET, 2P+E, 32A, IP67"
+    },
+    "ELEP00156": {
+      "onHand": 302,
+      "available": 302,
+      "avgCost": 0,
+      "productDescription": "TERMINAL - FEED-THROUGH, 4MM2, GREEN, EARTH"
+    },
+    "ELEP00157": {
+      "onHand": 281,
+      "available": 281,
+      "avgCost": 0,
+      "productDescription": "TERMINAL - TERMINAL FEED-THROUGH, 4MM2, GREY"
+    },
+    "ELEP00158": {
+      "onHand": 257,
+      "available": 257,
+      "avgCost": 0,
+      "productDescription": "TERMINAL - TERMINAL FEED-THROUGH, 4MM2, BLUE"
+    },
+    "ELEP00159": {
+      "onHand": 11,
+      "available": 11,
+      "avgCost": 0,
+      "productDescription": "TERMINAL - TERMINAL FEED-THROUGH, 10MM2, GREY"
+    },
+    "ELEP00160": {
+      "onHand": 200,
+      "available": 200,
+      "avgCost": 0,
+      "productDescription": "TERMINAL - End Plate for 4mm2 Feedthrough Terminal, Grey"
+    },
+    "ELEP00161": {
+      "onHand": 31,
+      "available": 31,
+      "avgCost": 0,
+      "productDescription": "TERMINAL - End Plate for 4mm2 Feedthrough Terminal, BLue"
+    },
+    "ELEP00162": {
+      "onHand": 32,
+      "available": 32,
+      "avgCost": 0,
+      "productDescription": "TERMINAL - BRIDGE BAR, 10MM2, 3-WAY"
+    },
+    "ELEP00163": {
+      "onHand": 21,
+      "available": 21,
+      "avgCost": 0,
+      "productDescription": "TERMINAL - TERMINAL END STOP"
+    },
+    "ELEP00164": {
+      "onHand": 3,
+      "available": 3,
+      "avgCost": 0,
+      "productDescription": "TERMINAL - BRIDGE BAR, 4MM2, 10-WAY"
+    },
+    "ELEP00172": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CONNECTOR - DEUTSCH, DTP, 4PIN, FEMALE KIT"
+    },
+    "ELEP00173": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CONNECTOR - DEUTSCH, DTP, 4PIN, MALE KIT"
+    },
+    "ELEP00174": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "4 COREWIRE - 0.5MM2, CABTYRE,"
+    },
+    "ELEP00175": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "FAN - Generator Bay Fan, DC"
+    },
+    "ELEP00176": {
+      "onHand": 22,
+      "available": 22,
+      "avgCost": 0,
+      "productDescription": "TRUNKING - DUCT & COVER, DBL TIER, WHITE To be issued per metre"
+    },
+    "ELEP00181": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TRUNKING - BLANK INSERT, 11900"
+    },
+    "ELEP00182": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CONNECTOR - CONNECTOR ANDERSON, 50A"
+    },
+    "ELEP00185": {
+      "onHand": 11,
+      "available": 11,
+      "avgCost": 0,
+      "productDescription": "PLUG - Plug with no cover (Microwave Plug)"
+    },
+    "ELEP00186": {
+      "onHand": 395,
+      "available": 395,
+      "avgCost": 0,
+      "productDescription": "STUD - 6MM X 20"
+    },
+    "ELEP00187": {
+      "onHand": 226,
+      "available": 226,
+      "avgCost": 0,
+      "productDescription": "CONNECTOR - 3 PIN, MALE CONTACT"
+    },
+    "ELEP00188": {
+      "onHand": 238,
+      "available": 238,
+      "avgCost": 0,
+      "productDescription": "CONNECTOR - 3 PIN, FEMALE CONTACT"
+    },
+    "ELEP00189": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "CONNECTOR - 6 PIN, MALE CONTACT"
+    },
+    "ELEP00190": {
+      "onHand": 27,
+      "available": 27,
+      "avgCost": 0,
+      "productDescription": "CONNECTOR - 6 PIN, FEMALE CONTACT"
+    },
+    "ELEP00191": {
+      "onHand": 328,
+      "available": 328,
+      "avgCost": 0,
+      "productDescription": "CONNECTOR - 3/4 PIN, HOUSING"
+    },
+    "ELEP00192": {
+      "onHand": 326,
+      "available": 326,
+      "avgCost": 0,
+      "productDescription": "CONNECTOR - 3/4 PIN, HOOD, SIDE ENTRY"
+    },
+    "ELEP00193": {
+      "onHand": 16,
+      "available": 16,
+      "avgCost": 0,
+      "productDescription": "CONNECTOR - 6 PIN, HOUSING"
+    },
+    "ELEP00194": {
+      "onHand": 18,
+      "available": 18,
+      "avgCost": 0,
+      "productDescription": "CONNECTOR - 6 PIN, HOOD, SIDE ENTRY"
+    },
+    "ELEP00195": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "SWITCH - BELL, IP55"
+    },
+    "ELEP00198": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LIGHT - DOWNLIGHT, MARINE, HELLA, 24V, CW"
+    },
+    "ELEP00203": {
+      "onHand": 103,
+      "available": 103,
+      "avgCost": 0,
+      "productDescription": "CONNECTOR - 4-PIN, MALE CONTACT"
+    },
+    "ELEP00204": {
+      "onHand": 98,
+      "available": 98,
+      "avgCost": 0,
+      "productDescription": "CONNECTOR - 4-PIN, FEMALE CONTACT"
+    },
+    "ELEP00211": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CIRCUIT BREAKER - 16A, 1-POLE"
+    },
+    "ELEP00219": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "WIRE - 6MM2, PANEL, GREEN/YELLOW"
+    },
+    "ELEP00220": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "DATA - RUBBER BOOT, RJ45, GREY"
+    },
+    "ELEP00224": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CAPACITOR - 10.000UF, 63V"
+    },
+    "ELEP00230": {
+      "onHand": 30,
+      "available": 30,
+      "avgCost": 0,
+      "productDescription": "GLAND - COMPRESSION, 20MM, GREY"
+    },
+    "ELEP00231": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SOCKET - 3-PIN, PLUG, 6896HD, RED"
+    },
+    "ELEP00234": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "WIRE - 7 CORE"
+    },
+    "ELEP00236": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "WIRE - 4MM2, PANELFLEX, RED"
+    },
+    "ELEP00237": {
+      "onHand": 100,
+      "available": 100,
+      "avgCost": 0,
+      "productDescription": "WIRE - 4MM2, PANEL FLEX, BROWN"
+    },
+    "ELEP00238": {
+      "onHand": 178,
+      "available": 178,
+      "avgCost": 0,
+      "productDescription": "TERMINAL - Spade, Female, insulated, 2.5mm2, BDF"
+    },
+    "ELEP00239": {
+      "onHand": 29,
+      "available": 29,
+      "avgCost": 0,
+      "productDescription": "TERMINAL - Spade, Male, insulated, 2.5mm2, BDM"
+    },
+    "ELEP00240": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PLUG - 2 PIN, FEMALE"
+    },
+    "ELEP00242": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TRUNKING - DUCT & COVER,SINGLE TIER, WHIT"
+    },
+    "ELEP00243": {
+      "onHand": 19,
+      "available": 19,
+      "avgCost": 0,
+      "productDescription": "TRUNKING - END CAP, SINGLE TIER, WHITE"
+    },
+    "ELEP00244": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TRUNKING - INT/EXT CORNER, SINGLE TIER, W"
+    },
+    "ELEP00245": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TRUNKING - 90deg - FLAT CORNER, SINGLE TIER, WHIT"
+    },
+    "ELEP00246": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TRUNKING - HALF ROUND"
+    },
+    "ELEP00247": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TRUNKING - DERIVATION BOX"
+    },
+    "ELEP00249": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SWITCH - Double Gang IP55"
+    },
+    "ELEP00250": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SWITCH - Single Gang IP55"
+    },
+    "ELEP00256": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "METER - KWH Reader"
+    },
+    "ELEP00257": {
+      "onHand": 5,
+      "available": 5,
+      "avgCost": 0,
+      "productDescription": "DISTRIBUTION BOARD - DB - 10 WAY, SURFACE MOUNT"
+    },
+    "ELEP00259": {
+      "onHand": 116,
+      "available": 116,
+      "avgCost": 0,
+      "productDescription": "CIRCUIT BREAKER - BLANKS"
+    },
+    "ELEP00262": {
+      "onHand": 14,
+      "available": 14,
+      "avgCost": 0,
+      "productDescription": "PLUG - IEC SOCKET, IN-LINE, MALE"
+    },
+    "ELEP00263": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PLUG - IEC, IN-LINE, FEMALE"
+    },
+    "ELEP00267": {
+      "onHand": 44,
+      "available": 44,
+      "avgCost": 0,
+      "productDescription": "FUSE - 15A, MINI BLADE"
+    },
+    "ELEP00269": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LUG - RING, 70 X 13"
+    },
+    "ELEP00270": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LUG - RING, 70 X 10.5"
+    },
+    "ELEP00271": {
+      "onHand": 13,
+      "available": 13,
+      "avgCost": 0,
+      "productDescription": "LUG - RING, 70 X 8"
+    },
+    "ELEP00274": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LIGHT - LED STRIP, 12V, PURE/COOL WHITE"
+    },
+    "ELEP00280": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "ENCLOSURE - 230 X 130 X 120"
+    },
+    "ELEP00283": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LUG - 10 X 5MM"
+    },
+    "ELEP00287": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "VOLTAGE SENSING RELAY - VOLTAGE SENSING RELAY 12/24V, 140A"
+    },
+    "ELEP00290": {
+      "onHand": 10,
+      "available": 10,
+      "avgCost": 0,
+      "productDescription": "FAN - Generator Bay Fan, 220V AC, Filter Size 148.5 x 148x5 x 13.5mm"
+    },
+    "ELEP00291": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PLUG - IEC SOCKET, FLANGE MOUNT, PRESSFIT"
+    },
+    "ELEP00293": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "INVERTER - VICTRON QUATTRO 24V/5KVA"
+    },
+    "ELEP00295": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "VICTRON - RJ45 UTP CABLE, 0.3M"
+    },
+    "ELEP00297": {
+      "onHand": 4,
+      "available": 4,
+      "avgCost": 0,
+      "productDescription": "TRUNKING - 60 X 40, 2M, SOLID WHITE. Issue per metre"
+    },
+    "ELEP00300": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SWITCH - ROCKER, WATERPROOF, ILLUMINATED"
+    },
+    "ELEP00301": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PLUG - TOP, BRITISH, FUSED, FLAT PIN,"
+    },
+    "ELEP00302": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PANEL - 24 PORT, POPULATED PATCH"
+    },
+    "ELEP00304": {
+      "onHand": 18,
+      "available": 18,
+      "avgCost": 0,
+      "productDescription": "FUSE - 125A, MIDI"
+    },
+    "ELEP00309": {
+      "onHand": 94,
+      "available": 94,
+      "avgCost": 0,
+      "productDescription": "VENTILATOR - UFO, DECK VENILATOR, Stainless Steel"
+    },
+    "ELEP00313": {
+      "onHand": 2,
+      "available": 2,
+      "avgCost": 0,
+      "productDescription": "MULTIPLUG - 10WAY"
+    },
+    "ELEP00315": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "FAN - EXTRACTOR FAN, 24V"
+    },
+    "ELEP00316": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CONVERTER - CONVERTER  - 24V TO 12V, 20A"
+    },
+    "ELEP00317": {
+      "onHand": 6,
+      "available": 6,
+      "avgCost": 0,
+      "productDescription": "AMMETER - 50A AC Direct Connected"
+    },
+    "ELEP00318": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "VOLTMETER - 0-300V AC"
+    },
+    "ELEP00324": {
+      "onHand": 49,
+      "available": 49,
+      "avgCost": 0,
+      "productDescription": "SWITCH - CIRCUIT BREAKER, A1 FLAT R 15A"
+    },
+    "ELEP00330": {
+      "onHand": 19,
+      "available": 19,
+      "avgCost": 0,
+      "productDescription": "CHARGER - BATTERY, 12V, 10A, 3 STAGE"
+    },
+    "ELEP00331": {
+      "onHand": 2,
+      "available": 2,
+      "avgCost": 0,
+      "productDescription": "CHARGER - Battery, 24V, 17A, 3 Stage"
+    },
+    "ELEP00332": {
+      "onHand": 32,
+      "available": 32,
+      "avgCost": 0,
+      "productDescription": "SWITCH - BATTERY, DISCONNECT"
+    },
+    "ELEP00335": {
+      "onHand": 13,
+      "available": 13,
+      "avgCost": 0,
+      "productDescription": "DISTRIBUTION BOARD - DISTRIBUTION BOARD 6 WAY, SURFACE MOUNT"
+    },
+    "ELEP00341": {
+      "onHand": 2,
+      "available": 2,
+      "avgCost": 0,
+      "productDescription": "VOLTMETER - 0-30V DC"
+    },
+    "ELEP00342": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CONNECTOR - CONNECTOR ANDERSON, 175A"
+    },
+    "ELEP00343": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CONNECTOR - REVOS BASIC, MALE CONTACT, 24 PIN"
+    },
+    "ELEP00344": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CONNECTOR - REVOS BASIC, FEMALE CONTACT, 24 PIN"
+    },
+    "ELEP00345": {
+      "onHand": 2,
+      "available": 2,
+      "avgCost": 0,
+      "productDescription": "CONNECTOR - REVOS BASIC, HOUSING, 24 PIN"
+    },
+    "ELEP00346": {
+      "onHand": 4,
+      "available": 4,
+      "avgCost": 0,
+      "productDescription": "CONNECTOR - REVOS BASIC, HOOD, SIDE ENTRY, 24 PIN"
+    },
+    "ELEP00347": {
+      "onHand": 2,
+      "available": 2,
+      "avgCost": 0,
+      "productDescription": "DISTRIBUTION BOARD - 3 WAY, SURFACE MOUNT"
+    },
+    "ELEP00348": {
+      "onHand": 3,
+      "available": 3,
+      "avgCost": 0,
+      "productDescription": "FUSE 60A Midi"
+    },
+    "ELEP00351": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SOLAR CHARGER - VICTRON BLUESOLAR MPPT 150/70-TR"
+    },
+    "ELEP00352": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SOLAR PANEL - POLY 405W CANADIAN SOLAR"
+    },
+    "ELEP00353": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "BATTERY - DISCOVER AGM 12V 230AH"
+    },
+    "ELEP00354": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CONTROL PANEL - VICTRON COLOUR CONTROL GX"
+    },
+    "ELEP00355": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "BATTERY - 638"
+    },
+    "ELEP00356": {
+      "onHand": 100,
+      "available": 100,
+      "avgCost": 0,
+      "productDescription": "WIRE - 4MM2, PANELFLEX, BLACK"
+    },
+    "ELEP00357": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "AMMETER - 50A DC Direct Connected"
+    },
+    "ELEP00360": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SWITCH - CIRCUIT BREAKER, A1 FLAT R 20A"
+    },
+    "ELEP00362": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "Fuse Holder BF2, 500A"
+    },
+    "ELEP00364": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "PDC - PARK DISTANCE COTROL W/LED"
+    },
+    "ELEP00381": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Coaxial Cable BNC Crimp"
+    },
+    "ELEP00388": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SOLAR PANEL - 300W, Deserv"
+    },
+    "ELEP00389": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "BATTERY - Omnipower, Solar (OPR180-12)"
+    },
+    "ELEP00418": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "DB Panel"
+    },
+    "ELEP00419": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Tailight Marcopolo G6 Single LH CLR 172010671"
+    },
+    "ELEP00420": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Tailight Marcopolo G6 Single RH CLR 172010665"
+    },
+    "ELEP00421": {
+      "onHand": 3,
+      "available": 3,
+      "avgCost": 0,
+      "productDescription": "Tailight Truck LED Rubber Clear Hella"
+    },
+    "ELEP00422": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Metal Bucket & Flange for Hella Trucklights"
+    },
+    "ELEP00423": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Taillight Marcopolo G6 Cluster LH 172010168"
+    },
+    "ELEP00424": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Multiplug - 6 Way"
+    },
+    "ELEP00425": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Taillight LED Combo S/T/I Clear Lens"
+    },
+    "ELEP00426": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CONNECTOR - PVMCV4 Female Connector 4-6mm"
+    },
+    "ELEP00427": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CONNECTOR - PVMCV4 Male Connector 4-6mm"
+    },
+    "ELEP00428": {
+      "onHand": 28,
+      "available": 28,
+      "avgCost": 0,
+      "productDescription": "WIRE - 2.5MM2, PANELFLEX, WHITE"
+    },
+    "ELEP00429": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "BUTTON - Push - Red"
+    },
+    "ELEP00430": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "BUTTON - Push - Green"
+    },
+    "ELEP00431": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "BUTTON - Contact Block"
+    },
+    "ELEP00432": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "BUTTON - Contact Block Support"
+    },
+    "ELEP00433": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Cable Protection - Split Sleeving - 16mm (Sprague)"
+    },
+    "ELEP00434": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Cable Protection - Split Sleeving - 14mm (Sprague)"
+    },
+    "ELEP00435": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TAILLIGHT - BUSSCAR TOP RED RH"
+    },
+    "ELEP00436": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TAILLIGHT - BUSSCAR TOP RED LH"
+    },
+    "ELEP00437": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TAILLIGHT - BUSSCAR CLR SQUARE RH/LH"
+    },
+    "ELEP00438": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LIGHT - NUMBER PLATE LIGHT TL31 LED"
+    },
+    "ELEP00439": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TAILLIGHT - WRAPAROUND HELLA RED"
+    },
+    "ELEP00440": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "MARKER LIGHT - HELLA CLEAR"
+    },
+    "ELEP00441": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "MARKER LIGHT - HELLA RED"
+    },
+    "ELEP00442": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "USB 2.0A SOCKET - FEMALE TO FEMALE WATERPROOF"
+    },
+    "ELEP00443": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "AUX - 3.5MM KEYSTONE SNAP IN"
+    },
+    "ELEP00444": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "USB2.0 MALE TO MALE CABLE 3M"
+    },
+    "ELEP00445": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CABLE - 3.5MM AUX 1.5M MALE TO MALE"
+    },
+    "ELEP00446": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LIGHTS - BUCKET & FLANGE METAL FOR HELLA TRUCKLIGHTS"
+    },
+    "ELEP00447": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CIRCUIT BREAKERS - 2.5A"
+    },
+    "ELEP00448": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CIRCUIT BREAKER - 5A"
+    },
+    "ELEP00449": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CIRCUIT BREAKER - 10A"
+    },
+    "ELEP00450": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PLUG - 15A RSA Socket IP40"
+    },
+    "ELEP00451": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PLUG - 15A British Socket with switch 3 gang"
+    },
+    "ELEP00452": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "GLOBE - 24V 21W SINGLE CONTACT"
+    },
+    "ELEP00453": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "FAN - BLOWER AC DBL - 006-B45-22 24V - BRUSHLESS"
+    },
+    "ELEP00454": {
+      "onHand": 117,
+      "available": 117,
+      "avgCost": 0,
+      "productDescription": "RING TERMINAL - BRASS, 6MM"
+    },
+    "ELEP00455": {
+      "onHand": 2,
+      "available": 2,
+      "avgCost": 0,
+      "productDescription": "DISTRIBUTION BOARD - 12 WAY IP65 SURFACE MOUNT DB"
+    },
+    "ELEP00456": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Circuit Breaker - Single Pole 20A (NRN120 or NCN120)"
+    },
+    "ELEP00457": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LEAD - Extension 5m"
+    },
+    "ELEP00458": {
+      "onHand": 3,
+      "available": 3,
+      "avgCost": 0,
+      "productDescription": "LIGHT - MARKER LIGHT BUSSCAR DD SIDE AMBER LED"
+    },
+    "ELEP00459": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CHARGER - Orion-Tr Smart 24/24-17A (400W) Isolated DC-DC charger"
+    },
+    "ELEP00460": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "WIRE - 4mm2 PANELFLEX - BLUE"
+    },
+    "ELEP00461": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TAILLIGHT - MARCOPOLO G7 LED MIDDLE LH"
+    },
+    "ELEP00462": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TRUNKING - 25 X 16mm"
+    },
+    "ELEP00463": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "FUSE - 300A BF2"
+    },
+    "ELEP00464": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "WIRE - 35MM2, PANELFLEX, BLACK"
+    },
+    "ELEP00465": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "WIRE - 35MM2, PANELFLEX, RED"
+    },
+    "ELEP00466": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "BATTERY - LiFeYPO4 24Kwh 26V"
+    },
+    "ELEP00467": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LED Downlights - Yacht 12V, 70mm Diam, Gold"
+    },
+    "ELEP00468": {
+      "onHand": 6,
+      "available": 6,
+      "avgCost": 0,
+      "productDescription": "DISTRIBUTION BOARD - 18-Way IP65, Surface Mount DB"
+    },
+    "ELEP00469": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Circuit Breaker - Single Pole 10A (NRN110)"
+    },
+    "ELEP00470": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CONNECTOR - MC4 Male  4-6mm / 6.5-7.5Ømm"
+    },
+    "ELEP00471": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CONNECTOR - MC4 Female 4-6mm / 6.5-7.5ØMM"
+    },
+    "ELEP00472": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "BATTERY - Hubble Lithium AM-4 - 2.75KWh 25V"
+    },
+    "ELEP00473": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Hubble Lithium - Cloudlink (formerly RIOT)"
+    },
+    "ELEP00474": {
+      "onHand": 68,
+      "available": 68,
+      "avgCost": 0,
+      "productDescription": "CONNECTOR - PV MC4 FEMALE BRANCH CONNECTOR"
+    },
+    "ELEP00475": {
+      "onHand": 78,
+      "available": 78,
+      "avgCost": 0,
+      "productDescription": "CONNECTOR - PV MC4 FMM BRANCH"
+    },
+    "ELEP00476": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CONVERTER - 24V - 12V, 40A"
+    },
+    "ELEP00477": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "ENCLOUSRE - PVC HOUSING IP56 100x100x50"
+    },
+    "ELEP00478": {
+      "onHand": 300,
+      "available": 300,
+      "avgCost": 0,
+      "productDescription": "WIRE - 2.5mm2 -  2 Core, Cabtyre"
+    },
+    "ELEP00479": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "BUSBAR - 1P 1000mm - 56 Pole, 63 Amps"
+    },
+    "ELEP00480": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "BUS BAR - 7 x 9 mm - 14 Way, 110mm"
+    },
+    "ELEP00481": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SHORE POWER - Inlet - 90 Degree"
+    },
+    "ELEP00482": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "POWER SUPPLY - 12V, 120W, 10A"
+    },
+    "ELEP00483": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SOCKET - 3 Pin, IP55, 16A"
+    },
+    "ELEP00484": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SWITCH - Add on block 1P+N 40A 30mA AC (for ELEP00152)"
+    },
+    "ELEP00485": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LIGHT - Taillight, Marcopolo G7 LED, Bottom RHS"
+    },
+    "ELEP00486": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LIGHT - Taillight, Marcopolo G7 LED, Middle RHS"
+    },
+    "ELEP00487": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LIGHT - Taillight, Marcopolo G7 LED, Top RHS"
+    },
+    "ELEP00488": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LIGHT - Taillight, Marcopolo G7 LED, Top LHS"
+    },
+    "ELEP00489": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "GENERATOR - Hour Meter"
+    },
+    "ELEP00490": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "WIRE - Bread Board Jumper Cables"
+    },
+    "ELEP00491": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "BATTERY - Large Alligator Clip, Black"
+    },
+    "ELEP00492": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "BATTERY - Large Alligator Clip, Red"
+    },
+    "ELEP00493": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CLIP - Alligator Clip, 2mm (Red/Black)"
+    },
+    "ELEP00494": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CLAMP - Alligator Clamp, Red, 2mm2"
+    },
+    "ELEP00495": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CONNECTOR - Block, Screw-In terminal, 30A"
+    },
+    "ELEP00496": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CONNECTOR - Block, Screw-In terminal, 5A"
+    },
+    "ELEP00497": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CIRCUIT BREAKER - 1 Pole, 20A, 10kA MCB"
+    },
+    "ELEP00498": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LUG - 10 x 6MM"
+    },
+    "ELEP00499": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LUG - 35 X 10MM, RING, NON INSULATED"
+    },
+    "ELEP00500": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CLIP - Alligator, 22mm (Black)"
+    },
+    "ELEP00501": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CLIP - Aligator, 22mm (Red)"
+    },
+    "ELEP00502": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CLIP - Alligator, 32mm (Black)"
+    },
+    "ELEP00503": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CLIP - Alligator, 32mm (Red)"
+    },
+    "ELEP00506": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "RESISTOR - 0.47 Ohm, 50W with Heatsink"
+    },
+    "ELEP00507": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "RESISTOR - 0.68 Ohm, 50W with Heatsink"
+    },
+    "ELEP00508": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "RESISTOR - 1 Ohm, 50W with Heatsink"
+    },
+    "ELEP00509": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "WIRE - Test Lead, 1mm2 (Black)"
+    },
+    "ELEP00510": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "WIRE - Test Lead, 1mm2 (Red)"
+    },
+    "ELEP00511": {
+      "onHand": 5,
+      "available": 5,
+      "avgCost": 0,
+      "productDescription": "WIRE - CAT5 Network Cable, Unshielded"
+    },
+    "ELEP00512": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SOLAR - Inverter - 5kW, Axpert King"
+    },
+    "ELEP00513": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SOLAR - Batteries - Hubble Lithium AM-2 - 5.5kW, 51V"
+    },
+    "ELEP00514": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "Solar Panel - 540W - 2279 x 1134 x 35mm"
+    },
+    "ELEP00515": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Inverter - Axpert MKS 5KVA/5KW"
+    },
+    "ELEP00516": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "GLAND - Compression, 4-9mm"
+    },
+    "ELEP00517": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "BREAKER - Double Pole, 63A, 15KA, C-Curve (NRN263)"
+    },
+    "ELEP00518": {
+      "onHand": 16,
+      "available": 16,
+      "avgCost": 0,
+      "productDescription": "BATTERY - AA"
+    },
+    "ELEP00519": {
+      "onHand": 8,
+      "available": 8,
+      "avgCost": 0,
+      "productDescription": "BATTERY - AAA"
+    },
+    "ELEP00520": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "POWER SUPPLY - 12V, 10A, 220V Input"
+    },
+    "ELEP00521": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "POWER SUPPLY - 12V (DC), 15A"
+    },
+    "ELEP00522": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TRUNKING - Tee Piece, Double Tier, Execuduct MK2,"
+    },
+    "ELEP00523": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SOLAR - Panel, 550W (2278 x 1133 x 35 mm)"
+    },
+    "ELEP00524": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LIGHT - Ford Figo 1.4 (2014) - Left Front Headlight"
+    },
+    "ELEP00525": {
+      "onHand": 15,
+      "available": 15,
+      "avgCost": 0,
+      "productDescription": "ADAPTOR - Janus Rubber Black"
+    },
+    "ELEP00526": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Single Switched Socket 2 x 4 - White - Legrand Arteor"
+    },
+    "ELEP00527": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "DISTRIBUTION BOARD - 24 Way IP65 Surface Mount DB"
+    },
+    "ELEP00528": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CIRCUIT BREAKER - Single Pole 20A - NF120A"
+    },
+    "ELEP00529": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "CIRCUIT BREAKER - Single Pole 16A - NF116A"
+    },
+    "ELEP00530": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TRUNKING - 100 x 40mm. To be issued per metre"
+    },
+    "ELEP00531": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CONDUIT - Male Adaptor 25mm PVC"
+    },
+    "ELEP00532": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CONDUIT - Coupling 25mm PVC"
+    },
+    "ELEP00533": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CONDUIT - Solid Bend 25mm PVC"
+    },
+    "ELEP00534": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Cable Protection - Conduit - 25mm Sprague - White"
+    },
+    "ELEP00535": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CONDUIT - Saddles 25mm PVC"
+    },
+    "ELEP00536": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CONDUIT - Conduit 25mm PVC"
+    },
+    "ELEP00537": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CONDUIT - Conduit Box 25mm 3 Way PVC"
+    },
+    "ELEP00538": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CONDUIT- Conduit Box 25mm 1 Way PVC"
+    },
+    "ELEP00539": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CONDUIT- Conduit Box 25mm 2 Way PVC"
+    },
+    "ELEP00540": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CONDUIT- Conduit Box 25mm 2 Way Angle PVC"
+    },
+    "ELEP00541": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CONDUIT - Conduit Box Lid PVC"
+    },
+    "ELEP00542": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SWITCH - Momentary Switch Panel Mount"
+    },
+    "ELEP00543": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "RELAY - 1 Channel 5V Module 16A AC (Arduino/PI Module)"
+    },
+    "ELEP00546": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CONNECTOR - Block, Screw-In terminal, 15A"
+    },
+    "ELEP00547": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SOCKET - Light Bulb Socket - Bayonet"
+    },
+    "ELEP00548": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "METER - Single Phase AC Din Rail Energy Meter"
+    },
+    "ELEP00549": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "POWER SUPPLY - 5V Power Supply for Back-up Triggers for Relays"
+    },
+    "ELEP00550": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "BATTERY - 12v, 7Ah"
+    },
+    "ELEP00551": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "BREAKER - Reset Fuse, 60A"
+    },
+    "ELEP00555": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "BOX - Surface Mount, Generic 2x4 Light Switch"
+    },
+    "ELEP00556": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SWITCH - Light Switch, 3 Lever, White - Legrand Arteor"
+    },
+    "ELEP00557": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LIGHT - Running Light, Bumper Attention Light Set - Isuzu FVM 1200 MAN"
+    },
+    "ELEP00564": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LIGHT - LED Strip, 12V, 9.6W - 6000K"
+    },
+    "ELEP00565": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LIGHTING - LED, Surface Mount Profile, A6 - 2m"
+    },
+    "ELEP00566": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LIGHTING - LED, Frosted Cover, for Profile A6/A4/A11/A25"
+    },
+    "ELEP00567": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LIGHTING - LED, Power Supply - 12V, 100W"
+    },
+    "ELEP00568": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LIGHT - Downlight, Hella, Euro 75, White, Warm White"
+    },
+    "ELEP00569": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SWITCH - Rocker Switch, Blank"
+    },
+    "ELEP00583": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SWITCH - Automatic Voltage Switch, AVS30"
+    },
+    "ELEP00584": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LIGHTING - LED, Corner Mount Profile, A13, 2m"
+    },
+    "ELEP00585": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LIGHTING - LED, Frosted Cover for Profile A13, 2m"
+    },
+    "ELEP00586": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LIGHTING - Bulb Holder"
+    },
+    "ELEP00587": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LIGHTING - CFL Bulbes (Warm White)"
+    },
+    "ELEP00588": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LIGHTING - CFL Bulbs (Cool White)"
+    },
+    "ELEP00589": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Lights - LED, Flexible Strip, Pure White, 24V"
+    },
+    "ELEP00590": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LIGHTS - LED, Flexible Strip, Warm White, 24V"
+    },
+    "ELEP00591": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LIGHTING - Power Supply, Dimmable, 24V, 30A"
+    },
+    "ELEP00596": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LIGHT - Bus Headlight, Marcopolo G7 LHS"
+    },
+    "ELEP00597": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LIGHT - Bus Headlight, Marcopolo G7 RHS"
+    },
+    "ELEP00598": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LIGHTS - LED, Flexible Strip, Neutral White, 12V"
+    },
+    "ELEP00599": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LIGHT - Side Indicator, Bus"
+    },
+    "ELEP00600": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "TAILLIGHT - BUSSCAR TOP RED RH - LED"
+    },
+    "ELEP00601": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TAILLIGHT - BUSSCAR TOP RED LH - LED"
+    },
+    "ELEP00602": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "INVERTER - Solar Inverter with Built-in MPPT Solar Charge Controller, 8kVA"
+    },
+    "ELEP00603": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "BATTERY - 48V Solar Battery (Obsolete)"
+    },
+    "ELEP00604": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LIGHT - TAILLIGHT, BUSCAR - Bottom, White, RHS"
+    },
+    "ELEP00605": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "BATTERY - Solar, Rack Mounted, Hubble Lithium X101"
+    },
+    "ELEP00606": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "INVERTER - Solar, 8kVA, SunSynk (Sunsynk-8k-SG01LP1)"
+    },
+    "ELEP00607": {
+      "onHand": 6,
+      "available": 6,
+      "avgCost": 0,
+      "productDescription": "TRUNKING - 16 x 16mm, 2M, PVC, White"
+    },
+    "ELEP00608": {
+      "onHand": 24,
+      "available": 24,
+      "avgCost": 0,
+      "productDescription": "SWITCH - CIRCUIT BREAKER, A1 FLAT R 10A"
+    },
+    "ELEP00609": {
+      "onHand": 178,
+      "available": 178,
+      "avgCost": 0,
+      "productDescription": "SWITCH - CIRCUIT BREAKER, A1 FLAT R 5A"
+    },
+    "ELEP00610": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SOLAR - Panel, Mono, 555W - JA Solar (JAM72S30-555/GR)"
+    },
+    "ELEP00611": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "INVERTER - Solar, 5kVA, SunSynk (Sunsynk-5k-SG03LP1)"
+    },
+    "ELEP00612": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "COMBINER BOX - Solar Panel Isolator, (inc Fuses), MC4 input and Output"
+    },
+    "ELEP00613": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "FUSE - Midi Fuse, BF1, 150A"
+    },
+    "ELEP00614": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "WIRE - 35mm2, Welding Cable, Red"
+    },
+    "ELEP00615": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "WIRE - 35mm2, Welding Cable, Black"
+    },
+    "ELEP00616": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SOLAR - Panel, Canadian Solar, 555W, HiKu6 Mono PERC, CS6W-530, 555MS"
+    },
+    "ELEP00617": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SOCKET - Outdoor Socket, 15A, 3 Pin, IP55"
+    },
+    "ELEP00618": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "POWER SUPPLY - 12V, 2A, Din Rail Mounted, MeanWell HDR-30-12"
+    },
+    "ELEP00619": {
+      "onHand": 2,
+      "available": 2,
+      "avgCost": 0,
+      "productDescription": "ISOLATOR - NH00 Fuse Disconnect Switch, 2P, 160A, (for Solar Battery Bank)"
+    },
+    "ELEP00620": {
+      "onHand": 31,
+      "available": 31,
+      "avgCost": 0,
+      "productDescription": "FUSE - Centered Tag Fuse, NH00, 125A"
+    },
+    "ELEP00621": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "CONVERTER - Victron Orion - 24V/48V, 8.5A, 400W DC-DC Converter"
+    },
+    "ELEP00623": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "DISTRIBUITON BOARD - 8-Way DB Board"
+    },
+    "ELEP00624": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "INVERTER - Solar, Axpert King, 5kVA Off-Grid Inverter, 4000W mppt, Rack Mounted (MPPT Input voltage 60-115VDC)"
+    },
+    "ELEP00625": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "BREAKER - Double Pole, 40A"
+    },
+    "ELEP00626": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LIGHT - Fog Light, Front Left, UD90"
+    },
+    "ELEP00627": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LIGHT - Fog Light, Front Right, UD90"
+    },
+    "ELEP00628": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LIGHT - Indicator Lamp, Front Right, UD90"
+    },
+    "ELEP00629": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LIGHT - Indicator Lamp, Front Left, UD90"
+    },
+    "ELEP00630": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SOLAR - Inverter, 8kVA, Axpert"
+    },
+    "ELEP00631": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "FUSE - Photovoltaic, 1000VDC, 30A"
+    },
+    "ELEP00632": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "BREAKER - Circuit Breaker - 40A, 1P, C-Curve (Hager NRN140)"
+    },
+    "ELEP00633": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CONNECTOR - RJ45 CAT6a, UTP Modular Plug"
+    },
+    "ELEP00634": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CONNECTOR - Rj45, CAT6a, Rubber Boot"
+    },
+    "ELEP00635": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SOLAR PANEL - Canadian Solar 545W, MONO, CS-545W"
+    },
+    "ELEP00636": {
+      "onHand": 2,
+      "available": 2,
+      "avgCost": 0,
+      "productDescription": "FUSE - Fuse Holder, Din Rail Mount, 2 Pole (for 22 x 58mm Fuse)"
+    },
+    "ELEP00637": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "FUSE - Ceramic Cartridge Fuse, 22 x 50mm, 40A"
+    },
+    "ELEP00638": {
+      "onHand": 9,
+      "available": 9,
+      "avgCost": 0,
+      "productDescription": "PLUG - Adaptor, 3-pin to 2-pin, Euro plug adaptor"
+    },
+    "ELEP00639": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "HEADLIGHT - Marcopolo G6 LH, 3 Chamber"
+    },
+    "ELEP00640": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "HEADLIGHT - Marcopolo G6, RH, 3 Chamber"
+    },
+    "ELEP00641": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TAILLIGHT - Marcopolo G6 Cluster RHS"
+    },
+    "ELEP00642": {
+      "onHand": 3,
+      "available": 3,
+      "avgCost": 0,
+      "productDescription": "SURGE PROTECTOR - Din Rail Mount - 40kA, 2P, 1000Vdc, IP20"
+    },
+    "ELEP00643": {
+      "onHand": 6,
+      "available": 6,
+      "avgCost": 0,
+      "productDescription": "LIGHT - Indicator, side indicator for Marcopolo G7"
+    },
+    "ELEP00645": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "DISTRIBUTION BOARD - DB - 16 Way, Surface Mount"
+    },
+    "ELEP00646": {
+      "onHand": 6,
+      "available": 6,
+      "avgCost": 0,
+      "productDescription": "BUS BAR - Battery Busbar Box (for Solar Battery Bank)"
+    },
+    "ELEP00648": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "WIRE - 16mm2, 3 Core, Cabtyre, Black"
+    },
+    "ELEP00649": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "ISOLATOR - Din Rail, 1P, 80A"
+    },
+    "ELEP00650": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "BREAKER - Earth Leakage, Single Phase, Dinrail Mount, 63A - Overload included"
+    },
+    "ELEP00651": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "BREAKER - Dinrail Mount, Magetic Circuit Breaker, 1P, 32A"
+    },
+    "ELEP00653": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SWITCH - Push Button, Start/Stop Switch, 1NO-NC"
+    },
+    "ELEP00654": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "FUSE - Centered Tag Fuse, NH00, 125A"
+    },
+    "ELEP00655": {
+      "onHand": 100,
+      "available": 100,
+      "avgCost": 0,
+      "productDescription": "WIRE - Cabtyre, 10mm2, 3 Core"
+    },
+    "ELEP00656": {
+      "onHand": 106,
+      "available": 106,
+      "avgCost": 0,
+      "productDescription": "Ammeter/Voltmeter - Digital, DC - 100V, 50A"
+    },
+    "ELEP00657": {
+      "onHand": 98,
+      "available": 98,
+      "avgCost": 0,
+      "productDescription": "Ammeter/Voltmeter - Digital, AC - 300V, 100A"
+    },
+    "ELEP00658": {
+      "onHand": 100,
+      "available": 100,
+      "avgCost": 0,
+      "productDescription": "WIRE - 1.5mm, 4 Core, Cabtyre"
+    },
+    "ELEP00659": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Trunking - Cable Drag Chain - 25x57mm"
+    },
+    "ELEP00660": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "FUSE - Ceramic Cartridge Fuse, 22 x 50mm, 63A"
+    },
+    "ELEP00661": {
+      "onHand": 2,
+      "available": 2,
+      "avgCost": 0,
+      "productDescription": "FUSE - Ceramic Cartridge Fuse, 22 x 50mm, 50A"
+    },
+    "ELEP00662": {
+      "onHand": 60,
+      "available": 60,
+      "avgCost": 0,
+      "productDescription": "BRIDGE BAR - Feed Through Terminal Jumper, 4mm2, 10 Way"
+    },
+    "ELEP00663": {
+      "onHand": 54,
+      "available": 54,
+      "avgCost": 0,
+      "productDescription": "BRIDGE BAR - Feed Through Terminal Jumper, 10mm2, 2 Way"
+    },
+    "ELEP00664": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TERMINAL - End Plate for 4mm2 Feedthrough Terminal, Green/Yellow"
+    },
+    "ELEP00665": {
+      "onHand": 21,
+      "available": 21,
+      "avgCost": 0,
+      "productDescription": "TERMINAL - End Plate for 10mm2 Feedthrough Terminal, Grey"
+    },
+    "ELEP00666": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TERMINAL - Marker Strip for 4mm2 Feed Through Terminal, ZB4 (Numbers 1 - 30)"
+    },
+    "ELEP00667": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "PLUG - PLUG SHORE PROTECTION CAP, INLET, 2P+E, 32A, IP67"
+    },
+    "ELEP00668": {
+      "onHand": 12,
+      "available": 12,
+      "avgCost": 0,
+      "productDescription": "DB BOX - 9 Way Distribution Box"
+    },
+    "ELEP00669": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Power Supply - 12VDC 20A Din Rail"
+    },
+    "ELEP00670": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "WIRE - 16mm2 Flexible Cable - Green"
+    },
+    "ELEP00671": {
+      "onHand": 4,
+      "available": 4,
+      "avgCost": 0,
+      "productDescription": "SPST Switch"
+    },
+    "ELEP00672": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "POWER SUPPLY - 12V, 35-105W Transformer"
+    },
+    "ELEP00673": {
+      "onHand": 213,
+      "available": 213,
+      "avgCost": 0,
+      "productDescription": "WAGO CONNECTOR - 5-Way"
+    },
+    "ELEP00674": {
+      "onHand": 78,
+      "available": 78,
+      "avgCost": 0,
+      "productDescription": "WIRE - Cabtyre - 10mm2, 3 Core"
+    },
+    "ELEP00675": {
+      "onHand": 15,
+      "available": 15,
+      "avgCost": 0,
+      "productDescription": "CONNECTOR - HQ-002-M - CODE TBC"
+    },
+    "ELEP00676": {
+      "onHand": 14,
+      "available": 14,
+      "avgCost": 0,
+      "productDescription": "CONNECTOR - HQ-002-F - CODE TBC"
+    },
+    "ELEP00677": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LIGHTING - LED, Power Supply - 12V, 150W"
+    },
+    "ELEP00678": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "INVERTER - SunSynk - 12kVA, 3 Phase"
+    },
+    "ELEP00679": {
+      "onHand": 84,
+      "available": 84,
+      "avgCost": 0,
+      "productDescription": "WIRE - Cabtyre - 6mm2, 4 Core"
+    },
+    "ELEP00680": {
+      "onHand": 799,
+      "available": 799,
+      "avgCost": 0,
+      "productDescription": "WAGO INLINE SPLICING CONNECTOR - 2 Lever Type - 0.2 to 4MM2"
+    },
+    "ELEP00681": {
+      "onHand": 6,
+      "available": 6,
+      "avgCost": 0,
+      "productDescription": "ENCLOSURE - Plastic Junction Box Waterproof, 175 x 175 x 100mm"
+    },
+    "ELEP00682": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CONTACTOR (HAGER) -  63A, 2NO+2NC, 230VAC"
+    },
+    "ELEP00683": {
+      "onHand": 93,
+      "available": 93,
+      "avgCost": 0,
+      "productDescription": "FUSE HOLDER - MC4 10 x  38 fuse holder, 30A Max, inline - (includes 20A Fuse)"
+    },
+    "ELEP00684": {
+      "onHand": 3,
+      "available": 3,
+      "avgCost": 0,
+      "productDescription": "SOLAR PANEL - Canadian Solar 585W, N - Type, CS-585W-N"
+    },
+    "ELEP00685": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PLUG - Plug top, Dedicated, Flattend Pin"
+    },
+    "ELEP00686": {
+      "onHand": 20,
+      "available": 20,
+      "avgCost": 0,
+      "productDescription": "FUSE - 10 x 38 Ceramic Cartridge Fuse, 20A"
+    },
+    "ELEP00687": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "WIRE - 16MM2, 5 CORE, NEOPRENE"
+    },
+    "ELEP00688": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "BREAKER - Dinrail Mount, Magetic Circuit Breaker, 1P, 80A 3P C CURVE"
+    },
+    "ELEP00689": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Socket - Surface Mount Socket/Plug Box"
+    },
+    "ELEP00690": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "P9000 (127 x 76 mm) Steel Duct - 3m Length"
+    },
+    "ELEP00691": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "P8000 (75 x 75 mm) Steel Duct - 3m Length"
+    },
+    "ELEP00692": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "P8200 (76.2 x 50.8 mm) Steel Duct - 3m Length"
+    },
+    "ELEP00693": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PVC Wiring Duct (40x40) -  2m Length"
+    },
+    "ELEP00694": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Cable Tray (150 x 60 mm) - Electrogalvanised Steel 3m Length"
+    },
+    "ELEP00695": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "P9000 (127 x 76 mm) Steel Duct Cover - 3m Length"
+    },
+    "ELEP00696": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "P8000 (75 x 75 mm) Steel Duct Cover - 3m Length"
+    },
+    "ELEP00697": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "P8200 (76.2 x 50.8 mm) Steel Duct Cover - 3m Length"
+    },
+    "ELEP00698": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Emergency Stop Twist and Release - 3NC contacts"
+    },
+    "ELEP00699": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "Switch On/Off - 3-Phase"
+    },
+    "ELEP00700": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "Light - Red Warning Light - Casing - 190-260VAC"
+    },
+    "ELEP00701": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Wire - Ground cable - 16mm2  - Shielded"
+    },
+    "ELEP00702": {
+      "onHand": 9,
+      "available": 9,
+      "avgCost": 0,
+      "productDescription": "P9000 90° EXTERNAL ELBOW"
+    },
+    "ELEP00703": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "P9000 END CAP"
+    },
+    "ELEP00704": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "DOWN LIGHT - FIxed downlight - White - 80mm"
+    },
+    "ELEP00705": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "Switch - Dimmer (CBI)"
+    },
+    "ELEP00706": {
+      "onHand": 5,
+      "available": 5,
+      "avgCost": 0,
+      "productDescription": "Surface Mount Box - 4x4 CBI Double wall Socket"
+    },
+    "ELEP00707": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "Switch - General CBI"
+    },
+    "ELEP00708": {
+      "onHand": 2,
+      "available": 2,
+      "avgCost": 0,
+      "productDescription": "Switch - 2 way CBI Light Switch"
+    },
+    "ELEP00709": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Fluorescent Ceiling Light Recessed - 600x600mm"
+    },
+    "ELEP00710": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Cable Tray Trapeze Support Bracket"
+    },
+    "ELEP00711": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "ENCLOSURE - Meter Box, 315 x 158 x 120mm"
+    },
+    "ELEP00712": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "DOWN LIGHT -  Bulb  - Dimmable Down Lights -(LED) 5W GU10 Daylite"
+    },
+    "ELEP00713": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "DOWN LIGHT - Dichroic Lamp Holder - GU10 15cm S?WIR"
+    },
+    "ELEP00714": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Connector - 12WAY strip connector - 10mm 16A - Black"
+    },
+    "ELEP00715": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Light - Red Warning Light - Bulb (LED) - 110/230VAC"
+    },
+    "ELEP00716": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "BREAKER - Circuit Breaker - 63A , 3P, 10kA - D-Curve MCB"
+    },
+    "ELEP00717": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Earth Leakage - 63A, 30mA, 2P"
+    },
+    "ELEP00718": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "BREAKER - Circuit Breaker - 20A, 1P, 6kA - C-Curve MCB"
+    },
+    "ELEP00719": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Surface Switch Socket - 63A, 3 Phase, 5P (3P+N+E) EIP67"
+    },
+    "ELEP00721": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Connector - LED Strip - Solderless -  Strip-to-strip"
+    },
+    "ELEP00722": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Connector - LED Strip - Solderless -  Strip-to-End"
+    },
+    "ELEP00723": {
+      "onHand": 2,
+      "available": 2,
+      "avgCost": 0,
+      "productDescription": "Toilet - PUSH SWITCH -SURF BELL- 16A 1P IP55"
+    },
+    "ELEP00726": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Power Supply - 12V - 4.5A - 240V input - DIN Mount"
+    },
+    "ELEP00727": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "EU Power Supply - 12V - 1.5A - 240V input"
+    },
+    "ELEP00728": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SOLAR PANEL - Canadian Solar 605W, N-Type Bi-Facial Panel"
+    },
+    "ELEP00729": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TRUNKING - Single - CBT Pllatinum - Black"
+    },
+    "ELEP00730": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SOCKET - Cover Set EPCC -  3 Point -  CT 6896H 16A SSO - BLK"
+    },
+    "ELEP00731": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SOCKET - Cover Set - Black - CT 6857 TWIN 16A SLIMLINE SO"
+    },
+    "ELEP00732": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TRUNKING - External Elbow - Single - Black - CBT Platinum"
+    },
+    "ELEP00733": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TRUNKING - internal Elbow - Single - Black - CBT Platinum"
+    },
+    "ELEP00734": {
+      "onHand": 95,
+      "available": 95,
+      "avgCost": 0,
+      "productDescription": "LUG - 10x8mm"
+    },
+    "ELEP00735": {
+      "onHand": 10,
+      "available": 10,
+      "avgCost": 0,
+      "productDescription": "FUSE - 50A 690V - aM DIN NH00"
+    },
+    "ELEP00736": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "BATTERY - BATTERY  YTX14 - BS"
+    },
+    "ELEP00737": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Breaker - MCB - 60A, 2 Pole(L+N) 3KA"
+    },
+    "ELEP00738": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Switch - 2P 63A - Change Over"
+    },
+    "ELEP00739": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "BREAKER - Double Pole, 63A, 10KA, C-Curve MCB (NFN263)"
+    },
+    "ELEP00740": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Cable Protection - Split Sleeving - 20mm (Sprague)"
+    },
+    "ELEP00741": {
+      "onHand": 87,
+      "available": 87,
+      "avgCost": 0,
+      "productDescription": "Cable Protection - Split sleeving - 10mm (Sprague)"
+    },
+    "ELEP00742": {
+      "onHand": 5,
+      "available": 5,
+      "avgCost": 0,
+      "productDescription": "TRUNKING - SINGLE DUCT + COVER 3M WHI"
+    },
+    "ELEP00743": {
+      "onHand": 12,
+      "available": 12,
+      "avgCost": 0,
+      "productDescription": "TRUNKING - SINGLE INTERNAL ELBOW WHI"
+    },
+    "ELEP00744": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CRADLE - 15MM, NO ADHESIVE"
+    },
+    "ELEP00745": {
+      "onHand": 3,
+      "available": 3,
+      "avgCost": 0,
+      "productDescription": "SPRAY - Electrical Contact Cleaner"
+    },
+    "ELEP00746": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Switch - Toilet - Momentary two lever bell switch - 20A, IP66"
+    },
+    "ELEP00747": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Frame - Reflective Taillight - RHS - Irizar new century"
+    },
+    "ELEP00748": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Frame - Reflective Taillight - LHS - Irizar New Centrury"
+    },
+    "ELEP00749": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LED - Round LED Bulb, Square Module, 12V DC, 1.5W."
+    },
+    "ELEP00750": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LIGHT - Tail Light, Irizar New Century, Clear reverse, Tound LED"
+    },
+    "ELEP00751": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CONNECTOR - 2 Pin, Super Seasl Connector (for ELEP00750)"
+    },
+    "ELEP00752": {
+      "onHand": 10,
+      "available": 10,
+      "avgCost": 0,
+      "productDescription": "LIGHT - Globe, Festoon, C5W, 24V, 5W"
+    },
+    "ELEP00753": {
+      "onHand": 8,
+      "available": 8,
+      "avgCost": 0,
+      "productDescription": "LIGHT - Globe (Park), T2W, 24V, 2W, SC"
+    },
+    "ELEP00754": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LIGHT - Marker Light, Rectangular, White (Hella 2PF961)"
+    },
+    "ELEP00755": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "BATTERY - 652 Car Battery, 12V Lead Acid"
+    },
+    "ELEP00756": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LIGHT - Taillight - Marcopolo, Viaggo, G7, RHS"
+    },
+    "ELEP00757": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LIGHT - Taillight - Marcopolo, Viaggo, G7, LHS"
+    },
+    "ELEP00758": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LIGHT - Marker light - Buscar LED, Thin Rectangular, Red"
+    },
+    "ELEP00759": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CABLE - Panelflex - 6mm2, Red"
+    },
+    "ELEP00760": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CABLE - Panelflex - 6mm2, Black"
+    },
+    "ELEP00761": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LIGHT - Headlight, 90mm"
+    },
+    "ELEP00762": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "BATTERY - Generator Battery, 12V, 12Ah"
+    },
+    "ELEP00763": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "INVERTER - Solar - SunSynk, Rack Mount, 7.6kW, 48V Hybrid Solar Inverter"
+    },
+    "ELEP00764": {
+      "onHand": 6,
+      "available": 6,
+      "avgCost": 0,
+      "productDescription": "LUG - RING, 50 x 6mm"
+    },
+    "ELEP00765": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LUG - RING, 50 x 8mm"
+    },
+    "ELEP00766": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LUG - RING, 50 x 10mm"
+    },
+    "ELEP00767": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "WIRE - 50mm2 Panelflex Cable, Red"
+    },
+    "ELEP00768": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "WIRE - 50mm2 Panelflex Cable, Black"
+    },
+    "ITEA00001": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Server Rack 19x42U (Completely Assembled)"
+    },
+    "ITEA00002": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "IT Installation - Optometry with Telemedicine"
+    },
+    "ITEA00003": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "IT Installation - PHC with Telemedicine (Sonka)"
+    },
+    "ITEA00004": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "IT Installation - Audiology"
+    },
+    "ITEA00005": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "IT Installation - Server Rack Componets"
+    },
+    "ITEA00005-2": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "IT Installation - Server Rack - 12.5m Office Bus"
+    },
+    "ITEA00006": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "IT Installation - Dental"
+    },
+    "ITEA00007": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "IT Installation - Dr/Sonography with Telemedicine"
+    },
+    "ITEA00008": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PC Assembly - AIO PC at workstation, Including Mount"
+    },
+    "ITEA00009": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SONKA - Screen Mount Upgrade - Desktop Vesa Mount Bracket"
+    },
+    "ITEA00010": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PRINTER ASSEMBLY - Brother HL-L2365DW"
+    },
+    "ITEA00011": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SCREEN - Telimedicine Screen Assembly"
+    },
+    "ITEA00012": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SCREEN ASSEMBLY- Additional AIO Monitor (Desk Mounted)"
+    },
+    "ITEA00013": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Printer Assembly - Brother DCP-L5510DW Installation"
+    },
+    "ITEP00002": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PC - ASUS, TOUCHSCREEN MONITOR"
+    },
+    "ITEP00010": {
+      "onHand": 3,
+      "available": 3,
+      "avgCost": 0,
+      "productDescription": "SERVER RACK - NUT CAGE + SCREW + RETAINER KIT (50pcs)"
+    },
+    "ITEP00014": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CABLE - RCA, 5M"
+    },
+    "ITEP00015": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CABLE - TELEPHONE"
+    },
+    "ITEP00018": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "NETWORK BOX - NETWORK BOX KRONE"
+    },
+    "ITEP00027": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CABLE - 1.8 USB V.2"
+    },
+    "ITEP000307": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SERVER RACK - 5 Way, PDU"
+    },
+    "ITEP00034": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "WIRE - ANS, CAT5E, 0.5M, PATCH LEAD, BLUE"
+    },
+    "ITEP00042": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "ROUTER - 1 PORT, W/A PHONE & FXO PO, LINKSYS"
+    },
+    "ITEP00051": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "HARDRIVE - 500GB"
+    },
+    "ITEP00060": {
+      "onHand": 4,
+      "available": 4,
+      "avgCost": 0,
+      "productDescription": "Reverse Camera"
+    },
+    "ITEP00068": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "MONITOR - 23"
+    },
+    "ITEP00090": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PUNCH PROFILE - 13U, GREY"
+    },
+    "ITEP00098": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SERVER RACK - 10 WAY, PDU"
+    },
+    "ITEP00102": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SERVER RACK - 19 X 42U, BLACK"
+    },
+    "ITEP00169": {
+      "onHand": 4,
+      "available": 4,
+      "avgCost": 0,
+      "productDescription": "SWITCH - 24 Port,"
+    },
+    "ITEP00192": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CABLE - SVGA, MALE, 1.8M"
+    },
+    "ITEP00193": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CABLE - PRINTER, USB, A_B, 3M"
+    },
+    "ITEP00194": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CABLE - HDMI TO HDMI, 30AWG, 2M"
+    },
+    "ITEP00197": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LCD ARM - 100X100/75X75, SWIVEL TILT, 12KG"
+    },
+    "ITEP00202": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CABLE - VGA, MALE TO MALE, 15M"
+    },
+    "ITEP00203": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "KEYBOARD COVER - KEYBOARD COVER"
+    },
+    "ITEP00217": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "MONITOR - MONITOR 23, LG"
+    },
+    "ITEP00218": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CABLE - EXTENSION, POWER, MALE TO FEMALE, 1.8M"
+    },
+    "ITEP00228": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "GPS UNIT"
+    },
+    "ITEP00241": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TV - 43"
+    },
+    "ITEP00242": {
+      "onHand": 5,
+      "available": 5,
+      "avgCost": 0,
+      "productDescription": "BLANK PLATE - 2U, BLACK"
+    },
+    "ITEP00244": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "ROUTER - FORTIWIFI 60E"
+    },
+    "ITEP00245": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TV - 49, HD"
+    },
+    "ITEP00253": {
+      "onHand": 2,
+      "available": 2,
+      "avgCost": 0,
+      "productDescription": "ADAPTOR - DISPLAY PORT M TO HDMI, 1.8M"
+    },
+    "ITEP00268": {
+      "onHand": 5,
+      "available": 5,
+      "avgCost": 0,
+      "productDescription": "BRACKET - Monitor, Wall Mount LED/LCD Screens - 23-42"
+    },
+    "ITEP00269": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Keyboard/Mouse Combo - Corded Logitech MK120"
+    },
+    "ITEP00270": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PC - Intel NUC Kit i3-8109U"
+    },
+    "ITEP00271": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CABLE - Clover to Plug"
+    },
+    "ITEP00272": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "RAM - 4GB DDR4-2666"
+    },
+    "ITEP00273": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "MONITOR - 21.5 AOC"
+    },
+    "ITEP00274": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "ACCESS POINT - UniFi LR Dual Band"
+    },
+    "ITEP00275": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PC - Raspberry Pi4 Model B 2GB"
+    },
+    "ITEP00276": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "ROUTER - D-Link 3G HSPA+ Mobile Router"
+    },
+    "ITEP00277": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "ROUTER - D-LINK 4G  LTE ROUTER"
+    },
+    "ITEP00278": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SOFTWARE - MICROSOFT WINDOWS 10 HOME 64-BIT"
+    },
+    "ITEP00279": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "BRACKET - TV Bracket, 23 - 42, Tilt and Swivel"
+    },
+    "ITEP00280": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PRINTER - CANON i-SENSYS MF445DW 4 in 1"
+    },
+    "ITEP00281": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PRINTER - CANON i-SENSYS LBP113W"
+    },
+    "ITEP00282": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SATELLITE - iNetVu Ka-98HS/Jup 3-Axis"
+    },
+    "ITEP00283": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SATELLITE - CONTROLLER iNetVu 7710 Controller"
+    },
+    "ITEP00284": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SATELLITE - External Cable Set for 7710 Controller"
+    },
+    "ITEP00285": {
+      "onHand": 55,
+      "available": 55,
+      "avgCost": 0,
+      "productDescription": "USB & 3.5MM AUX EXTENSION UNIT - 1.5M"
+    },
+    "ITEP00286": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "USB - Flashdrive, 16GB"
+    },
+    "ITEP00287": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SWITCH - 8 Port Unmanaged, D-Link DGS-1008A"
+    },
+    "ITEP00288": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "USB - Port Blocker - Blue (4 Pack)"
+    },
+    "ITEP00289": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PC - AIO 19.5"
+    },
+    "ITEP00290": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "USB - Port Blocker - Blue (10 Pack) Without Key"
+    },
+    "ITEP00291": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SERVER RACK - 19 X 29U, BLACK"
+    },
+    "ITEP00292": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SERVER RACK - 15U, 600 x 800mm (19), Black"
+    },
+    "ITEP00293": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PRINTER - HP 137FNW MONO MFP"
+    },
+    "ITEP00294": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Raspberry Pi 4 - Model B 4GB"
+    },
+    "ITEP00295": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Raspberry Pi4 - USB-C 15.3W Power Supply 5.1v 3A"
+    },
+    "ITEP00296": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Raspberry Pi4 - Model B Official Red/White Case"
+    },
+    "ITEP00297": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SD CARD - microSDHC 32GB"
+    },
+    "ITEP00298": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PC - Lenovo M712Q Tiny PC - Intel i5"
+    },
+    "ITEP00299": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "ADAPTOR - Mini Display (Male) to VGA (Female)"
+    },
+    "ITEP00300": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PC - Lenovo - M910Q i5-7500 8GB 500GB TIny"
+    },
+    "ITEP00301": {
+      "onHand": 7,
+      "available": 7,
+      "avgCost": 0,
+      "productDescription": "BRACKET - PC Mount Extension arm LDA29 Series"
+    },
+    "ITEP00302": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "UPS - 1KVA"
+    },
+    "ITEP00303": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "MONITOR - 18.5"
+    },
+    "ITEP00304": {
+      "onHand": 5,
+      "available": 5,
+      "avgCost": 0,
+      "productDescription": "Server Rack - Brush Panel"
+    },
+    "ITEP00305": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SERVER RACK - 15U Wall Mounted"
+    },
+    "ITEP00306": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SERVER RACK - 2U Shelf for 450mm Rack"
+    },
+    "ITEP00307": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PC - Intel NUC Kit i5-10210U"
+    },
+    "ITEP00308": {
+      "onHand": 2,
+      "available": 2,
+      "avgCost": 0,
+      "productDescription": "ROUTER - Mobile, 4G LTE"
+    },
+    "ITEP00309": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PC - All In One, 27 Inch, Intel i7(TBC)"
+    },
+    "ITEP00310": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LAPTOP - HP Notebook 255 G8"
+    },
+    "ITEP00311": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TABLET - 10.1 Display"
+    },
+    "ITEP00312": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PC - Raspberry PI 4 8GB"
+    },
+    "ITEP00313": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Raspberry PI Case"
+    },
+    "ITEP00314": {
+      "onHand": 2,
+      "available": 2,
+      "avgCost": 0,
+      "productDescription": "Raspberry PI Power Supply"
+    },
+    "ITEP00315": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Raspberry PI Relay Card 8 Channel"
+    },
+    "ITEP00316": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Micro SD Card (A2) 64GB"
+    },
+    "ITEP00317": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SCREEN - Wave 5 Display with Res Touch (Designed for Raspberry PI)"
+    },
+    "ITEP00318": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SERVER RACK - 22U x 600mm"
+    },
+    "ITEP00319": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SOLAR - Monitoring Device and Software (Details TBC)"
+    },
+    "ITEP00320": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "ROUTER - WiFi, 4G LTE, Dual Sim"
+    },
+    "ITEP00321": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CABLE - RS232, 6m, Male to Female."
+    },
+    "ITEP00322": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "RASPBERRY PI - Case - Din Rail Mount for Pi 4"
+    },
+    "ITEP00323": {
+      "onHand": 6,
+      "available": 6,
+      "avgCost": 0,
+      "productDescription": "ROUTER - RUTX50 - Din Rail Mount for RUTX50"
+    },
+    "ITEP00324": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PC - AIO, Guangzhou Star,  i7, 16GB RAM, 256GB SSD"
+    },
+    "ITEP00325": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Keyboard and Mouse - Set, Wireless"
+    },
+    "ITEP00326": {
+      "onHand": 8,
+      "available": 8,
+      "avgCost": 0,
+      "productDescription": "HEADPHONES - Over Ear, USB, with Mic arm"
+    },
+    "ITEP00327": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "SPEAKERS - PC Speakers, USB Powered, 3.5mm Audio"
+    },
+    "ITEP00328": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "WEB CAMERA - Andowl, 4k"
+    },
+    "ITEP00329": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "ROUTER - RUTX50, 5G Router, Dual Sim"
+    },
+    "ITEP00330": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "ANTENNA - Poynting 7-in-1 Transportation & Automotive Antenna, 617 - 7200mHZ, 4x4, LTE/5G (MIMO)"
+    },
+    "ITEP00331": {
+      "onHand": 27,
+      "available": 27,
+      "avgCost": 0,
+      "productDescription": "CABLE - Active USB 3.0 Extension - Male to Female, 3 meter"
+    },
+    "ITEP00332": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CABLE - USB 3.0 Extension, Male to Female, 1.5m"
+    },
+    "ITEP00333": {
+      "onHand": 6,
+      "available": 6,
+      "avgCost": 0,
+      "productDescription": "CABLE - Audio - Auxilary Extension, Stereo (2 pole), 3.5mm, Male to Female, 1.5m"
+    },
+    "ITEP00334": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "CABLE - VGA Extension, Male to Female, 3m"
+    },
+    "ITEP00335": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "POWER SUPPLY - DC, 3V, 1A (for I-Spy)"
+    },
+    "ITEP00336": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SCREW - Camera Tripod Screw, 1/4 - 20 UNC thread"
+    },
+    "ITEP00337": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CAMERA - Obsbot - AI, 4k"
+    },
+    "ITEP00338": {
+      "onHand": 11,
+      "available": 11,
+      "avgCost": 0,
+      "productDescription": "ROUTER - RUTX50 - Din Rail Mount for RUTX50 (Metal)"
+    },
+    "ITEP00340": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PRINTER - Samsung, Xpress M2070FW"
+    },
+    "ITEP00341": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "CABLE - USB Extension, 10m"
+    },
+    "ITEP00342": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PC - Laptop - Lenovo Ideapad 3 (i3, 15.6, 8GB RAM)"
+    },
+    "ITEP00343": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PC - Laptop - ASUS TUF Gaming f17 (i7, 64GB RAM, 17)"
+    },
+    "ITEP00344": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CABLE - Power, Kettle Cord, 90 degree, 1.8m"
+    },
+    "ITEP00345": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SERVER RACK - Rail Mount Kit for RCT Inverters"
+    },
+    "ITEP00346": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CAMERA - WiFi, Outdoor Security Camera"
+    },
+    "ITEP00347": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PC - Micro PC, (Refurbished) - Dell Optiplex 7060"
+    },
+    "ITEP00348": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SCREEN - 21.5, 1080P PC Monitor, Rogueware W2213SG"
+    },
+    "ITEP00349": {
+      "onHand": 296,
+      "available": 296,
+      "avgCost": 0,
+      "productDescription": "CONNECTOR - RJ45, EZ UTP Modular, CAT5e"
+    },
+    "ITEP00350": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CONNECTOR - RJ45 Boot - Green"
+    },
+    "ITEP00351": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CONNECTOR - RJ45 Boot, Blue"
+    },
+    "ITEP00352": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CONNECTOR - RJ45 Boot, Red"
+    },
+    "ITEP00353": {
+      "onHand": 32,
+      "available": 32,
+      "avgCost": 0,
+      "productDescription": "SOCKET - Data, RJ45, CAT5e UTP Keystone Jack"
+    },
+    "ITEP00354": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PRINTER - Brother DCP-L5510DW"
+    },
+    "ITEP00355": {
+      "onHand": 4,
+      "available": 4,
+      "avgCost": 0,
+      "productDescription": "CABLE - Silicone Cable Managment Clips, Surface Mount, Self Adhesive, Single"
+    },
+    "ITEP00356": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SERVER RACK - 42U, 600 x 600mm (Full Length)"
+    },
+    "ITEP00357": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PC - All-in-One - Asus AIO Ess, CEL N4500, 8GB RAM, 128GB SSD, 15.6 FHD, VESA Mount"
+    },
+    "ITEP00358": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "PC - NUC - H90, i7, 11390H, 16GB RAM, 512GB SSD"
+    },
+    "ITEP00359": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PC - Laptop - TK-E160  - i5, 16GB RAM, 512GB SSD"
+    },
+    "ITEP00360": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PC - Laptop - IK-E198, i9, 32GB RAM, 1TB SSD"
+    },
+    "ITEP00361": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CAMERA - Video Conferencing Camera and Microphone"
+    },
+    "ITEP00362": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "MONITOR - Frameless, 16:9, 24"
+    },
+    "ITEP00363": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CAMERA - Indoor/Outdoor Dome/Turret IP POE Network Camera"
+    },
+    "ITEP00364": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Switch - 4/5 Port, POE"
+    },
+    "ITEP00365": {
+      "onHand": 11,
+      "available": 11,
+      "avgCost": 0,
+      "productDescription": "WEBCAM - C17, 5MP, Auto Focus, Dual Mic, Privacy Cover Webcamera"
+    },
+    "ITEP00366": {
+      "onHand": 27,
+      "available": 27,
+      "avgCost": 0,
+      "productDescription": "CONVERTER - HDMI to VGA"
+    },
+    "ITEP00367": {
+      "onHand": 5,
+      "available": 5,
+      "avgCost": 0,
+      "productDescription": "CABLE - VGA, Male to Male, 3m"
+    },
+    "ITEP00368": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "PRINTER - Brother HL-L2365DW"
+    },
+    "ITEP00386": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Camera - Full Colour Dome. Outdoor Security Camera"
+    },
+    "ITEP00387": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "MONITOR - 19 PC Screen, Vesa Mount (Telemedicine)"
+    },
+    "ITEP00388": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "YOCO - Point Of Sale, Card Machine - Yoco Machine"
+    },
+    "ITEP00548": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "BULB - Light Bulb 60W - Bayonet"
+    },
+    "ITEP00585": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "INTERCOM - Through Glass Intecom, Microphone with Speaker"
+    },
+    "ITEP00586": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "ROUTER - RUTX12, CAT6 Router, Dual SIM, LTE"
+    },
+    "ITEP00587": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SATELLITE - Guud-link, internet Modem"
+    },
+    "ITEP00588": {
+      "onHand": 3,
+      "available": 3,
+      "avgCost": 0,
+      "productDescription": "CABLE - Active USB 3.0 Extension - Male to Female, 5 meter"
+    },
+    "ITEP00589": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CABLE - RS232, 10m, Male to Female."
+    },
+    "ITEP00590": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "BARCODE SCANNER - USB Laser Barcode Scanner, Hand Held, 1D"
+    },
+    "ITEP00591": {
+      "onHand": 4,
+      "available": 4,
+      "avgCost": 0,
+      "productDescription": "PRINTER - Barcode Label Thermal Printer, A6, 152mm, WINPAL WP300B"
+    },
+    "ITEP00592": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TABLET - Rugged - Oukitel, RT8, 4G IP68/IP69K, 6GB RAM, 256GB ROM"
+    },
+    "ITEP00593": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "PC - Laptop - TK-E140i - 14inch, i3 12th,8GB RAM, 512GB SSD"
+    },
+    "ITEP00594": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "HDD - G.Craftsman Hard Disc Drive for CCTV - 6 TB"
+    },
+    "ITEP00595": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "DVR - 16 Channel, 4K, 8MP, Network Video Recorder, POE, Facial Recognition."
+    },
+    "ITEP00596": {
+      "onHand": 4,
+      "available": 4,
+      "avgCost": 0,
+      "productDescription": "BARCODE SCANNER - Zebra DS2208, Black - Drivers License Barcode Scanner, Black"
+    },
+    "ITEP00597": {
+      "onHand": 5,
+      "available": 5,
+      "avgCost": 0,
+      "productDescription": "CABLE - USB-C Male to USB3.0 Female - ([M] UGreen 30701 to [F] OTG Adap-BK)"
+    },
+    "ITEP00598": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Smart Board 75 inch - 4 Core 4G+32G, Android 13, i5 6th gen"
+    },
+    "ITEP00599": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Mobile Stand - Smart Board - for ITEP00598"
+    },
+    "ITEP00600": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CABLE - 4in1 USB - USB-C to 4 x USB-A"
+    },
+    "ITEP00601": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Raspberry Pi5 - 8GB Red/White Official Kit"
+    },
+    "ITEP00602": {
+      "onHand": 4,
+      "available": 4,
+      "avgCost": 0,
+      "productDescription": "ADAPTOR - RPSMA Male to SMA Female - for ITEP00330"
+    },
+    "ITEP00603": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Camera - Dome - 4MP Hybrid Light IR - 30m, 2.8mm IP67"
+    },
+    "ITEP00604": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "ADAPTER - USB 3.0 to HDMI and VGA"
+    },
+    "ITEP00605": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "X-Ray - Software - Careray Brand - 1800Le - Wired Flat Panel Detector - DROX HUman Software"
+    },
+    "ITEP00606": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Point of Sales Device - Hand Held"
+    },
+    "ITEP00607": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PC - AIO - Heovose - i7, 8GB, 23.8"
+    },
+    "ITEP00608": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PRINTER - Brother DCP-L2540DW"
+    },
+    "ITEP00609": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PC - AIO - Dell - i7, 16GB, 21.5"
+    },
+    "ITEP00610": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Router - Tenda N300 Wi-Fi 4G LTE Router (TND-4G03-PRO)"
+    },
+    "ITEP00611": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SWITCH - 16 Port Ethernet Switch, PoE, 15W"
+    },
+    "ITEP00612": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LAPTOP - HP 250RT G9, Intel Celeron N150, 8GB RAM, 256GB NVMe, 15.6 FHD"
+    },
+    "ITERP00339": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "SWITCH - 5-port, Desktop,"
+    },
+    "MECA00002": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Self Levelling (Fully Assembled)"
+    },
+    "MECA00003": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "GENERATOR FUEL TANK (FULLY ASSEMBLED)"
+    },
+    "MECA00004": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Step Edging (Fully Assembled)"
+    },
+    "MECA00007": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Gas Strut 450mm (Fully Assembled)"
+    },
+    "MECA00009": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "GENERATOR - 12000X Fischer Panda (Fully Assembled)"
+    },
+    "MECA00010": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "FILLER NECK - FUEL (FULLY ASSEMBLED)"
+    },
+    "MECA00011": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "BARREL & KEY ASSEMBLY (FULLY ASSEMBLED)"
+    },
+    "MECA00012": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "GENERATOR - SERVICE KIT, LARGE AIR FILTER"
+    },
+    "MECA00013": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "GENERATOR - SERVICE KIT, SMALL AIR FILTER"
+    },
+    "MECA00014": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SERVICE KIT - Turner Morris, 8kva, Petrol"
+    },
+    "MECA00015": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "AIRCON - Standard Air Conditioning Connection Items (4 Aircon Unit)"
+    },
+    "MECA00015-2": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "AIRCON - Standard Air Conditioning Connection Items (3 Aircon Unit)"
+    },
+    "MECA00015-3": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "AIRCON - Standard Air Conditioning Connection Items (2 Aircon Unit, 12.5m Bus)"
+    },
+    "MECP00012": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "GENERATOR - FUEL FILTER WS180"
+    },
+    "MECP00013": {
+      "onHand": 2,
+      "available": 2,
+      "avgCost": 0,
+      "productDescription": "MOUNT - VIBRATION, 90KG"
+    },
+    "MECP00022": {
+      "onHand": 7,
+      "available": 7,
+      "avgCost": 0,
+      "productDescription": "PIPE - PIPE MLTIPRPSE, FUEL/WTR HOSE, 8MM ID"
+    },
+    "MECP00023": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PIPE - PIPE RADIATOR HOSE, 25mm"
+    },
+    "MECP00030": {
+      "onHand": 38,
+      "available": 38,
+      "avgCost": 0,
+      "productDescription": "BATTERY - BOX STANDARD"
+    },
+    "MECP00031": {
+      "onHand": 29,
+      "available": 29,
+      "avgCost": 0,
+      "productDescription": "BATTERY - BATTERY BOX LARGE"
+    },
+    "MECP00042": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LEVELLING - SYSTEM, AP49318, 625S"
+    },
+    "MECP00043": {
+      "onHand": 25,
+      "available": 25,
+      "avgCost": 0,
+      "productDescription": "ALUMINIUM - STEP EDGE INSERT, D1097 -"
+    },
+    "MECP00044": {
+      "onHand": 4.7,
+      "available": 4.7,
+      "avgCost": 0,
+      "productDescription": "STEP - RUBBER INSERT, YELLOW"
+    },
+    "MECP00046": {
+      "onHand": 2,
+      "available": 2,
+      "avgCost": 0,
+      "productDescription": "HOOK - ANDY HOOK, Small (Black)"
+    },
+    "MECP00047": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CORD - BUNGY SHOCK CORD, 6MM"
+    },
+    "MECP00048": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "VALVE - 24VDC"
+    },
+    "MECP00050": {
+      "onHand": 44,
+      "available": 44,
+      "avgCost": 0,
+      "productDescription": "DOOR RETAINER - RUBBER, FEMALE, 666F"
+    },
+    "MECP00051": {
+      "onHand": 9,
+      "available": 9,
+      "avgCost": 0,
+      "productDescription": "DOOR RETAINER - RUBBER, COMPLETE"
+    },
+    "MECP00052": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "HANDLE - PLASTIC GRAB HANDLE, 180MM"
+    },
+    "MECP00058": {
+      "onHand": 2,
+      "available": 2,
+      "avgCost": 0,
+      "productDescription": "FUEL - FUEL FILLER NECK"
+    },
+    "MECP00059": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CAP - Petrol, Newline"
+    },
+    "MECP00060": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LOCK - ZADI BARREL, FOR STEEL  KEY"
+    },
+    "MECP00061": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "KEY SET - ZADI, STEEL, INCL SPAR"
+    },
+    "MECP00062": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SENSOR - Ultrasonic Level"
+    },
+    "MECP00063": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "FUEL LEVEL INSTRUMENT - FUEL LEVEL INSTRUMENT 24V"
+    },
+    "MECP00064": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Diesel Tank - 60L"
+    },
+    "MECP00065": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "FUEL TANK - CONNECTION KIT"
+    },
+    "MECP00066": {
+      "onHand": 38.9,
+      "available": 38.9,
+      "avgCost": 0,
+      "productDescription": "PIPE - FUEL HOSE, 38MM"
+    },
+    "MECP00068": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PIPE - 38mm Exhaust 90° Bend"
+    },
+    "MECP00069": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "GAUGE - 0-12 BAR, 1/4"
+    },
+    "MECP00070": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "OIL -  HYDRAULIC OIL"
+    },
+    "MECP00074": {
+      "onHand": 2,
+      "available": 2,
+      "avgCost": 0,
+      "productDescription": "Swivel Nut Elbow Hydraulic"
+    },
+    "MECP00088": {
+      "onHand": 2,
+      "available": 2,
+      "avgCost": 0,
+      "productDescription": "WINDOW - Sliding 600"
+    },
+    "MECP00089": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "WINDOW - Sliding 800"
+    },
+    "MECP00106": {
+      "onHand": 62,
+      "available": 62,
+      "avgCost": 0,
+      "productDescription": "GAS STRUT - BALL AND STEEL END FITTING"
+    },
+    "MECP00107": {
+      "onHand": 7,
+      "available": 7,
+      "avgCost": 0,
+      "productDescription": "GAS STRUT - 250MM"
+    },
+    "MECP00108": {
+      "onHand": 2,
+      "available": 2,
+      "avgCost": 0,
+      "productDescription": "GAS STRUT - GAS STRUT K4045, 450MM - 250N"
+    },
+    "MECP00121": {
+      "onHand": 38,
+      "available": 38,
+      "avgCost": 0,
+      "productDescription": "PIPE - HEATER HOSE, 16MM"
+    },
+    "MECP00124": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "FILTER - INLINE"
+    },
+    "MECP00128": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TOOL KIT - BASIC"
+    },
+    "MECP00138": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "GENERATOR - AC/AC INVERTER, 230V-50HZ, 10000"
+    },
+    "MECP00139": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "GENERATOR - ACCESSORIES KIT, PANDA 8000I"
+    },
+    "MECP00140": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "GENERATOR - RADIATOR ACCESSORY KIT"
+    },
+    "MECP00147": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "GENERATOR - PANDA, 12000X, PVMV-N"
+    },
+    "MECP00154": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "VENT - VENT TURBO, WHITE"
+    },
+    "MECP00156": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LIGHT - LIGHT LED COVER JOINER"
+    },
+    "MECP00160": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "GAS STRUT - K4046, 500N"
+    },
+    "MECP00168": {
+      "onHand": 469,
+      "available": 469,
+      "avgCost": 0,
+      "productDescription": "Lock Paddle, S/S, 4 Holes, W/Keys"
+    },
+    "MECP00169": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "HINGE - Zinc Alloy, 40 X 40MM, Black"
+    },
+    "MECP00171": {
+      "onHand": 9,
+      "available": 9,
+      "avgCost": 0,
+      "productDescription": "HOLDER - Flare Holder (Large)"
+    },
+    "MECP00172": {
+      "onHand": 950,
+      "available": 950,
+      "avgCost": 0,
+      "productDescription": "SADDLE - S/STEEL, 45MM"
+    },
+    "MECP00173": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "BUNGI - RUBBER STRAP, 780MM"
+    },
+    "MECP00174": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "BUNGI - BUNGI RUBBER STRAP, 370MM"
+    },
+    "MECP00180": {
+      "onHand": 2,
+      "available": 2,
+      "avgCost": 0,
+      "productDescription": "CONNECTOR - HYDRAULIC HEX UNION"
+    },
+    "MECP00182": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "DISABILITY LIFT - UVL 855R24/1300II"
+    },
+    "MECP00189": {
+      "onHand": 8.5,
+      "available": 8.5,
+      "avgCost": 0,
+      "productDescription": "HOSETAIL - 1, DOUBLE, SS304"
+    },
+    "MECP00190": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "INVERTER - AC/AC, 230V, 50/50HZ, 8000IS"
+    },
+    "MECP00193": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Airconditioner - Dometic Freshjet 2200"
+    },
+    "MECP00195": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Alluminium Folding Stairs"
+    },
+    "MECP00196": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "AWNING - DOMETIC, PW1500, 3.5M"
+    },
+    "MECP00200": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "AIRCON - DISTRIBUTION BOX"
+    },
+    "MECP00201": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "VENT - 70MM, ROUND, PLASTIC"
+    },
+    "MECP00220": {
+      "onHand": 4,
+      "available": 4,
+      "avgCost": 0,
+      "productDescription": "SLIDE - 9330, 610MM, SUPER HEAVY DUTY"
+    },
+    "MECP00226": {
+      "onHand": 144,
+      "available": 144,
+      "avgCost": 0,
+      "productDescription": "TANK BREATHER - NIPPLE, STAINLESS STEEL"
+    },
+    "MECP00239": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PUMP - FUEL, In-Line, 12V"
+    },
+    "MECP00255": {
+      "onHand": 451,
+      "available": 451,
+      "avgCost": 0,
+      "productDescription": "Hinge 50x50 Black"
+    },
+    "MECP00256": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LOCK - Padlock"
+    },
+    "MECP00257": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Self Leveling System - AP44064 24VDC"
+    },
+    "MECP00258": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PUMP - Generator Water Pump - EWP115 Nylon Pump Kit 12V"
+    },
+    "MECP00259": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Generator - Honda EU65is"
+    },
+    "MECP00260": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Filter - Generator Air (Golf / AG635)"
+    },
+    "MECP00261": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "Filter - Generator, Air (Uno/AG806)"
+    },
+    "MECP00262": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "Filter - Generator, Oil (HH150)"
+    },
+    "MECP00263": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "Filter - Generator, Fuel (E13)"
+    },
+    "MECP00264": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Filter - Generator, Water/Fuel Seperator (Wix WF8270)"
+    },
+    "MECP00265": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Door Retainers - Short - With Plastic Backing"
+    },
+    "MECP00266": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Door Retainer - Backing Plate 1"
+    },
+    "MECP00267": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Door Retainer - Backing Plate 2"
+    },
+    "MECP00268": {
+      "onHand": 4,
+      "available": 4,
+      "avgCost": 0,
+      "productDescription": "Red Reflector - 76mm"
+    },
+    "MECP00269": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "Check Strap Door - Large"
+    },
+    "MECP00270": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "GENERATOR - Fischer Panda 10000x"
+    },
+    "MECP00271": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "GENERATOR - Rubber Mount 70/40 captive"
+    },
+    "MECP00272": {
+      "onHand": 13,
+      "available": 13,
+      "avgCost": 0,
+      "productDescription": "LOCK - Budget Large 125x25mm"
+    },
+    "MECP00273": {
+      "onHand": 35,
+      "available": 35,
+      "avgCost": 0,
+      "productDescription": "ALUMINIUM - STEP EDGE NO INSERT P34997/D277 5mt"
+    },
+    "MECP00274": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "STEP BUCKET - DRIVERS ENTRANCE"
+    },
+    "MECP00275": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "HOSE - EXHAUST HOSE 76MM ID"
+    },
+    "MECP00276": {
+      "onHand": 2,
+      "available": 2,
+      "avgCost": 0,
+      "productDescription": "WIPER - ARM - 800mm DOUBLE"
+    },
+    "MECP00277": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "WIPER - BLADE - AC P70 - 700mm"
+    },
+    "MECP00278": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "GEYSER - HOTFILL"
+    },
+    "MECP00279": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Generator - Honda EU65is Extended Run Time Fuel Kit"
+    },
+    "MECP00280": {
+      "onHand": 46,
+      "available": 46,
+      "avgCost": 0,
+      "productDescription": "GAS STRUT - K4045, 450mm, 450N"
+    },
+    "MECP00281": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "FLEX TUBE - Ø76mm Bellows Style - 76x110x12"
+    },
+    "MECP00282": {
+      "onHand": 3,
+      "available": 3,
+      "avgCost": 0,
+      "productDescription": "FLEX TUBE - 1.5 (38mm)"
+    },
+    "MECP00283": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "CLAMP - V-Band Set 3.0 (76mm)"
+    },
+    "MECP00284": {
+      "onHand": 3,
+      "available": 3,
+      "avgCost": 0,
+      "productDescription": "CLAMP - 2 Triclover"
+    },
+    "MECP00285": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PIPE FITTING - 2 Triclover Fitting"
+    },
+    "MECP00286": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "WIPER - ARM - 700MM DOUBLE"
+    },
+    "MECP00287": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "AIRCON - Underbench 9000BTU"
+    },
+    "MECP00288": {
+      "onHand": 7,
+      "available": 7,
+      "avgCost": 0,
+      "productDescription": "HINGE - 48x48mm - Nylon Black"
+    },
+    "MECP00289": {
+      "onHand": 46,
+      "available": 46,
+      "avgCost": 0,
+      "productDescription": "JACK - Parking Jack, extendable, side handle"
+    },
+    "MECP00290": {
+      "onHand": 133,
+      "available": 133,
+      "avgCost": 0,
+      "productDescription": "LOCK - Bay Door"
+    },
+    "MECP00291": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "GENERATOR - 8Kva, Petrol, Air Cooled"
+    },
+    "MECP00292": {
+      "onHand": 2,
+      "available": 2,
+      "avgCost": 0,
+      "productDescription": "LOCK - Pressure Latch - 80x35"
+    },
+    "MECP00293": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "GENERATOR - Diesel - 8Kva"
+    },
+    "MECP00294": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "GENERATOR - Petrol - 6Kva (USR TEC 60)"
+    },
+    "MECP00295": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "GENERATOR - V-Belt XPZ 850"
+    },
+    "MECP00296": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "GENERATOR - V-Belt XPZ 800"
+    },
+    "MECP00297": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "AIRCON - FRESCO 36"
+    },
+    "MECP00298": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "DOOR RETAINER - Spear & Socket"
+    },
+    "MECP00299": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "GENERATOR - Petrol - 8Kva"
+    },
+    "MECP00300": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "AIR CONDITIONER - Portable - GMC P12RLA"
+    },
+    "MECP00301": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LOUVRE - Aluminium - 300x300mm"
+    },
+    "MECP00302": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "FRAME - Bench Seat (Shout Trucks)"
+    },
+    "MECP00303": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SPARK PLUG - BP6ES"
+    },
+    "MECP00304": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "WINDSCREEN WIPER - Motor, 24V, Double Shaft, 60 degree (Left Hand Side)"
+    },
+    "MECP00305": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "LOCK - Door, Toilet Lock, Left Hand"
+    },
+    "MECP00306": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "BEARING SET - Crankshaft - FM 16-270 (LLME993942)"
+    },
+    "MECP00308": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SERVICE KIT - Minor FK/FN, FM16-270 (LLA99999109NEW)"
+    },
+    "MECP00309": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "AIR FILTER - Kit, FM65F/FM6 - Fuso FM16-270 (LLA99999111)"
+    },
+    "MECP00310": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "MOTOR - Servo"
+    },
+    "MECP00311": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "WIPER - Blade - 550mm"
+    },
+    "MECP00312": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "WIPER Vlade - 550mm"
+    },
+    "MECP00313": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SPARK PLUG - TR5B-13"
+    },
+    "MECP00314": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "MIRROR - Right Side (Fuso)"
+    },
+    "MECP00315": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "MOUNTING - Rubber, M8, 30 x 25 x M8 x 25 x 25"
+    },
+    "MECP00316": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "DUCT - Aluminium Ducting, 150mm"
+    },
+    "MECP00317": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "DUCT - Aluminium Ducting, 100mm"
+    },
+    "MECP00318": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "DUCT - Ducting Reducer, 150mm to 100mm"
+    },
+    "MECP00319": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "DUCT - Ducting Splitter, 100mm"
+    },
+    "MECP00320": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "DUCT - Flanged Spigot, Square Plate, 100mm"
+    },
+    "MECP00321": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "HOSE - Blower/Ventilator, 10m, 76 mm (3'')"
+    },
+    "MECP00322": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "AIR CONDITIONER - York, 9000BTU M-WS"
+    },
+    "MECP00323": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "VENT - Roof Vent, 400 x 400, Crystal"
+    },
+    "MECP00324": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LOCK - Door Lock Keeper (Catch) - Zadi, 34mm"
+    },
+    "MECP00325": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "GENERATOR - Water Pump Kit, Z602 (for Fischer Panda 10000)"
+    },
+    "MECP00326": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "HOSE - Elbow, 90deg, 38mm Radiator Hose"
+    },
+    "MECP00327": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "GENERATOR - USR TEC80, 8kVA, Petrol, Air Cooled, Floor Mounted, Honda Engine"
+    },
+    "MECP00328": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "AIR CONDITIONER - Alliance, 9000BTU, Inverter Airconditioner"
+    },
+    "MECP00329": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "AIR CONDITIONER - Puremind, Inverter, 9000BTU, Heating & Cooling"
+    },
+    "MECP00399": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "DOOR -Cylinder - Pneumatic Actuator, 10 Bar"
+    },
+    "MECP00400": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "GENERATOR - 8kVA, Gentech 8000IS"
+    },
+    "MECP00401": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "HOLDER - Flare Holder (Small)"
+    },
+    "MECP00402": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "REFLECTOR - Round, Orange"
+    },
+    "MECP00403": {
+      "onHand": 3,
+      "available": 3,
+      "avgCost": 0,
+      "productDescription": "POP OUT - Slide Out Kit, 12V, 3000 x 1900 x 650"
+    },
+    "MECP00404": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "MIRROR - MIRROR - Left Side (Fuso)"
+    },
+    "MECP00405": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "DISABILITY LIFT - UVL-1300II, Wheel Chair lift - In Luggage"
+    },
+    "MECP00406": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "HOSE - Fuel Hose, 8mm"
+    },
+    "MECP00407": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "MOTOR - Wind Screen Wiper Motor, 24V, Double Shaft, 80 degree (Left Hand Side)"
+    },
+    "MECP00437": {
+      "onHand": 262,
+      "available": 262,
+      "avgCost": 0,
+      "productDescription": "GAS STRUT - 450mm, 400N, Including Band and Steel End Fittings"
+    },
+    "MECP00438": {
+      "onHand": 65,
+      "available": 65,
+      "avgCost": 0,
+      "productDescription": "GAS STRUT - 250mm, 150N, (including Ball and Steel End Fittings)"
+    },
+    "MECP00439": {
+      "onHand": 2,
+      "available": 2,
+      "avgCost": 0,
+      "productDescription": "REFLECTOR - White, Metal Bracket"
+    },
+    "MECP00440": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "VENT - Louvre Vent - Stainless Steel"
+    },
+    "MECP00441": {
+      "onHand": 2,
+      "available": 2,
+      "avgCost": 0,
+      "productDescription": "MOTOR - Wind Screen Wiper Motor, 24V, Double Shaft, 80 degree (Right Hand Side)"
+    },
+    "MECP00442": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "AIR CONDITIONER - Aircon Installation Materials (Fitted and Installed, excluding Labour)"
+    },
+    "MECP00443": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Vibration Mount - Fail Safe Mount (SND FR200)"
+    },
+    "MECP00444": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Lock - Half Euro 45mm"
+    },
+    "mecp00445": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Door Lever - Arogan on Round Rose"
+    },
+    "MECP00446": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Door Lever - Flush Ring 70x70"
+    },
+    "MECP00447": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Escution - Euro Lock 2mm Brushed SS"
+    },
+    "MECP00448": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Door Lock - Stainless 61mm"
+    },
+    "MECP00449": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Hinge - Sinkless - 100x76x2mm BSS"
+    },
+    "MECP00450": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "MOUNT - Anti-Vibration, M10 Male to Male Thread, Unequal Length, 20 x 50mm (D:40, H30)"
+    },
+    "MECP00451": {
+      "onHand": 7,
+      "available": 7,
+      "avgCost": 0,
+      "productDescription": "DOOR RETAINER - T-Clip, Galvanised, 188mm (Long)"
+    },
+    "MECP00452": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "MOUNT - Anti-Vibration -M6 Female Thread/Female Thread,  (D:20mm, H20mm)"
+    },
+    "MECP00453": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "MOUNT - Anti-Vibration - M6 Male to Female Thread, (D:25mm, H20mm)"
+    },
+    "MECP00455": {
+      "onHand": 17,
+      "available": 17,
+      "avgCost": 0,
+      "productDescription": "SPONGE - EVA Foam Strip - 25mm x 40mm x 2m Length"
+    },
+    "MECP00456": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "MOUNT - Anti-Vibration - M8 Male to Female Thread, (D30mm, H30mm)"
+    },
+    "MECP00457": {
+      "onHand": 4,
+      "available": 4,
+      "avgCost": 0,
+      "productDescription": "Hinge - Double Action, Set (2 off)"
+    },
+    "MECP00458": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "HOSE - Fuel Hose, 6mm"
+    },
+    "MECP00459": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "DISSABILITY LIFT - Braun - Circuit Board Kit, 405901"
+    },
+    "MECP00460": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "MOUNT - Anti-Vibration - M10 Female to Female Thread, (D50mm, H30mm)"
+    },
+    "MECP00461": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "MOUNT - Anti-Vibration - M10 Male to Female Thread, (D50mm, H40mm)"
+    },
+    "MECP00462": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "MOUNT - Anti-Vibration - M8 Female to Female Thread, (D40mm, H30mm)"
+    },
+    "MECP00463": {
+      "onHand": 12,
+      "available": 12,
+      "avgCost": 0,
+      "productDescription": "MOUNT - Anti-Vibration - M8 Male to Male Thread, Equal Thread Length, 25 x 25mm (D30mm, H25mm)"
+    },
+    "MECP00464": {
+      "onHand": 2,
+      "available": 2,
+      "avgCost": 0,
+      "productDescription": "MOUNT - Anti-Vibration - M6 Male to Male Thread, Equal Thread Length, 20 x 20 mm (D20mm, H20mm)"
+    },
+    "MECP00465": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "GENERATOR - Turner Morris 3 Phase, 380V, 50Hz, 13kVA. Petrol, Electric Start, Silent"
+    },
+    "MECP00466": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "GENERATOR - REPLACEMENT CONTROL PANEL - TEC80"
+    },
+    "MECP00467": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "GENERATOR - 7.8kVA, RATO R8750ID"
+    },
+    "MECP00468": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Door Lock Kit - Container Door, 27mm, Zinc Plated"
+    },
+    "MECP00469": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Pipe - Door Lock Kit, 27mm"
+    },
+    "MECP00470": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Hinge - Zinc Plated, 360x70mm"
+    },
+    "MECP00471": {
+      "onHand": 5,
+      "available": 5,
+      "avgCost": 0,
+      "productDescription": "SELF LEVELLING - Full Kit, Model 6 - Shandong Dingshen industrial Trade Co"
+    },
+    "MECP00472": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Door  Rail - Double Axis Rectangle Linear Rail - SGR20 SGB20-3/4/5 Wheel - Black"
+    },
+    "MECP00473": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Wiper - Blade - 600mm"
+    },
+    "MECP00474": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "Wiper - Blade - 800mm"
+    },
+    "MECP00476": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "USB Dongle - for Temp humidity sensor (MECP00477)"
+    },
+    "MECP00477": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Sensor -  Temp humidity sensor - for USB Dongle (MECP00476)"
+    },
+    "MECP00478": {
+      "onHand": 2,
+      "available": 2,
+      "avgCost": 0,
+      "productDescription": "Generator - Replacement Ignition Coil - 230V/50HZ - TEC80"
+    },
+    "MECP00479": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "MOUNT - Anti-Vibration - M6x20x20 - Female to Female Thread - 8mm thread on one side"
+    },
+    "MECP00480": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "MOUNT - Anti-Vibration - M10 - Male(30mm) to Female(15mm) Thread - 60X40"
+    },
+    "MECP00481": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "MOUNT - Anti-Vibration - M8 CONCAVE- Male to Male - (D:40, H:30)"
+    },
+    "MECP00482": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LOCK - Back Lock - T Handle - Vector 3 Way, Black"
+    },
+    "MECP00483": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Aircon - 9000BTU Inverter Air Conditioner, MBO - MSGW-09HVACFMD"
+    },
+    "MECP00485": {
+      "onHand": 4,
+      "available": 4,
+      "avgCost": 0,
+      "productDescription": "Reflector - Red, Rectangular, Stick-on"
+    },
+    "MECP00486": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Door, Toilet Lock, Right Hand"
+    },
+    "MECP00487": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "WINDSCREEN WIPER - Wiper Bearing, Marcopolo G6, Main"
+    },
+    "MECP00488": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "WINDSCREEN WIPER - Wiper Bearing, Marcopolo G6, Main GRA"
+    },
+    "MECP00489": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "WIPER - Blade, 530mm (21)"
+    },
+    "MEDA00004": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "DR/Sonography Medical Room - Equipment"
+    },
+    "MEDP00398": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Meter - Haemoglobin, Blood Glucose and Cholesterol Meter, NW07"
+    },
+    "MEDP00474": {
+      "onHand": 2,
+      "available": 2,
+      "avgCost": 0,
+      "productDescription": "ECG - MONITOR - ECG for Patient Vital Signs Monitor"
+    },
+    "MEDP00476": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "Regulator - Pin Index - excl. 10L Tank"
+    },
+    "MEDP00525": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "AUDIOLOGY - Tweezers - Bayonet shaped - 160mm - metal"
+    },
+    "MEDP00528": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "AUDIOLOGY - Cutting plier"
+    },
+    "PLUA00001": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Toilet System (Fully Assembled)"
+    },
+    "PLUA00003": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Water Enclosure and Components (Fully Assembled)"
+    },
+    "PLUA00004": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TOILET - Pedastal, fully assembled"
+    },
+    "PLUA00005": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SINK - Kitchen Sink Assembly"
+    },
+    "PLUA00006": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SINK - Wash Sink Assembly"
+    },
+    "PLUA00007": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Fresh/Grey Water Filling Pipe"
+    },
+    "PLUA00009": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Black Water Drain Pipe"
+    },
+    "PLUA00013": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Fresh Water Tank Assembly"
+    },
+    "PLUA00014": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Grey Water Tank Assembly"
+    },
+    "PLUA00015": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Black Water Tank Assembly"
+    },
+    "PLUA00016": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Water Enclosure"
+    },
+    "PLUA00017": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Fresh Water Piping Assembly"
+    },
+    "PLUA00018": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Grey Water Piping Assembly"
+    },
+    "PLUA00019": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Black Water Piping Assembly"
+    },
+    "PLUP00002": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "ACCUMULATOR - Accumulator Tank, 0.75L, 125psi"
+    },
+    "PLUP00003": {
+      "onHand": 4,
+      "available": 4,
+      "avgCost": 0,
+      "productDescription": "COUPLING - MALE, JOHN GUEST, 15MM TO 1/2"
+    },
+    "PLUP00004": {
+      "onHand": 78,
+      "available": 78,
+      "avgCost": 0,
+      "productDescription": "COUPLING - FEMALE, JOHN GUEST, 15MM TO 1/2"
+    },
+    "PLUP00007": {
+      "onHand": 4,
+      "available": 4,
+      "avgCost": 0,
+      "productDescription": "TANK CONNECTOR - JOHN GUEST, 15MM"
+    },
+    "PLUP00008": {
+      "onHand": 26,
+      "available": 26,
+      "avgCost": 0,
+      "productDescription": "HOSETAIL - JOHN GUEST, 15MM TO 1/2"
+    },
+    "PLUP00009": {
+      "onHand": 29,
+      "available": 29,
+      "avgCost": 0,
+      "productDescription": "ELBOW - EQUAL, PVC, 45DEG, 40MM, WHITE"
+    },
+    "PLUP00010": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "ELBOW - EQUAL, PVC, 90DEG, 40MM, WHITE"
+    },
+    "PLUP00011": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "STOP END - PVC, SOLVENT TYPE, 40MM, WHITE"
+    },
+    "PLUP00013": {
+      "onHand": 6,
+      "available": 6,
+      "avgCost": 0,
+      "productDescription": "WASTE PIPE - PVC, 40MM, WHITE"
+    },
+    "PLUP00014": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PIPE - JOHN GUEST, 15MM"
+    },
+    "PLUP00015": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SINK - SMEV VA7306, ROUND W/GLASS LID"
+    },
+    "PLUP00017": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "WASTE BIN - CRAMER, GLASS LID"
+    },
+    "PLUP00018": {
+      "onHand": 7,
+      "available": 7,
+      "avgCost": 0,
+      "productDescription": "FILTER - GAC CARTRIDGE, 19000 L"
+    },
+    "PLUP00019": {
+      "onHand": 6,
+      "available": 6,
+      "avgCost": 0,
+      "productDescription": "FILTER - MELT BLOWN, POLYPROPYLENE"
+    },
+    "PLUP00022": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "BUSH - REDUCING, 1/2 TO 1/4"
+    },
+    "PLUP00023": {
+      "onHand": 45,
+      "available": 45,
+      "avgCost": 0,
+      "productDescription": "JOINER - INSERT, NYLON, 20MM"
+    },
+    "PLUP00024": {
+      "onHand": 5,
+      "available": 5,
+      "avgCost": 0,
+      "productDescription": "HOSE ADAPTER - NYLON, 1/2, MALE"
+    },
+    "PLUP00025": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TEE - EQUAL, NYLON, 20MM"
+    },
+    "PLUP00026": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "ELBOW - INSERT, NYLON, 20MM"
+    },
+    "PLUP00027": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "ELBOW - INSERT, NYLON, 20MM, FEMALE"
+    },
+    "PLUP00028": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TEE - INSERT, NYLON, 20MM, FEMALE"
+    },
+    "PLUP00029": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TEE - INSERT, NYLON, 20MM, MALE"
+    },
+    "PLUP00031": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CAMLOCK - CAMLOCK  -  TYPE F-150, 11/2  40mm"
+    },
+    "PLUP00032": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CAMLOCK - TYPE C, 3/4 20mm"
+    },
+    "PLUP00033": {
+      "onHand": 2,
+      "available": 2,
+      "avgCost": 0,
+      "productDescription": "CAMLOCK - TYPE DC, 3/4 20mm"
+    },
+    "PLUP00035": {
+      "onHand": 18,
+      "available": 18,
+      "avgCost": 0,
+      "productDescription": "BACK NUT - BACK NUT NYLON, 3/4"
+    },
+    "PLUP00036": {
+      "onHand": 3,
+      "available": 3,
+      "avgCost": 0,
+      "productDescription": "PIPE - GARDEN HOSE, 20MM"
+    },
+    "PLUP00037": {
+      "onHand": 35,
+      "available": 35,
+      "avgCost": 0,
+      "productDescription": "BUSH - REDUCING, NYLON, 3/4 TO 1/2"
+    },
+    "PLUP00038": {
+      "onHand": 5,
+      "available": 5,
+      "avgCost": 0,
+      "productDescription": "PIPE - SANITARY HOSE, 38MM"
+    },
+    "PLUP00039": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TAP - HIGH RISE, SWIVEL, MIXER"
+    },
+    "PLUP00040": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SINK - 340MMm with 38MM WASTE"
+    },
+    "PLUP00042": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "Sanitary Bin - White W/Pedal"
+    },
+    "PLUP00044": {
+      "onHand": 2,
+      "available": 2,
+      "avgCost": 0,
+      "productDescription": "FILTER - WATER SYSTEM, DBL HOUSING, 3/4"
+    },
+    "PLUP00045": {
+      "onHand": 11,
+      "available": 11,
+      "avgCost": 0,
+      "productDescription": "STRAIGHT CONNECTOR - JOHN GUEST, 15MM"
+    },
+    "PLUP00051": {
+      "onHand": 5,
+      "available": 5,
+      "avgCost": 0,
+      "productDescription": "BIN LINER - BIODEGRADABLE, FEMCARE"
+    },
+    "PLUP00052": {
+      "onHand": 97,
+      "available": 97,
+      "avgCost": 0,
+      "productDescription": "SOAP DISPENSER - Stainless Steel"
+    },
+    "PLUP00053": {
+      "onHand": 3,
+      "available": 3,
+      "avgCost": 0,
+      "productDescription": "SOAP DISPENSER"
+    },
+    "PLUP00054": {
+      "onHand": 134,
+      "available": 134,
+      "avgCost": 0,
+      "productDescription": "Toilet Roll Holder"
+    },
+    "PLUP00055": {
+      "onHand": 2,
+      "available": 2,
+      "avgCost": 0,
+      "productDescription": "Towel Dispenser"
+    },
+    "PLUP00056": {
+      "onHand": 2,
+      "available": 2,
+      "avgCost": 0,
+      "productDescription": "Multifold Paper Tad"
+    },
+    "PLUP00057": {
+      "onHand": 98,
+      "available": 98,
+      "avgCost": 0,
+      "productDescription": "TOWEL DISPENSER - Stainless Steel"
+    },
+    "PLUP00058": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "RUNNING NIPPLE - Brass, 3/4"
+    },
+    "PLUP00059": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Toilet Masterflush 8156"
+    },
+    "PLUP00060": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "BLACK Black Water , HTS 2 tank"
+    },
+    "PLUP00065": {
+      "onHand": 14,
+      "available": 14,
+      "avgCost": 0,
+      "productDescription": "TEE - EQUAL, PVC, 40MM, WHITE, PLAIN"
+    },
+    "PLUP00075": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "SANITARY BIN - MANUAL, WHITE, FEMCARE"
+    },
+    "PLUP00076": {
+      "onHand": 10,
+      "available": 10,
+      "avgCost": 0,
+      "productDescription": "ELBOW - EQUAL, JOHN GUEST, 15MM"
+    },
+    "PLUP00077": {
+      "onHand": 28,
+      "available": 28,
+      "avgCost": 0,
+      "productDescription": "TEE - EQUAL, JOHN GUEST, 15MM"
+    },
+    "PLUP00078": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PUMP - PUMP SUREFLO  AQUAKING, 24V, 3.0GPM"
+    },
+    "PLUP00080": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "COUPLING - COUPLING - NYLON, FEMALE, 3/4"
+    },
+    "PLUP00081": {
+      "onHand": 3,
+      "available": 3,
+      "avgCost": 0,
+      "productDescription": "VALVE - VALVE - BALL, SS, 3/4"
+    },
+    "PLUP00082": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "ELBOW - 40MM HOSETAIL TO 11/2 FEMALE BSP"
+    },
+    "PLUP00083": {
+      "onHand": 19,
+      "available": 19,
+      "avgCost": 0,
+      "productDescription": "NYLON - 11/2  (40MM)  EQUAL ELBOW"
+    },
+    "PLUP00084": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "CAMLOCK - CAMLOCK  -  TYPE C-150 11/2 38-40mm"
+    },
+    "PLUP00085": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CAMLOCK - TYPE F-075, 3/4 20mm"
+    },
+    "PLUP00086": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "VALVE - BALL, 1/2, MALE TO FEMALE"
+    },
+    "PLUP00087": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "(DO NOT USE) CONNECTOR - Tap Adapter, 3/4"
+    },
+    "PLUP00090": {
+      "onHand": 4,
+      "available": 4,
+      "avgCost": 0,
+      "productDescription": "WASTE FITTING - WASTE&PLUG, 40MM S/STEEL"
+    },
+    "PLUP00091": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "BUSH - REDUCING, MALE, 3/8 TO 1/4"
+    },
+    "PLUP00092": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "QUICK CONNECTOR - STRAIGHT, 1/4 MALE TO 8MM"
+    },
+    "PLUP00093": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "COUPLING - 1/8 MALE TO 1/4 FEMALE"
+    },
+    "PLUP00094": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "QUICK CONNECTOR - INLINE, 12MM"
+    },
+    "PLUP00095": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "QUICK CONNECTOR - ELBOW, 1/4 TO 6MM MALE"
+    },
+    "PLUP00096": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "QUICK CONNECTOR - ELBOW, 1/8 TO 6MM MALE"
+    },
+    "PLUP00099": {
+      "onHand": 15,
+      "available": 15,
+      "avgCost": 0,
+      "productDescription": "Tap Adaptor - 3/4"
+    },
+    "PLUP00100": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PIPE - PIPE GARDEN HOSE, 12MM X 20M"
+    },
+    "PLUP00104": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TANK - WATER, 120L"
+    },
+    "PLUP00112": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "P-TRAP"
+    },
+    "PLUP00116": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TAP - PILLARTAP IN TOILET"
+    },
+    "PLUP00119": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "BOTTLE TRAP - BOTTLE TRAP 40MM"
+    },
+    "PLUP00121": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "QUICK CONNECTOR - REDUCER, 8MM TO 6MM"
+    },
+    "PLUP00122": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "QUICK CONNECTOR - INLINE, 10MM"
+    },
+    "PLUP00123": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "QUICK CONNECTOR - INLINE, 8MM"
+    },
+    "PLUP00124": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "QUICK CONNECTOR - REDUCER, 6MM TO 4MM"
+    },
+    "PLUP00125": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "ELBOW - EQUAL, NYLON, 15MM"
+    },
+    "PLUP00126": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "ELBOW - EQUAL, NYLON, 10MM"
+    },
+    "PLUP00127": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TEE - EQUAL, NYLON, 10MM"
+    },
+    "PLUP00128": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "ELBOW - 25MM HOSETAIL  TO 1 BSPF, NYLON"
+    },
+    "PLUP00129": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TEE - EQUAL, NYLON, 25MM"
+    },
+    "PLUP00130": {
+      "onHand": 10,
+      "available": 10,
+      "avgCost": 0,
+      "productDescription": "CONNECTOR - COMB, NYLON, 20MM X 1"
+    },
+    "PLUP00131": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TAP - TAP Economy T-Style Faucet"
+    },
+    "PLUP00132": {
+      "onHand": 102,
+      "available": 102,
+      "avgCost": 0,
+      "productDescription": "PIPE - PIPE NYLON, 6MM OD"
+    },
+    "PLUP00134": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "REDUCER - PLASTIC, 1/2 TO 1/4, MALE"
+    },
+    "PLUP00138": {
+      "onHand": 11,
+      "available": 11,
+      "avgCost": 0,
+      "productDescription": "PIPE - PIPE NYLON, 8MM OD"
+    },
+    "PLUP00140": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "COUPLING - STRAIGHT, NYLON, 15MM  (MB102)"
+    },
+    "PLUP00142": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PIPE - PIPE WATER HOSE, REINFORCED, 12MM, Clear"
+    },
+    "PLUP00147": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TEE - FEMALE, 1/8"
+    },
+    "PLUP00149": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "COUPLING - 1/8 MALE TO 6MM HOSETAIL"
+    },
+    "PLUP00156": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TANK FITTING - 38MM"
+    },
+    "PLUP00157": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TANK FITTING - 13MM"
+    },
+    "PLUP00158": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "HOSE CONNECTOR - SYNTHETIC"
+    },
+    "PLUP00159": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "QUICK CONNECTOR - T-PIECE, 4MM"
+    },
+    "PLUP00164": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TUBE - 8MM OD, 5MM ID, CLEAR"
+    },
+    "PLUP00168": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TUBE - TUBE 8MM, CLEAR"
+    },
+    "PLUP00169": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "TAP - ELBOW, MEDICAL WALL TYPE"
+    },
+    "PLUP00170": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Tap - Medical Pillar Tap (Cold)"
+    },
+    "PLUP00176": {
+      "onHand": 16.6,
+      "available": 16.6,
+      "avgCost": 0,
+      "productDescription": "PIPE - PIPE WATER HOSE, REINFORCED, 25MM, Clear"
+    },
+    "PLUP00177": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "STRAINER - Water System Strainer Shurflo"
+    },
+    "PLUP00178": {
+      "onHand": 751,
+      "available": 751,
+      "avgCost": 0,
+      "productDescription": "COLLET CLIPS - COLLET CLIPS"
+    },
+    "PLUP00180": {
+      "onHand": 406,
+      "available": 406,
+      "avgCost": 0,
+      "productDescription": "JOHN GUEST - PIPE CLIPS, BRACKET, SADDLE"
+    },
+    "PLUP00191": {
+      "onHand": 40,
+      "available": 40,
+      "avgCost": 0,
+      "productDescription": "HATCH KIT - WATER TANK"
+    },
+    "PLUP00212": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "OUTLET - Wall, Fixfit E, without non-return valve"
+    },
+    "PLUP00242": {
+      "onHand": 108,
+      "available": 108,
+      "avgCost": 0,
+      "productDescription": "PIPE - PIPE 32MM, UPVC, CLASS 12"
+    },
+    "PLUP00243": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PIPE - 40MM, UPVC, CLASS 16"
+    },
+    "PLUP00255": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "ADAPTOR - ADAPTOR HOSE, 25MM X 1 PLAIN"
+    },
+    "PLUP00256": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "VALVE - DOMETIC TOILET DISCHARGE TUBE"
+    },
+    "PLUP00257": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "VALVE - 1-1/2 DOMETIC TOILET CHECK VALVE"
+    },
+    "PLUP00258": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "ADAPTER - DOMETIC TOILET 1-1/2 VALVE ADAPTER"
+    },
+    "PLUP00260": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PIPE CLIP - 40mm Waste"
+    },
+    "PLUP00261": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Toilet - Marine Toilet, 24V (Including Switches)"
+    },
+    "PLUP00262": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Toilet - Wall Switch TMWBS"
+    },
+    "PLUP00263": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TAP - Elbow Mixer"
+    },
+    "PLUP00264": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TANK -WATER, 75L"
+    },
+    "PLUP00265": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PUMP - PUMP SUREFLO AQUAKING, 24V, 4.0GPM"
+    },
+    "PLUP00266": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TOILET - Casette Toilet CTS 4110"
+    },
+    "PLUP00267": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "GAUGE - Waste Tank Level"
+    },
+    "PLUP00268": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "WASTE TANK - 120L, 24V incl. Pump and Sensor"
+    },
+    "PLUP00269": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CONNECTION - Waste Hose, 38mm bent for rigid tanks"
+    },
+    "PLUP00270": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "FILTER - Ecosoft Single Housing 3/4"
+    },
+    "PLUP00271": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "PUMP - Black Water, 24V"
+    },
+    "PLUP00272": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PIPE - Black Water Tank Extraction, 780mm, 1 1/2 Hose Nipple"
+    },
+    "PLUP00273": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "BLACK WATER - Tank Connection Kit"
+    },
+    "PLUP00274": {
+      "onHand": 2,
+      "available": 2,
+      "avgCost": 0,
+      "productDescription": "SENSOR - Waste Water Level (Black Water)"
+    },
+    "PLUP00275": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TOILET - Toilet - Marine Toilet, 12V (Including Switches)"
+    },
+    "PLUP00276": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PVC - Straight Connector (Socket), 40mm"
+    },
+    "PLUP00277": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "LICK BATH WASTE - 40mm"
+    },
+    "PLUP00278": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "HOSE - Reinforced, 25mm, Clear"
+    },
+    "PLUP00279": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "HOSE - Reinforced, 20mm, Clear"
+    },
+    "PLUP00280": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PUMP - Macerator Pump, 12V"
+    },
+    "PLUP00281": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PUMP - Fresh Water, 12V, 5.5GPM (Including Accumulator)"
+    },
+    "PLUP00282": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SOLENOID - Latching, DC"
+    },
+    "PLUP00283": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Valve - Globe F/C, 25mm"
+    },
+    "PLUP00284": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "BUSH - Reducing, 25mm to 15mm (1 to 1/2)"
+    },
+    "PLUP00285": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PUMP - Water, Self Priming, 12V, 3gpm"
+    },
+    "PLUP00286": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "FLEXI HOSE - 1/2 Male to 1/2 Male, 1 Metre"
+    },
+    "PLUP00287": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "REDUCER - Nylon, 40mm x 25mm"
+    },
+    "PLUP00288": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "ELBOW - Nylon, 20mm x 3/4 BSP"
+    },
+    "PLUP00289": {
+      "onHand": 11,
+      "available": 11,
+      "avgCost": 0,
+      "productDescription": "CONNECTOR - Garden Hose Connector, 19mm (3/4)"
+    },
+    "PLUP00290": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TOILET - Elbow, Inlet (Vetus TWM Toilets"
+    },
+    "PLUP00291": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PUMP - Macerator Pump - 24V, including Inlet Elbow (for Vetus TMW24Q Toilet)"
+    },
+    "PLUP00292": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PUMP - Macerator Pump - 24V, including Inlet Elbow (for Vetus TMWB124 Toilet)"
+    },
+    "PLUP00293": {
+      "onHand": 72,
+      "available": 72,
+      "avgCost": 0,
+      "productDescription": "GAUGE - Water Tank Level. ISSUE with PLUP00294"
+    },
+    "PLUP00294": {
+      "onHand": 71,
+      "available": 71,
+      "avgCost": 0,
+      "productDescription": "SENSOR - Fresh Water Level (320mm) ISSUE with PLUP00293"
+    },
+    "PLUP00295": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SENSOR - Waste Water Arm"
+    },
+    "PLUP00296": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "FITTING - Stainless Steel BSP Fitting - 90° Elbows BSP screwed female parallel thread - 32mm NB / 1 1/4"
+    },
+    "PLUP00297": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "VALVE - Stainless Steel BSP Ball Valve - 32mm / 1 1/4''"
+    },
+    "PLUP00298": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "VALVE - Stainless Steel BSP Ball Valve - 40mm / 1 1/2''"
+    },
+    "PLUP00299": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "FITTING - Stainless Steel BSP Fitting - 90° Elbows BSP screwed female parallel thread - 25mm NB / 1"
+    },
+    "PLUP00300": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PLUG - Square head plug BSP screwed male taper thread - 25mm NB / 1"
+    },
+    "PLUP00301": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PLUG - Square head plug BSP screwed male taper thread - 32mm NB / 1 1/4"
+    },
+    "PLUP00302": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Union Plain/Female uPVC 32 x 1"
+    },
+    "PLUP00303": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Union Plain/Female uPVC 40 x 1 1/4"
+    },
+    "PLUP00304": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "90° Elbow Plain/Female uPVC 32 x 1"
+    },
+    "PLUP00305": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "90° Elbow Plain/Female uPVC 40 x 1 1/4"
+    },
+    "PLUP00306": {
+      "onHand": 2,
+      "available": 2,
+      "avgCost": 0,
+      "productDescription": "Union Plain uPVC 32"
+    },
+    "PLUP00307": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Union Plain uPVC 40"
+    },
+    "PLUP00308": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Cap Plain uPVC 32"
+    },
+    "PLUP00309": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Cap Plain uPVC 40"
+    },
+    "PLUP00310": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "90° Elbow Plain uPVC 32"
+    },
+    "PLUP00311": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "90° Elbow Plain uPVC 40"
+    },
+    "PLUP00312": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "45° Elbow Plain uPVC 32"
+    },
+    "PLUP00313": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "45° Elbow Plain uPVC 40"
+    },
+    "PLUP00314": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "90° Tee Plain uPVC 32"
+    },
+    "PLUP00315": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "90° Tee Plain uPVC 40"
+    },
+    "PLUP00316": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Socket Plain uPVC 32"
+    },
+    "PLUP00317": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Socket Plain uPVC 40"
+    },
+    "PLUP00318": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "Socket Plain/Female uPVC 32"
+    },
+    "PLUP00319": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Socket Plain/Female uPVC 40"
+    },
+    "PLUP00320": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Pipe Support Clips With Retaining Bracket PP - 40"
+    },
+    "PLUP00321": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Pipe Support Clips Without Retaining Bracket PP - 32"
+    },
+    "PLUP00322": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Adaptor with Female Thread - 32 x 3/4"
+    },
+    "PLUP00323": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Adaptor with Female Thread - 32 x 3/4"
+    },
+    "PLUP00324": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Adaptor with Female Thread - 40 x 1"
+    },
+    "PLUP00325": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Adaptor with Female Thread - 40 x 1 1/4"
+    },
+    "PLUP00326": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CAMLOCK - Type F - 1 1/4 32mm"
+    },
+    "PLUP00327": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CAMLOCK - Type C - 1 1/4 32mm"
+    },
+    "PLUP00328": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PUMP - 220V, 0.75kW, 5 - 70 L/min (Pedrollo - JSWm 2CX)"
+    },
+    "PLUP00329": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PUMP - Controller, 10Bar Automatic Pressure Switch (DSK)"
+    },
+    "PLUP00330": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SOCKET - 32mm 1 1/4'' 316 BSP Socket #H16"
+    },
+    "PLUP00331": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "NIPPLE - Hose Nipple, Nominal Bore 15mm (1/2)"
+    },
+    "PLUP00332": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SOCKET - Female Parallel, BSP - 15mm (1/2)"
+    },
+    "PLUP00333": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "NIPPLE - Barrel Nipple, Nominal Bore 15mm (1/2)"
+    },
+    "PLUP00334": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "ADAPTOR - PVC, BSP Thread (Male), 25mm x 32mm by 1"
+    },
+    "PLUP00335": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "ADAPTOR - PVC, BSP Thread (Male), 32mm x 40mm by 1"
+    },
+    "PLUP00336": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "ADAPTOR - PVC, BSP Thread (Male), 32mm x40mm by 1 1/4"
+    },
+    "PLUP00337": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "FITTING - PVC, 90deg Long Bend - 25mm"
+    },
+    "PLUP00338": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "FITTING - PVC, 90deg Reducing Tee, 50 x 25mm"
+    },
+    "PLUP00339": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "FITTING - PVC, 90deg, Tee Piece - 50mm"
+    },
+    "PLUP00340": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "FITTING - PVC, Union - 25mm"
+    },
+    "PLUP00341": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "BALL VALVE - PVC, Double Union - 25mm"
+    },
+    "PLUP00342": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PIPE - PVC, 25mm"
+    },
+    "PLUP00343": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PIPE - PVC, 50mm"
+    },
+    "PLUP00344": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "FITTING - PVC, Adaptor, Female Thread - 25 x 3/4"
+    },
+    "PLUP00345": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "FITTING - PVC, Adaptor, Male Thread - 25x32x3/4"
+    },
+    "PLUP00346": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "FITTING - PVC, End Cap - 50mm"
+    },
+    "PLUP00347": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "FITTING - PVC, Adaptor, Male Thread - 20x25x3/4"
+    },
+    "PLUP00348": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "FITTING - PVC, Pipe Support Clip - 25mm"
+    },
+    "PLUP00349": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "FITTING - PVC, Pipe Support Clips, 50mm"
+    },
+    "PLUP00350": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "FITTING - PVC, Hose Adaptor, Plain - 25mm"
+    },
+    "PLUP00351": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "FITTING - PVC, Hose Adaptor, Plain - 40mm"
+    },
+    "PLUP00352": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "FITTING - PVC, Reducing Tee, 90deg, Plain - 50x40mm"
+    },
+    "PLUP00353": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PUMP - Black Water, 12V"
+    },
+    "PLUP00354": {
+      "onHand": 51,
+      "available": 51,
+      "avgCost": 0,
+      "productDescription": "PUMP - Black Water, Macerator Pump, 24V (12GPM, 6A Max)"
+    },
+    "PLUP00355": {
+      "onHand": 31,
+      "available": 31,
+      "avgCost": 0,
+      "productDescription": "PUMP - Fresh Water Pump, 24V, 5GPM, 4.2BAR, 8A max,"
+    },
+    "PLUP00356": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "CONNECTOR - Garden Hose Connector, 13mm (1/2)"
+    },
+    "PLUP00357": {
+      "onHand": 1,
+      "available": 1,
+      "avgCost": 0,
+      "productDescription": "VALVE - Ball Valve, 40mm, Stainless Steel"
+    },
+    "PLUP00358": {
+      "onHand": 8,
+      "available": 8,
+      "avgCost": 0,
+      "productDescription": "NIPPLE - Running Nipple, 11/2 (40mm) BSP Thread"
+    },
+    "PLUP00359": {
+      "onHand": 2,
+      "available": 2,
+      "avgCost": 0,
+      "productDescription": "FILTER - Filter Sock, 100 Micron, Small (4 - 10 x 30cm) - For Lens Cutting tank"
+    },
+    "PLUP00360": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "HOSE CLAMP - Wire Spring Hose Clamp, 4"
+    },
+    "PLUP00361": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "HATCH Kit - Deck Hatch, 370 x 375mm"
+    },
+    "PLUP00362": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SINK - Double Wash Up Sink"
+    },
+    "PLUP00363": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SINK - Single, Wash Sink with Drip Tray"
+    },
+    "PLUP00364": {
+      "onHand": 10,
+      "available": 10,
+      "avgCost": 0,
+      "productDescription": "BREATHER - Tank Breather Screw, M12, Plastic, Black"
+    },
+    "PLUP00365": {
+      "onHand": 4,
+      "available": 4,
+      "avgCost": 0,
+      "productDescription": "SENSOR - Water Level Sensor, 250mm"
+    },
+    "PLUP00366": {
+      "onHand": 12,
+      "available": 12,
+      "avgCost": 0,
+      "productDescription": "Reducing Socket - 3/4 to 1/2"
+    },
+    "PLUP00367": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Coupling - Reducing Hose Tails, 40mm to 25mm Reducer"
+    },
+    "PLUP00368": {
+      "onHand": 3,
+      "available": 3,
+      "avgCost": 0,
+      "productDescription": "BUSH - Reducing, Galvanised Steel, 80mm to 65mm"
+    },
+    "PLUP00369": {
+      "onHand": 3,
+      "available": 3,
+      "avgCost": 0,
+      "productDescription": "ADAPTOR - Hosetail, Nylon, 65mm Female Thread"
+    },
+    "PLUP00370": {
+      "onHand": 3,
+      "available": 3,
+      "avgCost": 0,
+      "productDescription": "ADAPTOR - PVC Nipple, 100mm Pipe to 90mm Thread"
+    },
+    "PLUP00371": {
+      "onHand": 3,
+      "available": 3,
+      "avgCost": 0,
+      "productDescription": "SOCKET - PVC, Female to Female, 80mm Thread"
+    },
+    "PLUP00372": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "ADAPTOR - PVC Hose Adaptor, 32 x 1, Male"
+    },
+    "PLUP00373": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "REDUCER - PVC Reducer, Female to Male, 3/4 x 1/2"
+    },
+    "PLUP00374": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "QUICK CONNECTOR - Tee Piece, 8mm"
+    },
+    "PLUP00375": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TANK - 40L Water Tank"
+    },
+    "PLUP00376": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "TEE - NYLON - 10mm Tee Piece, Black"
+    },
+    "PLUP00377": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "ELBOW - NYLOC - 13mm 90deg Elbow, Black"
+    },
+    "PLUP00378": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "BUSH - NYLON - 1 to 3/4 (25mm to 20mm)"
+    },
+    "PLUP00379": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "NIPPLE - Reducer - 3/4 BSP to 13mm Hosetail"
+    },
+    "PLUP00380": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Tank - Water, 60L (840L x 360W x 225H mm)"
+    },
+    "PLUP00381": {
+      "onHand": 26,
+      "available": 26,
+      "avgCost": 0,
+      "productDescription": "TANK FITTING - 90 Degree Elbow, Tank Fitting, 40mm, PVC socket"
+    },
+    "PLUP00382": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Marine Toilet - 220V Macerator, Solenoid Toilet- Incl Switches"
+    },
+    "PLUP00383": {
+      "onHand": 61,
+      "available": 61,
+      "avgCost": 0,
+      "productDescription": "PIPE - John Guest, 15mm (Blue), LLDPE Tube, Fresh Water,"
+    },
+    "PLUP00384": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "PUMP - Fresh Water Pump, Self Priming, 220V AC, 5.0 GPM"
+    },
+    "PLUP00385": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Switch - Electrical Toilet Switch - 12 - 24 V"
+    },
+    "PLUP00386": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "REDUCER - Hosetail, 40 to 25mm"
+    },
+    "SOLA00001": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "Solar Installation - 8m Truck"
+    },
+    "SOLA00002": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SOLAR - Solar Panel Assembly (8m Truck)"
+    },
+    "SOLA00003": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SOLAR - Solar Panel Assembly - Wiring, Terminals and Connectors (8m Truck)"
+    },
+    "SOLA00004": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SOLAR - Solar Panel Assembly - Consumables (8m Truck)"
+    },
+    "SOLA00005": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SOLAR - Batteries Assembly (8m Truck)"
+    },
+    "SOLA00006": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SOLAR - Batteries Assembly - Battery Frame Rack Mount (8m Truck)"
+    },
+    "SOLA00007": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SOLAR - Inverter Panel Assembly (8m Truck)"
+    },
+    "SOLA00008": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SOLAR - Solar Panel Assembly - Panels, Frames & Fastener (8m Truck)"
+    },
+    "SOLA00009": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SOLAR - Batteries Assembly - Batteries, Battery Frames and Consumables (8m Truck)"
+    },
+    "SOLA00010": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SOLAR - Batteries Assembly - Wiring, Terminals & Connectors (8m Truck)"
+    },
+    "SOLA00011": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SOLAR - Inverter Panel Assembly - Inverter, Bracket & Riot (8m Truck)"
+    },
+    "SOLA00012": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SOLAR - Inverter Panel Assembly - Wiring, Connectors & Fasteners (8m Truck)"
+    },
+    "SOLA00013": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SOLAR - Inverter Panel Assembly - Consumables (8m Truck)"
+    },
+    "SOLA00014": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SOLAR - Panel Assembly - 12.5m Bus - Installation"
+    },
+    "SOLA00015": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SOLAR - Battery Assembly - 12.5m Bus - Installation"
+    },
+    "SOLA00016": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SOLAR - Inverter Assembly - 12.5m Bus - Installation"
+    },
+    "SOLA00017": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SOLAR - Air Conditioner Conversion Assembly (Roof Mount to Underbench)"
+    },
+    "SOLA00018": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SOLAR - Electrical and Rewiring - 12.5m Bus (Solar Conversion)"
+    },
+    "SOLA00019": {
+      "onHand": 0,
+      "available": 0,
+      "avgCost": 0,
+      "productDescription": "SOLAR - Consumables - 12.5m Bus (Solar Conversion)"
+    }
+  }
+}
