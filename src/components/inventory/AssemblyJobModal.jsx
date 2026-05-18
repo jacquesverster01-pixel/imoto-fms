@@ -1,8 +1,28 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { apiFetch } from '../../hooks/useApi';
 
 function fmtZAR(n) {
   return 'R ' + (n || 0).toLocaleString('en-ZA', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+function getOnHand(stockMap, code) {
+  return Object.prototype.hasOwnProperty.call(stockMap, code) ? stockMap[code] : null;
+}
+
+function calcSummary(components, stockMap) {
+  let totalCost = 0;
+  let procureCost = 0;
+  let shortCount = 0;
+  for (const c of components) {
+    totalCost += c.totalCost ?? 0;
+    const onHand = getOnHand(stockMap, c.componentCode);
+    if (onHand !== null && onHand < c.qty) {
+      const needed = c.qty - onHand;
+      procureCost += needed * (c.unitCost ?? 0);
+      shortCount++;
+    }
+  }
+  return { totalCost, procureCost, shortCount };
 }
 
 export default function AssemblyJobModal({ item, components, onClose, onCreated }) {
@@ -10,6 +30,27 @@ export default function AssemblyJobModal({ item, components, onClose, onCreated 
   const [dueDate, setDueDate] = useState('');
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState(null);
+  const [stockMap, setStockMap] = useState({});
+  const [nameMap, setNameMap] = useState({});
+  const [loadingStock, setLoadingStock] = useState(true);
+
+  useEffect(() => {
+    apiFetch('/stock')
+      .then(items => {
+        const qtyMap = {};
+        const nMap = {};
+        for (const s of (Array.isArray(items) ? items : [])) {
+          if (s.code != null) {
+            qtyMap[s.code] = s.qty ?? 0;
+            nMap[s.code] = s.name || '';
+          }
+        }
+        setStockMap(qtyMap);
+        setNameMap(nMap);
+      })
+      .catch(() => {})
+      .finally(() => setLoadingStock(false));
+  }, []);
 
   async function handleCreate() {
     if (!jobName.trim()) { setError('Job name is required'); return; }
@@ -51,6 +92,8 @@ export default function AssemblyJobModal({ item, components, onClose, onCreated 
     }
   }
 
+  const { totalCost, procureCost, shortCount } = calcSummary(components, stockMap);
+
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
       <div className="bg-white rounded-xl shadow-xl w-full max-w-lg mx-4 flex flex-col max-h-[90vh]">
@@ -88,23 +131,55 @@ export default function AssemblyJobModal({ item, components, onClose, onCreated 
                   <thead className="bg-gray-50 sticky top-0">
                     <tr>
                       <th className="text-left px-3 py-2 font-medium text-gray-600">Code</th>
+                      <th className="text-left px-3 py-2 font-medium text-gray-600">Description</th>
                       <th className="text-right px-3 py-2 font-medium text-gray-600">Qty</th>
+                      <th className="text-right px-3 py-2 font-medium text-gray-600">On Hand</th>
                       <th className="text-right px-3 py-2 font-medium text-gray-600">Unit Cost</th>
                       <th className="text-right px-3 py-2 font-medium text-gray-600">Total</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-100">
-                    {components.map((c, i) => (
-                      <tr key={i} className="hover:bg-gray-50">
-                        <td className="px-3 py-1.5 font-mono text-gray-700">{c.componentCode}</td>
-                        <td className="px-3 py-1.5 text-right text-gray-600">{c.qty}</td>
-                        <td className="px-3 py-1.5 text-right text-gray-500">{fmtZAR(c.unitCost)}</td>
-                        <td className="px-3 py-1.5 text-right text-gray-700 font-medium">{fmtZAR(c.totalCost)}</td>
-                      </tr>
-                    ))}
+                    {components.map((c, i) => {
+                      const onHand = getOnHand(stockMap, c.componentCode);
+                      const isShort = onHand !== null && onHand < c.qty;
+                      return (
+                        <tr key={i} className={isShort ? 'bg-amber-50' : 'hover:bg-gray-50'}>
+                          <td className="px-3 py-1.5 font-mono text-gray-700">{c.componentCode}</td>
+                          <td className="px-3 py-1.5 text-gray-600 truncate max-w-[200px]" title={nameMap[c.componentCode] || ''}>
+                            {nameMap[c.componentCode] || <span className="text-gray-300">—</span>}
+                          </td>
+                          <td className="px-3 py-1.5 text-right text-gray-600">{c.qty}</td>
+                          <td className="px-3 py-1.5 text-right">
+                            {loadingStock
+                              ? <span className="text-gray-300">…</span>
+                              : onHand === null
+                                ? <span className="text-gray-400">—</span>
+                                : isShort
+                                  ? <span className="text-amber-600 font-medium">⚠ {onHand}</span>
+                                  : <span className="text-green-600 font-medium">{onHand}</span>
+                            }
+                          </td>
+                          <td className="px-3 py-1.5 text-right text-gray-500">{fmtZAR(c.unitCost)}</td>
+                          <td className="px-3 py-1.5 text-right text-gray-700 font-medium">{fmtZAR(c.totalCost)}</td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>
+            </div>
+
+            <div className="mt-2 border-t border-gray-200 pt-2 space-y-1">
+              <div className="flex justify-between text-xs">
+                <span className="text-gray-500">Total BOM cost</span>
+                <span className="font-semibold text-gray-800">{fmtZAR(totalCost)}</span>
+              </div>
+              {shortCount > 0 && (
+                <div className="flex justify-between text-xs">
+                  <span className="text-gray-500">Items to procure</span>
+                  <span className="text-amber-700 font-semibold">{shortCount} item{shortCount > 1 ? 's' : ''}  {fmtZAR(procureCost)}</span>
+                </div>
+              )}
             </div>
           </div>
 
