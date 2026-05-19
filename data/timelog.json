@@ -25572,5 +25572,35 @@
     "dept": "",
     "type": "in",
     "id": "TL1779188699612"
+  },
+  {
+    "id": "TL1779188956962_08ez",
+    "employeeId": "E012",
+    "name": "Nelson Nhlahle",
+    "dept": "",
+    "type": "in",
+    "timestamp": "2026-05-19T04:58:52.000Z",
+    "source": "biometric",
+    "zkUserId": "109077097"
+  },
+  {
+    "id": "TL1779188956962_2825",
+    "employeeId": "E012",
+    "name": "Nelson Nhlahle",
+    "dept": "",
+    "type": "out",
+    "timestamp": "2026-05-19T05:44:02.000Z",
+    "source": "biometric",
+    "zkUserId": "109077097"
+  },
+  {
+    "id": "TL1779188956962_tgly",
+    "employeeId": "E012",
+    "name": "Nelson Nhlahle",
+    "dept": "",
+    "type": "in",
+    "timestamp": "2026-05-19T09:48:42.000Z",
+    "source": "biometric",
+    "zkUserId": "109077097"
   }
 ]
