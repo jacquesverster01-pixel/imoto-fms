@@ -27,6 +27,52 @@ export default function timelogRouter(readData, writeData) {
     } catch (err) { res.status(500).json({ error: err.message }) }
   })
 
+  router.post('/timelog/backfill-clockouts', (req, res) => {
+    try {
+      const timelog = readData('timelog.json')
+      const settings = readData('settings.json')
+      const clockOutTime = settings?.autoClockOut?.clockOutTime || '16:00'
+
+      const nowSast = new Date(Date.now() + 2 * 60 * 60 * 1000)
+      const todaySast = nowSast.toISOString().slice(0, 10)
+
+      const groups = {}
+      timelog.forEach(e => {
+        const sastDate = new Date(new Date(e.timestamp).getTime() + 2 * 60 * 60 * 1000)
+          .toISOString().slice(0, 10)
+        const key = `${e.employeeId}|${sastDate}`
+        if (!groups[key]) groups[key] = { employeeId: e.employeeId, name: e.name, dept: e.dept, dateStr: sastDate, entries: [] }
+        groups[key].entries.push(e)
+      })
+
+      const toAdd = []
+      let skipped = 0
+
+      Object.values(groups).forEach(({ employeeId, name, dept, dateStr, entries }) => {
+        if (dateStr >= todaySast) return
+        const sorted = [...entries].sort((a, b) => (a.timestamp < b.timestamp ? -1 : 1))
+        if (sorted[sorted.length - 1].type !== 'in') return
+        const clockOutUtc = new Date(`${dateStr}T${clockOutTime}:00.000+02:00`)
+        const lastIn = sorted[sorted.length - 1].timestamp
+        if (clockOutUtc.toISOString() <= lastIn) { skipped++; return }
+        toAdd.push({
+          id: `BF${Date.now()}_${employeeId}_${dateStr}`,
+          employeeId, name, dept,
+          type: 'out',
+          source: 'backfill',
+          timestamp: clockOutUtc.toISOString()
+        })
+      })
+
+      if (toAdd.length > 0) {
+        toAdd.forEach(e => timelog.push(e))
+        writeData('timelog.json', timelog)
+      }
+
+      res.json({ fixed: toAdd.length, skipped })
+    } catch (err) { res.status(500).json({ error: err.message }) }
+  })
+
   router.put('/timelog', (req, res) => {
     // Bulk update — accepts an array of { id, timestamp }
     try {

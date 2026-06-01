@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import express from 'express'
 import cors from 'cors'
 import fs from 'fs'
@@ -255,4 +256,5 @@ app.use((err, req, res, _next) => {
 
 app.listen(PORT, () => {
   console.log(`iMoto FMS API running on http://localhost:${PORT}`)
+  console.log('Unleashed ID loaded:', !!process.env.UNLEASHED_API_ID)
 })

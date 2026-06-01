@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react'
-import { useGet } from '../../hooks/useApi'
+import { useGet, apiFetch } from '../../hooks/useApi'
 import { daysAgoStr, isoToHHMM, dateLabel, calcHours } from '../../utils/time'
 import { styles } from '../../utils/hrStyles'
 import EditShiftModal from './EditShiftModal'
@@ -119,8 +119,27 @@ export default function TimeLogTab({ employees }) {
   const [editShift, setEditShift] = useState(null)
   const [showExport, setShowExport] = useState(false)
   const [showDelete, setShowDelete] = useState(false)
+  const [showBackfillConfirm, setShowBackfillConfirm] = useState(false)
+  const [backfillMsg, setBackfillMsg] = useState(null)
+  const [backfillLoading, setBackfillLoading] = useState(false)
   const { data: settingsData } = useGet('/settings')
   const otTiers = (settingsData?.overtime?.tiers || []).sort((a, b) => a.hoursOver - b.hoursOver)
+  const clockOutTime = settingsData?.autoClockOut?.clockOutTime || '16:00'
+
+  async function handleBackfill() {
+    setBackfillLoading(true)
+    try {
+      const result = await apiFetch('/timelog/backfill-clockouts', { method: 'POST' })
+      setBackfillMsg(`Backfill complete — ${result.fixed} entries added.${result.skipped ? ` (${result.skipped} day${result.skipped > 1 ? 's' : ''} skipped — clock-out time before clock-in)` : ''}`)
+      setShowBackfillConfirm(false)
+      refreshTimelog()
+    } catch (err) {
+      setBackfillMsg(`Error: ${err.message}`)
+      setShowBackfillConfirm(false)
+    } finally {
+      setBackfillLoading(false)
+    }
+  }
 
   const allShifts = useMemo(() => buildShifts(timelog), [timelog])
 
@@ -235,10 +254,42 @@ export default function TimeLogTab({ employees }) {
         </div>
 
         <div style={{ display: 'flex', gap: 8, marginLeft: 'auto' }}>
+          <button
+            style={styles.btnSecondary}
+            onClick={() => { setShowBackfillConfirm(true); setBackfillMsg(null) }}
+          >
+            Backfill Clock-outs
+          </button>
           <button style={styles.btnSecondary} onClick={() => setShowExport(true)}>Export CSV</button>
           <button style={{ ...styles.btnSecondary, color: '#ef4444', borderColor: '#fca5a5' }} onClick={() => setShowDelete(true)}>Delete Range</button>
         </div>
       </div>
+
+      {showBackfillConfirm && (
+        <div style={{ background: '#fff8e1', border: '1px solid #fcd34d', borderRadius: 8, padding: '10px 14px', marginBottom: 12, fontSize: 13, display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
+          <span>This will add a {clockOutTime} clock-out for all past days where an employee clocked in but never clocked out. Continue?</span>
+          <button
+            style={{ ...styles.btnSmall, background: '#6c63ff', color: '#fff' }}
+            disabled={backfillLoading}
+            onClick={handleBackfill}
+          >
+            {backfillLoading ? 'Working…' : 'Confirm'}
+          </button>
+          <button
+            style={{ ...styles.btnSmall, background: '#f0f2f5', color: '#555' }}
+            onClick={() => setShowBackfillConfirm(false)}
+          >
+            Cancel
+          </button>
+        </div>
+      )}
+
+      {backfillMsg && (
+        <div style={{ background: '#dcfce7', border: '1px solid #86efac', borderRadius: 8, padding: '10px 14px', marginBottom: 12, fontSize: 13, display: 'flex', alignItems: 'center', gap: 10 }}>
+          <span>{backfillMsg}</span>
+          <button style={{ marginLeft: 'auto', background: 'none', border: 'none', color: '#555', fontSize: 16, padding: '0 4px', cursor: 'pointer' }} onClick={() => setBackfillMsg(null)}>×</button>
+        </div>
+      )}
 
       <div style={{ display: 'flex', gap: 20, marginBottom: 16 }}>
         <div style={styles.statPill}>{filtered.length} shifts</div>

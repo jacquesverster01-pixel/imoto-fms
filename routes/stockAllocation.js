@@ -77,13 +77,14 @@ export async function refreshStockCache() {
   const now = new Date().toISOString()
   const byCode = {}
   for (const item of items) {
-    const code = item.Product?.ProductCode
+    const code = item.ProductCode
     if (!code) continue
-    const qty = item.AvailableQty ?? 0
-    if (byCode[code]) {
-      byCode[code].onHand += qty
-    } else {
-      byCode[code] = { onHand: qty, lastUpdated: now }
+    byCode[code] = {
+      onHand: item.QtyOnHand ?? 0,
+      available: item.AvailableQty ?? 0,
+      avgCost: item.AvgCost ?? null,
+      productDescription: item.ProductDescription ?? '',
+      lastUpdated: now
     }
   }
   const cache = { updatedAt: now, byCode }
