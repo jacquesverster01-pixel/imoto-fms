@@ -58,5 +58,17 @@
     "status": "approved",
     "id": "LV1778849386893",
     "createdAt": "2026-05-15T12:49:46.893Z"
+  },
+  {
+    "employeeId": "E023",
+    "type": "Annual",
+    "startDate": "2026-07-15",
+    "endDate": "2026-07-16",
+    "reason": "",
+    "employeeName": "Keegan McKay",
+    "days": 2,
+    "status": "approved",
+    "id": "LV1780311835870",
+    "createdAt": "2026-06-01T11:03:55.870Z"
   }
 ]

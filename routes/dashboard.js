@@ -1,5 +1,7 @@
 import { Router } from 'express'
 import { calcProductionStats } from '../lib/dashboardStats.js'
+import { computeJobPct } from '../src/utils/jobProgress.js'
+import { computeJobCost } from '../src/utils/costToComplete.js'
 
 function toHHMM(isoStr) {
   const sast = new Date(new Date(isoStr).getTime() + 2 * 60 * 60 * 1000)
@@ -118,12 +120,21 @@ export default function dashboardRouter(readData) {
 
       // ── JOBS summary (only what the dashboard card needs) ───
       // name/due align with the field names Dashboard.jsx reads.
-      const jobSummaries = activeJobs.map(j => ({
-        id:     j.id,
-        name:   j.title,
-        status: j.status,
-        due:    j.dueDate || j.due || null,
-      }))
+      let stockCache = { byCode: {} }
+      try { stockCache = readData('stock_cache.json') || { byCode: {} } } catch { /* no cache yet */ }
+
+      const jobSummaries = activeJobs.map(j => {
+        const cost = computeJobCost(j, stockCache)
+        return {
+          id:             j.id,
+          name:           j.title,
+          status:         j.status,
+          due:            j.dueDate || j.due || null,
+          pct:            computeJobPct(j),
+          costToComplete: cost.totalCost,
+          materialCost:   cost.materialCost,
+        }
+      })
 
       res.json({
         hr:                  { clockedInCount, lateArrivalCount, onLeaveToday, totalEmployees: employees.length },

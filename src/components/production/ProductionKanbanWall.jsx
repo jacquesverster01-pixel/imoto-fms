@@ -1,14 +1,13 @@
-import { groupTasks, checkDependency, flattenTasks, listMappedDepartments, colourForDepartment } from './kanbanUtils.js'
+import { getTaskDepartments, getDisplayStatus } from '../../utils/deptAllocation.js'
+import { checkDependency, colourForDepartment } from './kanbanUtils.js'
 import CompactKanbanCard from './CompactKanbanCard.jsx'
 
+// Three columns — qc dropped (no 'qc' kanbanStatus values exist in the data)
 const COLS = [
-  { key: 'todo',       label: 'To Do' },
-  { key: 'inprogress', label: 'In Progress' },
-  { key: 'qc',         label: 'QC' },
-  { key: 'done',       label: 'Done' },
+  { key: 'todo',        label: 'To Do' },
+  { key: 'in-progress', label: 'In Progress' },
+  { key: 'done',        label: 'Done' },
 ]
-
-const EMPTY_COLS = { todo: [], inprogress: [], qc: [], done: [] }
 
 const colHeaderStyle = {
   padding: '6px 8px',
@@ -27,34 +26,80 @@ const emptyStyle = {
   fontSize: 14,
 }
 
+// Recursive flatten — mirrors KanbanBoard's walk(). Must stay in sync with that function.
+function walkTasks(tasks, jobId, jobTitle, jobColour) {
+  const out = []
+  for (const t of tasks || []) {
+    out.push({ ...t, jobId, jobTitle, jobColour })
+    if (t.children?.length) out.push(...walkTasks(t.children, jobId, jobTitle, jobColour))
+  }
+  return out
+}
+
+function flattenAllJobs(jobs) {
+  if (!Array.isArray(jobs)) return []
+  return jobs.flatMap(job => walkTasks(job.tasks || [], job.id, job.title, job.colour))
+}
+
+// Build dept → { todo, in-progress, done } map using same logic as the board.
+// A task resolving to multiple departments appears in each (correct, not a bug).
+function buildWallMap(tasks, prefixMappings) {
+  const map = {}
+  for (const task of tasks) {
+    const depts = getTaskDepartments(task, prefixMappings)
+    const lanes = depts.length > 0 ? depts : ['Unassigned']
+    const status = getDisplayStatus(task)
+    for (const dept of lanes) {
+      if (!map[dept]) map[dept] = { todo: [], 'in-progress': [], done: [] }
+      map[dept][status].push(task)
+    }
+  }
+  return map
+}
+
 function getDeptColour(deptName, settingsData) {
   const match = settingsData?.departments?.find(d => d.name === deptName)
-  return match?.colour || colourForDepartment(deptName)
+  return match?.color || colourForDepartment(deptName)
 }
 
 export default function ProductionKanbanWall({ jobs, prefixMappings, assemblyPhases = [], settingsData }) {
-  if (!prefixMappings?.length) {
-    return (
-      <div style={emptyStyle}>
-        No departments configured. Set up code prefixes in Settings → Department Codes.
-      </div>
-    )
-  }
-
-  const allFlat = flattenTasks(jobs)
+  const allFlat = flattenAllJobs(jobs)
 
   if (!allFlat.length) {
     return <div style={emptyStyle}>No active jobs.</div>
   }
 
-  const groups = groupTasks(jobs, prefixMappings)
-  const departments = listMappedDepartments(prefixMappings)
+  const wallMap = buildWallMap(allFlat, prefixMappings)
+
+  // Row list: settings departments first, then any extra depts derived from tasks, then Unassigned
+  const settingsDeptNames = (settingsData?.departments || []).map(d => d.name)
+  const extraDepts = Object.keys(wallMap).filter(d => d !== 'Unassigned' && !settingsDeptNames.includes(d))
+  const deptRows = [
+    ...settingsDeptNames,
+    ...extraDepts,
+    ...(wallMap['Unassigned'] ? ['Unassigned'] : []),
+  ]
+
+  if (!deptRows.length) {
+    return (
+      <div style={emptyStyle}>
+        No departments configured. Set up departments in Settings.
+      </div>
+    )
+  }
+
+  // Pre-group flat tasks by jobId for checkDependency lookups
+  const tasksByJob = {}
+  for (const t of allFlat) {
+    if (!tasksByJob[t.jobId]) tasksByJob[t.jobId] = []
+    tasksByJob[t.jobId].push(t)
+  }
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-      {departments.map(dept => {
+      {deptRows.map(dept => {
         const deptColour = getDeptColour(dept, settingsData)
-        const deptGroup = groups[dept] || EMPTY_COLS
+        const deptGroup = wallMap[dept] || { todo: [], 'in-progress': [], done: [] }
         const totalCount = COLS.reduce((s, c) => s + (deptGroup[c.key]?.length || 0), 0)
 
         return (
@@ -84,8 +129,8 @@ export default function ProductionKanbanWall({ jobs, prefixMappings, assemblyPha
               <div style={{ fontSize: 11, color: '#9298c4' }}>{totalCount} tasks</div>
             </div>
 
-            {/* 4 columns */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', flex: 1, minWidth: 0 }}>
+            {/* 3 status columns */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', flex: 1, minWidth: 0 }}>
               {COLS.map((col, ci) => {
                 const tasks = deptGroup[col.key] || []
                 return (
@@ -100,7 +145,7 @@ export default function ProductionKanbanWall({ jobs, prefixMappings, assemblyPha
                     </div>
                     <div style={{ padding: '4px 6px', overflowY: 'auto', flex: 1, maxHeight: 280 }}>
                       {tasks.map(task => {
-                        const jobTasks = allFlat.filter(t => t.jobId === task.jobId)
+                        const jobTasks = tasksByJob[task.jobId] || []
                         const depStatus = checkDependency(task, jobTasks, assemblyPhases)
                         return (
                           <CompactKanbanCard

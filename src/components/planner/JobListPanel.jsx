@@ -120,7 +120,7 @@ export default function JobListPanel({ jobs, selectedJobId, onSelect, onNewJob, 
                 onMouseLeave={() => setHoveredCardId(null)}
                 style={{
                   width: '100%', textAlign: 'left', padding: '10px 12px',
-                  borderRadius: 8, border: 'none', cursor: 'pointer',
+                  borderRadius: 8, border: 'none', cursor: 'default',
                   marginBottom: 2, display: 'block', position: 'relative',
                   background: isActive ? '#ededff' : (isHovered ? '#f7f8fa' : 'transparent'),
                   borderLeft: `3px solid ${isActive ? '#6c63ff' : 'transparent'}`,

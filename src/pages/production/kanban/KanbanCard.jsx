@@ -36,7 +36,7 @@ const STATUS_ACTIVE_BG = {
   'done':        '#16a34a',
 }
 
-export default function KanbanCard({ task, isExpanded, onExpand, onStatusChange, isUpdating, stockCache, globalAllocations, stockCacheData }) {
+export default function KanbanCard({ task, isExpanded, onExpand, onStatusChange, onTaskPatch, onTaskAction, isUpdating, stockCache, globalAllocations, stockCacheData, departments }) {
   const borderColor = task.dueThisWeek ? '#f59e0b' : (task.jobColour || '#dbeafe')
   const bgColor = task.dueThisWeek ? '#fffbeb' : '#fff'
   const allocStatus = computeAllocStatus(task, stockCache, globalAllocations)
@@ -104,11 +104,13 @@ export default function KanbanCard({ task, isExpanded, onExpand, onStatusChange,
       {isExpanded && (
         <KanbanCardDetail
           task={task}
-          onStatusChange={onStatusChange}
+          onTaskPatch={onTaskPatch}
+          onTaskAction={onTaskAction}
           isUpdating={isUpdating}
           stockCache={stockCache}
           globalAllocations={globalAllocations}
           stockCacheData={stockCacheData}
+          departments={departments}
         />
       )}
     </div>

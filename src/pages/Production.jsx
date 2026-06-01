@@ -1,18 +1,10 @@
 import { useState, useEffect } from 'react'
 import { useGet } from '../hooks/useApi'
 import { fmtHHMMSS } from '../utils/time'
-import ProductionGantt from './production/ProductionGantt.jsx'
 import ProductionKanbanWall from '../components/production/ProductionKanbanWall.jsx'
 import { computeJobPct } from '../utils/jobProgress.js'
 
-const btnBase = {
-  padding: '6px 16px', borderRadius: 6, fontSize: 13, fontWeight: 600, cursor: 'pointer',
-}
-const activeBtn  = { ...btnBase, background: '#4f67e4', color: '#fff', border: 'none' }
-const inactiveBtn = { ...btnBase, background: 'none', color: '#9298c4', border: '1px solid #e4e6ea' }
-
 export default function Production() {
-  const [viewMode,     setViewMode]     = useState('gantt')
   const [lastRefresh,  setLastRefresh]  = useState(new Date())
   const [now,          setNow]          = useState(new Date())
   const [isFullscreen, setIsFullscreen] = useState(false)
@@ -63,22 +55,6 @@ export default function Production() {
           Production Overview
         </div>
 
-        {/* View toggle */}
-        <div style={{ display: 'flex', gap: 4 }}>
-          <button
-            onClick={() => setViewMode('gantt')}
-            style={viewMode === 'gantt' ? activeBtn : inactiveBtn}
-          >
-            Gantt
-          </button>
-          <button
-            onClick={() => setViewMode('kanban')}
-            style={viewMode === 'kanban' ? activeBtn : inactiveBtn}
-          >
-            Kanban Wall
-          </button>
-        </div>
-
         {/* Clock + refresh + fullscreen */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, color: '#9298c4', fontSize: 13 }}>
           <span style={{ fontWeight: 700, color: '#1a1d3b', fontVariantNumeric: 'tabular-nums' }}>
@@ -101,10 +77,7 @@ export default function Production() {
       </div>
 
       {/* Body */}
-      {viewMode === 'gantt'
-        ? <ProductionGantt jobs={jobs} readOnly />
-        : <ProductionKanbanWall jobs={jobs} prefixMappings={prefixMappings} assemblyPhases={assemblyPhases} settingsData={settingsData} />
-      }
+      <ProductionKanbanWall jobs={jobs} prefixMappings={prefixMappings} assemblyPhases={assemblyPhases} settingsData={settingsData} />
     </div>
   )
 }

@@ -21,8 +21,8 @@
               "department": "Raw Materials",
               "startDate": null,
               "endDate": null,
-              "done": false,
-              "pct": 0,
+              "done": true,
+              "pct": 100,
               "assignedTo": null,
               "dependsOn": [],
               "notes": "",
@@ -222,10 +222,13 @@
                   "components": [],
                   "children": [],
                   "kanbanStatus": "todo",
-                  "dependsOnAssembly": null
+                  "dependsOnAssembly": null,
+                  "departments": [
+                    "Welding"
+                  ]
                 }
               ],
-              "kanbanStatus": "todo",
+              "kanbanStatus": "done",
               "dependsOnAssembly": null
             }
           ],
@@ -361,7 +364,8 @@
           "assignedTo": null,
           "notes": "",
           "kanbanStatus": "todo",
-          "dependsOnAssembly": null
+          "dependsOnAssembly": null,
+          "departments": []
         },
         {
           "pct": 0,
@@ -378,10 +382,13 @@
           "assignedTo": null,
           "notes": "",
           "kanbanStatus": "todo",
-          "dependsOnAssembly": null
+          "dependsOnAssembly": null,
+          "departments": [
+            "Welding"
+          ]
         },
         {
-          "pct": 0,
+          "pct": 100,
           "dependsOn": [],
           "children": [
             {
@@ -391,8 +398,8 @@
               "department": "Raw Materials",
               "startDate": null,
               "endDate": null,
-              "done": false,
-              "pct": 0,
+              "done": true,
+              "pct": 100,
               "assignedTo": null,
               "dependsOn": [],
               "notes": "",
@@ -509,7 +516,7 @@
                 }
               ],
               "children": [],
-              "kanbanStatus": "todo",
+              "kanbanStatus": "done",
               "dependsOnAssembly": null
             },
             {
@@ -519,8 +526,8 @@
               "department": "Raw Materials",
               "startDate": null,
               "endDate": null,
-              "done": false,
-              "pct": 0,
+              "done": true,
+              "pct": 100,
               "assignedTo": null,
               "dependsOn": [],
               "notes": "",
@@ -627,7 +634,7 @@
                 }
               ],
               "children": [],
-              "kanbanStatus": "todo",
+              "kanbanStatus": "done",
               "dependsOnAssembly": null
             },
             {
@@ -637,8 +644,8 @@
               "department": "Raw Materials",
               "startDate": null,
               "endDate": null,
-              "done": false,
-              "pct": 0,
+              "done": true,
+              "pct": 100,
               "assignedTo": null,
               "dependsOn": [],
               "notes": "",
@@ -745,7 +752,7 @@
                 }
               ],
               "children": [],
-              "kanbanStatus": "todo",
+              "kanbanStatus": "done",
               "dependsOnAssembly": null
             }
           ],
@@ -817,14 +824,14 @@
           "name": "SUBA00001-4 — Interior Cladding - 10m Truck (SIOC Dental Truck Layout)",
           "startDate": null,
           "endDate": null,
-          "done": false,
+          "done": true,
           "assignedTo": null,
           "notes": "",
-          "kanbanStatus": "todo",
+          "kanbanStatus": "done",
           "dependsOnAssembly": null
         },
         {
-          "pct": 0,
+          "pct": 100,
           "dependsOn": [],
           "children": [
             {
@@ -834,15 +841,18 @@
               "department": "Cutting List / Fabrication",
               "startDate": null,
               "endDate": null,
-              "done": false,
-              "pct": 0,
+              "done": true,
+              "pct": 100,
               "assignedTo": null,
               "dependsOn": [],
               "notes": "",
               "components": [],
               "children": [],
-              "kanbanStatus": "todo",
-              "dependsOnAssembly": null
+              "kanbanStatus": "done",
+              "dependsOnAssembly": null,
+              "departments": [
+                "Cabinet Making"
+              ]
             }
           ],
           "components": [
@@ -913,14 +923,14 @@
           "name": "SUBA00060-5 — Cabinetry - FINA00031 - SIOC Dental",
           "startDate": null,
           "endDate": null,
-          "done": false,
+          "done": true,
           "assignedTo": null,
           "notes": "",
-          "kanbanStatus": "todo",
+          "kanbanStatus": "done",
           "dependsOnAssembly": null
         },
         {
-          "pct": 0,
+          "pct": 100,
           "dependsOn": [],
           "children": [],
           "components": [
@@ -971,14 +981,14 @@
           "name": "SUBA00048 — Lighting Assembly",
           "startDate": null,
           "endDate": null,
-          "done": false,
+          "done": true,
           "assignedTo": null,
           "notes": "",
-          "kanbanStatus": "todo",
+          "kanbanStatus": "done",
           "dependsOnAssembly": null
         },
         {
-          "pct": 0,
+          "pct": 100,
           "dependsOn": [],
           "children": [],
           "components": [
@@ -1109,14 +1119,14 @@
           "name": "SUBA00014-1 — Black Water System - Truck, JK6",
           "startDate": null,
           "endDate": null,
-          "done": false,
+          "done": true,
           "assignedTo": null,
           "notes": "",
-          "kanbanStatus": "todo",
+          "kanbanStatus": "done",
           "dependsOnAssembly": null
         },
         {
-          "pct": 0,
+          "pct": 100,
           "dependsOn": [],
           "children": [],
           "components": [
@@ -1287,14 +1297,14 @@
           "name": "SUBA00012-1 — Fresh Water System - Truck, JK6",
           "startDate": null,
           "endDate": null,
-          "done": false,
+          "done": true,
           "assignedTo": null,
           "notes": "",
-          "kanbanStatus": "todo",
+          "kanbanStatus": "done",
           "dependsOnAssembly": null
         },
         {
-          "pct": 0,
+          "pct": 100,
           "dependsOn": [],
           "children": [],
           "components": [
@@ -1435,14 +1445,14 @@
           "name": "SUBA00065-1 — Red Water Tank System (Dental) - JK6 Dental",
           "startDate": null,
           "endDate": null,
-          "done": false,
+          "done": true,
           "assignedTo": null,
           "notes": "",
-          "kanbanStatus": "todo",
+          "kanbanStatus": "done",
           "dependsOnAssembly": null
         },
         {
-          "pct": 0,
+          "pct": 100,
           "dependsOn": [],
           "children": [],
           "components": [
@@ -1603,14 +1613,14 @@
           "name": "SUBA00013-1 — Grey Water System - Truck, JK6",
           "startDate": null,
           "endDate": null,
-          "done": false,
+          "done": true,
           "assignedTo": null,
           "notes": "",
-          "kanbanStatus": "todo",
+          "kanbanStatus": "done",
           "dependsOnAssembly": null
         },
         {
-          "pct": 0,
+          "pct": 100,
           "dependsOn": [],
           "children": [
             {
@@ -1930,14 +1940,14 @@
           "name": "SUBA00011-1 — Water Enclosure - FAW Truck",
           "startDate": null,
           "endDate": null,
-          "done": false,
+          "done": true,
           "assignedTo": null,
           "notes": "",
-          "kanbanStatus": "todo",
+          "kanbanStatus": "done",
           "dependsOnAssembly": null
         },
         {
-          "pct": 0,
+          "pct": 100,
           "dependsOn": [],
           "children": [],
           "components": [],
@@ -1947,14 +1957,17 @@
           "name": "SUBA00015 — Toilet Cubical",
           "startDate": null,
           "endDate": null,
-          "done": false,
+          "done": true,
           "assignedTo": null,
           "notes": "",
-          "kanbanStatus": "todo",
-          "dependsOnAssembly": null
+          "kanbanStatus": "done",
+          "dependsOnAssembly": null,
+          "departments": [
+            "Plumbing"
+          ]
         },
         {
-          "pct": 0,
+          "pct": 100,
           "dependsOn": [],
           "children": [
             {
@@ -1964,8 +1977,8 @@
               "department": "Electrical",
               "startDate": null,
               "endDate": null,
-              "done": false,
-              "pct": 0,
+              "done": true,
+              "pct": 100,
               "assignedTo": null,
               "dependsOn": [],
               "notes": "",
@@ -2012,7 +2025,7 @@
                 }
               ],
               "children": [],
-              "kanbanStatus": "todo",
+              "kanbanStatus": "done",
               "dependsOnAssembly": null
             },
             {
@@ -2022,8 +2035,8 @@
               "department": "Electrical",
               "startDate": null,
               "endDate": null,
-              "done": false,
-              "pct": 0,
+              "done": true,
+              "pct": 100,
               "assignedTo": null,
               "dependsOn": [],
               "notes": "",
@@ -2200,7 +2213,7 @@
                 }
               ],
               "children": [],
-              "kanbanStatus": "todo",
+              "kanbanStatus": "done",
               "dependsOnAssembly": null
             },
             {
@@ -2210,8 +2223,8 @@
               "department": "Electrical",
               "startDate": null,
               "endDate": null,
-              "done": false,
-              "pct": 0,
+              "done": true,
+              "pct": 100,
               "assignedTo": null,
               "dependsOn": [],
               "notes": "",
@@ -2288,7 +2301,7 @@
                 }
               ],
               "children": [],
-              "kanbanStatus": "todo",
+              "kanbanStatus": "done",
               "dependsOnAssembly": null
             },
             {
@@ -2298,8 +2311,8 @@
               "department": "Electrical",
               "startDate": null,
               "endDate": null,
-              "done": false,
-              "pct": 0,
+              "done": true,
+              "pct": 100,
               "assignedTo": null,
               "dependsOn": [],
               "notes": "",
@@ -2376,7 +2389,7 @@
                 }
               ],
               "children": [],
-              "kanbanStatus": "todo",
+              "kanbanStatus": "done",
               "dependsOnAssembly": null
             }
           ],
@@ -2387,11 +2400,14 @@
           "name": "SUBA00004-2 — Electrical System - Hybrid Solar and Generator System, 10m Truck (8 Panel, 2x5kVA, 4 Battery System)",
           "startDate": null,
           "endDate": null,
-          "done": false,
+          "done": true,
           "assignedTo": null,
           "notes": "",
-          "kanbanStatus": "todo",
-          "dependsOnAssembly": null
+          "kanbanStatus": "done",
+          "dependsOnAssembly": null,
+          "departments": [
+            "Electrical"
+          ]
         },
         {
           "pct": 0,
@@ -2572,8 +2588,8 @@
               "department": "Mechanical",
               "startDate": null,
               "endDate": null,
-              "done": false,
-              "pct": 0,
+              "done": true,
+              "pct": 100,
               "assignedTo": null,
               "dependsOn": [],
               "notes": "",
@@ -2690,7 +2706,7 @@
                 }
               ],
               "children": [],
-              "kanbanStatus": "todo",
+              "kanbanStatus": "done",
               "dependsOnAssembly": null
             }
           ],
@@ -2719,7 +2735,7 @@
           "dependsOnAssembly": null
         },
         {
-          "pct": 0,
+          "pct": 100,
           "dependsOn": [],
           "children": [],
           "components": [],
@@ -2729,14 +2745,17 @@
           "name": "SUBA00002-2 — Server Rack - Truck, Full Server Rack (SIOC Truck)",
           "startDate": null,
           "endDate": null,
-          "done": false,
+          "done": true,
           "assignedTo": null,
           "notes": "",
-          "kanbanStatus": "todo",
-          "dependsOnAssembly": null
+          "kanbanStatus": "done",
+          "dependsOnAssembly": null,
+          "departments": [
+            "Electrical"
+          ]
         },
         {
-          "pct": 0,
+          "pct": 100,
           "dependsOn": [],
           "children": [],
           "components": [],
@@ -2746,11 +2765,14 @@
           "name": "SUBA00022-3 — Electrical Distribution (Trunking) - 10m Truck, Double Dental Truck",
           "startDate": null,
           "endDate": null,
-          "done": false,
+          "done": true,
           "assignedTo": null,
           "notes": "",
-          "kanbanStatus": "todo",
-          "dependsOnAssembly": null
+          "kanbanStatus": "done",
+          "dependsOnAssembly": null,
+          "departments": [
+            "Electrical"
+          ]
         },
         {
           "pct": 0,
@@ -2821,7 +2843,7 @@
           "dependsOnAssembly": null
         },
         {
-          "pct": 0,
+          "pct": 100,
           "dependsOn": [],
           "children": [
             {
@@ -2831,8 +2853,8 @@
               "department": "IT",
               "startDate": null,
               "endDate": null,
-              "done": false,
-              "pct": 0,
+              "done": true,
+              "pct": 100,
               "assignedTo": null,
               "dependsOn": [],
               "notes": "",
@@ -2936,8 +2958,11 @@
                   "dependsOnAssembly": null
                 }
               ],
-              "kanbanStatus": "todo",
-              "dependsOnAssembly": null
+              "kanbanStatus": "done",
+              "dependsOnAssembly": null,
+              "departments": [
+                "Electrical"
+              ]
             },
             {
               "id": "t-bom-34",
@@ -2946,8 +2971,8 @@
               "department": "Medical / Dental",
               "startDate": null,
               "endDate": null,
-              "done": false,
-              "pct": 0,
+              "done": true,
+              "pct": 100,
               "assignedTo": null,
               "dependsOn": [],
               "notes": "",
@@ -3014,8 +3039,11 @@
                 }
               ],
               "children": [],
-              "kanbanStatus": "todo",
-              "dependsOnAssembly": null
+              "kanbanStatus": "done",
+              "dependsOnAssembly": null,
+              "departments": [
+                "Plumbing"
+              ]
             },
             {
               "id": "t-bom-35",
@@ -3024,8 +3052,8 @@
               "department": "Medical / Dental",
               "startDate": null,
               "endDate": null,
-              "done": false,
-              "pct": 0,
+              "done": true,
+              "pct": 100,
               "assignedTo": null,
               "dependsOn": [],
               "notes": "",
@@ -3082,7 +3110,7 @@
                 }
               ],
               "children": [],
-              "kanbanStatus": "todo",
+              "kanbanStatus": "done",
               "dependsOnAssembly": null
             },
             {
@@ -3482,10 +3510,10 @@
           "name": "SUBA00066-1 — Dental - SIOC 10m Truck",
           "startDate": null,
           "endDate": null,
-          "done": false,
+          "done": true,
           "assignedTo": null,
           "notes": "",
-          "kanbanStatus": "todo",
+          "kanbanStatus": "done",
           "dependsOnAssembly": null
         },
         {
@@ -3499,8 +3527,8 @@
               "department": "Assembly",
               "startDate": null,
               "endDate": null,
-              "done": false,
-              "pct": 0,
+              "done": true,
+              "pct": 100,
               "assignedTo": null,
               "dependsOn": [],
               "notes": "",
@@ -3557,7 +3585,7 @@
                 }
               ],
               "children": [],
-              "kanbanStatus": "todo",
+              "kanbanStatus": "done",
               "dependsOnAssembly": null
             }
           ],
@@ -3660,10 +3688,13 @@
           "assignedTo": null,
           "notes": "",
           "kanbanStatus": "todo",
-          "dependsOnAssembly": null
+          "dependsOnAssembly": null,
+          "departments": [
+            "Welding"
+          ]
         },
         {
-          "pct": 0,
+          "pct": 100,
           "dependsOn": [],
           "children": [],
           "components": [
@@ -5594,10 +5625,10 @@
           "name": "SUBA00027-1 — CONSUMABLES - Truck, JK6 (10m) - Guud Drivers (GD)",
           "startDate": null,
           "endDate": null,
-          "done": false,
+          "done": true,
           "assignedTo": null,
           "notes": "",
-          "kanbanStatus": "todo",
+          "kanbanStatus": "done",
           "dependsOnAssembly": null
         }
       ],

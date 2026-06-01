@@ -24,6 +24,7 @@ After adding new Express routes, always restart the server.
 - `src/App.jsx` — Top-level page switcher (not React Router); renders one page component based on state
 - `src/hooks/useApi.js` — All API calls go through `apiFetch(path)` and `useGet(path)` hook. BASE is already `http://localhost:3001/api`.
 - `src/pages/` — One file per top-level page; sub-pages and modals live in named subdirectories (e.g. `hr/`, `dashboard/`, `production/`)
+- **Production module** — Kanban board (`production/kanban/`) is the single planning + execution surface. Job list panel + New Job modal live in `components/planner/`. Task tree helpers in `production/taskTreeOps.js`. The Gantt editor was retired; do not recreate it.
 
 **Vite proxy:** `/api` and `/uploads` requests from the frontend proxy to `http://localhost:3001` in dev.
 

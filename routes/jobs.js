@@ -159,7 +159,7 @@ export default function jobsRouter(readData, writeData, upload, uploadsDir) {
       if (jobIdx === -1) return res.status(404).json({ error: 'Job not found' })
       const task = findTaskById(data.jobs[jobIdx].tasks, req.params.taskId)
       if (!task) return res.status(404).json({ error: 'Task not found' })
-      const allowed = ['kanbanStatus', 'done', 'dependsOnAssembly', 'assignee', 'note', 'name', 'assemblyCode', 'startDate', 'endDate', 'dependsOn', 'assignedTo', 'notes']
+      const allowed = ['kanbanStatus', 'done', 'dependsOnAssembly', 'assignee', 'note', 'name', 'assemblyCode', 'startDate', 'endDate', 'dependsOn', 'assignedTo', 'notes', 'pct', 'departments']
       allowed.forEach(k => {
         if (req.body[k] !== undefined) task[k] = req.body[k]
       })

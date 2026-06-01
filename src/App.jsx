@@ -10,7 +10,6 @@ import Inventory from './pages/Inventory'
 import Settings from './pages/Settings'
 import InspectionPage from './pages/InspectionPage'
 import KanbanBoard from './pages/production/kanban/KanbanBoard.jsx'
-import ProductionPlanner from './pages/ProductionPlanner'
 import CostDashboard from './pages/CostDashboard'
 
 const inspectionMatch = window.location.pathname.match(/^\/inspection\/(.+)$/)
@@ -18,8 +17,7 @@ const inspectionMatch = window.location.pathname.match(/^\/inspection\/(.+)$/)
 const pageTitles = {
   dashboard: 'Dashboard',
   production: 'Production overview',
-  'production-planner': 'Production Planner',
-  'department-boards': 'Department boards',
+  'department-boards': 'Production board',
   tools: 'Tool tracker',
   stock: 'Stock Tracker',
   inventory: 'Inventory',
@@ -36,7 +34,6 @@ function PageContent({ page, onNavigate }) {
   switch (page) {
     case 'dashboard': return <Dashboard onNavigate={onNavigate} />
     case 'production': return <Production />
-    case 'production-planner': return <ProductionPlanner />
     case 'department-boards': return <KanbanBoard />
     case 'time-attendance': return <HR section="time-attendance" />
     case 'employees': return <HR section="employees" />

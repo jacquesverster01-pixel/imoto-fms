@@ -11,8 +11,7 @@ const navItems = [
     section: 'Production',
     items: [
       { id: 'production',           label: 'Production overview',  icon: 'grid' },
-      { id: 'production-planner',   label: 'Production Planner',   icon: 'gantt' },
-      { id: 'department-boards',    label: 'Department boards',    icon: 'columns' },
+      { id: 'department-boards',    label: 'Production board',     icon: 'columns' },
       { id: 'cost-dashboard',       label: 'Cost to Completion',   icon: 'currency' },
     ]
   },

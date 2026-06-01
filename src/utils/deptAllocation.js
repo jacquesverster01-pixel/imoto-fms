@@ -1,4 +1,7 @@
 export function getTaskDepartments(task, prefixMappings) {
+  if (Array.isArray(task.departments) && task.departments.length > 0) {
+    return [...task.departments]
+  }
   const components = task.components || []
   if (components.length === 0) return []
   const depts = new Set()

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useGet } from '../hooks/useApi'
 import FactoryFloorList from './dashboard/FactoryFloorList'
 import ZkUnmatchedBanner from '../components/ZkUnmatchedBanner'
+import { formatZAR } from '../utils/costToComplete'
 
 const CARD = { background: '#fff', border: '1px solid #e4e6ea', borderRadius: 14, padding: '16px 20px' }
 
@@ -120,6 +121,10 @@ export default function Dashboard({ onNavigate }) {
                       </div>
                     </div>
                     <div style={{ height: 6, background: '#f0f2f5', borderRadius: 3, overflow: 'hidden' }}><div style={{ height: '100%', width: `${j.pct || 0}%`, background: sty.text, borderRadius: 3 }} /></div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 4 }}>
+                      <span style={{ fontSize: 11, color: '#94a3b8' }}>{j.pct || 0}% complete</span>
+                      <span style={{ fontSize: 11, color: '#94a3b8' }}>{j.costToComplete > 0 ? formatZAR(j.costToComplete) : '—'} to complete</span>
+                    </div>
                   </div>
                 )
               })}
