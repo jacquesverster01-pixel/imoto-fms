@@ -1,6 +1,8 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { checkTaskAllocation } from '../../../utils/stockAllocation.js'
-import { BASE, UPLOADS_BASE } from '../../../hooks/useApi.js'
+import DepartmentChips from './DepartmentChips.jsx'
+import SubTaskList from './SubTaskList.jsx'
+import TaskFilesSection from './TaskFilesSection.jsx'
 
 function formatCacheAge(updatedAt) {
   if (!updatedAt) return '—'
@@ -18,41 +20,6 @@ function CompStatusIcon({ status }) {
   return <span style={{ color: '#9298c4' }}>—</span>
 }
 
-function escapeHtml(s) {
-  return String(s).replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]))
-}
-
-function printComponentsList(task) {
-  const rows = (task.components || []).map(c => `
-    <tr>
-      <td style="font-family:monospace;padding:6px 10px;border-bottom:1px solid #ddd">${escapeHtml(c.itemCode || '')}</td>
-      <td style="padding:6px 10px;border-bottom:1px solid #ddd">${escapeHtml(c.itemDescription || '')}</td>
-      <td style="padding:6px 10px;border-bottom:1px solid #ddd;text-align:right">${c.quantity != null ? c.quantity : ''}</td>
-      <td style="padding:6px 10px;border-bottom:1px solid #ddd">${escapeHtml(c.unit || '')}</td>
-    </tr>
-  `).join('')
-  const html = `<!doctype html><html><head><meta charset="utf-8">
-    <title>Components — ${escapeHtml(task.name || '')}</title>
-    <style>
-      body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1d3b;margin:24px}
-      h1{font-size:16px;margin:0 0 4px}.meta{font-size:12px;color:#666;margin-bottom:18px}
-      table{width:100%;border-collapse:collapse;font-size:12px}
-      th{text-align:left;padding:6px 10px;border-bottom:2px solid #333;font-size:11px;text-transform:uppercase;letter-spacing:.04em}
-      th.num{text-align:right}
-      @media print{body{margin:12mm}button{display:none}}
-    </style></head><body>
-    <h1>${escapeHtml(task.name || 'Components')}</h1>
-    <div class="meta">${task.itemCode ? escapeHtml(task.itemCode) + ' · ' : ''}${task.components.length} component${task.components.length !== 1 ? 's' : ''} · Printed ${new Date().toLocaleString()}</div>
-    <table><thead><tr><th>Code</th><th>Description</th><th class="num">Qty</th><th>Unit</th></tr></thead>
-    <tbody>${rows}</tbody></table></body></html>`
-  const win = window.open('', '_blank', 'width=800,height=900')
-  if (!win) { alert('Pop-up blocked. Please allow pop-ups to print the components list.'); return }
-  win.document.write(html)
-  win.document.close()
-  win.focus()
-  setTimeout(() => { win.print() }, 200)
-}
-
 const labelStyle = { fontSize: 11, fontWeight: 600, color: '#9298c4', marginBottom: 3, display: 'block' }
 const inputStyle = {
   width: '100%', fontSize: 12, color: '#1a1d3b', background: '#fff',
@@ -65,9 +32,7 @@ export default function KanbanCardDetail({ task, onTaskPatch, onTaskAction, isUp
   const [localNotes, setLocalNotes] = useState(task.notes || '')
   const [localPct, setLocalPct] = useState(task.pct ?? 0)
   const [activeTab, setActiveTab] = useState('details')
-  const [uploading, setUploading] = useState(false)
   const [confirmDelete, setConfirmDelete] = useState(false)
-  const fileInputRef = useRef(null)
 
   useEffect(() => {
     setLocalName(task.name || '')
@@ -87,22 +52,6 @@ export default function KanbanCardDetail({ task, onTaskPatch, onTaskAction, isUp
   function savePct(val) {
     const n = Number(val)
     if (n !== (task.pct ?? 0)) onTaskPatch(task, { pct: n })
-  }
-
-  async function handleFileUpload(file) {
-    const fd = new FormData()
-    fd.append('file', file)
-    setUploading(true)
-    try {
-      const res = await fetch(`${BASE}/jobs/${task.jobId}/tasks/${task.id}/files`, { method: 'POST', body: fd })
-      if (!res.ok) throw new Error(`Upload failed: ${res.status}`)
-      const rec = await res.json()
-      await onTaskAction('addFileRecord', task, rec)
-    } catch (err) {
-      console.error('File upload failed:', err)
-    } finally {
-      setUploading(false)
-    }
   }
 
   const comps = task.components || []
@@ -140,54 +89,7 @@ export default function KanbanCardDetail({ task, onTaskPatch, onTaskAction, isUp
             />
           </div>
 
-          {Array.isArray(departments) && departments.length > 0 && (
-            <div style={{ marginBottom: 8 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 3 }}>
-                <label style={labelStyle}>Departments</label>
-                {Array.isArray(task.departments) && task.departments.length > 0 && (
-                  <button
-                    onClick={() => onTaskPatch(task, { departments: [] })}
-                    disabled={isUpdating}
-                    style={{ fontSize: 10, color: '#9298c4', background: 'none', border: 'none', cursor: isUpdating ? 'not-allowed' : 'pointer', padding: 0, textDecoration: 'underline' }}
-                  >
-                    Clear / use auto
-                  </button>
-                )}
-              </div>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
-                {departments.map(dept => {
-                  const manualDepts = Array.isArray(task.departments) ? task.departments : []
-                  const isOn = manualDepts.includes(dept.name)
-                  const next = isOn ? manualDepts.filter(d => d !== dept.name) : [...manualDepts, dept.name]
-                  return (
-                    <button
-                      key={dept.name}
-                      onClick={() => onTaskPatch(task, { departments: next })}
-                      disabled={isUpdating}
-                      style={{
-                        fontSize: 11,
-                        padding: '2px 8px',
-                        borderRadius: 12,
-                        border: `1px solid ${isOn ? dept.color : '#e4e6ea'}`,
-                        background: isOn ? dept.color : 'transparent',
-                        color: isOn ? '#fff' : '#6b7280',
-                        cursor: isUpdating ? 'not-allowed' : 'pointer',
-                        fontWeight: isOn ? 600 : 400,
-                        opacity: isUpdating ? 0.5 : 1,
-                      }}
-                    >
-                      {dept.name}
-                    </button>
-                  )
-                })}
-              </div>
-              {!(Array.isArray(task.departments) && task.departments.length > 0) && (
-                <div style={{ fontSize: 10, color: '#b0b5cc', marginTop: 3 }}>
-                  Auto — derived from component codes
-                </div>
-              )}
-            </div>
-          )}
+          <DepartmentChips task={task} departments={departments} onTaskPatch={onTaskPatch} isUpdating={isUpdating} />
 
           <div style={{ marginBottom: 8 }}>
             <label style={labelStyle}>Notes</label>
@@ -249,89 +151,12 @@ export default function KanbanCardDetail({ task, onTaskPatch, onTaskAction, isUp
             </div>
           )}
 
-          <div style={{ marginTop: 6 }}>
-            <label style={labelStyle}>Sub-tasks</label>
-            {(task.children || []).length === 0 && (
-              <div style={{ fontSize: 12, color: '#c0c5d8', marginBottom: 4 }}>No sub-tasks yet</div>
-            )}
-            {(task.children || []).map(child => (
-              <div key={child.id} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '4px 0', borderBottom: '1px solid #f3f4f6' }}>
-                <input
-                  type="checkbox"
-                  checked={!!child.done}
-                  onChange={() => onTaskPatch({ ...child, jobId: task.jobId }, { done: !child.done, pct: !child.done ? 100 : 0 })}
-                  disabled={isUpdating}
-                  style={{ flexShrink: 0, cursor: isUpdating ? 'not-allowed' : 'pointer' }}
-                />
-                <input
-                  defaultValue={child.name}
-                  onBlur={e => {
-                    const trimmed = e.target.value.trim()
-                    if (trimmed && trimmed !== child.name) onTaskPatch({ ...child, jobId: task.jobId }, { name: trimmed })
-                  }}
-                  onKeyDown={e => { if (e.key === 'Enter') e.target.blur() }}
-                  disabled={isUpdating}
-                  style={{ flex: 1, border: 'none', outline: 'none', fontSize: 12, background: 'transparent', color: child.done ? '#b0b5cc' : '#1a1d3b', textDecoration: child.done ? 'line-through' : 'none', minWidth: 0 }}
-                />
-              </div>
-            ))}
-            <button
-              onClick={() => onTaskAction('addChild', task)}
-              disabled={isUpdating}
-              style={{ marginTop: 5, background: 'none', border: 'none', cursor: isUpdating ? 'not-allowed' : 'pointer', color: '#4f67e4', fontSize: 12, padding: 0, fontWeight: 600 }}
-            >
-              + Add sub-task
-            </button>
-          </div>
+          <SubTaskList task={task} onTaskPatch={onTaskPatch} onTaskAction={onTaskAction} isUpdating={isUpdating} />
         </div>
       )}
 
       {activeTab === 'files' && (
-        <div style={{ padding: '10px 12px' }}>
-          {comps.length > 0 && (
-            <div style={{ marginBottom: 10 }}>
-              <button
-                onClick={() => printComponentsList(task)}
-                style={{ padding: '7px 0', background: '#f0f4ff', color: '#4f67e4', border: '1px solid #c7d0f8', borderRadius: 5, cursor: 'pointer', fontSize: 12, fontWeight: 600, width: '100%' }}
-              >
-                Print components list
-              </button>
-            </div>
-          )}
-          <label style={labelStyle}>Files</label>
-          {(task.files || []).length === 0 && (
-            <div style={{ fontSize: 12, color: '#c0c5d8', marginBottom: 8 }}>No files attached</div>
-          )}
-          {(task.files || []).map(f => (
-            <div key={f.id} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '5px 0', borderBottom: '1px solid #f3f4f6' }}>
-              <span style={{ fontSize: 12, flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', color: '#1a1d3b' }}>{f.name}</span>
-              <a href={`${UPLOADS_BASE}/${(f.url || '').replace(/^\/uploads\//, '')}`} target="_blank" rel="noreferrer"
-                style={{ fontSize: 11, color: '#4f67e4', textDecoration: 'none', flexShrink: 0 }}>Open</a>
-              <button
-                onClick={() => onTaskAction('deleteFile', task, f.id)}
-                disabled={isUpdating}
-                style={{ border: 'none', background: 'none', cursor: isUpdating ? 'not-allowed' : 'pointer', color: '#dc2626', fontSize: 14, padding: 0, lineHeight: 1, flexShrink: 0 }}
-              >×</button>
-            </div>
-          ))}
-          <input
-            ref={fileInputRef}
-            type="file"
-            style={{ display: 'none' }}
-            onChange={async e => {
-              if (!e.target.files[0]) return
-              await handleFileUpload(e.target.files[0])
-              e.target.value = ''
-            }}
-          />
-          <button
-            onClick={() => fileInputRef.current?.click()}
-            disabled={uploading || isUpdating}
-            style={{ marginTop: 8, padding: '7px 0', background: '#f0f4ff', color: '#4f67e4', border: '1px solid #c7d0f8', borderRadius: 5, cursor: (uploading || isUpdating) ? 'not-allowed' : 'pointer', fontSize: 12, fontWeight: 600, width: '100%', opacity: (uploading || isUpdating) ? 0.7 : 1 }}
-          >
-            {uploading ? 'Uploading…' : '+ Upload file'}
-          </button>
-        </div>
+        <TaskFilesSection task={task} onTaskAction={onTaskAction} isUpdating={isUpdating} />
       )}
 
       <div style={{ padding: '6px 12px', borderTop: '1px solid #f0f2f5' }}>
