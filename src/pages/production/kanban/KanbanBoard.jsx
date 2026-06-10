@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useGet, apiFetch } from '../../../hooks/useApi.js'
 import { getTaskDepartments, taskOverlapsWeek, getWeekStart, getWeekEnd, flattenJobTasks } from '../../../utils/deptAllocation.js'
+import { fmtDayMonth } from '../../../utils/time.js'
 import { computeGlobalAllocations } from '../../../utils/stockAllocation.js'
 import { appendChildTo, removeNodeById, updateNodeById } from '../../../utils/taskTreeOps.js'
 import KanbanSwimLane from './KanbanSwimLane.jsx'
@@ -32,10 +33,6 @@ function offsetDate(date, weeks) {
   const d = new Date(date)
   d.setDate(d.getDate() + weeks * 7)
   return d
-}
-
-function fmtShort(d) {
-  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })
 }
 
 const navBtn = {
@@ -85,7 +82,7 @@ export default function KanbanBoard() {
 
   const weekStart = getWeekStart(offsetDate(new Date(), weekOffset))
   const weekEnd = getWeekEnd(weekStart)
-  const weekLabel = `${fmtShort(weekStart)} – ${fmtShort(weekEnd)}`
+  const weekLabel = `${fmtDayMonth(weekStart)} – ${fmtDayMonth(weekEnd)}`
 
   const allTasks = flattenJobTasks(jobs)
   const undoneTasks = allTasks.filter(t => t.kanbanStatus !== 'done' && t.done !== true)

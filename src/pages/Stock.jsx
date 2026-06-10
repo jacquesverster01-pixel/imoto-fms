@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useGet, apiFetch } from '../hooks/useApi'
+import { fmtLocaleDate } from '../utils/time.js'
 import AddEditStockModal from './stock/AddEditStockModal'
 import AdjustQtyModal from './stock/AdjustQtyModal'
 import ImportStockModal from './stock/ImportStockModal'
@@ -258,7 +259,7 @@ export default function Stock() {
         <div className="flex items-center justify-between mt-2 text-xs" style={{ color: '#b0b5cc' }}>
           <span>{items.length} item{items.length !== 1 ? 's' : ''}</span>
           {lastImport && (
-            <span>Last import: {new Date(lastImport).toLocaleDateString()}</span>
+            <span>Last import: {fmtLocaleDate(lastImport)}</span>
           )}
         </div>
       )}

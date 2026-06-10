@@ -1,11 +1,7 @@
 import { checkTaskAllocation } from '../../../utils/stockAllocation.js'
 import { getDisplayStatus } from '../../../utils/deptAllocation.js'
+import { fmtDayMonth } from '../../../utils/time.js'
 import KanbanCardDetail from './KanbanCardDetail.jsx'
-
-function formatDate(d) {
-  if (!d) return ''
-  return new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })
-}
 
 function computeAllocStatus(task, stockCache, globalAllocations) {
   const comps = task.components || []
@@ -70,7 +66,7 @@ export default function KanbanCard({ task, isExpanded, onExpand, onStatusChange,
         </div>
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', fontSize: 11, color: '#6b7280' }}>
           {task.assignedTo && <span>👤 {task.assignedTo}</span>}
-          {task.endDate && <span>📅 {formatDate(task.endDate)}</span>}
+          {task.endDate && <span>📅 {fmtDayMonth(task.endDate)}</span>}
           {task.dueThisWeek && (
             <span style={{ color: '#f59e0b', fontWeight: 600 }}>This week</span>
           )}

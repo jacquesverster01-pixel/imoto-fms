@@ -1,5 +1,6 @@
 import { useState, useMemo, useEffect, useCallback } from 'react'
 import { apiFetch } from '../../hooks/useApi'
+import { fmtLocaleDate } from '../../utils/time.js'
 import { styles } from '../../utils/hrStyles'
 import NewJobModal from '../planner/NewJobModal'
 import AssemblyJobModal from './AssemblyJobModal'
@@ -115,7 +116,7 @@ export default function InventoryStockOnHand({ onSubtitleChange }) {
   useEffect(() => {
     if (!onSubtitleChange) return
     if (dataSource === 'local') {
-      const dateStr = lastUpdated ? new Date(lastUpdated).toLocaleDateString() : '—'
+      const dateStr = lastUpdated ? fmtLocaleDate(lastUpdated) : '—'
       onSubtitleChange(`Local stock · ${rawItems.length} items · Last updated ${dateStr}`)
     } else {
       onSubtitleChange('Live stock positions via Unleashed')

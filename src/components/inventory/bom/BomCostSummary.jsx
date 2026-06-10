@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { computeCosts } from './bomUtils'
+import { fmtLocaleDate } from '../../../utils/time.js'
 
 const DEPT_COLORS = {
   ELE: '#3b82f6', CAB: '#8b5cf6', MEC: '#10b981',
@@ -34,7 +35,7 @@ export default function BomCostSummary({ bom, items }) {
 
       {/* Row 2: BOM reference + import date + row count */}
       <div style={{ fontSize: 12, color: '#9298c4', marginTop: 4 }}>
-        {bom.bomReference} · Imported {new Date(bom.importedAt).toLocaleDateString()} · {bom.rowCount} rows
+        {bom.bomReference} · Imported {fmtLocaleDate(bom.importedAt)} · {bom.rowCount} rows
       </div>
 
       {/* Row 3: Department cost pills */}

@@ -64,6 +64,19 @@ export function fmtDDMMM(dateStr) {
   return `${d.getUTCDate()} ${MONTHS_SHORT[d.getUTCMonth()]}`
 }
 
+// Day + short month in LOCAL time, e.g. "6 Jun"
+// Mirrors toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }).
+export function fmtDayMonth(value) {
+  if (!value) return ''
+  const d = value instanceof Date ? value : new Date(value)
+  return `${d.getDate()} ${MONTHS_SHORT[d.getMonth()]}`
+}
+
+// Locale-default short date — mirrors `new Date(value).toLocaleDateString()`.
+export function fmtLocaleDate(value) {
+  return new Date(value).toLocaleDateString()
+}
+
 export function fmtHHMMSS(date) {
   const d = new Date(date.getTime() + 2 * 60 * 60 * 1000)
   const h = d.getUTCHours().toString().padStart(2, '0')
