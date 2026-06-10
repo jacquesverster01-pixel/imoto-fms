@@ -1,3 +1,16 @@
+export function flattenJobTasks(jobs) {
+  if (!Array.isArray(jobs)) return []
+  const walk = (tasks, jobId, jobTitle, jobColour, jobPriority) => {
+    const out = []
+    for (const t of tasks || []) {
+      out.push({ ...t, jobId, jobTitle, jobColour, jobPriority })
+      if (t.children?.length) out.push(...walk(t.children, jobId, jobTitle, jobColour, jobPriority))
+    }
+    return out
+  }
+  return jobs.flatMap(job => walk(job.tasks || [], job.id, job.title, job.colour, job.priority || 99))
+}
+
 export function getTaskDepartments(task, prefixMappings) {
   if (Array.isArray(task.departments) && task.departments.length > 0) {
     return [...task.departments]

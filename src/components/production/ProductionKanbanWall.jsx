@@ -1,4 +1,4 @@
-import { getTaskDepartments, getDisplayStatus } from '../../utils/deptAllocation.js'
+import { getTaskDepartments, getDisplayStatus, flattenJobTasks } from '../../utils/deptAllocation.js'
 import { checkDependency, colourForDepartment } from './kanbanUtils.js'
 import CompactKanbanCard from './CompactKanbanCard.jsx'
 
@@ -26,21 +26,6 @@ const emptyStyle = {
   fontSize: 14,
 }
 
-// Recursive flatten — mirrors KanbanBoard's walk(). Must stay in sync with that function.
-function walkTasks(tasks, jobId, jobTitle, jobColour) {
-  const out = []
-  for (const t of tasks || []) {
-    out.push({ ...t, jobId, jobTitle, jobColour })
-    if (t.children?.length) out.push(...walkTasks(t.children, jobId, jobTitle, jobColour))
-  }
-  return out
-}
-
-function flattenAllJobs(jobs) {
-  if (!Array.isArray(jobs)) return []
-  return jobs.flatMap(job => walkTasks(job.tasks || [], job.id, job.title, job.colour))
-}
-
 // Build dept → { todo, in-progress, done } map using same logic as the board.
 // A task resolving to multiple departments appears in each (correct, not a bug).
 function buildWallMap(tasks, prefixMappings) {
@@ -63,7 +48,7 @@ function getDeptColour(deptName, settingsData) {
 }
 
 export default function ProductionKanbanWall({ jobs, prefixMappings, assemblyPhases = [], settingsData }) {
-  const allFlat = flattenAllJobs(jobs)
+  const allFlat = flattenJobTasks(jobs)
 
   if (!allFlat.length) {
     return <div style={emptyStyle}>No active jobs.</div>

@@ -1,24 +1,11 @@
 import { useState } from 'react'
 import { useGet, apiFetch } from '../../../hooks/useApi.js'
-import { getTaskDepartments, taskOverlapsWeek, getWeekStart, getWeekEnd } from '../../../utils/deptAllocation.js'
+import { getTaskDepartments, taskOverlapsWeek, getWeekStart, getWeekEnd, flattenJobTasks } from '../../../utils/deptAllocation.js'
 import { computeGlobalAllocations } from '../../../utils/stockAllocation.js'
-import { appendChildTo, removeNodeById, updateNodeById } from '../taskTreeOps.js'
+import { appendChildTo, removeNodeById, updateNodeById } from '../../../utils/taskTreeOps.js'
 import KanbanSwimLane from './KanbanSwimLane.jsx'
 import JobListPanel from '../../../components/planner/JobListPanel.jsx'
 import NewJobModal from '../../../components/planner/NewJobModal.jsx'
-
-function walk(tasks, jobId, jobTitle, jobColour, jobPriority) {
-  const out = []
-  for (const t of tasks || []) {
-    out.push({ ...t, jobId, jobTitle, jobColour, jobPriority })
-    if (t.children?.length) out.push(...walk(t.children, jobId, jobTitle, jobColour, jobPriority))
-  }
-  return out
-}
-
-function flattenJobTasks(jobs) {
-  return jobs.flatMap(job => walk(job.tasks || [], job.id, job.title, job.colour, job.priority || 99))
-}
 
 function buildLaneMap(tasks, prefixMappings, weekStart, weekEnd) {
   const map = {}

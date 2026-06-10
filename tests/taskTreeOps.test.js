@@ -2,7 +2,7 @@ import { describe, test, expect } from '@jest/globals'
 import {
   findNodeById, findParentId, updateNodeById, removeNodeById,
   appendChildTo, moveNodeTo, flattenTree, walkTree, filterVisibleRows
-} from '../src/pages/production/taskTreeOps.js'
+} from '../src/utils/taskTreeOps.js'
 
 // Fixture: 2 roots. R1 has children C1 and C2. C1 has grandchild G1.
 const G1 = { id: 'g1', name: 'Grandchild 1', children: [] }

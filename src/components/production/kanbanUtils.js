@@ -2,18 +2,6 @@ import { getPhaseForCode } from '../../utils/codeParser.js'
 
 const STATUSES = ['todo', 'inprogress', 'qc', 'done']
 
-export function flattenTasks(jobs) {
-  if (!Array.isArray(jobs)) return []
-  const out = []
-  for (const job of jobs) {
-    if (!Array.isArray(job?.tasks)) continue
-    for (const task of job.tasks) {
-      out.push({ ...task, jobId: job.id, jobTitle: job.title })
-    }
-  }
-  return out
-}
-
 export function getKanbanStatus(task) {
   if (task?.kanbanStatus && STATUSES.includes(task.kanbanStatus)) return task.kanbanStatus
   if (task?.done === true) return 'done'
