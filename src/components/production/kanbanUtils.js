@@ -1,4 +1,4 @@
-import { getDepartmentForCode, getPhaseForCode, isUnallocated } from '../../utils/codeParser.js'
+import { getPhaseForCode } from '../../utils/codeParser.js'
 
 const STATUSES = ['todo', 'inprogress', 'qc', 'done']
 
@@ -20,25 +20,6 @@ export function getKanbanStatus(task) {
   return 'todo'
 }
 
-export function groupTasks(jobs, prefixes) {
-  const flat = flattenTasks(jobs)
-  const groups = { unallocated: { todo: [], inprogress: [], qc: [], done: [] } }
-  for (const p of (prefixes || [])) {
-    groups[p.department] = { todo: [], inprogress: [], qc: [], done: [] }
-  }
-  for (const task of flat) {
-    const status = getKanbanStatus(task)
-    const dept = getDepartmentForCode(task.assemblyCode, prefixes)
-    if (!dept) {
-      groups.unallocated[status].push(task)
-    } else {
-      if (!groups[dept.department]) groups[dept.department] = { todo: [], inprogress: [], qc: [], done: [] }
-      groups[dept.department][status].push(task)
-    }
-  }
-  return groups
-}
-
 export function checkDependency(task, allTasksInJob, assemblyPhases) {
   const phase = getPhaseForCode(task.assemblyCode, assemblyPhases)
   if (phase !== 'installation') return { status: 'ok', missing: [] }
@@ -53,16 +34,6 @@ export function checkDependency(task, allTasksInJob, assemblyPhases) {
     }
   }
   return { status: missing.length ? 'warning' : 'ok', missing }
-}
-
-export function countUnallocated(jobs, prefixes) {
-  const flat = flattenTasks(jobs)
-  return flat.filter(t => isUnallocated(t, prefixes)).length
-}
-
-export function listMappedDepartments(prefixMappings) {
-  if (!Array.isArray(prefixMappings)) return []
-  return Array.from(new Set(prefixMappings.map(p => p.department))).sort()
 }
 
 const PALETTE = ['#fbbf24', '#a78bfa', '#60a5fa', '#34d399', '#f87171', '#fb923c', '#22d3ee', '#a3e635']
